@@ -11,9 +11,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
+    
+
+    /* this is the code I added */
+
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -24,6 +26,8 @@ namespace thegame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+
+
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
