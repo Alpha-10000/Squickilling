@@ -18,6 +18,8 @@ namespace thegame
     /*this is something Victor added */
 
 
+    /*this is something Elise added */
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
