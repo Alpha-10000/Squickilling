@@ -15,6 +15,8 @@ namespace thegame
 
     /* this is the code I added */
 
+    /*this is something Victor added */
+
 
     public class Game1 : Microsoft.Xna.Framework.Game
     {
