@@ -23,20 +23,18 @@ namespace thegame
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            this.graphics.PreferredBackBufferHeight = 500;
+            this.graphics.PreferredBackBufferWidth = 800;
             Content.RootDirectory = "Content";
         }
 
+        private Perso marioRepos;
 
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            marioRepos = new Perso();
+            marioRepos.Initialize();
 
             base.Initialize();
         }
@@ -49,8 +47,7 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            marioRepos.LoadContent(Content, "marioRepos");
         }
 
         /// <summary>
@@ -72,9 +69,7 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
-            // TODO: Add your update logic here
-
+            marioRepos.Update(Keyboard.GetState(), Mouse.GetState());
             base.Update(gameTime);
         }
 
@@ -86,7 +81,9 @@ namespace thegame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            marioRepos.Draw(spriteBatch, gameTime);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

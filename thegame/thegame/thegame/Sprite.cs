@@ -24,7 +24,7 @@ namespace thegame
             get { return texture; }
             set { texture = value; }
         }
-        private Texture2D texture;
+        protected Texture2D texture;
 
         /// <summary>
         /// Récupère ou définit la position du Sprite
@@ -34,7 +34,7 @@ namespace thegame
             get { return position; }
             set { position = value; }
         }
-        private Vector2 position;
+        protected Vector2 position;
 
         /// <summary>
         /// Récupère ou définit la direction du sprite. Lorsque la direction est modifiée, elle est automatiquement normalisée.
@@ -44,7 +44,7 @@ namespace thegame
             get { return direction; }
             set { direction = Vector2.Normalize(value); }
         }
-        private Vector2 direction;
+        protected Vector2 direction;
 
         /// <summary>
         /// Récupère ou définit la vitesse de déplacement du sprite.
@@ -54,7 +54,7 @@ namespace thegame
             get { return speed; }
             set { speed = value; }
         }
-        private float speed;
+        protected float speed;
 
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace thegame
         /// </summary>
         public virtual void Initialize()
         {
-            position = Vector2.Zero;
-            direction = Vector2.Zero;
-            speed = 0;
+             position = new Vector2 (0,0);
+             direction = new Vector2 (1,0);
+             speed = 0.2f;
         }
 
         /// <summary>
@@ -81,20 +81,10 @@ namespace thegame
         /// Met à jour les variables du sprite
         /// </summary>
         /// <param name="gameTime">Le GameTime associé à la frame</param>
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(KeyboardState keyboardState, MouseState mouseState)
         {
-            position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
-        /// <summary>
-        /// Permet de gérer les entrées du joueur
-        /// </summary>
-        /// <param name="keyboardState">L'état du clavier à tester</param>
-        /// <param name="mouseState">L'état de la souris à tester</param>
-        /// <param name="joueurNum">Le numéro du joueur qui doit être surveillé</param>
-        public virtual void HandleInput(KeyboardState keyboardState, MouseState mouseState)
-        {
-        }
 
         /// <summary>
         /// Dessine le sprite en utilisant ses attributs et le spritebatch donné
@@ -106,6 +96,4 @@ namespace thegame
             spriteBatch.Draw(texture, position, Color.White);
         }
     }
-
-
 }
