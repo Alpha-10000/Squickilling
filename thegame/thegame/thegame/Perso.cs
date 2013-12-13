@@ -41,5 +41,9 @@ namespace thegame
                 position.Y++;
             }
         }
+            public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            spriteBatch.Draw(texture, this.hitBox ,Color.White);
+        }
     }
 }

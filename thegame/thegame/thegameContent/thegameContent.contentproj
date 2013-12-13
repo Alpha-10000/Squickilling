@@ -42,8 +42,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="marioRepos.png">
-      <Name>marioRepos</Name>
+    <Compile Include="mario.png">
+      <Name>mario</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

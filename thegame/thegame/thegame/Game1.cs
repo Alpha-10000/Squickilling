@@ -25,16 +25,17 @@ namespace thegame
             graphics = new GraphicsDeviceManager(this);
             this.graphics.PreferredBackBufferHeight = 500;
             this.graphics.PreferredBackBufferWidth = 800;
+            this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
         }
 
-        private Perso marioRepos;
+        private Perso mario;
 
 
         protected override void Initialize()
         {
-            marioRepos = new Perso();
-            marioRepos.Initialize();
+            mario = new Perso();
+            mario.Initialize();
 
             base.Initialize();
         }
@@ -47,7 +48,7 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            marioRepos.LoadContent(Content, "marioRepos");
+            mario.LoadContent(Content, "mario");
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            marioRepos.Update(Keyboard.GetState(), Mouse.GetState());
+            mario.Update(Keyboard.GetState(), Mouse.GetState());
             base.Update(gameTime);
         }
 
@@ -82,7 +83,7 @@ namespace thegame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            marioRepos.Draw(spriteBatch, gameTime);
+            mario.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);
