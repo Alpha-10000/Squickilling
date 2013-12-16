@@ -14,7 +14,7 @@ namespace thegame
 {
     class Perso : Sprite
     {
-        public Rectangle hitBox
+        public Rectangle hitBox 
         {
             get
             {
