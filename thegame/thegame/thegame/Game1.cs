@@ -23,8 +23,8 @@ namespace thegame
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            this.graphics.PreferredBackBufferHeight = 500;
-            this.graphics.PreferredBackBufferWidth = 800;
+          //  this.graphics.PreferredBackBufferHeight = 500;
+          //  this.graphics.PreferredBackBufferWidth = 800;
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
         }

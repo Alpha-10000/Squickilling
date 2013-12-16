@@ -19,6 +19,7 @@ namespace thegame
             get
             {
                 return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
+
             }
         }
         public override void Update(KeyboardState keyboardState, MouseState mouseState)
@@ -41,9 +42,12 @@ namespace thegame
                 position.Y++;
             }
         }
-            public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(texture, this.hitBox ,Color.White);
+            spriteBatch.Draw(texture, this.hitBox, Color.White);
         }
+
     }
 }
+
