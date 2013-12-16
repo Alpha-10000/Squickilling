@@ -24,7 +24,7 @@ namespace thegame
         }
         public override void Update(KeyboardState keyboardState, MouseState mouseState)
         {
-            speed = 0.5f;
+            speed = 1f;
             if (keyboardState.IsKeyDown(Keys.Left))
             {
                 position.X--;
