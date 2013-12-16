@@ -31,7 +31,7 @@ namespace thegame
             }
             if (keyboardState.IsKeyDown(Keys.Right))
             {
-                position.X++;
+                position.X++; 
             }
             if (keyboardState.IsKeyDown(Keys.Up))
             {
