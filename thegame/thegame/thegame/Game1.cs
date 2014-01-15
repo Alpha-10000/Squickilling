@@ -70,7 +70,7 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            mario.Update(Keyboard.GetState(), Mouse.GetState());
+            mario.Update(Keyboard.GetState(), Mouse.GetState(), gameTime);
             base.Update(gameTime);
         }
 
