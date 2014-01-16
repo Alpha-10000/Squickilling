@@ -14,18 +14,18 @@ namespace thegame
 {
     class Perso
     {
-        protected Texture2D texture;
-        public Texture2D Texture
+        protected Texture2D imagePerso;
+        public Texture2D ImagePerso
         {
-            get { return texture; }
-            set { texture = value; }
+            get { return imagePerso; }
+            set { imagePerso = value; }
         }
 
-        protected Vector2 position;
+        protected Vector2 positionPerso;
         public Vector2 Position
         {
-            get { return position; }
-            set { position = value; }
+            get { return positionPerso; }
+            set { positionPerso = value; }
         }
 
         protected float speed;
@@ -35,46 +35,39 @@ namespace thegame
             set { speed = value; }
         }
 
+        protected Vector2 tempCurrentFrame;
+        Animation animationPerso = new Animation();
         public void Initialize()
         {
-            position = new Vector2(0, 0);
-            speed = 0.2f;
+            animationPerso.Initialize(positionPerso, new Vector2(11, 1));
+            tempCurrentFrame = Vector2.Zero;
+        //    position = new Vector2(0, 0);
+          //  speed = 0.2f;
         }
-        public void LoadContent(ContentManager content, string assetName)
+        public void LoadContent(ContentManager Content, string assetName)
         {
-            texture = content.Load<Texture2D>(assetName);
+            imagePerso = Content.Load<Texture2D>(assetName);
+            animationPerso.AnimationSprite = imagePerso;
         }
-        public void Update(KeyboardState keyboardState, MouseState mouseState, GameTime gametime)
-        {
-            speed = 1f;
-            if (keyboardState.IsKeyDown(Keys.Left))
-            {
-                position.X -= speed;
-            }
-            if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                position.X += speed;
-            }
-            if (keyboardState.IsKeyDown(Keys.Up))
-            {
-                position.Y -= speed;
-            }
-            if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                position.Y += speed;
-            }
-        }
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            spriteBatch.Draw(texture, position, Color.White);
-        }
-        public Rectangle hitBox 
-        {
-            get
-            {
-                return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
 
-            }
+        KeyboardState keyboardState;
+        public void Update(GameTime gametime)
+        {
+          //  keyboardState = Keyboard.GetState();
+            animationPerso.Actif = true;
+          //  positionPerso = animationPerso.Position;
+          //  if (keyboardState.IsKeyDown(Keys.Right))
+          //  {
+           //     positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+           //     tempCurrentFrame.X= 0;
+          //  }
+          //  animationPerso.Position = positionPerso;
+          //  animationPerso.CurrentFrame = tempCurrentFrame;
+            animationPerso.Update(gametime);
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            animationPerso.Draw(spriteBatch);
         }
     }
 }

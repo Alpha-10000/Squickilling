@@ -20,6 +20,8 @@ namespace thegame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Perso mario = new Perso();
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -29,12 +31,9 @@ namespace thegame
             Content.RootDirectory = "Content";
         }
 
-        private Perso mario;
-
 
         protected override void Initialize()
         {
-            mario = new Perso();
             mario.Initialize();
 
             base.Initialize();
@@ -70,7 +69,7 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            mario.Update(Keyboard.GetState(), Mouse.GetState(), gameTime);
+            mario.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -83,7 +82,7 @@ namespace thegame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            mario.Draw(spriteBatch, gameTime);
+            mario.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

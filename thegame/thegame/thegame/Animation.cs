@@ -14,7 +14,76 @@ namespace thegame
 {
     class Animation
     {
-        int frames;
-        int framesCounter;
+        int frameCounter;
+        int switchFrames;
+        bool actif;
+
+        private Vector2 position, nbFrames, currentFrame;
+        Rectangle SpriteSheet;
+
+        Texture2D Sprite;
+        public Texture2D AnimationSprite
+        {
+            set { Sprite = value; }
+        }
+
+
+        public Vector2 CurrentFrame
+        {
+            get { return currentFrame; }
+            set { currentFrame = value; }
+        }
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
+        public bool Actif
+        {
+            get { return actif; }
+            set { actif = value; }
+        }
+        public int FrameWidth
+        {
+            get { return Sprite.Width / (int)nbFrames.X; }
+        
+        }
+        public int FrameHeight
+        {
+            get { return Sprite.Height / (int)nbFrames.Y; }
+        }
+
+
+        public void Initialize(Vector2 position, Vector2 Frames)
+        {
+            actif = false;
+            switchFrames = 100;
+            this.position = position;
+            nbFrames = Frames;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (actif)
+                frameCounter += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            else
+                frameCounter = 0;
+            if (frameCounter >= switchFrames)
+            {
+                frameCounter = 0;
+                currentFrame.X += FrameWidth;
+                if (currentFrame.X >= Sprite.Width)
+                {
+                    currentFrame.X = 0;
+                }
+                SpriteSheet = new Rectangle((int)currentFrame.X, (int)currentFrame.Y * FrameHeight , FrameWidth, FrameHeight);
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Sprite, position, SpriteSheet, Color.White);
+        }
     }
 }
