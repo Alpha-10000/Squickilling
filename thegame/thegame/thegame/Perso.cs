@@ -14,6 +14,8 @@ namespace thegame
 {
     class Perso
     {
+        Vector2 positionPerso, tempCurrentFrame;
+        KeyboardState keyboardState;
         protected Texture2D imagePerso;
         public Texture2D ImagePerso
         {
@@ -21,28 +23,27 @@ namespace thegame
             set { imagePerso = value; }
         }
 
-        protected Vector2 positionPerso;
+        
         public Vector2 Position
         {
             get { return positionPerso; }
             set { positionPerso = value; }
         }
 
-        protected float speed;
+        float speed;
         public float Speed
         {
             get { return speed; }
             set { speed = value; }
         }
 
-        protected Vector2 tempCurrentFrame;
         Animation animationPerso = new Animation();
         public void Initialize()
         {
-            animationPerso.Initialize(positionPerso, new Vector2(11, 1));
+            animationPerso.Initialize(positionPerso, new Vector2(3, 2));
             tempCurrentFrame = Vector2.Zero;
-        //    position = new Vector2(0, 0);
-          //  speed = 0.2f;
+           positionPerso = new Vector2(0, 500);
+           speed = 100f;
         }
         public void LoadContent(ContentManager Content, string assetName)
         {
@@ -50,19 +51,38 @@ namespace thegame
             animationPerso.AnimationSprite = imagePerso;
         }
 
-        KeyboardState keyboardState;
+        
         public void Update(GameTime gametime)
         {
-          //  keyboardState = Keyboard.GetState();
+            keyboardState = Keyboard.GetState();
+            positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
-          //  positionPerso = animationPerso.Position;
-          //  if (keyboardState.IsKeyDown(Keys.Right))
-          //  {
-           //     positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-           //     tempCurrentFrame.X= 0;
-          //  }
-          //  animationPerso.Position = positionPerso;
-          //  animationPerso.CurrentFrame = tempCurrentFrame;
+            positionPerso = animationPerso.Position;
+            if (keyboardState.IsKeyDown(Keys.Right))
+            {
+                positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                tempCurrentFrame.Y = 0;
+            }
+            else if (keyboardState.IsKeyDown(Keys.Left))
+            {
+                positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                tempCurrentFrame.Y = 1;
+            }
+            else if (keyboardState.IsKeyDown(Keys.Up))
+            {
+                positionPerso.Y -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                tempCurrentFrame.Y = 0;
+            }
+            else if (keyboardState.IsKeyDown(Keys.Down))
+            {
+                positionPerso.Y += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                tempCurrentFrame.Y = 1;
+            }
+            else
+                animationPerso.Actif = false;
+            tempCurrentFrame.X = animationPerso.CurrentFrame.X;
+            animationPerso.Position = positionPerso;
+            animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
         }
         public void Draw(SpriteBatch spriteBatch)
