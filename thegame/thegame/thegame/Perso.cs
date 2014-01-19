@@ -42,12 +42,12 @@ namespace thegame
         {
             animationPerso.Initialize(positionPerso, new Vector2(3, 2));
             tempCurrentFrame = Vector2.Zero;
-           positionPerso = new Vector2(0, 500);
-           speed = 100f;
+            speed = 100f;
         }
         public void LoadContent(ContentManager Content, string assetName)
         {
             imagePerso = Content.Load<Texture2D>(assetName);
+            positionPerso = new Vector2(30, 30);
             animationPerso.AnimationSprite = imagePerso;
         }
 
@@ -56,30 +56,30 @@ namespace thegame
         {
             keyboardState = Keyboard.GetState();
             positionPerso = animationPerso.Position;
-            animationPerso.Actif = true;
+            animationPerso.Actif = false;
             positionPerso = animationPerso.Position;
             if (keyboardState.IsKeyDown(Keys.Right))
             {
-                positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 tempCurrentFrame.Y = 0;
+                positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else if (keyboardState.IsKeyDown(Keys.Left))
             {
-                positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 tempCurrentFrame.Y = 1;
+                positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else if (keyboardState.IsKeyDown(Keys.Up))
             {
-                positionPerso.Y -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 tempCurrentFrame.Y = 0;
+                positionPerso.Y -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else if (keyboardState.IsKeyDown(Keys.Down))
             {
-                positionPerso.Y += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 tempCurrentFrame.Y = 1;
+                positionPerso.Y += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else
-                animationPerso.Actif = false;
+                animationPerso.Actif = true;
             tempCurrentFrame.X = animationPerso.CurrentFrame.X;
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;

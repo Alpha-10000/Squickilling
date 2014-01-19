@@ -35,7 +35,6 @@ namespace thegame
         protected override void Initialize()
         {
             mario.Initialize();
-
             base.Initialize();
         }
 
