@@ -47,8 +47,9 @@ namespace thegame
         public void LoadContent(ContentManager Content, string assetName)
         {
             imagePerso = Content.Load<Texture2D>(assetName);
-            positionPerso = new Vector2(30, 30);
+            positionPerso = new Vector2(100, 100);
             animationPerso.AnimationSprite = imagePerso;
+            animationPerso.Position = positionPerso;
         }
 
         
@@ -56,8 +57,7 @@ namespace thegame
         {
             keyboardState = Keyboard.GetState();
             positionPerso = animationPerso.Position;
-            animationPerso.Actif = false;
-            positionPerso = animationPerso.Position;
+            animationPerso.Actif = true;
             if (keyboardState.IsKeyDown(Keys.Right))
             {
                 tempCurrentFrame.Y = 0;
@@ -79,7 +79,7 @@ namespace thegame
                 positionPerso.Y += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else
-                animationPerso.Actif = true;
+                animationPerso.Actif = false;
             tempCurrentFrame.X = animationPerso.CurrentFrame.X;
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
