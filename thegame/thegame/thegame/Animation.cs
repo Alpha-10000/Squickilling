@@ -58,7 +58,7 @@ namespace thegame
         public void Initialize(Vector2 position, Vector2 Frames)
         {
             actif = false;
-            switchFrames = 70;
+            switchFrames = 80;
             this.position = position;
             nbFrames = Frames;
         }
@@ -66,7 +66,9 @@ namespace thegame
         public void Update(GameTime gameTime)
         {
             if (actif)
+            {
                 frameCounter += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
             else
             {
                 currentFrame.X = 0;
