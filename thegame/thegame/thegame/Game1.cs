@@ -19,6 +19,8 @@ namespace thegame
     {
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        float frameRate;
+        private SpriteFont _font;
 
         Perso mario = new Perso();
 
@@ -34,6 +36,7 @@ namespace thegame
         protected override void Initialize()
         {
             mario.Initialize();
+            frameRate = 0;
             base.Initialize();
         }
 
@@ -41,6 +44,7 @@ namespace thegame
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mario.LoadContent(Content, "mario");
+            _font = Content.Load<SpriteFont>("FPS");
         }
 
         protected override void UnloadContent()
@@ -53,6 +57,7 @@ namespace thegame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             mario.Update(gameTime);
+            frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
             base.Update(gameTime);
         }
 
@@ -62,6 +67,7 @@ namespace thegame
 
             spriteBatch.Begin();
             mario.Draw(spriteBatch);
+            spriteBatch.DrawString(_font, "FPS : " + frameRate.ToString(), new Vector2(10, 10), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
