@@ -10,6 +10,15 @@
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb</Output>
       <Time>2014-01-19T18:09:35.7573959+01:00</Time>
     </Item>
+    <Item>
+      <Source>FPS.spritefont</Source>
+      <Name>FPS</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
+      <Time>2014-01-30T22:47:36.3108898+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{AB46CF56-1E7F-42D1-9430-FCB7F0AB151C}</ContentProjectGUID>
