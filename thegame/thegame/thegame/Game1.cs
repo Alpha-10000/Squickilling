@@ -24,6 +24,8 @@ namespace thegame
 
         Perso mario = new Perso();
 
+        Menu Menu = new Menu();
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -45,30 +47,7 @@ namespace thegame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mario.LoadContent(Content, "mario", 0, 300);
             _font = Content.Load<SpriteFont>("FPS");
-           /* if (mario.hitBoxPerso.Intersects(blockBounds) || !GraphicsDevice.Viewport.Bounds.Contains(ballBounds))
-            {
-
-                //we have a simple collision!
-                //if it has hit, swap the direction of the ball, and update it's position
-                ballVelocity = -ballVelocity;
-                ballPosition += ballVelocity;
-
-            }
-
-            else
-            {
-
-                //move the ball a bit
-                ballPosition += ballVelocity;
-
-            }
-
-            //update bounding boxes
-            ballBounds.X = (int)ballPosition.X;
-            ballBounds.Y = (int)ballPosition.Y;
-
-            blockBounds.X = (int)blockPosition.X;
-            blockBounds.Y = (int)blockPosition.Y;*/
+         
         }
 
         protected override void UnloadContent()
@@ -80,21 +59,50 @@ namespace thegame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            mario.Update(gameTime);
-            frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (Menu.MenuBool == false)
+            {
+                base.Draw(gameTime);
+                mario.Update(gameTime);
+                frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                Menu.Update(gameTime);
+            }
+           
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            
+            if (Menu.MenuBool == false)
+            {
+                Startgame();
+            }
+            else
+            {
+                Menu_start();
+            }
+            base.Draw(gameTime);
+        }
+
+        private void Menu_start()
+        {
+            GraphicsDevice.Clear(Color.Beige);
+        }
+
+        private void Startgame()
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             mario.Draw(spriteBatch);
             spriteBatch.DrawString(_font, "FPS : " + frameRate.ToString(), new Vector2(10, 10), Color.White);
             spriteBatch.End();
-
-            base.Draw(gameTime);
         }
+
+
     }
 }

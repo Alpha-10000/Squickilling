@@ -20,34 +20,17 @@ namespace thegame
       //  Vector2 velocity;
       //  float gravity = 0.1f;
         Rectangle hitBoxPerso;
-        public Rectangle HitboxPerso
-        {
-            get { return hitBoxPerso; }
-            set { hitBoxPerso = value; }
-        }
+        public Rectangle HitboxPerso { get; private set; }
 
         float sol, jumpspeed = 0;
         bool jumping;
-        protected Texture2D imagePerso;
-        public Texture2D ImagePerso
-        {
-            get { return imagePerso; }
-            set { imagePerso = value; }
-        }
+        protected Texture2D imagePerso { get; private set; }
 
 
-        public Vector2 Position
-        {
-            get { return positionPerso; }
-            set { positionPerso = value; }
-        }
+        public Vector2 Position { get; private set; }
 
         float speed;
-        public float Speed
-        {
-            get { return speed; }
-            set { speed = value; }
-        }
+        public float Speed { get; set; }
 
         Animation animationPerso = new Animation();
         public void Initialize()
