@@ -19,9 +19,15 @@ namespace thegame
         KeyboardState keyboardState;
       //  Vector2 velocity;
       //  float gravity = 0.1f;
+        Rectangle hitBoxPerso;
+        public Rectangle HitboxPerso
+        {
+            get { return hitBoxPerso; }
+            set { hitBoxPerso = value; }
+        }
+
         float sol, jumpspeed = 0;
         bool jumping;
-
         protected Texture2D imagePerso;
         public Texture2D ImagePerso
         {
@@ -53,14 +59,16 @@ namespace thegame
             sol = positionPerso.Y;
             jumping = false;
             jumpspeed = 0;
+            
         }
-        public void LoadContent(ContentManager Content, string assetName)
+        public void LoadContent(ContentManager Content, string assetName, int x, int y)
         {
 
             imagePerso = Content.Load<Texture2D>(assetName);
-            positionPerso = new Vector2(0, 300);
+            positionPerso = new Vector2(x, y);
             animationPerso.AnimationSprite = imagePerso;
             animationPerso.Position = positionPerso;
+            hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
         }
 
         public void Update(GameTime gametime)
@@ -84,7 +92,7 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     jumping = true;
-                    jumpspeed = -16;
+                    jumpspeed = -18;
                 }
             }
           /*  velocity.Y += gravity;
@@ -122,6 +130,7 @@ namespace thegame
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
         }
         public void Draw(SpriteBatch spriteBatch)
         {

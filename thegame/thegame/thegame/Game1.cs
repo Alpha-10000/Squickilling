@@ -43,8 +43,32 @@ namespace thegame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            mario.LoadContent(Content, "mario");
+            mario.LoadContent(Content, "mario", 0, 300);
             _font = Content.Load<SpriteFont>("FPS");
+           /* if (mario.hitBoxPerso.Intersects(blockBounds) || !GraphicsDevice.Viewport.Bounds.Contains(ballBounds))
+            {
+
+                //we have a simple collision!
+                //if it has hit, swap the direction of the ball, and update it's position
+                ballVelocity = -ballVelocity;
+                ballPosition += ballVelocity;
+
+            }
+
+            else
+            {
+
+                //move the ball a bit
+                ballPosition += ballVelocity;
+
+            }
+
+            //update bounding boxes
+            ballBounds.X = (int)ballPosition.X;
+            ballBounds.Y = (int)ballPosition.Y;
+
+            blockBounds.X = (int)blockPosition.X;
+            blockBounds.Y = (int)blockPosition.Y;*/
         }
 
         protected override void UnloadContent()
