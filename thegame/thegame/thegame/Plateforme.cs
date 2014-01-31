@@ -15,7 +15,7 @@ namespace thegame
     class Plateforme
     {
         Vector2 positionPlatform;
-        Rectangle hitBoxPlatform;
+       // Rectangle hitBoxPlatform;
 
         protected Texture2D imagePlatform;
         public Texture2D ImagePlatform
@@ -30,11 +30,15 @@ namespace thegame
             set { positionPlatform = value; }
         }
 
-        public void LoadContent(ContentManager Content, string assetName, int x, int y)
+        public void Initialize(int x, int y)
+        {
+            positionPlatform = new Vector2(x, y);
+        }
+
+        public void LoadContent(ContentManager Content, string assetName)
         {
 
             imagePlatform = Content.Load<Texture2D>(assetName);
-            positionPlatform = new Vector2(x, y);
             Rectangle hitBoxPerso = new Rectangle((int)(positionPlatform.X - imagePlatform.Width / 2), (int)(positionPlatform.Y - imagePlatform.Height / 2), imagePlatform.Width, imagePlatform.Height);
         }
 

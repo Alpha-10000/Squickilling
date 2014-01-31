@@ -23,7 +23,7 @@ namespace thegame
         private SpriteFont _font;
 
         Perso mario = new Perso();
-
+        Plateforme plateforme = new Plateforme();
         Menu Menu = new Menu();
 
         public Game1()
@@ -37,7 +37,8 @@ namespace thegame
 
         protected override void Initialize()
         {
-            mario.Initialize();
+            mario.Initialize(0, 300);
+            plateforme.Initialize(300, 200);
             frameRate = 0;
             base.Initialize();
         }
@@ -45,7 +46,8 @@ namespace thegame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            mario.LoadContent(Content, "mario", 0, 300);
+            mario.LoadContent(Content, "mario");
+            plateforme.LoadContent(Content, "plateforme");
             _font = Content.Load<SpriteFont>("FPS");
          
         }
@@ -99,6 +101,7 @@ namespace thegame
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             mario.Draw(spriteBatch);
+            plateforme.Draw(spriteBatch);
             spriteBatch.DrawString(_font, "FPS : " + frameRate.ToString(), new Vector2(10, 10), Color.White);
             spriteBatch.End();
         }

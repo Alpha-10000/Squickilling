@@ -33,22 +33,23 @@ namespace thegame
         public float Speed { get; set; }
 
         Animation animationPerso = new Animation();
-        public void Initialize()
+
+        public void Initialize(int x, int y)
         {
             animationPerso.Initialize(positionPerso, new Vector2(3, 2));
-            positionPerso = new Vector2(0, 300);
             tempCurrentFrame = Vector2.Zero;
+            positionPerso = new Vector2(x, y);
             speed = 100f;
             sol = positionPerso.Y;
             jumping = false;
             jumpspeed = 0;
             
         }
-        public void LoadContent(ContentManager Content, string assetName, int x, int y)
+        public void LoadContent(ContentManager Content, string assetName)
         {
-
+          //  positionPerso = new Vector2(x, y);
             imagePerso = Content.Load<Texture2D>(assetName);
-            positionPerso = new Vector2(x, y);
+
             animationPerso.AnimationSprite = imagePerso;
             animationPerso.Position = positionPerso;
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);

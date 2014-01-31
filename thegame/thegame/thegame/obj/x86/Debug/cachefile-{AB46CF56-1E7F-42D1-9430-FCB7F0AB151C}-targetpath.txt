@@ -1,2 +1,3 @@
 Content\mario.xnb
 Content\FPS.xnb
+Content\plateforme.xnb

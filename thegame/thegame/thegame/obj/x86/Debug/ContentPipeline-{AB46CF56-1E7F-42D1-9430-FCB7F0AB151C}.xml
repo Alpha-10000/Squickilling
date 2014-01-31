@@ -19,6 +19,15 @@
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
       <Time>2014-01-30T22:47:36.3108898+01:00</Time>
     </Item>
+    <Item>
+      <Source>plateforme.png</Source>
+      <Name>plateforme</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb</Output>
+      <Time>2014-01-31T17:15:32.8183057+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{AB46CF56-1E7F-42D1-9430-FCB7F0AB151C}</ContentProjectGUID>
