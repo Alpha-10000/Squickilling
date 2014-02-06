@@ -34,10 +34,7 @@ namespace thegame
             (execute as Menu).AddElements("Quit");
         }
 
-        public void Selected(int i)
-        {
-            this.selected = this.selected + i;
-        }
+    
 
         public void UpdateByKey(GameTime gametime)
         {
