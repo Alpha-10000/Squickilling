@@ -22,7 +22,6 @@ namespace thegame
         float frameRate;
         private SpriteFont _font;
         public Drawable FrameRate;
-        Perso mario;
         Plateforme plateforme1;
         public  Instances instancesobject;
 
@@ -48,12 +47,10 @@ namespace thegame
 
             Textures.load(Content);
             FrameRate = new Drawable(drawable_type.font);
-            mario = new Perso(new Vector2(0, 300));
-            mario.LoadContent(Content, "mario");
             plateforme1 = new Plateforme(drawable_type.Plateform_default ,new Vector2(300, 300));
             plateforme1.LoadContent(Content, "plateforme");
             _font = Content.Load<SpriteFont>("FPS");
-            instancesobject = new Instances(instances_type.Menu);
+            instancesobject = new Instances();
         }
 
         protected override void UnloadContent()
@@ -63,16 +60,13 @@ namespace thegame
 
         protected override void Update(GameTime gameTime)
         {
-            if ((instancesobject.execute as Menu) != null && (instancesobject.execute as Menu).MenuBool == false)
-            {
+           
                 base.Draw(gameTime);
-                mario.Update(gameTime);
+                
                 frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else
-            {
+           
                 instancesobject.UpdateByKey(gameTime);
-            }
+            
            
             base.Update(gameTime);
         }
@@ -81,11 +75,11 @@ namespace thegame
         {
 
 
-            if ((instancesobject.execute as Menu) != null && (instancesobject.execute as Menu).MenuBool == false)
+            if (instancesobject.type == instances_type.Game)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 spriteBatch.Begin();
-                mario.Draw(spriteBatch);
+                instancesobject.Display(spriteBatch);
                 plateforme1.Draw(spriteBatch, new Vector2(300,300));
                 FrameRate.Draw(spriteBatch, "FPS : " + frameRate.ToString() , new Vector2(10, 10), Color.Black);
                 spriteBatch.End();
