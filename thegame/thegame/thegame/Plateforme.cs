@@ -12,39 +12,27 @@ using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
-    class Plateforme
+    class Plateforme : Drawable
     {
         Vector2 positionPlatform;
        // Rectangle hitBoxPlatform;
 
         protected Texture2D imagePlatform;
-        public Texture2D ImagePlatform
+        public Texture2D ImagePlatform { get; private set; }
+        public Vector2 Position { get; private set; }
+        public Plateforme(drawable_type drawable_t ,Vector2 positionPlateform)
+            : base(drawable_t)
         {
-            get { return imagePlatform; }
-            set { imagePlatform = value; }
+            this.positionPlatform = positionPlateform;
         }
 
-        public Vector2 Position
-        {
-            get { return positionPlatform; }
-            set { positionPlatform = value; }
-        }
-
-        public void Initialize(int x, int y)
-        {
-            positionPlatform = new Vector2(x, y);
-        }
-
-        public void LoadContent(ContentManager Content, string assetName)
+        public void LoadContent(ContentManager Content, string assetName) /* I didnt know what to do with this so I let this that way. */
         {
 
             imagePlatform = Content.Load<Texture2D>(assetName);
             Rectangle hitBoxPerso = new Rectangle((int)(positionPlatform.X - imagePlatform.Width / 2), (int)(positionPlatform.Y - imagePlatform.Height / 2), imagePlatform.Width, imagePlatform.Height);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(imagePlatform, positionPlatform, new Rectangle(0, 0, imagePlatform.Width, imagePlatform.Height), Color.White);
-        }
+     
     }
 }

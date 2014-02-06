@@ -18,7 +18,9 @@ namespace thegame
         int switchFrames;
         bool actif;
 
-        private Vector2 position, nbFrames, currentFrame;
+        private Vector2 currentFrame;
+        public Vector2 Position { get; set; }
+        public Vector2 nbFrames { get; set; }
         Rectangle SpriteSheet;
 
         Texture2D Sprite;
@@ -33,11 +35,7 @@ namespace thegame
             get { return currentFrame; }
             set { currentFrame = value; }
         }
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
+
 
         public bool Actif
         {
@@ -55,12 +53,12 @@ namespace thegame
         }
 
 
-        public void Initialize(Vector2 position, Vector2 Frames)
+        public Animation(Vector2 Position, Vector2 nbframes)
         {
             actif = false;
             switchFrames = 80;
-            this.position = position;
-            nbFrames = Frames;
+            this.Position = Position;
+            this.nbFrames = nbframes;
         }
 
         public void Update(GameTime gameTime)
@@ -89,7 +87,7 @@ namespace thegame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, position, SpriteSheet, Color.White);
+            spriteBatch.Draw(Sprite, Position, SpriteSheet, Color.White);
         }
     }
 }

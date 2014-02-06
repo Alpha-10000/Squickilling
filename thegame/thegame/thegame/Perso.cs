@@ -30,15 +30,15 @@ namespace thegame
         public Vector2 Position { get; private set; }
 
         float speed;
-        public float Speed { get; set; }
+        public float Speed { get; private set; }
 
-        Animation animationPerso = new Animation();
+        Animation animationPerso;
 
-        public void Initialize(int x, int y)
+        public Perso(Vector2 pos)
         {
-            animationPerso.Initialize(positionPerso, new Vector2(3, 2));
+            animationPerso = new Animation(positionPerso, new Vector2(3, 2));
             tempCurrentFrame = Vector2.Zero;
-            positionPerso = new Vector2(x, y);
+            positionPerso = pos;
             speed = 100f;
             sol = positionPerso.Y;
             jumping = false;
@@ -116,7 +116,7 @@ namespace thegame
             animationPerso.Update(gametime);
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public  void Draw(SpriteBatch spriteBatch)
         {
             // spriteBatch.Draw(imagePerso, positionPerso, new Rectangle(0, 0, imagePerso.Width / 3 , imagePerso.Height / 2), Color.White);
             animationPerso.Draw(spriteBatch);

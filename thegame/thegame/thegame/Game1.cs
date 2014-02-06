@@ -21,10 +21,10 @@ namespace thegame
         SpriteBatch spriteBatch;
         float frameRate;
         private SpriteFont _font;
-
-        Perso mario = new Perso();
-        Plateforme plateforme = new Plateforme();
-        Menu Menu = new Menu();
+        public Drawable FrameRate;
+        Perso mario;
+        Plateforme plateforme1;
+        Menu Menu;
 
         public Game1()
         {
@@ -37,8 +37,7 @@ namespace thegame
 
         protected override void Initialize()
         {
-            mario.Initialize(0, 300);
-            plateforme.Initialize(300, 200);
+            
             frameRate = 0;
             base.Initialize();
         }
@@ -46,10 +45,15 @@ namespace thegame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            Textures.load(Content);
+            FrameRate = new Drawable(drawable_type.font);
+            mario = new Perso(new Vector2(0, 300));
             mario.LoadContent(Content, "mario");
-            plateforme.LoadContent(Content, "plateforme");
+            plateforme1 = new Plateforme(drawable_type.Plateform_default ,new Vector2(300, 300));
+            plateforme1.LoadContent(Content, "plateforme");
             _font = Content.Load<SpriteFont>("FPS");
-         
+            Menu =  new Menu();
         }
 
         protected override void UnloadContent()
@@ -59,9 +63,6 @@ namespace thegame
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
             if (Menu.MenuBool == false)
             {
                 base.Draw(gameTime);
@@ -82,29 +83,24 @@ namespace thegame
             
             if (Menu.MenuBool == false)
             {
-                Startgame();
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+                spriteBatch.Begin();
+                mario.Draw(spriteBatch);
+                plateforme1.Draw(spriteBatch, new Vector2(300,300));
+                FrameRate.Draw(spriteBatch, _font, "FPS : " + frameRate.ToString() , new Vector2(10, 10));
+                spriteBatch.End();
             }
             else
             {
-                Menu_start();
+                GraphicsDevice.Clear(Color.Beige);
+                spriteBatch.Begin();
+                Menu.Draw(spriteBatch, _font, "Press bar space", new Vector2(200, 200));
+                spriteBatch.End();
             }
             base.Draw(gameTime);
         }
 
-        private void Menu_start()
-        {
-            GraphicsDevice.Clear(Color.Beige);
-        }
-
-        private void Startgame()
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
-            mario.Draw(spriteBatch);
-            plateforme.Draw(spriteBatch);
-            spriteBatch.DrawString(_font, "FPS : " + frameRate.ToString(), new Vector2(10, 10), Color.White);
-            spriteBatch.End();
-        }
+   
 
 
     }

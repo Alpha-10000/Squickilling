@@ -12,11 +12,15 @@ using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
-    class Menu
+    class Menu : Drawable
     {
         public bool MenuBool = true;
         KeyboardState keyboardState;
 
+        public Menu() : base(drawable_type.font)
+        {
+
+        }
         public void Update(GameTime gametime)
         {
             keyboardState = Keyboard.GetState();
@@ -29,6 +33,8 @@ namespace thegame
 
 
             }
+
+     
 
     }
 }
