@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Drawable.cs" />
+    <Compile Include="Instances.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Perso.cs" />
     <Compile Include="Plateforme.cs" />
