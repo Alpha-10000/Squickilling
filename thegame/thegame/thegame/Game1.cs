@@ -52,7 +52,7 @@ namespace thegame
             plateforme1 = new Plateforme(drawable_type.Plateform_default ,new Vector2(300, 300));
             plateforme1.LoadContent(Content, "plateforme");
             _font = Content.Load<SpriteFont>("FPS");
-            instancesobject = new Instances();
+            instancesobject = new Instances(this);
         }
 
         protected override void UnloadContent()
@@ -71,6 +71,7 @@ namespace thegame
             
            
             base.Update(gameTime);
+            
         }
 
         protected override void Draw(GameTime gameTime)

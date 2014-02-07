@@ -20,13 +20,14 @@ namespace thegame
 
     public class Instances
     {
+        public Game1 game { get; private set; }
         KeyboardState keyboardState;
         public instances_type type { get; private set; }
         public object execute { get; private set; }
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
 
-        public Instances()
+        public Instances(Game1 game)
         {
             this.type = instances_type.Menu;
             this.selected = 0;
@@ -37,7 +38,7 @@ namespace thegame
             (execute as Menu).AddElements("Options");
             (execute as Menu).AddElements("Quit");
             MediaPlayer.Play(Textures.openingSound_Effect);
-
+            this.game = game;
         }
 
     
@@ -69,6 +70,12 @@ namespace thegame
                                 this.selected++;
                                 Execute();
                                 Thread.Sleep(150);
+                            }
+                            break;
+                        case 2:
+                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Go to options settings */
+                            {
+                                game.Exit();
                             }
                             break;
                         default:
