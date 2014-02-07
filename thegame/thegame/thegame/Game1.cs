@@ -84,7 +84,7 @@ namespace thegame
                 spriteBatch.Begin();
                 instancesobject.Display(spriteBatch);
                 plateforme1.Draw(spriteBatch, new Vector2(300,300));
-                FrameRate.Draw(spriteBatch, "FPS : " + frameRate.ToString() , new Vector2(10, 10), Color.Black);
+                FrameRate.Draw(spriteBatch, "FPS : " + frameRate.ToString() , new Vector2(10, 10), Color.Black, "normal");
                 spriteBatch.End();
             }
             else

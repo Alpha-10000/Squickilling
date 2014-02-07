@@ -8,6 +8,7 @@ using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using System.Data.SqlClient;
 
 namespace thegame
 {
@@ -26,19 +27,33 @@ namespace thegame
         public object execute { get; private set; }
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
+        private List<string> Text_Game;
+
+        private void GetText(string language)
+        {
+            if (language == "english")
+            {
+                Text_Game = new List<string> { "Play Game", "Options", "Quit", "Language", "Full screen", "Back", "English", "French" };
+            }
+            else
+            {
+                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langage", "Plein écran", "Retour", "Anglais", "Français" };
+            }
+        }
 
         public Instances(Game1 game)
         {
             this.type = instances_type.Menu;
             this.selected = 0;
-
+            GetText("english");
             /* Execute by default when loading for the first time */
-            execute = new Menu(3);
-            (execute as Menu).AddElements("Play Game");
-            (execute as Menu).AddElements("Options");
-            (execute as Menu).AddElements("Quit");
+            execute = new Menu(3, "Squickilling");
+            (execute as Menu).AddElements(Text_Game[0]);
+            (execute as Menu).AddElements(Text_Game[1]);
+            (execute as Menu).AddElements(Text_Game[2]);
             MediaPlayer.Play(Textures.openingSound_Effect);
             this.game = game;
+            
         }
 
     
@@ -86,6 +101,14 @@ namespace thegame
                 {
                     switch ((execute as Menu).selected) /* Go back to main Menu */
                     {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter))
+                            {
+                                this.selected = 3;
+                                Execute();
+                                Thread.Sleep(150);
+                            }
+                            break;
                         case 2:
                             if (keyboardState.IsKeyDown(Keys.Enter))
                             {
@@ -98,7 +121,34 @@ namespace thegame
                             break;
                     }
                 }
-               
+                else if (selected == 3)
+                {
+                    
+                    switch ((execute as Menu).selected) /* Go back to main Menu */
+                    {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter))
+                            {
+                                GetText("english");
+                                this.selected = 0;
+                                Execute();
+                                Thread.Sleep(150);
+                            }
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter))
+                            {
+                                GetText("french");
+                                this.selected = 0;
+                                Execute();
+                                Thread.Sleep(150);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                }
             }
             else
             {
@@ -114,23 +164,29 @@ namespace thegame
             {
                 case 0: /* Create main menu */
                     Textures.buttonSound_Effect.Play();
-                    execute = new Menu(3);
-            (execute as Menu).AddElements("Play Game");
-            (execute as Menu).AddElements("Options");
-            (execute as Menu).AddElements("Quit");
+                    execute = new Menu(3, "Squickilling");
+            (execute as Menu).AddElements(Text_Game[0]);
+            (execute as Menu).AddElements(Text_Game[1]);
+            (execute as Menu).AddElements(Text_Game[2]);
             
                     break;
                 case 1: /* Create option menu */
                     Textures.buttonSound_Effect.Play();
-                    execute = new Menu(3);
-                    (execute as Menu).AddElements("Language");
-                    (execute as Menu).AddElements("Full screen");
-                    (execute as Menu).AddElements("Back");
+                    execute = new Menu(3, Text_Game[1]);
+            (execute as Menu).AddElements(Text_Game[3]);
+            (execute as Menu).AddElements(Text_Game[4]);
+            (execute as Menu).AddElements(Text_Game[5]);
    
                     break;
                 case 2: /* Start the game */
                     Textures.buttonSound_Effect.Play();
                     execute = new Perso(new Vector2(0, 300));
+                    break;
+                case 3: /* Start the game */
+                    Textures.buttonSound_Effect.Play();
+                    execute = new Menu(2, Text_Game[3]);
+            (execute as Menu).AddElements(Text_Game[6]);
+            (execute as Menu).AddElements(Text_Game[7]);
                     break;
                 default:
                     break;

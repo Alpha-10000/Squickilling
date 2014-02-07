@@ -14,6 +14,7 @@ namespace thegame
         public static Texture2D plateform_texture;
         public static Texture2D mario_texture;
         public static  SpriteFont font_texture;
+        public static SpriteFont fontTitle_texture;
         public static Song openingSound_Effect;
         public static SoundEffect buttonSound_Effect;
 
@@ -22,6 +23,7 @@ namespace thegame
             plateform_texture = cm.Load<Texture2D>(@"plateforme");
             mario_texture = cm.Load<Texture2D>(@"mario");
             font_texture = cm.Load<SpriteFont>(@"FPS");
+            fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             openingSound_Effect = cm.Load<Song>("audio\\opening");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
         }

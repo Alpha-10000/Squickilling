@@ -18,6 +18,7 @@ namespace thegame
     {
         public Texture2D image;
         public SpriteFont _font;
+        public SpriteFont _fontTitle;
 
         public Drawable(drawable_type drawable_t)
         {
@@ -28,6 +29,7 @@ namespace thegame
                     break;
                 case drawable_type.font:
                     _font = Textures.font_texture;
+                    _fontTitle = Textures.fontTitle_texture;
                     break;
                 default:
                     image = null;
@@ -41,9 +43,17 @@ namespace thegame
         {
             sb.Draw(image, pos, Color.White);
         }
-        public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color) /* To show text */
+        public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color, string Type) /* To show text */
         {
-            sb.DrawString(_font, text, pos, color);
+            
+            if (Type == "normal")
+            {
+                sb.DrawString(_font, text, pos, color);
+            }
+            else
+            {
+                sb.DrawString(_fontTitle, text, pos, color);
+            }
         }
     }
 }

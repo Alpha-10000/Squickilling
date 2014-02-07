@@ -16,15 +16,16 @@ namespace thegame
     public class Menu : Drawable
     {
         public bool MenuBool = true;
-     
         public string[] tab { get; private set; }
         public int size { get; private set; }
         public int pos_tab { get; private set; }
         public Color[] color_tab { get; private set; }
         public int selected { get; set; }
         public Color defaultColor { get; private set; }
+        public string Text { get; private set; }
 
-        public Menu(int size) : base(drawable_type.font)
+        public Menu(int size, string Text)
+            : base(drawable_type.font)
         {
             this.size = size;
             tab = new string[this.size];
@@ -32,6 +33,7 @@ namespace thegame
             this.selected = 0;
             color_tab = new Color[this.size];
             this.defaultColor = Color.Black;
+            this.Text = Text;
         }
 
         public void AddElements(string Text)
@@ -56,11 +58,13 @@ namespace thegame
             int y = 0;
             while (i < this.pos_tab && tab[i] != null)
             {
-                this.Draw(sb, tab[i], new Vector2(100 + x, 200 + y), color_tab[i]);
+                this.Draw(sb, tab[i], new Vector2(100 + x, 200 + y), color_tab[i], "normal");
                 x = 70 + x;
                 y = 60 + y;
                 i++;
             }
+
+            this.Draw(sb, Text, new Vector2(50, 60), Color.Black, "titre");
         }
 
         public void Update(GameTime gametime, KeyboardState keyboardState)
