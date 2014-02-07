@@ -63,6 +63,35 @@ namespace thegame
             }
         }
 
+        public void Update(GameTime gametime, KeyboardState keyboardState)
+        {
+            if (keyboardState.IsKeyDown(Keys.Down))
+            {
+                if (this.selected < this.color_tab.Length - 1)
+                {
+                    this.selected++;
+                    this.color_tab[this.selected] = Color.Blue;
+                    this.color_tab[this.selected - 1] = this.defaultColor;
+                    Textures.buttonSound_Effect.Play();
+                    Thread.Sleep(100);
+                }
+
+            }
+            if (keyboardState.IsKeyDown(Keys.Up))
+            {
+                if (this.selected >= 1)
+                {
+                    this.color_tab[this.selected] = this.defaultColor;
+                    this.selected--;
+                    this.color_tab[this.selected] = Color.Blue;
+                    Textures.buttonSound_Effect.Play();
+                    Thread.Sleep(100);
+
+                }
+
+            }
+        }
+
         
 
        

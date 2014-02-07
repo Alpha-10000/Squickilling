@@ -38,6 +38,7 @@ namespace thegame
         {
             
             frameRate = 0;
+
             base.Initialize();
         }
 
@@ -46,6 +47,7 @@ namespace thegame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Textures.load(Content);
+            
             FrameRate = new Drawable(drawable_type.font);
             plateforme1 = new Plateforme(drawable_type.Plateform_default ,new Vector2(300, 300));
             plateforme1.LoadContent(Content, "plateforme");

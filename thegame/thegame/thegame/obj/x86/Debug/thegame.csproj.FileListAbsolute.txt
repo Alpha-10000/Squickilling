@@ -32,3 +32,8 @@ C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thega
 C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe
 C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.pdb
+C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb
+C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma
+C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.mp3
+C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb
+C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.wav

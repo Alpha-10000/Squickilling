@@ -28,6 +28,25 @@
       <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
       <Time>2014-02-06T01:51:11.6952789+01:00</Time>
     </Item>
+    <Item>
+      <Source>audio\opening.mp3</Source>
+      <Name>audio\opening</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb</Output>
+      <Extra>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma</Extra>
+      <Time>2014-02-07T17:08:45.590126+01:00</Time>
+    </Item>
+    <Item>
+      <Source>audio\button.wav</Source>
+      <Name>audio\button</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb</Output>
+      <Time>2014-02-07T17:44:29.5438084+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

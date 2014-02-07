@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
@@ -22,16 +24,20 @@ namespace thegame
         public instances_type type { get; private set; }
         public object execute { get; private set; }
         public int selected { get; private set; }
+        public SoundEffect sound { get; private set; }
 
         public Instances()
         {
             this.type = instances_type.Menu;
             this.selected = 0;
 
+            /* Execute by default when loading for the first time */
             execute = new Menu(3);
             (execute as Menu).AddElements("Play Game");
             (execute as Menu).AddElements("Options");
             (execute as Menu).AddElements("Quit");
+            MediaPlayer.Play(Textures.openingSound_Effect);
+
         }
 
     
@@ -40,78 +46,56 @@ namespace thegame
         {
             keyboardState = Keyboard.GetState();
 
-            if (this.selected == 0)
+            if (type == instances_type.Menu)
             {
-                switch ((execute as Menu).selected)
+                (execute as Menu).Update(gametime, keyboardState); /* For the design */
+                if (this.selected == 0)
                 {
-                    case 0:
-                        if (keyboardState.IsKeyDown(Keys.Enter)) /* Start the game */
-                        {
-                            (execute as Menu).MenuBool = false;
-                            this.type = instances_type.Game;
-                            this.selected = 2;
-                            Execute();
-                            Thread.Sleep(100);
-                        }
-                        break;
-                    case 1:
-                        if (keyboardState.IsKeyDown(Keys.Enter)) /* Go to options settings */
-                        {
-                            this.selected++;
-                            Execute();
-                            Thread.Sleep(100);
-                        }
-                        break;
-                    default:
-                        break;
+                    switch ((execute as Menu).selected)
+                    {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Start the game */
+                            {
+                                (execute as Menu).MenuBool = false;
+                                this.type = instances_type.Game;
+                                this.selected = 2;
+                                Execute();
+                                Thread.Sleep(150);
+                            }
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Go to options settings */
+                            {
+                                this.selected++;
+                                Execute();
+                                Thread.Sleep(150);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            else if (selected == 1)
-            {
-                switch ((execute as Menu).selected) /* Go back to main Menu */
+                else if (selected == 1)
                 {
-                    case 2:
-                        if (keyboardState.IsKeyDown(Keys.Enter))
-                        {
-                            this.selected--;
-                            Execute();
-                            Thread.Sleep(100);
-                        }
-                        break;
-                    default:
-                        break;
+                    switch ((execute as Menu).selected) /* Go back to main Menu */
+                    {
+                        case 2:
+                            if (keyboardState.IsKeyDown(Keys.Enter))
+                            {
+                                this.selected--;
+                                Execute();
+                                Thread.Sleep(150);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
+               
             }
             else
             {
                 (execute as Perso).Update(gametime);
-            }
-
-            if(type == instances_type.Menu)
-            {
-                if (keyboardState.IsKeyDown(Keys.Down))
-                {
-                    if ((execute as Menu).selected < (execute as Menu).color_tab.Length - 1)
-                    {
-                        (execute as Menu).selected++;
-                        (execute as Menu).color_tab[(execute as Menu).selected] = Color.Blue;
-                        (execute as Menu).color_tab[(execute as Menu).selected - 1] = (execute as Menu).defaultColor;
-                        Thread.Sleep(100);
-                    }
-
-                }
-                if (keyboardState.IsKeyDown(Keys.Up))
-                {
-                    if ((execute as Menu).selected >= 1)
-                    {
-                        (execute as Menu).color_tab[(execute as Menu).selected] = (execute as Menu).defaultColor;
-                        (execute as Menu).selected--;
-                        (execute as Menu).color_tab[(execute as Menu).selected] = Color.Blue;
-                        Thread.Sleep(100);
-
-                    }
-
-                }
             }
 
         }
@@ -122,6 +106,7 @@ namespace thegame
             switch (this.selected)
             {
                 case 0: /* Create main menu */
+                    Textures.buttonSound_Effect.Play();
                     execute = new Menu(3);
             (execute as Menu).AddElements("Play Game");
             (execute as Menu).AddElements("Options");
@@ -129,6 +114,7 @@ namespace thegame
             
                     break;
                 case 1: /* Create option menu */
+                    Textures.buttonSound_Effect.Play();
                     execute = new Menu(3);
                     (execute as Menu).AddElements("Language");
                     (execute as Menu).AddElements("Full screen");
@@ -136,6 +122,7 @@ namespace thegame
    
                     break;
                 case 2: /* Start the game */
+                    Textures.buttonSound_Effect.Play();
                     execute = new Perso(new Vector2(0, 300));
                     break;
                 default:
