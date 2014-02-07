@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace thegame
 {
@@ -31,6 +32,7 @@ namespace thegame
 
         private void GetText(string language)
         {
+            CultureInfo ci = CultureInfo.InstalledUICulture;
             if (language == "english")
             {
                 Text_Game = new List<string> { "Play Game", "Options", "Quit", "Language", "Full screen", "Back", "English", "French" };
@@ -45,7 +47,14 @@ namespace thegame
         {
             this.type = instances_type.Menu;
             this.selected = 0;
-            GetText("english");
+            if(CultureInfo.InstalledUICulture.ToString() == "fr-FR")
+            {
+            GetText("french");
+            }
+            else{
+                GetText("english");
+            }
+
             /* Execute by default when loading for the first time */
             execute = new Menu(3, "Squickilling");
             (execute as Menu).AddElements(Text_Game[0]);
