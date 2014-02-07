@@ -1,9 +1,9 @@
 Content\mario.xnb
-Content\plateforme.xnb
 Content\FPS.xnb
+Content\plateforme.xnb
+Content\Title.xnb
 Content\audio\opening.xnb
 Content\audio\opening.wma
 Content\audio\button.xnb
-Content\Title.xnb
 Content\audio\opening.mp3
 Content\audio\button.wav

@@ -39,7 +39,7 @@ namespace thegame
             }
             else
             {
-                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langage", "Plein écran", "Retour", "Anglais", "Français" };
+                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langue", "Plein écran", "Retour", "Anglais", "Français" };
             }
         }
 
@@ -76,6 +76,11 @@ namespace thegame
                 (execute as Menu).Update(gametime, keyboardState); /* For the design */
                 if (this.selected == 0)
                 {
+                    if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
+                    {
+                        game.Exit();
+                    }
+
                     switch ((execute as Menu).selected)
                     {
                         case 0:
@@ -97,7 +102,7 @@ namespace thegame
                             }
                             break;
                         case 2:
-                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Go to options settings */
+                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Exit the game */
                             {
                                 game.Exit();
                             }
