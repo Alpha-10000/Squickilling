@@ -29,6 +29,9 @@ namespace thegame
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
         private List<string> Text_Game;
+        private Vector2[] coordPlateforme;
+        private string[] typePlateforme;
+        private SoundEffectInstance instancesound;
 
         private void GetText(string language)
         {
@@ -54,7 +57,8 @@ namespace thegame
             else{
                 GetText("english");
             }
-
+            instancesound = Textures.gameSound_Effect.CreateInstance();
+            instancesound.IsLooped = true;
             /* Execute by default when loading for the first time */
             execute = new Menu(3, "Squickilling");
             (execute as Menu).AddElements(Text_Game[0]);
@@ -172,6 +176,7 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                 {
                     this.selected = 0;
+                    instancesound.Stop();
                     this.type = instances_type.Menu;
                     Execute();
                     Thread.Sleep(150);
@@ -204,6 +209,9 @@ namespace thegame
                     break;
                 case 2: /* Start the game */
                     Textures.buttonSound_Effect.Play();
+                    instancesound.Play();
+                    coordPlateforme = new Vector2[4] { new Vector2(300, 300), new Vector2(380, 250), new Vector2(450, 200), new Vector2(20, 350) };
+                    typePlateforme = new string[4] { "plateforme", "plateforme", "buche", "buche" };
                     execute = new Perso(new Vector2(0, 300));
                     break;
                 case 3: /* Start the game */
@@ -225,7 +233,17 @@ namespace thegame
             }
             else
             {
-
+                for (int i = 0; i < coordPlateforme.Length; i++)
+                {
+                    if (typePlateforme[i] == "plateforme")
+                    {
+                        new Plateforme(drawable_type.Plateform_default, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
+                    }
+                    else
+                    {
+                        new Plateforme(drawable_type.buche, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
+                    } 
+                }
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
             }
         }

@@ -22,7 +22,6 @@ namespace thegame
         float frameRate;
         private SpriteFont _font;
         public Drawable FrameRate;
-        Plateforme plateforme1;
         public  Instances instancesobject;
 
         public Game1()
@@ -49,8 +48,8 @@ namespace thegame
             Textures.load(Content);
             
             FrameRate = new Drawable(drawable_type.font);
-            plateforme1 = new Plateforme(drawable_type.Plateform_default ,new Vector2(300, 300));
-            plateforme1.LoadContent(Content, "plateforme");
+            
+
             _font = Content.Load<SpriteFont>("FPS");
             instancesobject = new Instances(this);
         }
@@ -80,10 +79,10 @@ namespace thegame
 
             if (instancesobject.type == instances_type.Game)
             {
-                GraphicsDevice.Clear(Color.CornflowerBlue);
+                GraphicsDevice.Clear(Color.ForestGreen);
                 spriteBatch.Begin();
                 instancesobject.Display(spriteBatch);
-                plateforme1.Draw(spriteBatch, new Vector2(300,300));
+                
                 FrameRate.Draw(spriteBatch, "FPS : " + frameRate.ToString() , new Vector2(10, 10), Color.Black, "normal");
                 spriteBatch.End();
             }

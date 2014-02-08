@@ -10,6 +10,7 @@ namespace thegame
     public enum drawable_type
     {
         Plateform_default,
+        buche,
         font
     }
 
@@ -26,6 +27,9 @@ namespace thegame
             {
                 case drawable_type.Plateform_default:
                     image = Textures.plateform_texture;
+                    break;
+                case drawable_type.buche:
+                    image = Textures.buche_texture;
                     break;
                 case drawable_type.font:
                     _font = Textures.font_texture;

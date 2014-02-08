@@ -56,6 +56,24 @@
       <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb</Output>
       <Time>2014-02-07T20:06:37.7137854+01:00</Time>
     </Item>
+    <Item>
+      <Source>audio\game.wav</Source>
+      <Name>audio\game</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb</Output>
+      <Time>2014-02-08T18:51:30.2266803+01:00</Time>
+    </Item>
+    <Item>
+      <Source>buche.png</Source>
+      <Name>buche</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\buche.xnb</Output>
+      <Time>2014-02-08T19:10:52.0709718+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
