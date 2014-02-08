@@ -71,15 +71,17 @@ namespace thegame
         {
             keyboardState = Keyboard.GetState();
 
+            if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
+            {
+                game.Exit();
+            }
+
             if (type == instances_type.Menu)
             {
                 (execute as Menu).Update(gametime, keyboardState); /* For the design */
                 if (this.selected == 0)
                 {
-                    if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
-                    {
-                        game.Exit();
-                    }
+                    
 
                     switch ((execute as Menu).selected)
                     {
@@ -167,6 +169,14 @@ namespace thegame
             else
             {
                 (execute as Perso).Update(gametime);
+                if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
+                {
+                    this.selected = 0;
+                    this.type = instances_type.Menu;
+                    Execute();
+                    Thread.Sleep(150);
+                }
+       
             }
 
         }
@@ -215,6 +225,7 @@ namespace thegame
             }
             else
             {
+
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
             }
         }
