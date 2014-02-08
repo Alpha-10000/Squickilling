@@ -210,8 +210,8 @@ namespace thegame
                 case 2: /* Start the game */
                     Textures.buttonSound_Effect.Play();
                     instancesound.Play();
-                    coordPlateforme = new Vector2[4] { new Vector2(300, 300), new Vector2(380, 250), new Vector2(450, 200), new Vector2(20, 350) };
-                    typePlateforme = new string[4] { "plateforme", "plateforme", "buche", "buche" };
+                    coordPlateforme = new Vector2[4] { new Vector2(300, 300), new Vector2(380, 250), new Vector2(450, 200), new Vector2(-100, 0) };
+                    typePlateforme = new string[4] { "plateforme", "plateforme", "buche", "tree" };
                     execute = new Perso(new Vector2(0, 300));
                     break;
                 case 3: /* Start the game */
@@ -239,10 +239,14 @@ namespace thegame
                     {
                         new Plateforme(drawable_type.Plateform_default, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
                     }
-                    else
+                    else if (typePlateforme[i] == "buche")
                     {
                         new Plateforme(drawable_type.buche, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
-                    } 
+                    }
+                    else
+                    {
+                        new Plateforme(drawable_type.tree, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
+                    }
                 }
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
             }

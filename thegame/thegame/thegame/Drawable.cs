@@ -11,6 +11,7 @@ namespace thegame
     {
         Plateform_default,
         buche,
+        tree,
         font
     }
 
@@ -30,6 +31,9 @@ namespace thegame
                     break;
                 case drawable_type.buche:
                     image = Textures.buche_texture;
+                    break;
+                case drawable_type.tree:
+                    image = Textures.tree_texture;
                     break;
                 case drawable_type.font:
                     _font = Textures.font_texture;

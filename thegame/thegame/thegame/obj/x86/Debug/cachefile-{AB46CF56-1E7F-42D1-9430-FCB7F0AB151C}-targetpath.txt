@@ -7,6 +7,7 @@ Content\audio\button.xnb
 Content\Title.xnb
 Content\audio\game.xnb
 Content\buche.xnb
+Content\tree.xnb
 Content\audio\opening.mp3
 Content\audio\button.wav
 Content\buche.png
