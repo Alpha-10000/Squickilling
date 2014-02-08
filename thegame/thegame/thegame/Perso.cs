@@ -36,7 +36,7 @@ namespace thegame
 
         public Perso(Vector2 pos)
         {
-            animationPerso = new Animation(positionPerso, new Vector2(3, 2));
+            animationPerso = new Animation(positionPerso, new Vector2(8, 2));
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
             speed = 100f;

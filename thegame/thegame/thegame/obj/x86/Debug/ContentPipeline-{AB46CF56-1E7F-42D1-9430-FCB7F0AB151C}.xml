@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb</Output>
-      <Time>2014-01-19T18:09:35.7573959+01:00</Time>
+      <Time>2014-02-08T20:04:52.1201847+01:00</Time>
     </Item>
     <Item>
       <Source>FPS.spritefont</Source>
@@ -55,6 +55,33 @@
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb</Output>
       <Time>2014-02-07T20:40:49.0614553+01:00</Time>
+    </Item>
+    <Item>
+      <Source>buche.png</Source>
+      <Name>buche</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\buche.xnb</Output>
+      <Time>2014-02-08T19:54:13.8249147+01:00</Time>
+    </Item>
+    <Item>
+      <Source>tree.png</Source>
+      <Name>tree</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb</Output>
+      <Time>2014-02-08T19:54:13.9549288+01:00</Time>
+    </Item>
+    <Item>
+      <Source>audio\game.wav</Source>
+      <Name>audio\game</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb</Output>
+      <Time>2014-02-08T19:54:13.8179114+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
