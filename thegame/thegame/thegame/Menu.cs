@@ -67,9 +67,9 @@ namespace thegame
             this.Draw(sb, Text, new Vector2(50, 60), Color.Black, "titre");
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey)
         {
-            if (keyboardState.IsKeyDown(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.Down) && !oldkey.IsKeyDown(Keys.Down))
             {
                 if (this.selected < this.color_tab.Length - 1)
                 {
@@ -77,11 +77,10 @@ namespace thegame
                     this.color_tab[this.selected] = Color.Blue;
                     this.color_tab[this.selected - 1] = this.defaultColor;
                     Textures.buttonSound_Effect.Play();
-                    Thread.Sleep(100);
                 }
 
             }
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
             {
                 if (this.selected >= 1)
                 {
@@ -89,8 +88,6 @@ namespace thegame
                     this.selected--;
                     this.color_tab[this.selected] = Color.Blue;
                     Textures.buttonSound_Effect.Play();
-                    Thread.Sleep(100);
-
                 }
 
             }

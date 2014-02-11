@@ -24,14 +24,28 @@ namespace thegame
     {
         public Game1 game { get; private set; }
         KeyboardState keyboardState;
+        KeyboardState oldkey;
         public instances_type type { get; private set; }
         public object execute { get; private set; }
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
         private List<string> Text_Game;
-        private Vector2[] coordPlateforme;
-        private string[] typePlateforme;
         private SoundEffectInstance instancesound;
+
+        private int[,] tilemap;
+        public List<Rectangle> blocks;
+        public List<Rectangle> blocksTop;
+        public List<Rectangle> blocksLeft;
+        public List<Rectangle> blocksRight;
+        public List<Rectangle> tile;
+
+        private bool movedown;
+        private bool moveleft;
+        private bool moveright;
+
+         private List<Texture2D>   texlis;
+            private int mapSizeX;
+           private int mapSizeY;
 
         private void GetText(string language)
         {
@@ -66,13 +80,17 @@ namespace thegame
             (execute as Menu).AddElements(Text_Game[2]);
             MediaPlayer.Play(Textures.openingSound_Effect);
             this.game = game;
-            
+
+            movedown = true;
+            moveleft = true;
+            moveright = true;
         }
 
     
 
         public void UpdateByKey(GameTime gametime)
         {
+            oldkey = keyboardState;
             keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
@@ -82,7 +100,7 @@ namespace thegame
 
             if (type == instances_type.Menu)
             {
-                (execute as Menu).Update(gametime, keyboardState); /* For the design */
+                (execute as Menu).Update(gametime, keyboardState, oldkey); /* For the design */
                 if (this.selected == 0)
                 {
                     
@@ -172,13 +190,36 @@ namespace thegame
             }
             else
             {
-               /*  if((execute as Perso).hitBoxPerso.Intersects(truc) */
-              /*   foreach((execute as Perso) in ...
+                movedown = true;
+                moveleft = true;
+                moveright = true;
+                foreach (Rectangle top in blocksTop)
                 {
-                  if (execute as Perso).hitBoxPerso.Intersects(
-            
-                 } */
-                (execute as Perso).Update(gametime);
+                    if (top.Intersects((execute as Perso).hitBoxPerso))
+                    {
+                        movedown = false;
+                    }
+                }
+
+                foreach (Rectangle left in blocksLeft)
+                {
+                    if (left.Intersects((execute as Perso).hitBoxPerso))
+                    {
+                        moveleft = false;
+                    }
+                }
+
+                foreach (Rectangle right in blocksRight)
+                {
+                    if (right.Intersects((execute as Perso).hitBoxPerso))
+                    {
+                        moveright = false;
+                    }
+                }
+
+                
+                    (execute as Perso).Update(gametime, keyboardState, oldkey, movedown, moveleft, moveright);
+
                 if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                 {
                     this.selected = 0;
@@ -216,10 +257,62 @@ namespace thegame
                 case 2: /* Start the game */
                     Textures.buttonSound_Effect.Play();
                     instancesound.Play();
-                    coordPlateforme = new Vector2[4] { new Vector2(300, 300), new Vector2(380, 250), new Vector2(450, 200), new Vector2(-100, 0) };
-                    typePlateforme = new string[4] { "plateforme", "plateforme", "buche", "tree" };
-                    execute = new Perso(new Vector2(0, 300));
-                    
+                    tilemap = new int[,]
+                        {
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        };
+
+              
+            texlis = new List<Texture2D>();
+            mapSizeX = tilemap.GetLength(1);
+            mapSizeY = tilemap.GetLength(0);
+                    blocks = new List<Rectangle>();
+            blocksTop = new List<Rectangle>();
+            blocksLeft = new List<Rectangle>();
+            blocksRight = new List<Rectangle>();
+                    tile = new List<Rectangle>();
+
+                    for (int x = 0; x < mapSizeX; x++)
+            {
+                for (int y = 0; y < mapSizeY; y++)
+                {
+                    if (tilemap[y, x] == 1)
+                    {
+                        blocks.Add(new Rectangle(x * 65, y * 8 + 260, 65, 8));
+
+                    }
+                }
+            }
+
+            foreach (Rectangle block in blocks)
+            {
+                blocksTop.Add(new Rectangle(block.X , block.Y , 65 , 8));
+            }
+            foreach (Rectangle block in blocks)
+            {
+                blocksRight.Add(new Rectangle(block.Left, block.Y + 2, 1  , block.Height));
+            }
+            foreach (Rectangle block in blocks)
+            {
+                blocksLeft.Add(new Rectangle(block.Right, block.Y + 2, 1 , block.Height));
+            }
+
+
+       
+
+                   
+                    execute = new Perso(new Vector2(0, 0));
+                    movedown = true;
+                    moveright = true;
+                    moveleft = true;
                     break;
                 case 3: /* Start the game */
                     Textures.buttonSound_Effect.Play();
@@ -240,21 +333,26 @@ namespace thegame
             }
             else
             {
-                for (int i = 0; i < coordPlateforme.Length; i++)
+
+               /* for (int i = 0; i < mapSizeX; i++)
                 {
-                    if (typePlateforme[i] == "plateforme")
+                    for (int j = 0; j < mapSizeY; j++)
                     {
-                        new Plateforme(drawable_type.Plateform_default, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
+                        if (tilemap[j, i] == 1)
+                            sb.Draw(Textures.plateform_texture, new Rectangle(i * 65, j * 8 + 260, 65, 8), Color.White);
+
                     }
-                    else if (typePlateforme[i] == "buche")
-                    {
-                        new Plateforme(drawable_type.buche, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
-                    }
-                    else
-                    {
-                        new Plateforme(drawable_type.tree, coordPlateforme[i]).Draw(sb, coordPlateforme[i]);
-                    }
+
+                    
+                }*/
+
+                foreach (Rectangle top in blocks)
+                {
+                    sb.Draw(Textures.plateform_texture, top , Color.White);
                 }
+
+       
+               
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
             }
         }

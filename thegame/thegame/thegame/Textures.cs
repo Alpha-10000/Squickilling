@@ -12,6 +12,7 @@ namespace thegame
     class Textures
     {
         public static Texture2D plateform_texture;
+        public static Texture2D hitbox;
         public static Texture2D mario_texture;
         public static Texture2D buche_texture;
         public static Texture2D tree_texture;
@@ -26,6 +27,7 @@ namespace thegame
             plateform_texture = cm.Load<Texture2D>(@"plateforme");
             mario_texture = cm.Load<Texture2D>(@"mario");
             buche_texture = cm.Load<Texture2D>(@"buche");
+            hitbox = cm.Load<Texture2D>(@"blank");
             tree_texture = cm.Load<Texture2D>(@"tree");
             font_texture = cm.Load<SpriteFont>(@"FPS");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");

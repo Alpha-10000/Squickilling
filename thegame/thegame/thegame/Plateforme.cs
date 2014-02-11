@@ -15,7 +15,7 @@ namespace thegame
     class Plateforme : Drawable
     {
         Vector2 positionPlatform;
-        public Rectangle hitBoxPlatform;
+       // Rectangle hitBoxPlatform;
 
         protected Texture2D imagePlatform;
         public Texture2D ImagePlatform { get; private set; }
@@ -30,7 +30,7 @@ namespace thegame
         {
 
             imagePlatform = Content.Load<Texture2D>(assetName);
-            Rectangle hitBoxPlatform = new Rectangle((int)(positionPlatform.X - imagePlatform.Width / 2), (int)(positionPlatform.Y - imagePlatform.Height / 2), imagePlatform.Width, imagePlatform.Height);
+            Rectangle hitBoxPerso = new Rectangle((int)(positionPlatform.X - imagePlatform.Width / 2), (int)(positionPlatform.Y - imagePlatform.Height / 2), imagePlatform.Width, imagePlatform.Height);
         }
 
      

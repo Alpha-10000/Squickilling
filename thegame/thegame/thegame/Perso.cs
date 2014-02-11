@@ -16,13 +16,12 @@ namespace thegame
     {
 
         Vector2 positionPerso, tempCurrentFrame;
-        KeyboardState keyboardState;
       //  Vector2 velocity;
       //  float gravity = 0.1f;
         public Rectangle hitBoxPerso;
-        public Rectangle HitboxPerso { get; private set; }
 
         float sol, jumpspeed = 0;
+        float positionTop;
         bool jumping;
         protected Texture2D imagePerso { get; private set; }
 
@@ -51,32 +50,36 @@ namespace thegame
             animationPerso.AnimationSprite = Textures.mario_texture;
             animationPerso.Position = positionPerso;
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
-
         }
 
-        public void Update(GameTime gametime)
+        public void Update(GameTime gametime, KeyboardState keyboardState , KeyboardState oldkey, bool movedown, bool moveleft, bool moveright)
         {
-            keyboardState = Keyboard.GetState();
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
             if (jumping)
             {
-                positionPerso.Y += jumpspeed;
-                jumpspeed += 1;
-                if (positionPerso.Y >= sol)
+                float positioninitiale = positionPerso.Y;
+                
+                if (positionPerso.Y > positionTop)
                 {
-                    positionPerso.Y = sol;
+                    positionPerso.Y -= 5;
+                }
+                else
+                {
                     jumping = false;
                 }
+              
             }
 
             else
             {
-                if (keyboardState.IsKeyDown(Keys.Space))
+                if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space) && jumping == false)
                 {
                     jumping = true;
-                    jumpspeed = -18;
+                    positionTop = positionPerso.Y - 50;
                 }
+                if (movedown)
+                    positionPerso.Y += 5;
             }
           /*  velocity.Y += gravity;
             positionPerso.X += velocity.X;
@@ -86,40 +89,38 @@ namespace thegame
                 gravity = 0.4f;
             }*/
 
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.Right) && moveright)
             {
                 tempCurrentFrame.Y = 0;
                 positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
-            else if (keyboardState.IsKeyDown(Keys.Left))
+            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft)
             {
                 tempCurrentFrame.Y = 1;
                 positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
-            else if (keyboardState.IsKeyDown(Keys.Up))
-            {
-                // tempCurrentFrame.Y = 0; 
-                positionPerso.Y -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-            }
-            else if (keyboardState.IsKeyDown(Keys.Down))
+            
+           /* else if (keyboardState.IsKeyDown(Keys.Down) && movedown)
             {
                 // tempCurrentFrame.Y = 1; /*Pour se baisser, placer les lignes de sprites respectivement en dessous de celles correspondant à la direction en cours. Et faire ".Y+1".
                 positionPerso.Y += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-            }
+            }*/
             else
                 animationPerso.Actif = false;
+
+            
 
             tempCurrentFrame.X = animationPerso.CurrentFrame.X;
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
-            hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
-            
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 23, 28);
         }
         public  void Draw(SpriteBatch spriteBatch)
         {
             // spriteBatch.Draw(imagePerso, positionPerso, new Rectangle(0, 0, imagePerso.Width / 3 , imagePerso.Height / 2), Color.White);
             animationPerso.Draw(spriteBatch);
+            
         }
     }
 }

@@ -66,7 +66,6 @@ namespace thegame
                 
                 frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
            
-           
                 instancesobject.UpdateByKey(gameTime);
             
            
