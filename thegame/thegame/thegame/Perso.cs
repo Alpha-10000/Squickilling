@@ -20,7 +20,8 @@ namespace thegame
       //  float gravity = 0.1f;
         public Rectangle hitBoxPerso;
 
-        float sol, jumpspeed = 0;
+        public float gravity = 5f;
+        float sol = 380;
         float positionTop;
         bool jumping;
         protected Texture2D imagePerso { get; private set; }
@@ -39,9 +40,8 @@ namespace thegame
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
             speed = 100f;
-            sol = positionPerso.Y;
             jumping = false;
-            jumpspeed = 0;
+ 
 
 
 
@@ -78,8 +78,10 @@ namespace thegame
                     jumping = true;
                     positionTop = positionPerso.Y - 50;
                 }
-                if (movedown)
-                    positionPerso.Y += 5;
+                if (movedown && positionPerso.Y + 1 < sol)
+                    positionPerso.Y += 1 * 3f; /* I put one for a reason! Generates beug otherwise */
+                if(movedown && positionPerso.Y + 5 > sol)
+                    positionPerso.Y = sol;
             }
           /*  velocity.Y += gravity;
             positionPerso.X += velocity.X;
@@ -114,13 +116,13 @@ namespace thegame
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 23, 28);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
         }
         public  void Draw(SpriteBatch spriteBatch)
         {
             // spriteBatch.Draw(imagePerso, positionPerso, new Rectangle(0, 0, imagePerso.Width / 3 , imagePerso.Height / 2), Color.White);
             animationPerso.Draw(spriteBatch);
-            
+           /* spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White); // debug perso hitbox */
         }
     }
 }

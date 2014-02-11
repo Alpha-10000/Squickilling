@@ -24,6 +24,7 @@ namespace thegame
         public Color defaultColor { get; private set; }
         public string Text { get; private set; }
 
+
         public Menu(int size, string Text)
             : base(drawable_type.font)
         {

@@ -31,6 +31,7 @@ namespace thegame
 
             imagePlatform = Content.Load<Texture2D>(assetName);
             Rectangle hitBoxPerso = new Rectangle((int)(positionPlatform.X - imagePlatform.Width / 2), (int)(positionPlatform.Y - imagePlatform.Height / 2), imagePlatform.Width, imagePlatform.Height);
+        
         }
 
      

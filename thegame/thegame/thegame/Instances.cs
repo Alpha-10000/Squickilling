@@ -44,6 +44,8 @@ namespace thegame
         private bool moveright;
         private Drawable tree;
 
+        private Drawable debug;
+
          private List<Texture2D>   texlis;
             private int mapSizeX;
            private int mapSizeY;
@@ -194,11 +196,13 @@ namespace thegame
                 movedown = true;
                 moveleft = true;
                 moveright = true;
+                (execute as Perso).gravity = 5f;
                 foreach (Rectangle top in blocksTop)
                 {
                     if (top.Intersects((execute as Perso).hitBoxPerso))
                     {
                         movedown = false;
+                        (execute as Perso).gravity = 0f;
                     }
                 }
 
@@ -260,14 +264,14 @@ namespace thegame
                     instancesound.Play();
                     tilemap = new int[,]
                         {
-                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,1,0,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
@@ -299,11 +303,11 @@ namespace thegame
             }
             foreach (Rectangle block in blocks)
             {
-                blocksRight.Add(new Rectangle(block.Left, block.Y + 2, 1  , block.Height));
+                blocksRight.Add(new Rectangle(block.X, block.Y + 3, 1  , 8));
             }
             foreach (Rectangle block in blocks)
             {
-                blocksLeft.Add(new Rectangle(block.Right, block.Y + 2, 1 , block.Height));
+                blocksLeft.Add(new Rectangle(block.X + 65, block.Y + 3, 1, 8));
             }
 
 
@@ -314,9 +318,12 @@ namespace thegame
 
                     tree = new Drawable(drawable_type.tree);
 
+
                     movedown = true;
                     moveright = true;
                     moveleft = true;
+
+                    debug = new Drawable(drawable_type.font);
                     break;
                 case 3: /* Start the game */
                     Textures.buttonSound_Effect.Play();
@@ -355,7 +362,17 @@ namespace thegame
                     sb.Draw(Textures.plateform_texture, top , Color.White);
                 }
 
+               /*  foreach (Rectangle top in blocksRight)
+                {
+                    sb.Draw(Textures.hitbox, top, Color.White);
+                } // debug right collision 
                 
+                 foreach (Rectangle top in blocksLeft)
+                 {
+                     sb.Draw(Textures.hitbox, top, Color.Red);
+                 } // debug left collision 
+                */
+                debug.Draw(sb, "Down : " + movedown.ToString() + " left " + moveleft.ToString() + " right " + moveright.ToString(), new Vector2(300, 50), Color.White, "normal");
                
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
                 tree.Draw(sb, new Vector2(-100, 50));
