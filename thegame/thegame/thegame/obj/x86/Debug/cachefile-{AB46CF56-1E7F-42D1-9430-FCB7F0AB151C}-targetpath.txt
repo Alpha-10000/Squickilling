@@ -12,3 +12,4 @@ Content\blank.xnb
 Content\audio\opening.mp3
 Content\audio\button.wav
 Content\buche.png
+Content\tree.png

@@ -42,6 +42,7 @@ namespace thegame
         private bool movedown;
         private bool moveleft;
         private bool moveright;
+        private Drawable tree;
 
          private List<Texture2D>   texlis;
             private int mapSizeX;
@@ -286,7 +287,7 @@ namespace thegame
                 {
                     if (tilemap[y, x] == 1)
                     {
-                        blocks.Add(new Rectangle(x * 65, y * 8 + 260, 65, 8));
+                        blocks.Add(new Rectangle(x * 65, y * 8 + 330, 65, 8));
 
                     }
                 }
@@ -309,7 +310,10 @@ namespace thegame
        
 
                    
-                    execute = new Perso(new Vector2(0, 0));
+                    execute = new Perso(new Vector2(90, 280));
+
+                    tree = new Drawable(drawable_type.tree);
+
                     movedown = true;
                     moveright = true;
                     moveleft = true;
@@ -351,9 +355,10 @@ namespace thegame
                     sb.Draw(Textures.plateform_texture, top , Color.White);
                 }
 
-       
+                
                
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
+                tree.Draw(sb, new Vector2(-100, 50));
             }
         }
 

@@ -102,17 +102,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tree.png">
-      <Name>tree</Name>
+    <Compile Include="blank.bmp">
+      <Name>blank</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="blank.bmp">
-      <Name>blank</Name>
+    <Compile Include="tree.png">
+      <Name>tree</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
