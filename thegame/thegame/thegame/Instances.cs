@@ -38,7 +38,7 @@ namespace thegame
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (language == "english")
             {
-                Text_Game = new List<string> { "Play Game", "Options", "Quit", "Language", "Full screen", "Back", "English", "French" };
+                Text_Game = new List<string> { "Play", "Options", "Exit", "Language", "Full screen", "Back", "English", "French" };
             }
             else
             {
@@ -172,6 +172,12 @@ namespace thegame
             }
             else
             {
+               /*  if((execute as Perso).hitBoxPerso.Intersects(truc) */
+              /*   foreach((execute as Perso) in ...
+                {
+                  if (execute as Perso).hitBoxPerso.Intersects(
+            
+                 } */
                 (execute as Perso).Update(gametime);
                 if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                 {
@@ -213,6 +219,7 @@ namespace thegame
                     coordPlateforme = new Vector2[4] { new Vector2(300, 300), new Vector2(380, 250), new Vector2(450, 200), new Vector2(-100, 0) };
                     typePlateforme = new string[4] { "plateforme", "plateforme", "buche", "tree" };
                     execute = new Perso(new Vector2(0, 300));
+                    
                     break;
                 case 3: /* Start the game */
                     Textures.buttonSound_Effect.Play();

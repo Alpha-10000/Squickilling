@@ -19,7 +19,7 @@ namespace thegame
         KeyboardState keyboardState;
       //  Vector2 velocity;
       //  float gravity = 0.1f;
-        Rectangle hitBoxPerso;
+        public Rectangle hitBoxPerso;
         public Rectangle HitboxPerso { get; private set; }
 
         float sol, jumpspeed = 0;
@@ -51,6 +51,7 @@ namespace thegame
             animationPerso.AnimationSprite = Textures.mario_texture;
             animationPerso.Position = positionPerso;
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
+
         }
 
         public void Update(GameTime gametime)
@@ -113,6 +114,7 @@ namespace thegame
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
+            
         }
         public  void Draw(SpriteBatch spriteBatch)
         {

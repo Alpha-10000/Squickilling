@@ -1,12 +1,12 @@
 Content\mario.xnb
-Content\FPS.xnb
 Content\plateforme.xnb
+Content\buche.xnb
+Content\tree.xnb
+Content\FPS.xnb
 Content\Title.xnb
 Content\audio\opening.xnb
 Content\audio\opening.wma
 Content\audio\button.xnb
-Content\buche.xnb
-Content\tree.xnb
 Content\audio\game.xnb
 Content\audio\opening.mp3
 Content\audio\button.wav

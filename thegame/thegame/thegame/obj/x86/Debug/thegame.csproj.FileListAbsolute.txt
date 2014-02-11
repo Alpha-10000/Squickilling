@@ -52,3 +52,14 @@ C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Con
 C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb
 C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb
 C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\buche.png
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\buche.xnb
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.mp3
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.wav
+C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\buche.png
