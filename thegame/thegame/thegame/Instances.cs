@@ -39,11 +39,10 @@ namespace thegame
         public List<Rectangle> blocksRight;
         public List<Rectangle> tile;
 
-        private bool movedown;
+        private bool SoundIsTrue;
         private bool moveleft;
         private bool moveright;
         private Drawable tree;
-        private float offset;
 
         private Drawable debug;
 
@@ -56,11 +55,11 @@ namespace thegame
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (language == "english")
             {
-                Text_Game = new List<string> { "Play", "Options", "Exit", "Language", "Full screen", "Back", "English", "French" };
+                Text_Game = new List<string> { "Play", "Options", "Exit", "Language", "Full screen", "Back", "English", "French", "Sound", "On", "Off"  };
             }
             else
             {
-                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langue", "Plein écran", "Retour", "Anglais", "Français" };
+                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langue", "Plein écran", "Retour", "Anglais", "Français", "Son", "On", "Off" };
             }
         }
 
@@ -85,7 +84,7 @@ namespace thegame
             MediaPlayer.Play(Textures.openingSound_Effect);
             this.game = game;
 
-            movedown = true;
+            SoundIsTrue = true;
             moveleft = true;
             moveright = true;
         }
@@ -104,33 +103,31 @@ namespace thegame
 
             if (type == instances_type.Menu)
             {
-                (execute as Menu).Update(gametime, keyboardState, oldkey); /* For the design */
+                (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIsTrue); /* For the design */
                 if (this.selected == 0)
                 {
                     
 
                     switch ((execute as Menu).selected)
                     {
-                        case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Start the game */
+                        case 0: /* Start the game */
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) /* Start the game */
                             {
                                 (execute as Menu).MenuBool = false;
                                 this.type = instances_type.Game;
                                 this.selected = 2;
                                 Execute();
-                                Thread.Sleep(150);
                             }
                             break;
-                        case 1:
-                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Go to options settings */
+                        case 1: /* Go to options */
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) /* Go to options settings */
                             {
                                 this.selected++;
                                 Execute();
-                                Thread.Sleep(150);
                             }
                             break;
-                        case 2:
-                            if (keyboardState.IsKeyDown(Keys.Enter)) /* Exit the game */
+                        case 2: /* Exit the game */
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) /* Exit the game */
                             {
                                 game.Exit();
                             }
@@ -139,24 +136,29 @@ namespace thegame
                             break;
                     }
                 }
-                else if (selected == 1)
+                else if (selected == 1) /* Options pannel */
                 {
                     switch ((execute as Menu).selected) /* Go back to main Menu */
                     {
-                        case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter))
+                        case 0: /* langage settings */
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                             {
                                 this.selected = 3;
                                 Execute();
-                                Thread.Sleep(150);
                             }
                             break;
-                        case 2:
-                            if (keyboardState.IsKeyDown(Keys.Enter))
+                        case 2: /* Sound settings */
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                             {
-                                this.selected--;
+                                this.selected = 4;
                                 Execute();
-                                Thread.Sleep(150);
+                            }
+                            break;
+                        case 3: /* Go back button to main menu */
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                            {
+                                this.selected = 0;
+                                Execute();
                             }
                             break;
                         default:
@@ -169,21 +171,19 @@ namespace thegame
                     switch ((execute as Menu).selected) /* Go back to main Menu */
                     {
                         case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter))
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                             {
                                 GetText("english");
                                 this.selected = 0;
                                 Execute();
-                                Thread.Sleep(150);
                             }
                             break;
                         case 1:
-                            if (keyboardState.IsKeyDown(Keys.Enter))
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                             {
                                 GetText("french");
                                 this.selected = 0;
                                 Execute();
-                                Thread.Sleep(150);
                             }
                             break;
                         default:
@@ -191,10 +191,37 @@ namespace thegame
                     }
                     
                 }
+                else if (selected == 4)
+                {
+
+                    switch ((execute as Menu).selected) /* Go back to main Menu */
+                    {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                            {
+                                SoundIsTrue = true;
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                            {
+                                SoundIsTrue = false;
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
             }
+
             else
             {
-                movedown = true;
+  
                 moveleft = true;
                 moveright = true;
            
@@ -238,7 +265,7 @@ namespace thegame
             switch (this.selected)
             {
                 case 0: /* Create main menu */
-                    Textures.buttonSound_Effect.Play();
+                    Sound("menu");
                     execute = new Menu(3, "Squickilling");
             (execute as Menu).AddElements(Text_Game[0]);
             (execute as Menu).AddElements(Text_Game[1]);
@@ -246,16 +273,27 @@ namespace thegame
             
                     break;
                 case 1: /* Create option menu */
-                    Textures.buttonSound_Effect.Play();
-                    execute = new Menu(3, Text_Game[1]);
+                    Sound("menu");
+                    execute = new Menu(4, Text_Game[1]);
             (execute as Menu).AddElements(Text_Game[3]);
             (execute as Menu).AddElements(Text_Game[4]);
+            (execute as Menu).AddElements(Text_Game[8]);
             (execute as Menu).AddElements(Text_Game[5]);
    
                     break;
+
+                case 4: /* Create option menu */
+                    Sound("menu");
+                    execute = new Menu(2, Text_Game[8]);
+                    (execute as Menu).AddElements(Text_Game[9]);
+                    (execute as Menu).AddElements(Text_Game[10]);
+                    
+
+                    break;
+                
                 case 2: /* Start the game */
-                    Textures.buttonSound_Effect.Play();
-                    instancesound.Play();
+                    Sound("menu");
+                    Sound("Game");
                     tilemap = new int[,]
                         {
                             {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -313,20 +351,35 @@ namespace thegame
                     tree = new Drawable(drawable_type.tree);
 
 
-                    movedown = true;
+            
                     moveright = true;
                     moveleft = true;
 
                     debug = new Drawable(drawable_type.font);
                     break;
                 case 3: /* Start the game */
-                    Textures.buttonSound_Effect.Play();
+                    Sound("menu");
                     execute = new Menu(2, Text_Game[3]);
             (execute as Menu).AddElements(Text_Game[6]);
             (execute as Menu).AddElements(Text_Game[7]);
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void Sound(string type)
+        {
+            if (SoundIsTrue)
+            {
+                if (type == "menu")
+                {
+                    Textures.buttonSound_Effect.Play();
+                }
+                else
+                {
+                    instancesound.Play();
+                }
             }
         }
 
