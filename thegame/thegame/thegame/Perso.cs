@@ -20,10 +20,16 @@ namespace thegame
       //  float gravity = 0.1f;
         public Rectangle hitBoxPerso;
 
-        public float gravity = 5f;
+
         float sol = 380;
         float positionTop;
+        float minnewYpos;
         bool jumping;
+        bool Adapt;
+        float Gravity;
+        bool movedown;
+
+        float newYpos;
         protected Texture2D imagePerso { get; private set; }
 
 
@@ -41,31 +47,47 @@ namespace thegame
             positionPerso = pos;
             speed = 100f;
             jumping = false;
- 
 
 
-
-
+            movedown = true;
+            newYpos = 0;
+            Gravity = 18f; /* YOU CAN CHANGE THE GRAVITY BY WHATEVER YOU WANT */
             imagePerso = Textures.mario_texture;
             animationPerso.AnimationSprite = Textures.mario_texture;
             animationPerso.Position = positionPerso;
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState , KeyboardState oldkey, bool movedown, bool moveleft, bool moveright)
+        public void Update(GameTime gametime, KeyboardState keyboardState , KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop)
         {
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
+            movedown = true;
+            Adapt = false;
+
+            
+
+
+            foreach (Rectangle top in blocksTop)
+            {
+                if (top.Intersects(hitBoxPerso))
+                {
+                    movedown = false;
+
+                }
+            }
+
             if (jumping)
             {
                 float positioninitiale = positionPerso.Y;
                 
                 if (positionPerso.Y > positionTop)
                 {
-                    positionPerso.Y -= 5;
+                    positionPerso.Y -= Gravity;
                 }
                 else
                 {
+                  
                     jumping = false;
                 }
               
@@ -76,20 +98,51 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space) && jumping == false && (!movedown || positionPerso.Y == sol))
                 {
                     jumping = true;
-                    positionTop = positionPerso.Y - 50;
+                    positionTop = positionPerso.Y - 100;
                 }
-                if (movedown && positionPerso.Y + 1 < sol)
-                    positionPerso.Y += 1 * 3f; /* I put one for a reason! Generates beug otherwise */
-                if(movedown && positionPerso.Y + 5 > sol)
+               
+                if(movedown && positionPerso.Y + Gravity > sol) /* The perso does not fall */
                     positionPerso.Y = sol;
+
+                /* THIS PART IS VERY VERY IMPORTANT */
+                minnewYpos = 50000;
+                if (movedown)
+                {
+                    
+                    for (float i = 0; i < Gravity; i++)
+                    {
+                        newYpos = minnewYpos;
+                        foreach (Rectangle top in blocksTop)
+                        {
+                            newYpos = minnewYpos;
+                            if (top.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + (int)i + 28,28,1)))
+                            {
+                                Adapt = true;
+                                minnewYpos = top.Top - 26;
+                                minnewYpos = Math.Min(minnewYpos, newYpos);
+                                
+                            }
+                        }
+                    }
+                }
+
+
+
+                /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
+
+
+                if (movedown && positionPerso.Y + 1 < sol && !Adapt) /* The perso fall */
+                    positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
+
+                /* THIS PART IS VERY IMPORTANT */
+                if (Adapt)
+                {
+                    positionPerso.Y = minnewYpos;
+                    
+                }
+                /* END OF THE IMPORTANT PART */
             }
-          /*  velocity.Y += gravity;
-            positionPerso.X += velocity.X;
-            positionPerso.Y += velocity.Y;
-            if (gravity > 0.4f)
-            {
-                gravity = 0.4f;
-            }*/
+        
 
             if (keyboardState.IsKeyDown(Keys.Right) && moveright)
             {
@@ -102,11 +155,7 @@ namespace thegame
                 positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             
-           /* else if (keyboardState.IsKeyDown(Keys.Down) && movedown)
-            {
-                // tempCurrentFrame.Y = 1; /*Pour se baisser, placer les lignes de sprites respectivement en dessous de celles correspondant à la direction en cours. Et faire ".Y+1".
-                positionPerso.Y += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-            }*/
+          
             else
                 animationPerso.Actif = false;
 
@@ -122,6 +171,7 @@ namespace thegame
         {
             // spriteBatch.Draw(imagePerso, positionPerso, new Rectangle(0, 0, imagePerso.Width / 3 , imagePerso.Height / 2), Color.White);
             animationPerso.Draw(spriteBatch);
+
            /* spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White); // debug perso hitbox */
         }
     }

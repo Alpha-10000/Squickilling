@@ -64,10 +64,10 @@ namespace thegame
            
                 base.Draw(gameTime);
                 
-                frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
+                
            
                 instancesobject.UpdateByKey(gameTime);
-            
+            frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
            
             base.Update(gameTime);
             

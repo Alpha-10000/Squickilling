@@ -196,15 +196,8 @@ namespace thegame
                 movedown = true;
                 moveleft = true;
                 moveright = true;
-                (execute as Perso).gravity = 5f;
-                foreach (Rectangle top in blocksTop)
-                {
-                    if (top.Intersects((execute as Perso).hitBoxPerso))
-                    {
-                        movedown = false;
-                        (execute as Perso).gravity = 0f;
-                    }
-                }
+           
+               
 
                 foreach (Rectangle left in blocksLeft)
                 {
@@ -223,7 +216,7 @@ namespace thegame
                 }
 
                 
-                    (execute as Perso).Update(gametime, keyboardState, oldkey, movedown, moveleft, moveright);
+                    (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop);
 
                 if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                 {
@@ -372,8 +365,8 @@ namespace thegame
                      sb.Draw(Textures.hitbox, top, Color.Red);
                  } // debug left collision 
                 */
-                debug.Draw(sb, "Down : " + movedown.ToString() + " left " + moveleft.ToString() + " right " + moveright.ToString(), new Vector2(300, 50), Color.White, "normal");
-               
+           /*     debug.Draw(sb, "Down : " + movedown.ToString() + " left " + moveleft.ToString() + " right " + moveright.ToString(), new Vector2(300, 50), Color.White, "normal");
+               */
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
                 tree.Draw(sb, new Vector2(-100, 50));
             }
