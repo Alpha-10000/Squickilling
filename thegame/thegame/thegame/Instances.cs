@@ -43,6 +43,7 @@ namespace thegame
         private bool moveleft;
         private bool moveright;
         private Drawable tree;
+        private float offset;
 
         private Drawable debug;
 
@@ -201,7 +202,7 @@ namespace thegame
 
                 foreach (Rectangle left in blocksLeft)
                 {
-                    if (left.Intersects((execute as Perso).hitBoxPerso))
+                    if ((new Rectangle(left.X + (int)(execute as Perso).offset, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
                     {
                         moveleft = false;
                     }
@@ -209,7 +210,7 @@ namespace thegame
 
                 foreach (Rectangle right in blocksRight)
                 {
-                    if (right.Intersects((execute as Perso).hitBoxPerso))
+                    if ((new Rectangle(right.X + (int)(execute as Perso).offset, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
                     {
                         moveright = false;
                     }
@@ -349,10 +350,11 @@ namespace thegame
 
                     
                 }*/
+                
 
                 foreach (Rectangle top in blocks)
                 {
-                    sb.Draw(Textures.plateform_texture, top , Color.White);
+                    sb.Draw(Textures.plateform_texture, new Rectangle(top.X + (int)(execute as Perso).offset, top.Y, top.Width, top.Height) , Color.White);
                 }
 
                /*  foreach (Rectangle top in blocksRight)
@@ -365,10 +367,10 @@ namespace thegame
                      sb.Draw(Textures.hitbox, top, Color.Red);
                  } // debug left collision 
                 */
-           /*     debug.Draw(sb, "Down : " + movedown.ToString() + " left " + moveleft.ToString() + " right " + moveright.ToString(), new Vector2(300, 50), Color.White, "normal");
-               */
+        /*        debug.Draw(sb, "X : " + (execute as Perso).positionPerso.X.ToString() + " offset : " + (execute as Perso).offset.ToString(), new Vector2(300, 50), Color.White, "normal");
+            */   
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
-                tree.Draw(sb, new Vector2(-100, 50));
+                tree.Draw(sb, new Vector2(-100 + (execute as Perso).offset, 50));
             }
         }
 

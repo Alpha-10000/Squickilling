@@ -15,7 +15,7 @@ namespace thegame
     class Perso
     {
 
-        Vector2 positionPerso, tempCurrentFrame;
+        public Vector2 positionPerso, tempCurrentFrame;
       //  Vector2 velocity;
       //  float gravity = 0.1f;
         public Rectangle hitBoxPerso;
@@ -29,6 +29,7 @@ namespace thegame
         float Gravity;
         bool movedown;
 
+        public float offset;
         float newYpos;
         protected Texture2D imagePerso { get; private set; }
 
@@ -47,7 +48,7 @@ namespace thegame
             positionPerso = pos;
             speed = 100f;
             jumping = false;
-
+            offset = 0;
 
             movedown = true;
             newYpos = 0;
@@ -70,7 +71,7 @@ namespace thegame
 
             foreach (Rectangle top in blocksTop)
             {
-                if (top.Intersects(hitBoxPerso))
+                if ((new Rectangle(top.X + (int)offset, top.Y, top.Width, top.Height)).Intersects(hitBoxPerso))
                 {
                     movedown = false;
 
@@ -115,7 +116,7 @@ namespace thegame
                         foreach (Rectangle top in blocksTop)
                         {
                             newYpos = minnewYpos;
-                            if (top.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + (int)i + 28,28,1)))
+                            if ((new Rectangle(top.X + (int)offset, top.Y, top.Width, top.Height)).Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + (int)i + 28, 28, 1)))
                             {
                                 Adapt = true;
                                 minnewYpos = top.Top - 26;
@@ -147,12 +148,18 @@ namespace thegame
             if (keyboardState.IsKeyDown(Keys.Right) && moveright)
             {
                 tempCurrentFrame.Y = 0;
-                positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                if (positionPerso.X < 400)
+                    positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                else
+                    offset -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else if (keyboardState.IsKeyDown(Keys.Left) && moveleft)
             {
                 tempCurrentFrame.Y = 1;
-                positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                if(offset > 0)
+                    positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                else
+                    offset += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             
           
