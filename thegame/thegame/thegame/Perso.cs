@@ -73,7 +73,7 @@ namespace thegame
 
             else
             {
-                if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space) && jumping == false)
+                if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space) && jumping == false && (!movedown || positionPerso.Y == sol))
                 {
                     jumping = true;
                     positionTop = positionPerso.Y - 50;
