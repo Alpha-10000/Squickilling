@@ -43,6 +43,7 @@ namespace thegame
         private bool moveleft;
         private bool moveright;
         private Drawable tree;
+        private Drawable Ground;
 
         private Drawable debug;
 
@@ -323,7 +324,7 @@ namespace thegame
                 {
                     if (tilemap[y, x] == 1)
                     {
-                        blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height, Textures.buche_texture.Width, Textures.buche_texture.Height));
+                        blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 80, Textures.buche_texture.Width, Textures.buche_texture.Height));
 
                     }
                 }
@@ -349,6 +350,7 @@ namespace thegame
                     execute = new Perso(new Vector2(200, 0));
 
                     tree = new Drawable(drawable_type.tree);
+                    Ground = new Drawable(drawable_type.Ground);
 
 
             
@@ -404,7 +406,10 @@ namespace thegame
                     
                 }*/
                 
-
+                for (int truc = 0; truc < 9; truc++)
+                {
+                    Ground.Draw(sb, new Vector2(truc * Textures.ground_texture.Width + (int)(execute as Perso).offset, 408));
+                }
                 foreach (Rectangle top in blocks)
                 {
                     sb.Draw(Textures.buche_texture, new Rectangle(top.X + (int)(execute as Perso).offset, top.Y, top.Width, top.Height), Color.White);
@@ -424,6 +429,9 @@ namespace thegame
             */   
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
                 tree.Draw(sb, new Vector2(-100 + (execute as Perso).offset, 50));
+                /* DRAW GROUND */
+
+                
             }
         }
 

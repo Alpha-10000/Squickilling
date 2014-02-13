@@ -12,7 +12,8 @@ namespace thegame
         Plateform_default,
         buche,
         tree,
-        font
+        font,
+        Ground
     }
 
 
@@ -38,6 +39,9 @@ namespace thegame
                 case drawable_type.font:
                     _font = Textures.font_texture;
                     _fontTitle = Textures.fontTitle_texture;
+                    break;
+                case drawable_type.Ground:
+                    image = Textures.ground_texture;
                     break;
                 default:
                     image = null;
