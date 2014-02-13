@@ -147,7 +147,7 @@ namespace thegame
 
 
                 /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
-                if(!jumping && (positionPerso.Y == sol || !movedown))
+                if(!jumping && (positionPerso.Y == sol || !movedown || Adapt))
                 {
                     GravityInit();
                 }
