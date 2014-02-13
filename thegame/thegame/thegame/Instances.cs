@@ -300,12 +300,12 @@ namespace thegame
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0},
                             {0,0,0,1,1,1,0,0,0,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1},
-                            {0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
               
@@ -393,7 +393,19 @@ namespace thegame
             }
             else
             {
-
+                tree.Draw(sb, new Vector2(500 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(400 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(900 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(1050 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(1400 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(1800 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(2200 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(2400 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(3000 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(3400 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(3900 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(4050 + (execute as Perso).offset, 50));
+                tree.Draw(sb, new Vector2(4900 + (execute as Perso).offset, 50));
                /* for (int i = 0; i < mapSizeX; i++)
                 {
                     for (int j = 0; j < mapSizeY; j++)
@@ -429,6 +441,7 @@ namespace thegame
             */   
                 (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
                 tree.Draw(sb, new Vector2(-100 + (execute as Perso).offset, 50));
+                
                 /* DRAW GROUND */
 
                 
