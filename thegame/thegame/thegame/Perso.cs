@@ -22,12 +22,13 @@ namespace thegame
 
 
         float sol = 380;
-        float positionTop;
         float minnewYpos;
         bool jumping;
         bool Adapt;
         float Gravity;
         bool movedown;
+        float vel;
+        float acc;
 
         public float offset;
         float newYpos;
@@ -49,26 +50,33 @@ namespace thegame
             speed = 100f;
             jumping = false;
             offset = 0;
-
+            
             movedown = true;
             newYpos = 0;
-            Gravity = 18f; /* YOU CAN CHANGE THE GRAVITY BY WHATEVER YOU WANT */
+            GravityInit();
             imagePerso = Textures.mario_texture;
             animationPerso.AnimationSprite = Textures.mario_texture;
             animationPerso.Position = positionPerso;
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
         }
 
+        private void GravityInit()
+        {
+            vel = 10f; /* Kind of like the hight of the jump */
+            acc = 150f; /* Duration of jump */
+            Gravity = 0.5f; /* Start folling with this speed */
+        }
+
         public void Update(GameTime gametime, KeyboardState keyboardState , KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop)
         {
+
+            /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
             movedown = true;
             Adapt = false;
 
-            
-
-
+            /* CHECK TOP COLLISION */
             foreach (Rectangle top in blocksTop)
             {
                 if ((new Rectangle(top.X + (int)offset, top.Y, top.Width, top.Height)).Intersects(hitBoxPerso))
@@ -78,38 +86,41 @@ namespace thegame
                 }
             }
 
+            /* THE PERSO IS JUMPING - PART FROM BOTTOM TO TOP */
             if (jumping)
             {
-                float positioninitiale = positionPerso.Y;
-                
-                if (positionPerso.Y > positionTop)
+                if (Gravity >0)
                 {
+                    float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
+                    vel -= acc * dt;// v = u + a*t
+                    Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
                     positionPerso.Y -= Gravity;
                 }
                 else
                 {
-                  
+                    GravityInit();
                     jumping = false;
                 }
               
             }
-
             else
             {
-                if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space) && jumping == false && (!movedown || positionPerso.Y == sol))
+                /* IF PERSO CAN JUMP THEN JUMP */
+                if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space) && (!movedown || positionPerso.Y == sol))
                 {
                     jumping = true;
-                    positionTop = positionPerso.Y - 100;
+                    Gravity = 5f; /* First jump speed while pressing the button*/
                 }
-               
-                if(movedown && positionPerso.Y + Gravity > sol) /* The perso does not fall */
+
+                /* KEEP PERSO ON GROUND */
+                if (movedown && positionPerso.Y + Gravity > sol) 
                     positionPerso.Y = sol;
 
                 /* THIS PART IS VERY VERY IMPORTANT */
                 minnewYpos = 50000;
                 if (movedown)
                 {
-                    
+
                     for (float i = 0; i < Gravity; i++)
                     {
                         newYpos = minnewYpos;
@@ -121,28 +132,37 @@ namespace thegame
                                 Adapt = true;
                                 minnewYpos = top.Top - 26;
                                 minnewYpos = Math.Min(minnewYpos, newYpos);
-                                
+
                             }
                         }
                     }
                 }
-
-
-
-                /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
-
-
-                if (movedown && positionPerso.Y + 1 < sol && !Adapt) /* The perso fall */
-                    positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
-
-                /* THIS PART IS VERY IMPORTANT */
                 if (Adapt)
                 {
                     positionPerso.Y = minnewYpos;
-                    
+
                 }
-                /* END OF THE IMPORTANT PART */
-            }
+                }
+                /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
+
+
+                /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
+                if(!jumping && (positionPerso.Y == sol || !movedown))
+                {
+                    GravityInit();
+                }
+
+                /* GRAVITY - PERSO NOT JUMPING AND ON GROUND */
+                if (movedown && !jumping && positionPerso.Y + 1 < sol && !Adapt)
+                {
+                    float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
+                    vel += acc * dt;// v = u + a*t
+                    Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
+                    positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
+                }
+
+  
+                
         
 
             if (keyboardState.IsKeyDown(Keys.Right) && moveright)
@@ -179,6 +199,10 @@ namespace thegame
             // spriteBatch.Draw(imagePerso, positionPerso, new Rectangle(0, 0, imagePerso.Width / 3 , imagePerso.Height / 2), Color.White);
             animationPerso.Draw(spriteBatch);
 
+            /*
+            Drawable debug = new Drawable(drawable_type.font);
+            debug.Draw(spriteBatch, "grav: " + Gravity.ToString()  + " I : " + (!jumping || positionPerso.Y == sol).ToString(), new Vector2(300, 50), Color.White, "normal");
+            */
            /* spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White); // debug perso hitbox */
         }
     }

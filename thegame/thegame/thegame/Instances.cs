@@ -346,7 +346,7 @@ namespace thegame
        
 
                    
-                    execute = new Perso(new Vector2(90, 280));
+                    execute = new Perso(new Vector2(200, 0));
 
                     tree = new Drawable(drawable_type.tree);
 
@@ -414,10 +414,10 @@ namespace thegame
                 {
                     sb.Draw(Textures.hitbox, top, Color.White);
                 } // debug right collision 
-                
-                 foreach (Rectangle top in blocksLeft)
+                */
+                /* foreach (Rectangle top in blocksRight)
                  {
-                     sb.Draw(Textures.hitbox, top, Color.Red);
+                     sb.Draw(Textures.hitbox, new Rectangle(top.X + (int)(execute as Perso).offset, top.Y, top.Width, top.Height), Color.Red);
                  } // debug left collision 
                 */
         /*        debug.Draw(sb, "X : " + (execute as Perso).positionPerso.X.ToString() + " offset : " + (execute as Perso).offset.ToString(), new Vector2(300, 50), Color.White, "normal");
