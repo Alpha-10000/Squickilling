@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb</Output>
-      <Time>2014-02-08T20:04:52.1201847+01:00</Time>
+      <Time>2014-02-14T01:37:20.3331877+01:00</Time>
     </Item>
     <Item>
       <Source>FPS.spritefont</Source>
@@ -17,7 +17,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
-      <Time>2014-02-07T20:40:49.0534487+01:00</Time>
+      <Time>2014-02-14T01:37:19.8868897+01:00</Time>
     </Item>
     <Item>
       <Source>plateforme.png</Source>
@@ -26,7 +26,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb</Output>
-      <Time>2014-01-31T17:15:32.8183057+01:00</Time>
+      <Time>2014-02-14T01:37:20.4062368+01:00</Time>
     </Item>
     <Item>
       <Source>Title.spritefont</Source>
@@ -35,7 +35,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb</Output>
-      <Time>2014-02-07T20:40:49.0574526+01:00</Time>
+      <Time>2014-02-14T01:37:19.8938944+01:00</Time>
     </Item>
     <Item>
       <Source>audio\opening.mp3</Source>
@@ -45,7 +45,7 @@
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb</Output>
       <Extra>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma</Extra>
-      <Time>2014-02-07T20:40:49.0654571+01:00</Time>
+      <Time>2014-02-14T01:37:20.3141754+01:00</Time>
     </Item>
     <Item>
       <Source>audio\button.wav</Source>
@@ -54,16 +54,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb</Output>
-      <Time>2014-02-07T20:40:49.0614553+01:00</Time>
-    </Item>
-    <Item>
-      <Source>buche.png</Source>
-      <Name>buche</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\buche.xnb</Output>
-      <Time>2014-02-08T19:54:13.8249147+01:00</Time>
+      <Time>2014-02-14T01:37:19.8978979+01:00</Time>
     </Item>
     <Item>
       <Source>tree.png</Source>
@@ -72,7 +63,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb</Output>
-      <Time>2014-02-08T19:54:13.9549288+01:00</Time>
+      <Time>2014-02-14T01:37:20.4092401+01:00</Time>
     </Item>
     <Item>
       <Source>audio\game.wav</Source>
@@ -81,7 +72,34 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb</Output>
-      <Time>2014-02-08T19:54:13.8179114+01:00</Time>
+      <Time>2014-02-14T01:37:20.3071703+01:00</Time>
+    </Item>
+    <Item>
+      <Source>blank.bmp</Source>
+      <Name>blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2014-02-14T01:37:20.3311863+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Buche_test.png</Source>
+      <Name>Buche_test</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb</Output>
+      <Time>2014-02-14T01:44:32.3857236+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Ground.png</Source>
+      <Name>Ground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb</Output>
+      <Time>2014-02-14T01:37:19.8888915+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
