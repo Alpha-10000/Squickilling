@@ -1,12 +1,12 @@
 Content\mario.xnb
-Content\FPS.xnb
 Content\plateforme.xnb
-Content\Title.xnb
+Content\FPS.xnb
 Content\audio\opening.xnb
 Content\audio\opening.wma
 Content\audio\button.xnb
-Content\tree.xnb
+Content\Title.xnb
 Content\audio\game.xnb
+Content\tree.xnb
 Content\blank.xnb
 Content\Buche_test.xnb
 Content\Ground.xnb

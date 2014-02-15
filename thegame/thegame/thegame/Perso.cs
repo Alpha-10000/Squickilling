@@ -161,11 +161,11 @@ namespace thegame
                     positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
                 }
 
-  
-                
-        
 
-            if (keyboardState.IsKeyDown(Keys.Right) && moveright)
+
+
+
+                if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left))
             {
                 tempCurrentFrame.Y = 0;
                 if (positionPerso.X < 400)
@@ -173,7 +173,7 @@ namespace thegame
                 else
                     offset -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
-            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft)
+                else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right))
             {
                 tempCurrentFrame.Y = 1;
                 if(offset > 0)
@@ -196,14 +196,14 @@ namespace thegame
         }
         public  void Draw(SpriteBatch spriteBatch)
         {
-            // spriteBatch.Draw(imagePerso, positionPerso, new Rectangle(0, 0, imagePerso.Width / 3 , imagePerso.Height / 2), Color.White);
+           
             animationPerso.Draw(spriteBatch);
 
             /*
             Drawable debug = new Drawable(drawable_type.font);
             debug.Draw(spriteBatch, "grav: " + Gravity.ToString()  + " I : " + (!jumping || positionPerso.Y == sol).ToString(), new Vector2(300, 50), Color.White, "normal");
             */
-           /* spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White); // debug perso hitbox */
+          /*  spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White * 0.5f); // debug perso hitbox */
         }
     }
 }
