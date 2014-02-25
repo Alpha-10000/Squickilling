@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework;
 
 namespace thegame
 {
@@ -17,11 +18,14 @@ namespace thegame
         public static Texture2D ground_texture;
         public static Texture2D buche_texture;
         public static Texture2D tree_texture;
-        public static  SpriteFont font_texture;
+        public static Texture2D pausedTexture;
+        public static Rectangle pausedRectangle;
+        public static SpriteFont font_texture;
         public static SpriteFont fontTitle_texture;
         public static Song openingSound_Effect;
         public static SoundEffect buttonSound_Effect;
         public static SoundEffect gameSound_Effect;
+        public static Texture2D background;
 
         public static void load(ContentManager cm)
         {
@@ -36,6 +40,10 @@ namespace thegame
             openingSound_Effect = cm.Load<Song>("audio\\opening");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
             gameSound_Effect = cm.Load<SoundEffect>("audio\\game");
+            background = cm.Load<Texture2D>(@"Background");
+            pausedTexture = cm.Load<Texture2D>(@"Paused");
+            pausedRectangle = new Rectangle(0, 0, pausedTexture.Width, pausedTexture.Height);
+            
         }
     }
 }

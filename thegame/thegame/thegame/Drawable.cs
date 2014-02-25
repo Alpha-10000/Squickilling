@@ -13,6 +13,7 @@ namespace thegame
         buche,
         tree,
         font,
+        Background,
         Ground
     }
 
@@ -43,6 +44,9 @@ namespace thegame
                 case drawable_type.Ground:
                     image = Textures.ground_texture;
                     break;
+                case drawable_type.Background:
+                     image = Textures.background;
+                    break;
                 default:
                     image = null;
                     break;
@@ -53,7 +57,9 @@ namespace thegame
 
         public void Draw(SpriteBatch sb, Vector2 pos) /* To show image */
         {
-            sb.Draw(image, pos, Color.White);
+           
+                sb.Draw(image, pos, Color.White);
+            
         }
         public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color, string Type) /* To show text */
         {
