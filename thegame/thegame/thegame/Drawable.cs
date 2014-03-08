@@ -14,13 +14,15 @@ namespace thegame
         tree,
         font,
         Background,
-        Ground
+        Ground,
+        vid
     }
 
 
     public class Drawable
     {
         public Texture2D image;
+        public static Texture2D vidTexture;
         public SpriteFont _font;
         public SpriteFont _fontTitle;
 
@@ -47,7 +49,10 @@ namespace thegame
                 case drawable_type.Background:
                      image = Textures.background;
                     break;
-                default:
+                case drawable_type.vid:
+                    vidTexture = Textures.vidPlayer.GetTexture();
+                    break;
+               default:
                     image = null;
                     break;
             }
@@ -57,8 +62,21 @@ namespace thegame
 
         public void Draw(SpriteBatch sb, Vector2 pos) /* To show image */
         {
-           
+            
+            if (Instances.isIntroDone)
+            {
                 sb.Draw(image, pos, Color.White);
+            }
+            if (Instances.pause)
+            {
+                sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                sb.Draw(Textures.ground_texture, new Vector2(0,408), Color.White);
+                sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
+                sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
+                Textures.btnPlay.Draw(sb);
+                Textures.btnMenu.Draw(sb);
+                Textures.btnQuit.Draw(sb);
+            }
             
         }
         public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color, string Type) /* To show text */

@@ -23,9 +23,15 @@ namespace thegame
         public static SpriteFont font_texture;
         public static SpriteFont fontTitle_texture;
         public static Song openingSound_Effect;
+        public static SoundEffect openingSound_Effect1;
         public static SoundEffect buttonSound_Effect;
         public static SoundEffect gameSound_Effect;
         public static Texture2D background;
+        public static Video vid;
+        public static Rectangle vidRectangle;
+        public static VideoPlayer vidPlayer;
+        public static Button btnPlay, btnQuit, btnMenu;
+        
 
         public static void load(ContentManager cm)
         {
@@ -38,12 +44,26 @@ namespace thegame
             font_texture = cm.Load<SpriteFont>(@"FPS");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             openingSound_Effect = cm.Load<Song>("audio\\opening");
+            openingSound_Effect1 = cm.Load<SoundEffect>("audio\\opening1");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
             gameSound_Effect = cm.Load<SoundEffect>("audio\\game");
             background = cm.Load<Texture2D>(@"Background");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
             pausedRectangle = new Rectangle(0, 0, pausedTexture.Width, pausedTexture.Height);
-            
+            //Intro
+            vid = cm.Load<Video>(@"video\\vid");
+            vidPlayer = new VideoPlayer();
+            vidRectangle = new Rectangle(0, 0, 800, 480);
+            if (!Instances.isIntroDone)
+            {
+                vidPlayer.Play(vid);
+            }
+            btnPlay = new Button();
+            btnMenu = new Button();
+            btnQuit = new Button();
+            btnPlay.Load(cm.Load<Texture2D>(@"Play"), new Vector2(313, 183));
+            btnMenu.Load(cm.Load<Texture2D>(@"Menu"), new Vector2(318, 253));
+            btnQuit.Load(cm.Load<Texture2D>(@"Quit"), new Vector2(307, 323));
         }
     }
 }
