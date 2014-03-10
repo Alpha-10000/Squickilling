@@ -301,6 +301,13 @@ namespace thegame
 
                         else // THIS IS THE GAME 
                         {
+                            if (Keyboard.GetState().IsKeyDown(Keys.P))
+                            {
+                                pause = true;
+                                Textures.btnPlay.isClicked = false;
+                                Textures.btnMenu.isClicked = false;
+                            }
+
                             /* START OF THE GAME CODE */
                             moveleft = true;
                             moveright = true;
