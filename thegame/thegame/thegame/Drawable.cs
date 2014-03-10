@@ -49,9 +49,6 @@ namespace thegame
                 case drawable_type.Background:
                      image = Textures.background;
                     break;
-                case drawable_type.vid:
-                    vidTexture = Textures.vidPlayer.GetTexture();
-                    break;
                default:
                     image = null;
                     break;
@@ -63,19 +60,20 @@ namespace thegame
         public void Draw(SpriteBatch sb, Vector2 pos) /* To show image */
         {
             
-            if (Instances.isIntroDone)
-            {
-                sb.Draw(image, pos, Color.White);
-            }
+
             if (Instances.pause)
             {
                 sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                sb.Draw(Textures.ground_texture, new Vector2(0,408), Color.White);
+                sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
                 sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
                 sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
                 Textures.btnPlay.Draw(sb);
                 Textures.btnMenu.Draw(sb);
                 Textures.btnQuit.Draw(sb);
+            }
+            else
+            {
+                sb.Draw(image, pos, Color.White);
             }
             
         }

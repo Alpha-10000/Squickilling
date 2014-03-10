@@ -53,29 +53,12 @@ namespace thegame
 
         protected override void Draw(GameTime gameTime)
         {
-            if (!Instances.isIntroDone)
-            {
-                Drawable.vidTexture = Textures.vidPlayer.GetTexture();
-                spriteBatch.Begin();
-                spriteBatch.Draw(Drawable.vidTexture, Textures.vidRectangle, Color.White);
-                spriteBatch.End();
-            }
-
-                if (instancesobject.type == instances_type.Game && Instances.isIntroDone)
-                {
-                    spriteBatch.Begin();
-                    spriteBatch.Draw(Textures.background, Vector2.Zero, Color.White*0.9f);
-                    instancesobject.Display(spriteBatch);
-                    spriteBatch.End();
-                }
-                else if (instancesobject.type == instances_type.Menu && Instances.isIntroDone)
-                {
-                    GraphicsDevice.Clear(Color.Beige);
-                    spriteBatch.Begin();
-                    instancesobject.Display(spriteBatch);
-                    spriteBatch.End();
-                }
            
+
+            GraphicsDevice.Clear(Color.Beige);
+            spriteBatch.Begin();
+            instancesobject.Display(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
 

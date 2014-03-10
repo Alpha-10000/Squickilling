@@ -28,8 +28,7 @@ namespace thegame
         public static SoundEffect gameSound_Effect;
         public static Texture2D background;
         public static Video vid;
-        public static Rectangle vidRectangle;
-        public static VideoPlayer vidPlayer;
+        
         public static Button btnPlay, btnQuit, btnMenu;
         
 
@@ -52,12 +51,7 @@ namespace thegame
             pausedRectangle = new Rectangle(0, 0, pausedTexture.Width, pausedTexture.Height);
             //Intro
             vid = cm.Load<Video>(@"video\\vid");
-            vidPlayer = new VideoPlayer();
-            vidRectangle = new Rectangle(0, 0, 800, 480);
-            if (!Instances.isIntroDone)
-            {
-                vidPlayer.Play(vid);
-            }
+           
             btnPlay = new Button();
             btnMenu = new Button();
             btnQuit = new Button();
