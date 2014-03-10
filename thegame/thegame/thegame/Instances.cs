@@ -65,7 +65,7 @@ namespace thegame
             }
             else
             {
-                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langue", "Plein écran", "Retour", "Anglais", "Français", "Son", "On", "Off" };
+                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langue", "Plein ecran", "Retour", "Anglais", "Français", "Son", "On", "Off" };
             }
         }
 
@@ -194,6 +194,14 @@ namespace thegame
                                         Execute();
                                     }
                                     break;
+                                case 1: /* Fullscreen */
+                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                                    {
+                                        this.selected = 5;
+                                        Execute();
+                                    }
+                                    break;
+
                                 case 2: /* Sound settings */
                                     if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                                     {
@@ -264,6 +272,40 @@ namespace thegame
                             }
 
                         }
+
+                        else if (selected == 5)
+                        {
+
+                            switch ((execute as Menu).selected) /* Go back to main Menu */
+                            {
+                                case 0:
+                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                                    {
+                                        if (!Game1.graphics.IsFullScreen)
+                                        {
+                                            Game1.graphics.ToggleFullScreen();
+                                        }
+                                        this.selected = 0;
+                                        Execute();
+                                    }
+                                    break;
+                                case 1:
+                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                                    {
+                                        if (Game1.graphics.IsFullScreen)
+                                        {
+                                            Game1.graphics.ToggleFullScreen();
+                                        }
+                                        this.selected = 0;
+                                        Execute();
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
+
                     }
 
                     else
@@ -363,6 +405,12 @@ namespace thegame
                     (execute as Menu).AddElements(Text_Game[10]);
                     
 
+                    break;
+                case 5:
+                    Sound("menu");
+                    execute = new Menu(2, Text_Game[4]);
+                    (execute as Menu).AddElements(Text_Game[9]);
+                    (execute as Menu).AddElements(Text_Game[10]);
                     break;
                 
                 case 2: /* Start the game */

@@ -14,7 +14,7 @@ namespace thegame
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        public GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public Instances instancesobject;
         

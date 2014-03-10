@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb</Output>
-      <Time>2014-02-08T20:14:56.5214002+01:00</Time>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb</Output>
+      <Time>2014-02-26T16:27:05+01:00</Time>
     </Item>
     <Item>
       <Source>plateforme.png</Source>
@@ -16,63 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb</Output>
-      <Time>2014-02-06T01:51:11.7693296+01:00</Time>
-    </Item>
-    <Item>
-      <Source>FPS.spritefont</Source>
-      <Name>FPS</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
-      <Time>2014-02-07T19:56:52.4344047+01:00</Time>
-    </Item>
-    <Item>
-      <Source>audio\opening.mp3</Source>
-      <Name>audio\opening</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb</Output>
-      <Extra>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma</Extra>
-      <Time>2014-02-07T17:08:45.590126+01:00</Time>
-    </Item>
-    <Item>
-      <Source>audio\button.wav</Source>
-      <Name>audio\button</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb</Output>
-      <Time>2014-02-07T17:44:29.5438084+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Title.spritefont</Source>
-      <Name>Title</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb</Output>
-      <Time>2014-02-07T20:06:37.7137854+01:00</Time>
-    </Item>
-    <Item>
-      <Source>audio\game.wav</Source>
-      <Name>audio\game</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb</Output>
-      <Time>2014-02-08T18:51:30.2266803+01:00</Time>
-    </Item>
-    <Item>
-      <Source>tree.png</Source>
-      <Name>tree</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb</Output>
-      <Time>2014-02-11T22:57:59.5373112+01:00</Time>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb</Output>
+      <Time>2014-02-26T16:27:05+01:00</Time>
     </Item>
     <Item>
       <Source>blank.bmp</Source>
@@ -80,8 +25,17 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2014-02-11T21:55:48.2696246+01:00</Time>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2014-02-26T16:27:05+01:00</Time>
+    </Item>
+    <Item>
+      <Source>tree.png</Source>
+      <Name>tree</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb</Output>
+      <Time>2014-02-26T16:27:05+01:00</Time>
     </Item>
     <Item>
       <Source>Buche_test.png</Source>
@@ -89,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb</Output>
-      <Time>2014-02-14T13:01:36.4724128+01:00</Time>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb</Output>
+      <Time>2014-02-26T16:27:04+01:00</Time>
     </Item>
     <Item>
       <Source>Ground.png</Source>
@@ -98,8 +52,118 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb</Output>
-      <Time>2014-02-13T23:21:04.6524084+01:00</Time>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb</Output>
+      <Time>2014-02-26T16:27:04+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Paused.png</Source>
+      <Name>Paused</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Paused.xnb</Output>
+      <Time>2014-02-26T16:27:04+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Background.JPG</Source>
+      <Name>Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Background.xnb</Output>
+      <Time>2014-02-26T16:27:04+01:00</Time>
+    </Item>
+    <Item>
+      <Source>FPS.spritefont</Source>
+      <Name>FPS</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
+      <Time>2014-02-26T16:27:04+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Title.spritefont</Source>
+      <Name>Title</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb</Output>
+      <Time>2014-02-26T16:27:04+01:00</Time>
+    </Item>
+    <Item>
+      <Source>audio\opening.mp3</Source>
+      <Name>audio\opening</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb</Output>
+      <Extra>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma</Extra>
+      <Time>2014-02-26T16:27:05+01:00</Time>
+    </Item>
+    <Item>
+      <Source>audio\button.wav</Source>
+      <Name>audio\button</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb</Output>
+      <Time>2014-02-26T16:27:04+01:00</Time>
+    </Item>
+    <Item>
+      <Source>audio\game.wav</Source>
+      <Name>audio\game</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb</Output>
+      <Time>2014-02-26T16:27:05+01:00</Time>
+    </Item>
+    <Item>
+      <Source>menu.png</Source>
+      <Name>menu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\menu.xnb</Output>
+      <Time>2014-03-08T17:33:17+01:00</Time>
+    </Item>
+    <Item>
+      <Source>video\vid.wmv</Source>
+      <Name>video\vid</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.xnb</Output>
+      <Extra>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.wmv</Extra>
+      <Time>2014-03-08T12:49:48+01:00</Time>
+    </Item>
+    <Item>
+      <Source>audio\opening1.wav</Source>
+      <Name>audio\opening1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening1.xnb</Output>
+      <Time>2014-03-08T16:52:32+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Play.png</Source>
+      <Name>Play</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Play.xnb</Output>
+      <Time>2014-03-08T17:33:51+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Quit.png</Source>
+      <Name>Quit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Quit.xnb</Output>
+      <Time>2014-03-08T17:30:26+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -107,10 +171,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegameContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegameContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegameContent\</RootDirectory>
+      <LoggerRootDirectory>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\</LoggerRootDirectory>
+      <IntermediateDirectory>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegameContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -138,8 +202,8 @@
         <Value>2010-08-23T13:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2013-11-20T23:15:37.5193868+01:00</Value>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2013-12-13T19:20:48.3818+01:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

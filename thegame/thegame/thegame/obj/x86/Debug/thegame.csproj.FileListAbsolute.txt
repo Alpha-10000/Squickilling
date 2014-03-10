@@ -1,64 +1,32 @@
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.exe
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.pdb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.csprojResolveAssemblyReference.cache
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.pdb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Paused.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Quit.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Play.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Background.xnb
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.png
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.png
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.mp3
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.wav
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.png
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.png
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.exe
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.pdb
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.csprojResolveAssemblyReference.cache
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.pdb
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.exe
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.pdb
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.csprojResolveAssemblyReference.cache
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe
-C:\Users\epita\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.pdb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.exe
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.pdb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.csprojResolveAssemblyReference.cache
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.pdb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.mp3
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.wav
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.mp3
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.wav
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.png
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.png
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.png
-C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.png
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.png
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.png
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.png
-C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.png
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\menu.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.xnb
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.wmv
+\\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening1.xnb
