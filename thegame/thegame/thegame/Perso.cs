@@ -78,15 +78,20 @@ namespace thegame
             Adapt = false;
 
             /*PROJECTILE*/
-
-            Vector2 direction = new Vector2(1, 0);
+            Vector2 directionNoix;
             Vector2 positionNoix;
             if (animationPerso.CurrentFrame.Y == 1)
+            {
                 positionNoix = new Vector2(positionPerso.X - 7, positionPerso.Y);
+                directionNoix = new Vector2(-1, 0);
+            }
             else
+            {
                 positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y);
+                directionNoix = new Vector2(1, 0);
+            }
 
-            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 100, direction);
+            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 100, directionNoix);
 
             if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space))
             {
