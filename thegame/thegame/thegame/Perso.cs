@@ -82,16 +82,16 @@ namespace thegame
             Vector2 positionNoix;
             if (animationPerso.CurrentFrame.Y == 1)
             {
-                positionNoix = new Vector2(positionPerso.X - 7, positionPerso.Y);
+                positionNoix = new Vector2(positionPerso.X - 5, positionPerso.Y + 5);
                 directionNoix = new Vector2(-1, 0);
             }
             else
             {
-                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y);
+                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y + 5);
                 directionNoix = new Vector2(1, 0);
             }
 
-            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 100, directionNoix);
+            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 230, directionNoix);
 
             if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space))
             {

@@ -39,7 +39,7 @@ namespace thegame
 
         public void Update(GameTime gameTime)
         {
-            if (positionProjectile.X - startPosition.X > distance)
+            if (Vector2.Distance(startPosition, positionProjectile) > distance)
             {
                 visible = false;
             }
