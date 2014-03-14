@@ -78,29 +78,26 @@ namespace thegame
             Adapt = false;
 
             /*PROJECTILE*/
-            projs = proj;
+
             Vector2 direction = new Vector2(1, 0);
             Vector2 positionNoix;
-            if (animationPerso.CurrentFrame.Y == 0)
-                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y);
-            else
+            if (animationPerso.CurrentFrame.Y == 1)
                 positionNoix = new Vector2(positionPerso.X - 7, positionPerso.Y);
+            else
+                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y);
 
-            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, speed, direction);
-            foreach(Projectile nut in projs)
-            nut.Update(gametime);
-            if (keyboardState.IsKeyDown(Keys.Space))
+            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 100, direction);
+
+            if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space))
             {
                 projs.Add(noix);
             }
-            /*for (int i = 0; i < projs.Count; i++)
+            for (int i = 0; i < projs.Count; i++)
             {
+                projs[i].Update(gametime);
                 if (projs[i].Visible == false)
-                {
-                    projs.RemoveAt(i);
-                    i--;
-                }
-            }*/
+                    projs.Remove(projs[i]);
+            }
 
             /* CHECK TOP COLLISION */
             foreach (Rectangle top in blocksTop)

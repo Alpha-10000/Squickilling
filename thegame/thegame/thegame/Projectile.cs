@@ -14,7 +14,7 @@ namespace thegame
 {
     class Projectile : Drawable
     {
-        int distance = 1000;
+        int distance = 100;
         bool visible;
         public bool Visible
         {
