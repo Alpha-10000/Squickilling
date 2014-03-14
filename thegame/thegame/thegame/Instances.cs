@@ -41,6 +41,7 @@ namespace thegame
         public List<Rectangle> blocksLeft;
         public List<Rectangle> blocksRight;
         public List<Rectangle> tile;
+        private List<Projectile> projectiles;
 
         private bool SoundIsTrue;
         private bool moveleft;
@@ -329,8 +330,8 @@ namespace thegame
                                 }
                             }
 
-
-                            (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop);
+                            projectiles = new List<Projectile>();
+                            (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles);
 
                             if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                             {

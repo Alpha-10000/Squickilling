@@ -16,8 +16,8 @@ namespace thegame
     {
 
         public Vector2 positionPerso, tempCurrentFrame;
-      //  Vector2 velocity;
-      //  float gravity = 0.1f;
+        //  Vector2 velocity;
+        //  float gravity = 0.1f;
         public Rectangle hitBoxPerso;
 
 
@@ -41,6 +41,7 @@ namespace thegame
         public float Speed { get; private set; }
 
         Animation animationPerso;
+        List<Projectile> projs = new List<Projectile>();
 
         public Perso(Vector2 pos)
         {
@@ -50,7 +51,7 @@ namespace thegame
             speed = 100f;
             jumping = false;
             offset = 0;
-            
+
             movedown = true;
             newYpos = 0;
             GravityInit();
@@ -67,7 +68,7 @@ namespace thegame
             Gravity = 0.5f; /* Start folling with this speed */
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState , KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj)
         {
 
             /* INITIALISATION */
@@ -75,6 +76,31 @@ namespace thegame
             animationPerso.Actif = true;
             movedown = true;
             Adapt = false;
+
+            /*PROJECTILE*/
+            projs = proj;
+            Vector2 direction = new Vector2(1, 0);
+            Vector2 positionNoix;
+            if (animationPerso.CurrentFrame.Y == 0)
+                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y);
+            else
+                positionNoix = new Vector2(positionPerso.X - 7, positionPerso.Y);
+
+            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, speed, direction);
+            foreach(Projectile nut in projs)
+            nut.Update(gametime);
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                projs.Add(noix);
+            }
+            /*for (int i = 0; i < projs.Count; i++)
+            {
+                if (projs[i].Visible == false)
+                {
+                    projs.RemoveAt(i);
+                    i--;
+                }
+            }*/
 
             /* CHECK TOP COLLISION */
             foreach (Rectangle top in blocksTop)
@@ -89,7 +115,7 @@ namespace thegame
             /* THE PERSO IS JUMPING - PART FROM BOTTOM TO TOP */
             if (jumping)
             {
-                if (Gravity >0)
+                if (Gravity > 0)
                 {
                     float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
                     vel -= acc * dt;// v = u + a*t
@@ -101,19 +127,19 @@ namespace thegame
                     GravityInit();
                     jumping = false;
                 }
-              
+
             }
             else
             {
                 /* IF PERSO CAN JUMP THEN JUMP */
-                if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space) && (!movedown || positionPerso.Y == sol))
+                if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up) && (!movedown || positionPerso.Y == sol))
                 {
                     jumping = true;
                     Gravity = 5f; /* First jump speed while pressing the button*/
                 }
 
                 /* KEEP PERSO ON GROUND */
-                if (movedown && positionPerso.Y + Gravity > sol) 
+                if (movedown && positionPerso.Y + Gravity > sol)
                     positionPerso.Y = sol;
 
                 /* THIS PART IS VERY VERY IMPORTANT */
@@ -142,30 +168,30 @@ namespace thegame
                     positionPerso.Y = minnewYpos;
 
                 }
-                }
-                /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
+            }
+            /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
 
 
-                /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
-                if(!jumping && (positionPerso.Y == sol || !movedown || Adapt))
-                {
-                    GravityInit();
-                }
+            /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
+            if (!jumping && (positionPerso.Y == sol || !movedown || Adapt))
+            {
+                GravityInit();
+            }
 
-                /* GRAVITY - PERSO NOT JUMPING AND ON GROUND */
-                if (movedown && !jumping && positionPerso.Y + 1 < sol && !Adapt)
-                {
-                    float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
-                    vel += acc * dt;// v = u + a*t
-                    Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
-                    positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
-                }
-
-
+            /* GRAVITY - PERSO NOT JUMPING AND ON GROUND */
+            if (movedown && !jumping && positionPerso.Y + 1 < sol && !Adapt)
+            {
+                float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
+                vel += acc * dt;// v = u + a*t
+                Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
+                positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
+            }
 
 
 
-                if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left))
+
+
+            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left))
             {
                 tempCurrentFrame.Y = 0;
                 if (positionPerso.X < 400)
@@ -173,20 +199,20 @@ namespace thegame
                 else
                     offset -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
-                else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right))
+            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right))
             {
                 tempCurrentFrame.Y = 1;
-                if(offset > 0)
+                if (offset > 0)
                     positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 else
                     offset += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
-            
-          
+
+
             else
                 animationPerso.Actif = false;
 
-            
+
 
             tempCurrentFrame.X = animationPerso.CurrentFrame.X;
             animationPerso.Position = positionPerso;
@@ -194,16 +220,18 @@ namespace thegame
             animationPerso.Update(gametime);
             hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
         }
-        public  void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
-           
+
             animationPerso.Draw(spriteBatch);
+            foreach (Projectile nut in projs)
+                nut.Draw(spriteBatch);
 
             /*
             Drawable debug = new Drawable(drawable_type.font);
             debug.Draw(spriteBatch, "grav: " + Gravity.ToString()  + " I : " + (!jumping || positionPerso.Y == sol).ToString(), new Vector2(300, 50), Color.White, "normal");
             */
-          /*  spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White * 0.5f); // debug perso hitbox */
+            /*  spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White * 0.5f); // debug perso hitbox */
         }
     }
 }

@@ -18,6 +18,7 @@ Content\audio\game.xnb
 Content\audio\opening1.xnb
 Content\video\vid.xnb
 Content\video\vid.wmv
+Content\nut.xnb
 Content\mario.png
 Content\plateforme.png
 Content\audio\opening.mp3

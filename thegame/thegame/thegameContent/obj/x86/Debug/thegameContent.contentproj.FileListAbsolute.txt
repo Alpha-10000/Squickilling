@@ -1,2 +1,3 @@
 \\psf\Home\Desktop\GitHub\Projet\thegame\thegame\thegameContent\obj\x86\Debug\thegameContent.contentprojResolveAssemblyReference.cache
 C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegameContent\obj\x86\Debug\thegameContent.contentprojResolveAssemblyReference.cache
+C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegameContent\obj\x86\Debug\thegameContent.contentprojResolveAssemblyReference.cache

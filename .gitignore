@@ -163,6 +163,10 @@ App_Data/*.ldf
 *.bim.layout
 *.bim_*.settings
 
+# Mac
+*.DS_Store
+*.userprefs
+
 # Microsoft Fakes
 FakesAssemblies/
 
@@ -176,6 +180,10 @@ ehthumbs.db
 
 # Folder config file
 Desktop.ini
+*.ini
 
 # Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac
 $RECYCLE.BIN/

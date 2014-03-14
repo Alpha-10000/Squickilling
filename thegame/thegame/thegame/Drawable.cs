@@ -15,7 +15,8 @@ namespace thegame
         font,
         Background,
         Ground,
-        vid
+        vid,
+        Nut
     }
 
 
@@ -48,6 +49,9 @@ namespace thegame
                     break;
                 case drawable_type.Background:
                      image = Textures.background;
+                    break;
+                case drawable_type.Nut:
+                    image = Textures.nut_texture;
                     break;
                default:
                     image = null;
