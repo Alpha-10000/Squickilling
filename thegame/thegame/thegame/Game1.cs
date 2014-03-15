@@ -17,6 +17,8 @@ namespace thegame
         public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public Instances instancesobject;
+
+       Camera camera = new Camera();
         
         public Game1()
         {
@@ -30,6 +32,7 @@ namespace thegame
         protected override void Initialize()
         {
             base.Initialize();
+            
         }
 
         protected override void LoadContent()
@@ -53,12 +56,22 @@ namespace thegame
 
         protected override void Draw(GameTime gameTime)
         {
-           
-
+            camera.Position = instancesobject.cameraPos;
             GraphicsDevice.Clear(Color.Beige);
-            spriteBatch.Begin();
+            if (instancesobject.selected == 2)//for the fixed background. I had to do that
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(Textures.background, Vector2.Zero, Color.White * 0.9f);
+                spriteBatch.End();
+            }
+
+            
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
+                   camera.TransformMatrix);
             instancesobject.Display(spriteBatch);
             spriteBatch.End();
+
+           
             base.Draw(gameTime);
         }
 

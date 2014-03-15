@@ -87,6 +87,7 @@ namespace thegame
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
             spriteBatch.Draw(Sprite, Position, SpriteSheet, Color.White);
         }
     }

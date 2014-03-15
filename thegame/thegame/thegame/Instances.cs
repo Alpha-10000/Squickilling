@@ -21,6 +21,12 @@ namespace thegame
         SplashScreen
     }
 
+    public enum CharacType
+    {
+        player,
+        ia
+    }
+
     public class Instances
     {
         public Game1 game { get; private set; }
@@ -44,6 +50,8 @@ namespace thegame
         private List<Projectile> projectiles;
         private List<Rectangle> objects = new List<Rectangle> { };
 
+        private List<Perso> iaPerso = new List<Perso>();
+
         private bool SoundIsTrue;
         private bool moveleft;
         private bool moveright;
@@ -56,6 +64,7 @@ namespace thegame
         private int mapSizeX;
         private int mapSizeY;
 
+        public Vector2 cameraPos = Vector2.Zero;
         
 
         public static bool pause = false;
@@ -319,7 +328,7 @@ namespace thegame
 
                             foreach (Rectangle left in blocksLeft)
                             {
-                                if ((new Rectangle(left.X + (int)(execute as Perso).offset, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
+                                if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
                                 {
                                     moveleft = false;
                                 }
@@ -327,7 +336,7 @@ namespace thegame
 
                             foreach (Rectangle right in blocksRight)
                             {
-                                if ((new Rectangle(right.X + (int)(execute as Perso).offset, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
+                                if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
                                 {
                                     moveright = false;
                                 }
@@ -336,8 +345,33 @@ namespace thegame
                             projectiles = new List<Projectile>();
                             (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
 
+                            foreach (Perso iathings in iaPerso)
+                            {
+                                moveleft = true;
+                                moveright = true;
+
+
+                                foreach (Rectangle left in blocksLeft)
+                                {
+                                    if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
+                                    {
+                                        moveleft = false;
+                                    }
+                                }
+
+                                foreach (Rectangle right in blocksRight)
+                                {
+                                    if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
+                                    {
+                                        moveright = false;
+                                    }
+                                }
+                                iathings.UpdateIA(gametime, moveleft, moveright, blocksTop);
+                            }
+
                             this.objects = (execute as Perso).objects;
 
+                            cameraPos = (execute as Perso).cameraPos;
 
                             if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                             {
@@ -388,6 +422,7 @@ namespace thegame
 
         public void Execute()
         {
+            cameraPos = Vector2.Zero;
             switch (this.selected)
             {
                 case 0: /* MAIN MENU */
@@ -451,12 +486,19 @@ namespace thegame
                             {0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
+                    objects = new List<Rectangle>();
+                    iaPerso = new List<Perso>();
+
             /* AT THE TIME IT IS MANUAL : LATER WE WILL HAVE TO USE A MATRIX */
             objects.Add(new Rectangle(320, 320, 10, 10));
             objects.Add(new Rectangle(484, 284, 10, 10));
             objects.Add(new Rectangle(781, 254, 10, 10));
             objects.Add(new Rectangle(996, 194, 10, 10));
             objects.Add(new Rectangle(1333, 284, 10, 10));
+
+            /* IA CHARACTERS */
+
+            iaPerso.Add(new Perso(new Vector2(490, 0), CharacType.ia));
               
             texlis = new List<Texture2D>();
             mapSizeX = tilemap.GetLength(1);
@@ -496,7 +538,7 @@ namespace thegame
        
 
                    
-                    execute = new Perso(new Vector2(200, 0));
+                    execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
                     Ground = new Drawable(drawable_type.Ground);
                     moveright = true;
@@ -531,6 +573,7 @@ namespace thegame
 
         public void Display(SpriteBatch sb)
         {
+
             if (this.selected != 6)
             {
                 if (type == instances_type.Menu)
@@ -539,45 +582,35 @@ namespace thegame
                 }
                 else
                 {
-                    sb.Draw(Textures.background, Vector2.Zero, Color.White * 0.9f);
-                    tree.Draw(sb, new Vector2(500 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(400 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(900 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(1050 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(1400 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(1800 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(2200 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(2400 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(3000 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(3400 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(3900 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(4050 + (execute as Perso).offset, 50));
-                    tree.Draw(sb, new Vector2(4900 + (execute as Perso).offset, 50));
-                    /* for (int i = 0; i < mapSizeX; i++)
-                     {
-                         for (int j = 0; j < mapSizeY; j++)
-                         {
-                             if (tilemap[j, i] == 1)
-                                 sb.Draw(Textures.plateform_texture, new Rectangle(i * 65, j * 8 + 260, 65, 8), Color.White);
-
-                         }
-
-                    
-                     }*/
+                   
+                    tree.Draw(sb, new Vector2(500, 50));
+                    tree.Draw(sb, new Vector2(400, 50));
+                    tree.Draw(sb, new Vector2(900, 50));
+                    tree.Draw(sb, new Vector2(1050, 50));
+                    tree.Draw(sb, new Vector2(1400, 50));
+                    tree.Draw(sb, new Vector2(1800, 50));
+                    tree.Draw(sb, new Vector2(2200, 50));
+                    tree.Draw(sb, new Vector2(2400, 50));
+                    tree.Draw(sb, new Vector2(3000, 50));
+                    tree.Draw(sb, new Vector2(3400, 50));
+                    tree.Draw(sb, new Vector2(3900, 50));
+                    tree.Draw(sb, new Vector2(4050, 50));
+                    tree.Draw(sb, new Vector2(4900, 50));
+       
 
                     for (int truc = 0; truc < 9; truc++)
                     {
-                        Ground.Draw(sb, new Vector2(truc * Textures.ground_texture.Width + (int)(execute as Perso).offset, 408));
+                        Ground.Draw(sb, new Vector2(truc * Textures.ground_texture.Width, 408));
                     }
                     foreach (Rectangle top in blocks)
                     {
-                        sb.Draw(Textures.buche_texture, new Rectangle(top.X + (int)(execute as Perso).offset, top.Y, top.Width, top.Height), Color.White);
+                        sb.Draw(Textures.buche_texture, new Rectangle(top.X, top.Y, top.Width, top.Height), Color.White);
                     }
 
                     /* On affiche les objets */
                     foreach (Rectangle dessine in objects)
                     {
-                        sb.Draw(Textures.nut_texture, new Rectangle(dessine.X + (int)(execute as Perso).offset, dessine.Y, dessine.Width, dessine.Height), Color.White);
+                        sb.Draw(Textures.nut_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
                     }
 
                     /*  foreach (Rectangle top in blocksRight)
@@ -593,7 +626,13 @@ namespace thegame
                     /*        debug.Draw(sb, "X : " + (execute as Perso).positionPerso.X.ToString() + " offset : " + (execute as Perso).offset.ToString(), new Vector2(300, 50), Color.White, "normal");
                         */
                     (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
-                    tree.Draw(sb, new Vector2(-100 + (execute as Perso).offset, 50));
+
+                    foreach (Perso iathings in iaPerso)
+                    {
+                        iathings.Draw(sb);
+                    }
+
+                    tree.Draw(sb, new Vector2(-100, 50));
 
                     /* DRAW GROUND */
                 }
