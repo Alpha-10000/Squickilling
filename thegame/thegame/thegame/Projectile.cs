@@ -25,6 +25,7 @@ namespace thegame
         Vector2 startPosition;
         float speed;
         Vector2 direction;
+        public Rectangle hitbox;
 
         public Projectile(drawable_type drawable_t, Vector2 positionProjectile, Vector2 startPosition, float speed, Vector2 direction)
             : base(drawable_t)
@@ -34,6 +35,7 @@ namespace thegame
             this.speed = speed;
             this.direction = direction;
             visible = true;
+            this.hitbox = new Rectangle((int)positionProjectile.X, (int)positionProjectile.Y, Textures.nut_texture.Width, Textures.nut_texture.Height);//collision
         }
 
 
@@ -47,6 +49,8 @@ namespace thegame
             if (visible == true)
             {
                 positionProjectile += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.hitbox.X = (int)positionProjectile.X;//collision
+                this.hitbox.Y = (int)positionProjectile.Y;//collision
             }
 
         }

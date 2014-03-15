@@ -42,6 +42,7 @@ namespace thegame
 
         Animation animationPerso;
         List<Projectile> projs = new List<Projectile>();
+        public List<Rectangle> objects = new List<Rectangle>();
 
         public Perso(Vector2 pos)
         {
@@ -68,8 +69,9 @@ namespace thegame
             Gravity = 0.5f; /* Start folling with this speed */
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj, List<Rectangle> objects)
         {
+            this.objects = objects;
 
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
@@ -97,12 +99,33 @@ namespace thegame
             {
                 projs.Add(noix);
             }
+
+            /* CHECK OBJECT COLLISION WITH PROJECTILES */
+            for (int i = 0; i < projs.Count; i++)
+            {
+                bool ifitdoes = false;
+                for (int j = objects.Count - 1; j >= 0; j--)
+                {
+                    if ((new Rectangle(objects[j].X + (int)offset, objects[j].Y, objects[j].Width, objects[j].Height)).Intersects(projs[i].hitbox))
+                    {
+                        ifitdoes = true;
+                        objects.Remove(objects[i]);
+                    }
+                }
+                if (ifitdoes)
+                {
+                    projs.Remove(projs[i]);
+                }
+            }
+
+            /* Update list*/
             for (int i = 0; i < projs.Count; i++)
             {
                 projs[i].Update(gametime);
                 if (projs[i].Visible == false)
                     projs.Remove(projs[i]);
             }
+           
 
             /* CHECK TOP COLLISION */
             foreach (Rectangle top in blocksTop)
@@ -229,10 +252,10 @@ namespace thegame
             foreach (Projectile nut in projs)
                 nut.Draw(spriteBatch);
 
-            /*
+            
             Drawable debug = new Drawable(drawable_type.font);
-            debug.Draw(spriteBatch, "grav: " + Gravity.ToString()  + " I : " + (!jumping || positionPerso.Y == sol).ToString(), new Vector2(300, 50), Color.White, "normal");
-            */
+            debug.Draw(spriteBatch, "x : " + (positionPerso.X - offset).ToString() + " y : " + positionPerso.Y, new Vector2(300, 50), Color.White, "normal");
+            
             /*  spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White * 0.5f); // debug perso hitbox */
         }
     }

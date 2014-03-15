@@ -95,3 +95,4 @@ C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\Mic
 C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe
 C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.pdb
 C:\Users\Alpha\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\nut.xnb
+C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\nut.xnb

@@ -165,6 +165,15 @@
       <Extra>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.wmv</Extra>
       <Time>2014-03-09T00:20:43.5583788+01:00</Time>
     </Item>
+    <Item>
+      <Source>nut.png</Source>
+      <Name>nut</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\nut.xnb</Output>
+      <Time>2014-03-15T07:28:01.9037584+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

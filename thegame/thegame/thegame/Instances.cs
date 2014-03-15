@@ -42,6 +42,7 @@ namespace thegame
         public List<Rectangle> blocksRight;
         public List<Rectangle> tile;
         private List<Projectile> projectiles;
+        private List<Rectangle> objects = new List<Rectangle> { };
 
         private bool SoundIsTrue;
         private bool moveleft;
@@ -54,6 +55,8 @@ namespace thegame
         private List<Texture2D>   texlis;
         private int mapSizeX;
         private int mapSizeY;
+
+        
 
         public static bool pause = false;
         MouseState mouse = Mouse.GetState();
@@ -331,7 +334,10 @@ namespace thegame
                             }
 
                             projectiles = new List<Projectile>();
-                            (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles);
+                            (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
+
+                            this.objects = (execute as Perso).objects;
+
 
                             if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                             {
@@ -341,6 +347,9 @@ namespace thegame
                                 Execute();
                                 Thread.Sleep(150);
                             }
+
+                           
+                            
 
                         }
                 }
@@ -442,6 +451,12 @@ namespace thegame
                             {0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
+            /* AT THE TIME IT IS MANUAL : LATER WE WILL HAVE TO USE A MATRIX */
+            objects.Add(new Rectangle(320, 320, 10, 10));
+            objects.Add(new Rectangle(484, 284, 10, 10));
+            objects.Add(new Rectangle(781, 254, 10, 10));
+            objects.Add(new Rectangle(996, 194, 10, 10));
+            objects.Add(new Rectangle(1333, 284, 10, 10));
               
             texlis = new List<Texture2D>();
             mapSizeX = tilemap.GetLength(1);
@@ -557,6 +572,12 @@ namespace thegame
                     foreach (Rectangle top in blocks)
                     {
                         sb.Draw(Textures.buche_texture, new Rectangle(top.X + (int)(execute as Perso).offset, top.Y, top.Width, top.Height), Color.White);
+                    }
+
+                    /* On affiche les objets */
+                    foreach (Rectangle dessine in objects)
+                    {
+                        sb.Draw(Textures.nut_texture, new Rectangle(dessine.X + (int)(execute as Perso).offset, dessine.Y, dessine.Width, dessine.Height), Color.White);
                     }
 
                     /*  foreach (Rectangle top in blocksRight)
