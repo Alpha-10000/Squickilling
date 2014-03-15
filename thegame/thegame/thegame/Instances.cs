@@ -499,7 +499,9 @@ namespace thegame
             /* IA CHARACTERS */
 
             iaPerso.Add(new Perso(new Vector2(490, 0), CharacType.ia));
-              
+            iaPerso.Add(new Perso(new Vector2(1300, 0), CharacType.ia));
+
+
             texlis = new List<Texture2D>();
             mapSizeX = tilemap.GetLength(1);
             mapSizeY = tilemap.GetLength(0);

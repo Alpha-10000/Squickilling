@@ -122,7 +122,7 @@ namespace thegame
                     if ((new Rectangle(objects[j].X, objects[j].Y, objects[j].Width, objects[j].Height)).Intersects(projs[i].hitbox))
                     {
                         ifitdoes = true;
-                        objects.Remove(objects[i]);
+                        objects.Remove(objects[j]);
                     }
                 }
                 if (ifitdoes)
@@ -415,7 +415,7 @@ namespace thegame
             foreach (Projectile nut in projs)
                 nut.Draw(spriteBatch);
 
-            
+            /*
             Drawable debug = new Drawable(drawable_type.font);
             if(this.typePerso == CharacType.player)
                 debug.Draw(spriteBatch, "x : " + positionPerso.X, new Vector2(300, 50), Color.White, "normal");
