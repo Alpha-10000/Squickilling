@@ -261,6 +261,24 @@ namespace thegame
             hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
         }
 
+        public List<Perso> CollisionIAProjec(List<Perso> checkIA)
+        {
+            for (int i = 0; i < checkIA.Count; i++)
+            {
+                for (int j = 0; j < projs.Count; j++)
+                {
+                    if (projs[j].hitbox.Intersects(checkIA[i].hitBoxPerso))
+                    {
+                        checkIA.Remove(checkIA[i]);
+                        break;
+                    }
+                }
+            }
+
+
+            return checkIA;
+        }
+
 
         public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer)
         {

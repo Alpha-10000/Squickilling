@@ -348,6 +348,7 @@ namespace thegame
                             this.objects = (execute as Perso).objects;
 
                             cameraPos = (execute as Perso).cameraPos;
+                            iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
 
                             foreach (Perso iathings in iaPerso)
                             {
