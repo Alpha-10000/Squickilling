@@ -109,7 +109,7 @@ namespace thegame
                 directionNoix = new Vector2(1, 0);
             }
 
-            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 230, directionNoix);
+            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 200, directionNoix);
 
             if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space))
             {
