@@ -65,20 +65,10 @@ namespace thegame
         {
             
 
-            if (Instances.pause)
-            {
-                sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
-                sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
-                sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
-                Textures.btnPlay.Draw(sb);
-                Textures.btnMenu.Draw(sb);
-                Textures.btnQuit.Draw(sb);
-            }
-            else
-            {
+    
+            
                 sb.Draw(image, pos, Color.White);
-            }
+            
             
         }
         public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color, string Type) /* To show text */

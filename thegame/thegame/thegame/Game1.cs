@@ -65,13 +65,21 @@ namespace thegame
                 spriteBatch.End();
             }
 
-            
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
-                   camera.TransformMatrix);
-            instancesobject.Display(spriteBatch);
-            spriteBatch.End();
+            if (instancesobject.pause)
+            {
+                spriteBatch.Begin();
+                instancesobject.Display(spriteBatch);
+                spriteBatch.End();
+            }
+            else
+            {
 
-           
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
+                       camera.TransformMatrix);
+                instancesobject.Display(spriteBatch);
+                spriteBatch.End();
+
+            }
             base.Draw(gameTime);
         }
 

@@ -67,7 +67,7 @@ namespace thegame
         public Vector2 cameraPos = Vector2.Zero;
         
 
-        public static bool pause = false;
+        public bool pause = false;
         MouseState mouse = Mouse.GetState();
 
 
@@ -322,7 +322,7 @@ namespace thegame
                             }
                             else
                             {
-
+                                cameraPos = (execute as Perso).cameraPos;
                                 /* START OF THE GAME CODE */
                                 moveleft = true;
                                 moveright = true;
@@ -349,7 +349,7 @@ namespace thegame
 
                                 this.objects = (execute as Perso).objects;
 
-                                cameraPos = (execute as Perso).cameraPos;
+                                
                                 iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
 
                                 foreach (Perso iathings in iaPerso)
@@ -593,10 +593,24 @@ namespace thegame
                 if (type == instances_type.Menu)
                 {
                     (execute as Menu).Display(sb);
+                    
+                }
+                else if (pause)
+                {
+                 
+                        sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                        sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
+                        sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
+                        sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
+                        Textures.btnPlay.Draw(sb);
+                        Textures.btnMenu.Draw(sb);
+                        Textures.btnQuit.Draw(sb);
+                    
+
                 }
                 else
                 {
-                   
+
                     tree.Draw(sb, new Vector2(500, 50));
                     tree.Draw(sb, new Vector2(400, 50));
                     tree.Draw(sb, new Vector2(900, 50));
@@ -610,7 +624,7 @@ namespace thegame
                     tree.Draw(sb, new Vector2(3900, 50));
                     tree.Draw(sb, new Vector2(4050, 50));
                     tree.Draw(sb, new Vector2(4900, 50));
-       
+
 
                     for (int truc = 0; truc < 9; truc++)
                     {
