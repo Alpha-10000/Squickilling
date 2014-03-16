@@ -229,9 +229,25 @@ namespace thegame
             }
 
 
+            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
+            {
+                tempCurrentFrame.Y = 0;
+                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                positionPerso.X += changement + 10;
+                if (positionPerso.X > 400)
+                    cameraPos = new Vector2(cameraPos.X - changement - 10, cameraPos.Y);
+            }
+            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
+            {
+                tempCurrentFrame.Y = 1;
 
+                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                positionPerso.X -= changement + 10;
+                if (positionPerso.X > 400)
+                    cameraPos = new Vector2(cameraPos.X + changement + 10, cameraPos.Y);
+            }
 
-            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
@@ -239,7 +255,7 @@ namespace thegame
                     if (positionPerso.X > 400)
                         cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
-            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right))
+            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
             {
                 tempCurrentFrame.Y = 1;
 

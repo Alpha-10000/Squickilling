@@ -126,13 +126,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Paused.png">
-      <Name>Paused</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Background.JPG">
       <Name>Background</Name>
       <Importer>TextureImporter</Importer>
@@ -177,6 +170,13 @@
   <ItemGroup>
     <Compile Include="nut.png">
       <Name>nut</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Paused.png">
+      <Name>Paused</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

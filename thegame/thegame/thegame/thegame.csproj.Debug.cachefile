@@ -9,6 +9,7 @@ Content\Background.xnb
 Content\Play.xnb
 Content\Menu.xnb
 Content\Quit.xnb
+Content\nut.xnb
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\opening.xnb
@@ -16,7 +17,6 @@ Content\audio\button.xnb
 Content\audio\game.xnb
 Content\audio\opening1.xnb
 Content\video\vid.xnb
-Content\nut.xnb
 Content\audio\opening.wma
 Content\video\vid.wmv
 Content\mario.png
