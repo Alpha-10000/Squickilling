@@ -320,45 +320,17 @@ namespace thegame
                                 Textures.btnPlay.isClicked = false;
                                 Textures.btnMenu.isClicked = false;
                             }
-
-                            /* START OF THE GAME CODE */
-                            moveleft = true;
-                            moveright = true;
-
-
-                            foreach (Rectangle left in blocksLeft)
+                            else
                             {
-                                if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
-                                {
-                                    moveleft = false;
-                                }
-                            }
 
-                            foreach (Rectangle right in blocksRight)
-                            {
-                                if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
-                                {
-                                    moveright = false;
-                                }
-                            }
-
-                            projectiles = new List<Projectile>();
-                            (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
-
-                            this.objects = (execute as Perso).objects;
-
-                            cameraPos = (execute as Perso).cameraPos;
-                            iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
-
-                            foreach (Perso iathings in iaPerso)
-                            {
+                                /* START OF THE GAME CODE */
                                 moveleft = true;
                                 moveright = true;
 
 
                                 foreach (Rectangle left in blocksLeft)
                                 {
-                                    if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
+                                    if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
                                     {
                                         moveleft = false;
                                     }
@@ -366,34 +338,64 @@ namespace thegame
 
                                 foreach (Rectangle right in blocksRight)
                                 {
-                                    if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
+                                    if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
                                     {
                                         moveright = false;
                                     }
                                 }
-                                iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
-                                if (iathings.gameover == true)
+
+                                projectiles = new List<Projectile>();
+                                (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
+
+                                this.objects = (execute as Perso).objects;
+
+                                cameraPos = (execute as Perso).cameraPos;
+                                iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
+
+                                foreach (Perso iathings in iaPerso)
                                 {
-                                    this.type = instances_type.Game;
-                                    this.selected = 2;
-                                    Execute();
-                                    break;
+                                    moveleft = true;
+                                    moveright = true;
+
+
+                                    foreach (Rectangle left in blocksLeft)
+                                    {
+                                        if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
+                                        {
+                                            moveleft = false;
+                                        }
+                                    }
+
+                                    foreach (Rectangle right in blocksRight)
+                                    {
+                                        if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
+                                        {
+                                            moveright = false;
+                                        }
+                                    }
+                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
+                                    if (iathings.gameover == true)
+                                    {
+                                        this.type = instances_type.Game;
+                                        this.selected = 2;
+                                        Execute();
+                                        break;
+                                    }
                                 }
+
+
+
+                                if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
+                                {
+                                    this.selected = 0;
+                                    instancesound.Stop();
+                                    this.type = instances_type.Menu;
+                                    Execute();
+                                    Thread.Sleep(150);
+                                }
+
+
                             }
-
-                           
-
-                            if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
-                            {
-                                this.selected = 0;
-                                instancesound.Stop();
-                                this.type = instances_type.Menu;
-                                Execute();
-                                Thread.Sleep(150);
-                            }
-
-                           
-                            
 
                         }
                 }
