@@ -345,6 +345,10 @@ namespace thegame
                             projectiles = new List<Projectile>();
                             (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
 
+                            this.objects = (execute as Perso).objects;
+
+                            cameraPos = (execute as Perso).cameraPos;
+
                             foreach (Perso iathings in iaPerso)
                             {
                                 moveleft = true;
@@ -366,12 +370,17 @@ namespace thegame
                                         moveright = false;
                                     }
                                 }
-                                iathings.UpdateIA(gametime, moveleft, moveright, blocksTop);
+                                iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
+                                if (iathings.gameover == true)
+                                {
+                                    this.type = instances_type.Game;
+                                    this.selected = 2;
+                                    Execute();
+                                    break;
+                                }
                             }
 
-                            this.objects = (execute as Perso).objects;
-
-                            cameraPos = (execute as Perso).cameraPos;
+                           
 
                             if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                             {

@@ -19,7 +19,7 @@ namespace thegame
         //  Vector2 velocity;
         //  float gravity = 0.1f;
         public Rectangle hitBoxPerso;
-
+        public Rectangle ThrowProjectiles;
 
         float sol = 380;
         float minnewYpos;
@@ -30,12 +30,13 @@ namespace thegame
         float vel;
         float acc;
 
-
+        public bool gameover = false;
+        bool debugbool = false;
 
         float newYpos;
         protected Texture2D imagePerso { get; private set; }
 
-
+        public List<Projectile> projIA = new List<Projectile>();
         public Vector2 Position { get; private set; }
         public Vector2 initPos { get; private set; }
 
@@ -50,12 +51,14 @@ namespace thegame
         bool goright = false;
         bool goleft = true;
 
+        double nextprojec = 0;
         public CharacType typePerso;
 
         public Vector2 cameraPos = Vector2.Zero;
 
         public Perso(Vector2 pos, CharacType typePerso)
         {
+
             animationPerso = new Animation(positionPerso, new Vector2(8, 2));
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
@@ -71,7 +74,7 @@ namespace thegame
             animationPerso.AnimationSprite = Textures.mario_texture;
             animationPerso.Position = positionPerso;
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
-
+            ThrowProjectiles = new Rectangle((int)positionPerso.X, (int)positionPerso.Y, 150, 40);
 
         }
 
@@ -85,7 +88,7 @@ namespace thegame
         public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj, List<Rectangle> objects)
         {
             this.objects = objects;
-
+           
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
@@ -259,17 +262,63 @@ namespace thegame
         }
 
 
-        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop)
+        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer)
         {
-           
 
+            
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
             movedown = true;
             Adapt = false;
 
+            Vector2 directionNoix;
+            Vector2 positionNoix;
+            if (animationPerso.CurrentFrame.Y == 1)
+            {
+                positionNoix = new Vector2(positionPerso.X - 5, positionPerso.Y + 5);
+                directionNoix = new Vector2(-1, 0);
+            }
+            else
+            {
+                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y + 5);
+                directionNoix = new Vector2(1, 0);
+            }
+
+            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 230, directionNoix);
+
+            debugbool = ThrowProjectiles.Intersects(hitboxPlayer);
+
+            if (gametime.TotalGameTime.TotalMilliseconds >= nextprojec && ThrowProjectiles.Intersects(hitboxPlayer))
+            {
+                projIA.Add(noix);
+                nextprojec = gametime.TotalGameTime.TotalMilliseconds + 1000;
+            }
+
+
+
+
           
+
+            /* CHECK OBJECT COLLISION WITH PROJECTILES */
+            for (int i = 0; i < projIA.Count; i++)
+            {
+                if (projIA[i].hitbox.Intersects(hitboxPlayer))
+                {
+                    projIA.Remove(projIA[i]);
+                    gameover = true;
+                }
+                
+            }
+
+            /* Update list*/
+            for (int i = 0; i < projIA.Count; i++)
+            {
+                projIA[i].Update(gametime);
+                if (projIA[i].Visible == false)
+                    projs.Remove(projIA[i]);
+            }
+           
 
             /* CHECK TOP COLLISION */
             foreach (Rectangle top in blocksTop)
@@ -277,7 +326,6 @@ namespace thegame
                 if ((new Rectangle(top.X, top.Y, top.Width, top.Height)).Intersects(hitBoxPerso))
                 {
                     movedown = false;
-
                 }
             }
 
@@ -384,13 +432,13 @@ namespace thegame
             {
                
                 tempCurrentFrame.Y = 0;
-                
+                ThrowProjectiles = new Rectangle((int)positionPerso.X, (int)positionPerso.Y, 150, 40);
                     positionPerso.X += speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
             else if (moveleft && goleft)
             {
                 tempCurrentFrame.Y = 1;
-                
+                ThrowProjectiles = new Rectangle((int)positionPerso.X - 150, (int)positionPerso.Y, 150, 40);
                     positionPerso.X -= speed * (float)gametime.ElapsedGameTime.TotalSeconds;
             }
 
@@ -412,16 +460,30 @@ namespace thegame
         {
 
             animationPerso.Draw(spriteBatch);
-            foreach (Projectile nut in projs)
-                nut.Draw(spriteBatch);
+            if (typePerso == CharacType.player)
+            {
+                foreach (Projectile nut in projs)
+                    nut.Draw(spriteBatch);
+            }
+            else
+            {
+                foreach (Projectile nut in projIA)
+                    nut.Draw(spriteBatch);
+            }
+/* DEBUUUUGGGG
+            if (typePerso == CharacType.ia)
+            {
+                Drawable debug = new Drawable(drawable_type.font);
+                if(debugbool)
+                    debug.Draw(spriteBatch, "bool" + debug.ToString(), new Vector2(300, 50), Color.White, "normal");
 
-            /*
-            Drawable debug = new Drawable(drawable_type.font);
-            if(this.typePerso == CharacType.player)
-                debug.Draw(spriteBatch, "x : " + positionPerso.X, new Vector2(300, 50), Color.White, "normal");
-            
-            /*  spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.White * 0.5f); // debug perso hitbox */
+                      
+
+                spriteBatch.Draw(Textures.hitbox, ThrowProjectiles, Color.White * 0.5f);
+            } */
         }
+
+     
     }
 }
 
