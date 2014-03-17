@@ -4,12 +4,12 @@ Content\blank.xnb
 Content\tree.xnb
 Content\Buche_test.xnb
 Content\Ground.xnb
-Content\Paused.xnb
 Content\Background.xnb
 Content\Play.xnb
 Content\Menu.xnb
 Content\Quit.xnb
 Content\nut.xnb
+Content\Paused.xnb
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\opening.xnb
