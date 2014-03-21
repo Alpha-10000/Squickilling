@@ -334,7 +334,7 @@ namespace thegame
 
           
 
-            /* CHECK OBJECT COLLISION WITH PROJECTILES */
+            /* CHECK PERSO COLLISION WITH PROJECTILES */
             for (int i = 0; i < projIA.Count; i++)
             {
                 if (projIA[i].hitbox.Intersects(hitboxPlayer))
@@ -342,7 +342,7 @@ namespace thegame
                     projIA.Remove(projIA[i]);
                     gameover = true;
                 }
-                
+
             }
 
             /* Update list*/
@@ -350,7 +350,7 @@ namespace thegame
             {
                 projIA[i].Update(gametime);
                 if (projIA[i].Visible == false)
-                    projs.Remove(projIA[i]);
+                    projIA.Remove(projIA[i]);
             }
            
 

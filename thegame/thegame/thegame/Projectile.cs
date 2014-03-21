@@ -62,6 +62,8 @@ namespace thegame
             {
                 base.Draw(spriteBatch, positionProjectile);
             }
+
+
         }
 
 
