@@ -101,3 +101,40 @@ C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thega
 C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.application
 C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe.manifest
 C:\Users\Victor\Google Drive\Epita\Projet\sauvegarde victor\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.application
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.csprojResolveAssemblyReference.cache
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.pdb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Background.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Play.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Menu.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Quit.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\nut.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Paused.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening1.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.xnb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.wmv
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.png
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.png
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.mp3
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.wav
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.png
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.png
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.exe.manifest
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.application
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.exe
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\thegame.pdb
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.exe.manifest
+C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\obj\x86\Debug\thegame.application

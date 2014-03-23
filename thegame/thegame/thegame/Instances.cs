@@ -36,7 +36,21 @@ namespace thegame
         public object execute { get; private set; }
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
-        private List<string> Text_Game;
+
+        private List<string> Text_Game;     // Contains text of menu options
+        private const int _mnuPlay = 0;     // Use this constant to refer to the menu text.
+        private const int _mnuOptions = 1;
+        private const int _mnuExit = 2;
+        private const int _mnuLanguage = 3;
+        private const int _mnuFullscreen = 4;
+        private const int _mnuBack = 5;
+        private const int _mnuEnglish = 6;
+        private const int _mnuFrench = 7;
+        private const int _mnuSound = 8;
+        private const int _mnuOn = 9;
+        private const int _mnuOff = 10;
+        private const int _mnuDutch = 11;
+
         private SoundEffectInstance instancesound;
         public static Rectangle vidRectangle;
         public static VideoPlayer vidPlayer;
@@ -52,7 +66,8 @@ namespace thegame
 
         private List<Perso> iaPerso = new List<Perso>();
 
-        private bool SoundIsTrue;
+        private bool Fullscreen;        // Set to true to switch to fullscreen
+        private bool SoundIsTrue;       // Set to true to switch the sound (on / off)
         private bool moveleft;
         private bool moveright;
         private Drawable tree;
@@ -75,14 +90,57 @@ namespace thegame
         private void GetText(string language)
         {
             CultureInfo ci = CultureInfo.InstalledUICulture;
-            if (language == "english")
+            switch (language)
             {
-                Text_Game = new List<string> { "Play", "Options", "Exit", "Language", "Full screen", "Back", "English", "French", "Sound", "On", "Off"  };
+                case "english":
+                        Text_Game = new List<string> { "Play", 
+                                                       "Options", 
+                                                       "Exit", 
+                                                       "Language", 
+                                                       "Full screen", 
+                                                       "Back", 
+                                                       "English", 
+                                                       "French", 
+                                                       "Sound", 
+                                                       "On", 
+                                                       "Off",
+                                                       "Dutch" };
+                         break;
+
+                case "french":
+                    Text_Game = new List<string> { "Jouer",
+                                                   "Options", 
+                                                   "Quitter", 
+                                                   "Langue", 
+                                                   "Plein écran", 
+                                                   "Retour", 
+                                                   "Anglais", 
+                                                   "Français", 
+                                                   "Son", 
+                                                   "Actif", 
+                                                   "Inactif",
+                                                   "Néerlandais" };
+                    break;
+
+                case "nederlands":
+                    Text_Game = new List<string> { "Spelen", 
+                                                   "Opties", 
+                                                   "Afsluiten", 
+                                                   "Taal",
+                                                   "Volledig scherm",
+                                                   "Terug",
+                                                   "Engels",
+                                                   "Frans",
+                                                   "Geluid",
+                                                   "Aan",
+                                                   "Uit",
+                                                   "Nederlands" };
+                    break;
             }
-            else
-            {
-                Text_Game = new List<string> { "Jouer", "Options", "Quitter", "Langue", "Plein ecran", "Retour", "Anglais", "Français", "Son", "On", "Off" };
-            }
+            
+                    
+                
+            
         }
 
         public Instances(Game1 game)
@@ -189,7 +247,9 @@ namespace thegame
                                 case 1: 
                                     if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // FUllSCREEN
                                     {
-                                        this.selected = 5;
+                                        //this.selected = 5;
+                                        Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
+                                        Game1.graphics.ToggleFullScreen();
                                         Execute();
                                     }
                                     break;
@@ -197,7 +257,9 @@ namespace thegame
                                 case 2:
                                     if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // SOUND SETTINGS
                                     {
-                                        this.selected = 4;
+                                        //this.selected = 4;
+                                        SoundIsTrue = !SoundIsTrue;
+
                                         Execute();
                                     }
                                     break;
@@ -233,6 +295,14 @@ namespace thegame
                                         Execute();
                                     }
                                     break;
+                                case 2:
+                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                                    {
+                                        GetText("nederlands");
+                                        this.selected = 0;      // This takes it to the first menu page
+                                        Execute();
+                                    }
+                                    break;
                                 default:
                                     break;
                             }
@@ -265,6 +335,8 @@ namespace thegame
 
                         }
 
+                        // ES :  I have moved the fullscreen toggle to the option menu.
+                        //       This is section is no longer active.
                         else if (selected == 5) // FULLSCREEN SETTINGS
                         {
 
@@ -440,34 +512,62 @@ namespace thegame
                 case 0: /* MAIN MENU */
                     Sound("menu");
                     execute = new Menu(3, "Squickilling");
-            (execute as Menu).AddElements(Text_Game[0]);//Play
-            (execute as Menu).AddElements(Text_Game[1]);//Options
-            (execute as Menu).AddElements(Text_Game[2]);//Exit game
+                    (execute as Menu).AddElements(Text_Game[_mnuPlay]);//Play
+                    (execute as Menu).AddElements(Text_Game[_mnuOptions]);//Options
+                    (execute as Menu).AddElements(Text_Game[_mnuExit]);//Exit game
             
                     break;
                 case 1: /* OPTION MENU */
                     Sound("menu");
-                    execute = new Menu(4, Text_Game[1]);//options
-            (execute as Menu).AddElements(Text_Game[3]);//language 
-            (execute as Menu).AddElements(Text_Game[4]);//fullscreen
-            (execute as Menu).AddElements(Text_Game[8]);//sound
-            (execute as Menu).AddElements(Text_Game[5]);//back
+                    execute = new Menu(4, Text_Game[_mnuOptions]);//options
+                    (execute as Menu).AddElements(Text_Game[_mnuLanguage]);//language 
+                    //(execute as Menu).AddElements(Text_Game[4]);//fullscreen  
+                    //     Next section modifies text on display mode.
+                    if (Fullscreen)
+                    {
+                        (execute as Menu).AddElements(Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOn] + ")"); //fullscreen on
+                    }
+                    else
+                    {
+                        (execute as Menu).AddElements(Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOff] + ")"); //fullscreen off
+                    }
+
+                    //(execute as Menu).AddElements(Text_Game[8]);//sound
+                    //      Next section modifies text on sound mode.
+                    if (SoundIsTrue)
+                    {
+                        (execute as Menu).AddElements(Text_Game[_mnuSound] + " (" + Text_Game[_mnuOn] + ")"); //sound on
+                    }
+                    else
+                    {
+                        (execute as Menu).AddElements((Text_Game[_mnuSound] + " (" + Text_Game[_mnuOff] + ")")); // sound off
+                    }
+                    (execute as Menu).AddElements(Text_Game[_mnuBack]);//back
    
+                    break;
+
+                case 3: /* Start the game */
+                    Sound("menu");
+                    execute = new Menu(3, Text_Game[_mnuLanguage]);
+                    (execute as Menu).AddElements(Text_Game[_mnuEnglish]);
+                    (execute as Menu).AddElements(Text_Game[_mnuFrench]);
+                    (execute as Menu).AddElements(Text_Game[_mnuDutch]);
                     break;
 
                 case 4: /* SOUND MENU */
                     Sound("menu");
-                    execute = new Menu(2, Text_Game[8]);//sound
-                    (execute as Menu).AddElements(Text_Game[9]);//on
-                    (execute as Menu).AddElements(Text_Game[10]);//off
+                    execute = new Menu(2, Text_Game[_mnuSound]);//sound
+                    (execute as Menu).AddElements(Text_Game[_mnuOn]);//on
+                    (execute as Menu).AddElements(Text_Game[_mnuOff]);//off
                     
+                   
 
                     break;
                 case 5: /* FULL SCREEN */
                     Sound("menu");
-                    execute = new Menu(2, Text_Game[4]);//fullscreen
-                    (execute as Menu).AddElements(Text_Game[9]);//on
-                    (execute as Menu).AddElements(Text_Game[10]);//off
+                    execute = new Menu(2, Text_Game[_mnuFullscreen]);//fullscreen
+                    (execute as Menu).AddElements(Text_Game[_mnuOn]);//on
+                    (execute as Menu).AddElements(Text_Game[_mnuOff]);//off
                     break;
 
                 case 6: /* INTRODUCTION : SPLASHSCREEN */
@@ -615,12 +715,7 @@ namespace thegame
                     moveleft = true;
                     debug = new Drawable(drawable_type.font);
                     break;
-                case 3: /* Start the game */
-                    Sound("menu");
-                    execute = new Menu(2, Text_Game[3]);
-            (execute as Menu).AddElements(Text_Game[6]);
-            (execute as Menu).AddElements(Text_Game[7]);
-                    break;
+
                 default:
                     break;
             }
