@@ -17,8 +17,11 @@ Content\audio\button.xnb
 Content\audio\game.xnb
 Content\audio\opening1.xnb
 Content\video\vid.xnb
+Content\game_over.xnb
+Content\video\game_over_vid.xnb
 Content\audio\opening.wma
 Content\video\vid.wmv
+Content\video\game_over_vid.wmv
 Content\mario.png
 Content\plateforme.png
 Content\audio\opening.mp3

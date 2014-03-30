@@ -19,6 +19,7 @@ namespace thegame
         public static Texture2D buche_texture;
         public static Texture2D tree_texture;
         public static Texture2D pausedTexture;
+        public static Texture2D game_overTexture;
         public static Rectangle pausedRectangle;
         public static SpriteFont font_texture;
         public static SpriteFont fontTitle_texture;
@@ -60,6 +61,10 @@ namespace thegame
             btnPlay.Load(cm.Load<Texture2D>(@"Play"), new Vector2(313, 183));
             btnMenu.Load(cm.Load<Texture2D>(@"Menu"), new Vector2(318, 253));
             btnQuit.Load(cm.Load<Texture2D>(@"Quit"), new Vector2(307, 323));
+
+            // Game Over
+            game_overTexture = cm.Load<Texture2D>(@"game_over");
+            
         }
     }
 }

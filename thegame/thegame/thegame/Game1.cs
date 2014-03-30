@@ -18,7 +18,7 @@ namespace thegame
         SpriteBatch spriteBatch;
         public Instances instancesobject;
 
-       Camera camera = new Camera();
+        Camera camera = new Camera();
         
         public Game1()
         {

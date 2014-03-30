@@ -31,6 +31,7 @@ namespace thegame
         float acc;
 
         public bool gameover = false;
+        public static bool game_over;
         bool debugbool = false;
 
         float newYpos;
@@ -55,6 +56,7 @@ namespace thegame
         public CharacType typePerso;
 
         public Vector2 cameraPos = Vector2.Zero;
+
 
         public Perso(Vector2 pos, CharacType typePerso)
         {
@@ -341,6 +343,7 @@ namespace thegame
                 {
                     projIA.Remove(projIA[i]);
                     gameover = true;
+                    game_over = true;
                 }
 
             }

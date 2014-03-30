@@ -16,6 +16,7 @@ namespace thegame
         Background,
         Ground,
         vid,
+        game_over_vid,
         Nut
     }
 
@@ -24,6 +25,7 @@ namespace thegame
     {
         public Texture2D image;
         public static Texture2D vidTexture;
+        
         public SpriteFont _font;
         public SpriteFont _fontTitle;
 
@@ -63,13 +65,7 @@ namespace thegame
 
         public void Draw(SpriteBatch sb, Vector2 pos) /* To show image */
         {
-            
-
-    
-            
-                sb.Draw(image, pos, Color.White);
-            
-            
+           sb.Draw(image, pos, Color.White);
         }
         public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color, string Type) /* To show text */
         {

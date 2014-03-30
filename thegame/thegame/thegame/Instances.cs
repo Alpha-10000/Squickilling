@@ -53,7 +53,7 @@ namespace thegame
 
         private SoundEffectInstance instancesound;
         public static Rectangle vidRectangle;
-        public static VideoPlayer vidPlayer;
+        public static VideoPlayer vidPlayer, vidPlayer2;
 
         private int[,] tilemap;
         public List<Rectangle> blocks;
@@ -86,6 +86,7 @@ namespace thegame
         
 
         public bool pause = false;
+        public bool game_over_i = false;
         MouseState mouse = Mouse.GetState();
 
 
@@ -198,7 +199,7 @@ namespace thegame
             
             
 
-            if (!pause)
+            if (!pause && !game_over_i)
             {
                     if (type == instances_type.Menu)// MENU
                     {
@@ -451,10 +452,12 @@ namespace thegame
                                     iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
                                     if (iathings.gameover == true)
                                     {
-                                        this.type = instances_type.Game;
+
+                                        game_over_i = true;
+                                        /*this.type = instances_type.Game;
                                         this.selected = 2;
                                         Execute();
-                                        break;
+                                        break;*/
                                     }
                                 }
 
@@ -501,6 +504,18 @@ namespace thegame
                 Textures.btnPlay.Update(mouse);
                 Textures.btnMenu.Update(mouse);
                 Textures.btnQuit.Update(mouse);
+            }
+
+            if (game_over_i)
+            { 
+                if (keyboardState.IsKeyDown(Keys.Space))
+                {
+                    game_over_i = false;
+                    this.type = instances_type.Game;
+                    this.selected = 2;
+                    Execute();
+                    
+                }
             }
         }
 
@@ -742,6 +757,16 @@ namespace thegame
                         Textures.btnQuit.Draw(sb);
                     
 
+                }
+                else if (Perso.game_over && game_over_i)
+                {
+                    Rectangle rec = new Rectangle(0, 0, 800, 480);
+                    
+                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                    sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
+                    sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
+                    sb.Draw(Textures.game_overTexture, rec, Color.White);
+                    
                 }
                 else
                 {
