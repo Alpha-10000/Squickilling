@@ -66,6 +66,9 @@ namespace thegame
 
         private List<Perso> iaPerso = new List<Perso>();
 
+        private int score = 0;          // Score
+                                        // TODO: Should score stay here or should it be elsewhere?
+
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIsTrue;       // Set to true to switch the sound (on / off)
         private bool moveleft;
@@ -546,7 +549,7 @@ namespace thegame
    
                     break;
 
-                case 3: /* Start the game */
+                case 3: /* Select language */
                     Sound("menu");
                     execute = new Menu(3, Text_Game[_mnuLanguage]);
                     (execute as Menu).AddElements(Text_Game[_mnuEnglish]);
@@ -579,6 +582,7 @@ namespace thegame
                 case 2: /* GAME START */
                     Sound("menu");
                     Sound("Game");
+                    score = 0;              // We start the game with the score = 0
                     tilemap = new int[,]
                         {
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -653,13 +657,13 @@ namespace thegame
             texlis = new List<Texture2D>();
             mapSizeX = tilemap.GetLength(1);
             mapSizeY = tilemap.GetLength(0);
-                    blocks = new List<Rectangle>();
+            blocks = new List<Rectangle>();
             blocksTop = new List<Rectangle>();
             blocksLeft = new List<Rectangle>();
             blocksRight = new List<Rectangle>();
-                    tile = new List<Rectangle>();
+            tile = new List<Rectangle>();
 
-                    for (int x = 0; x < mapSizeX; x++)
+            for (int x = 0; x < mapSizeX; x++)
             {
                 for (int y = 0; y < mapSizeY; y++)
                 {
@@ -794,6 +798,7 @@ namespace thegame
                     tree.Draw(sb, new Vector2(-100, 50));
 
                     /* DRAW GROUND */
+                    // TODO: Display current score
                 }
 
             }
