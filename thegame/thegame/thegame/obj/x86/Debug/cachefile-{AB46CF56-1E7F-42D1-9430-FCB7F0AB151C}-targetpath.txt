@@ -10,6 +10,7 @@ Content\Menu.xnb
 Content\Quit.xnb
 Content\nut.xnb
 Content\Paused.xnb
+Content\game_over.xnb
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\opening.xnb

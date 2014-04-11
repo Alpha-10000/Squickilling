@@ -65,7 +65,7 @@ namespace thegame
                 spriteBatch.End();
             }
 
-            if (instancesobject.pause)
+            if (instancesobject.pause || instancesobject.game_over_i)
             {
                 spriteBatch.Begin();
                 instancesobject.Display(spriteBatch);

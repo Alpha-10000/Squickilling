@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb</Output>
-      <Time>2014-02-09T00:32:36.3162458+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\mario.xnb</Output>
+      <Time>2014-04-11T19:37:01.6728691+02:00</Time>
     </Item>
     <Item>
       <Source>plateforme.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb</Output>
-      <Time>2014-02-01T16:32:40.483862+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\plateforme.xnb</Output>
+      <Time>2014-04-11T19:37:01.6768732+02:00</Time>
     </Item>
     <Item>
       <Source>blank.bmp</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2014-02-13T22:48:41.854581+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2014-04-11T19:37:01.6668661+02:00</Time>
     </Item>
     <Item>
       <Source>tree.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb</Output>
-      <Time>2014-02-13T22:48:41.9055839+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\tree.xnb</Output>
+      <Time>2014-04-11T19:37:01.6788741+02:00</Time>
     </Item>
     <Item>
       <Source>Buche_test.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb</Output>
-      <Time>2014-02-18T21:19:20.2689185+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Buche_test.xnb</Output>
+      <Time>2014-04-11T19:37:01.2970092+02:00</Time>
     </Item>
     <Item>
       <Source>Ground.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb</Output>
-      <Time>2014-03-22T17:37:56.4660674+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Ground.xnb</Output>
+      <Time>2014-04-11T19:37:01.2990101+02:00</Time>
     </Item>
     <Item>
       <Source>Background.JPG</Source>
@@ -61,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Background.xnb</Output>
-      <Time>2014-02-26T14:35:02.4189834+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Background.xnb</Output>
+      <Time>2014-04-11T19:37:01.2318926+02:00</Time>
     </Item>
     <Item>
       <Source>Play.png</Source>
@@ -70,8 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Play.xnb</Output>
-      <Time>2014-03-11T10:04:05.2000942+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Play.xnb</Output>
+      <Time>2014-04-11T19:37:01.3020126+02:00</Time>
     </Item>
     <Item>
       <Source>Menu.png</Source>
@@ -79,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Menu.xnb</Output>
-      <Time>2014-03-11T10:04:05.196094+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Menu.xnb</Output>
+      <Time>2014-04-11T19:37:01.3000108+02:00</Time>
     </Item>
     <Item>
       <Source>Quit.png</Source>
@@ -88,8 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Quit.xnb</Output>
-      <Time>2014-03-11T10:04:05.2080947+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Quit.xnb</Output>
+      <Time>2014-04-11T19:37:01.3020126+02:00</Time>
     </Item>
     <Item>
       <Source>nut.png</Source>
@@ -97,8 +97,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\nut.xnb</Output>
-      <Time>2014-03-22T17:37:56.4690675+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\nut.xnb</Output>
+      <Time>2014-04-11T19:37:01.3000108+02:00</Time>
     </Item>
     <Item>
       <Source>Paused.png</Source>
@@ -106,8 +106,17 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Paused.xnb</Output>
-      <Time>2014-02-26T14:35:02.4389846+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Paused.xnb</Output>
+      <Time>2014-04-11T19:37:01.301011+02:00</Time>
+    </Item>
+    <Item>
+      <Source>game_over.png</Source>
+      <Name>game_over</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\game_over.xnb</Output>
+      <Time>2014-04-11T19:37:01.6708678+02:00</Time>
     </Item>
     <Item>
       <Source>FPS.spritefont</Source>
@@ -115,8 +124,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
-      <Time>2014-02-08T18:10:32.4440753+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\FPS.xnb</Output>
+      <Time>2014-04-11T19:37:01.2980099+02:00</Time>
     </Item>
     <Item>
       <Source>Title.spritefont</Source>
@@ -124,8 +133,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb</Output>
-      <Time>2014-02-08T18:10:32.4520757+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\Title.xnb</Output>
+      <Time>2014-04-11T19:37:01.3030132+02:00</Time>
     </Item>
     <Item>
       <Source>audio\opening.mp3</Source>
@@ -133,9 +142,9 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb</Output>
-      <Extra>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma</Extra>
-      <Time>2014-02-08T18:10:32.4700768+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.xnb</Output>
+      <Extra>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening.wma</Extra>
+      <Time>2014-04-11T19:37:01.6538574+02:00</Time>
     </Item>
     <Item>
       <Source>audio\button.wav</Source>
@@ -143,8 +152,8 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb</Output>
-      <Time>2014-02-08T18:10:32.4600762+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\button.xnb</Output>
+      <Time>2014-04-11T19:37:01.3050141+02:00</Time>
     </Item>
     <Item>
       <Source>audio\game.wav</Source>
@@ -152,8 +161,8 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb</Output>
-      <Time>2014-02-09T00:32:36.302245+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\game.xnb</Output>
+      <Time>2014-04-11T19:37:01.6498589+02:00</Time>
     </Item>
     <Item>
       <Source>audio\opening1.wav</Source>
@@ -161,8 +170,8 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening1.xnb</Output>
-      <Time>2014-03-11T10:04:05.2690982+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\audio\opening1.xnb</Output>
+      <Time>2014-04-11T19:37:01.6658659+02:00</Time>
     </Item>
     <Item>
       <Source>video\vid.wmv</Source>
@@ -170,9 +179,9 @@
       <Importer>WmvImporter</Importer>
       <Processor>VideoProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.xnb</Output>
-      <Extra>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.wmv</Extra>
-      <Time>2014-03-11T10:04:05.7411252+01:00</Time>
+      <Output>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.xnb</Output>
+      <Extra>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\video\vid.wmv</Extra>
+      <Time>2014-04-11T19:37:01.7949514+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -180,10 +189,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegameContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegameContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Elise\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegameContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegameContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Victor\Documents\GitHub\Projet\thegame\thegame\thegame\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -211,8 +220,8 @@
         <Value>2010-08-23T13:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2014-01-30T19:39:19.4542849+01:00</Value>
+        <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2013-11-20T23:15:37.5193868+01:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
