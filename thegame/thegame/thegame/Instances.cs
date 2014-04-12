@@ -703,24 +703,18 @@ namespace thegame
                 blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture.Width, block.Y + 3, 1, Textures.buche_texture.Height));
             }
 
-
-       
-
                    
-                    execute = new Perso(new Vector2(200, 0), CharacType.player);
-                    tree = new Drawable(drawable_type.tree);
-                    Ground = new Drawable(drawable_type.Ground);
-                    moveright = true;
-                    moveleft = true;
-                    debug = new Drawable(drawable_type.font);
-<<<<<<< HEAD
-=======
-                    scoreDisplay = new Drawable(drawable_type.font);
->>>>>>> 1c2b497... toto
-                    break;
-
-                default:
-                    break;
+	    execute = new Perso(new Vector2(200, 0), CharacType.player);
+	    tree = new Drawable(drawable_type.tree);
+	    Ground = new Drawable(drawable_type.Ground);
+	    moveright = true;
+	    moveleft = true;
+	    debug = new Drawable(drawable_type.font);
+	    scoreDisplay = new Drawable(drawable_type.font);
+	    break;
+	    
+	    default:
+	      break;
             }
         }
 
@@ -828,10 +822,7 @@ namespace thegame
 
                     /* DRAW GROUND */
                     // TODO: Display current score
-<<<<<<< HEAD
-=======
                     scoreDisplay.Draw(sb, "Score: " + score, new Vector2(10 - cameraPos.X, 10), Color.Black, "normal");
->>>>>>> 1c2b497... toto
                 }
 
             }
