@@ -77,6 +77,7 @@ namespace thegame
         private Drawable Ground;
 
         private Drawable debug;
+        private Drawable scoreDisplay;
 
         private List<Texture2D>   texlis;
         private int mapSizeX;
