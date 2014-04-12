@@ -16,7 +16,7 @@ namespace thegame
     public class Menu : Drawable
     {
         public bool MenuBool = true;
-        public string[] tab { get; private set; }
+        public string[] tab { get; private set; }       // C'est quoi???? Ya quoi dedans????
         public int size { get; private set; }
         public int pos_tab { get; private set; }
         public Color[] color_tab { get; private set; }

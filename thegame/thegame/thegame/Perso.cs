@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
+    public delegate void UpdateScore(int points);   // call this to increment score
+   
     class Perso
     {
 

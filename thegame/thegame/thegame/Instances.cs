@@ -482,7 +482,7 @@ namespace thegame
             if (pause)
             {
                 
-                if (Textures.btnPlay.isClicked)
+                if (Textures.btnPlay.isClicked|| (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)))
                 {
                     pause = false;
                 }
@@ -713,6 +713,10 @@ namespace thegame
                     moveright = true;
                     moveleft = true;
                     debug = new Drawable(drawable_type.font);
+<<<<<<< HEAD
+=======
+                    scoreDisplay = new Drawable(drawable_type.font);
+>>>>>>> 1c2b497... toto
                     break;
 
                 default:
@@ -824,6 +828,10 @@ namespace thegame
 
                     /* DRAW GROUND */
                     // TODO: Display current score
+<<<<<<< HEAD
+=======
+                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(10 - cameraPos.X, 10), Color.Black, "normal");
+>>>>>>> 1c2b497... toto
                 }
 
             }
