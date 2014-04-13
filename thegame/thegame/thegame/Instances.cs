@@ -85,7 +85,7 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
         
-
+        private int Health = 10; //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool game_over_i = false;
         MouseState mouse = Mouse.GetState();
@@ -450,7 +450,7 @@ namespace thegame
                                             moveright = false;
                                         }
                                     }
-                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
+                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso, ref Health);
                                     if (iathings.gameover == true)
                                     {
 
@@ -512,6 +512,7 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;
+                    Health = 10;
                     this.type = instances_type.Game;
                     this.selected = 2;
                     Execute();
@@ -826,7 +827,7 @@ namespace thegame
                     //Negative health
                     sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 28), Color.Gray);
                     //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, (int)(Textures.healthBar_texture.Width * (double)(execute as Perso).Health / 10f), 28), new Rectangle(0, 31,
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, (int)(Textures.healthBar_texture.Width * (double)Health / 10f), 28), new Rectangle(0, 31,
                         Textures.healthBar_texture.Width, 44), Color.Red);
                     //healthBar bounds
                     sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0, Textures.healthBar_texture.Width, 28), Color.White);

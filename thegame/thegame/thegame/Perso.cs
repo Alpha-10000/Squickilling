@@ -45,7 +45,6 @@ namespace thegame
 
         float speed;
         public float Speed { get; private set; }
-        public int Health { get; set; }
 
         Animation animationPerso;
         List<Projectile> projs = new List<Projectile>();
@@ -69,7 +68,6 @@ namespace thegame
             positionPerso = pos;
             speed = 100f;
             jumping = false;
-            Health = 10;
 
             this.typePerso = typePerso;
             this.initPos = pos;
@@ -302,7 +300,7 @@ namespace thegame
         }
 
 
-        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer)
+        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer, ref int Health)
         {
 
             
@@ -516,17 +514,14 @@ namespace thegame
                 foreach (Projectile nut in projIA)
                     nut.Draw(spriteBatch);
             }
-/* DEBUUUUGGGG
-            if (typePerso == CharacType.ia)
-            {
-                Drawable debug = new Drawable(drawable_type.font);
-                if(debugbool)
-                    debug.Draw(spriteBatch, "bool" + debug.ToString(), new Vector2(300, 50), Color.White, "normal");
 
-                      
+    
+      /*          Drawable debug = new Drawable(drawable_type.font);
+                if(typePerso == CharacType.player)
+                    debug.Draw(spriteBatch, "h : " + Health, new Vector2(300, 50), Color.White, "normal");
 
-                spriteBatch.Draw(Textures.hitbox, ThrowProjectiles, Color.White * 0.5f);
-            } */
+
+            */
         }
 
      
