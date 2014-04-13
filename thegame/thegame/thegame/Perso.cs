@@ -45,6 +45,7 @@ namespace thegame
 
         float speed;
         public float Speed { get; private set; }
+        public int Health { get; set; }
 
         Animation animationPerso;
         List<Projectile> projs = new List<Projectile>();
@@ -68,6 +69,7 @@ namespace thegame
             positionPerso = pos;
             speed = 100f;
             jumping = false;
+            Health = 10;
 
             this.typePerso = typePerso;
             this.initPos = pos;
@@ -343,9 +345,14 @@ namespace thegame
             {
                 if (projIA[i].hitbox.Intersects(hitboxPlayer))
                 {
+                    Health -= 3;
+                    Health = (int)MathHelper.Clamp(Health, 0, 10);
                     projIA.Remove(projIA[i]);
-                    gameover = true;
-                    game_over = true;
+                    if (Health == 0)
+                    {
+                        gameover = true;
+                        game_over = true;
+                    }
                 }
 
             }

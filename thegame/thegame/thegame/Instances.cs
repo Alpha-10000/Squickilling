@@ -822,8 +822,16 @@ namespace thegame
                     tree.Draw(sb, new Vector2(-100, 50));
 
                     /* DRAW GROUND */
+
+                    //Negative health
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 28), Color.Gray);
+                    //health left
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, (int)(Textures.healthBar_texture.Width * (double)(execute as Perso).Health / 10f), 28), new Rectangle(0, 31,
+                        Textures.healthBar_texture.Width, 44), Color.Red);
+                    //healthBar bounds
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0, Textures.healthBar_texture.Width, 28), Color.White);
                     // TODO: Display current score
-                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(10 - cameraPos.X, 10), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
                 }
 
             }
