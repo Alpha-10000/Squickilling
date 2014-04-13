@@ -37,6 +37,7 @@ namespace thegame
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
 
+        private Drawable scoreDisplay;
         private List<string> Text_Game;     // Contains text of menu options
         private const int _mnuPlay = 0;     // Use this constant to refer to the menu text.
         private const int _mnuOptions = 1;
