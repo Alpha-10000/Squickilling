@@ -12,6 +12,7 @@ namespace thegame
         Plateform_default,
         buche,
         tree,
+        tree_autumn_entrance_inside,
         font,
         Background,
         Ground,
@@ -21,7 +22,6 @@ namespace thegame
         Nut,
         Acorn
     }
-
 
     public class Drawable
     {
@@ -44,6 +44,9 @@ namespace thegame
                 case drawable_type.tree:
                     image = Textures.tree_texture;
                     break;
+                case drawable_type.tree_autumn_entrance_inside:
+                    image = Textures.tree_autumn_entrance_inside;
+                    break;
                 case drawable_type.font:
                     _font = Textures.font_texture;
                     _fontTitle = Textures.fontTitle_texture;
@@ -52,7 +55,7 @@ namespace thegame
                     image = Textures.ground_texture;
                     break;
                 case drawable_type.Background:
-                     image = Textures.background;
+                    image = Textures.background;
                     break;
                 case drawable_type.Nut:
                     image = Textures.nut_texture;

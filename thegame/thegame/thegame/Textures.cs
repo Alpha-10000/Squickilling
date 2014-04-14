@@ -18,6 +18,7 @@ namespace thegame
         public static Texture2D ground_texture;
         public static Texture2D buche_texture;
         public static Texture2D tree_texture;
+        public static Texture2D tree_autumn_entrance_inside;
         public static Texture2D pausedTexture;
         public static Texture2D game_overTexture;
         public static Rectangle pausedRectangle;
@@ -43,6 +44,7 @@ namespace thegame
             buche_texture = cm.Load<Texture2D>(@"Buche_test");
             hitbox = cm.Load<Texture2D>(@"blank");
             tree_texture = cm.Load<Texture2D>(@"tree");
+            tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Tree_Autumn_entrance_inside");
             ground_texture = cm.Load<Texture2D>(@"Ground");
             font_texture = cm.Load<SpriteFont>(@"FPS");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");

@@ -75,6 +75,7 @@ namespace thegame
         private bool moveleft;
         private bool moveright;
         private Drawable tree;
+        private Drawable tree_autumn_entrance_inside;
         private Drawable Ground;
 
         private Drawable debug;
@@ -91,7 +92,6 @@ namespace thegame
         public bool game_over_i = false;
         MouseState mouse = Mouse.GetState();
 
-
         /*LANGUAGE OPTION */
         private void GetText(string language)
         {
@@ -100,17 +100,17 @@ namespace thegame
             {
                 case "english":
                     Text_Game = new List<string> { "Play", 
-                                                       "Options", 
-                                                       "Exit", 
-                                                       "Language", 
-                                                       "Full screen", 
-                                                       "Back", 
-                                                       "English", 
-                                                       "Français", //has to be français
-                                                       "Sound", 
-                                                       "On", 
-                                                       "Off",
-                                                       "Nederlands" };
+                                                   "Options", 
+                                                   "Exit", 
+                                                   "Language", 
+                                                   "Full screen", 
+                                                   "Back", 
+                                                   "English", 
+                                                   "Français", //has to be français
+                                                   "Sound", 
+                                                   "On", 
+                                                   "Off",
+                                                   "Nederlands" };
                     break;
 
                 case "french":
@@ -143,15 +143,10 @@ namespace thegame
                                                    "Nederlands" };
                     break;
             }
-
-
-
-
         }
 
         public Instances(Game1 game)
         {
-
             /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
             this.type = instances_type.Menu;
             this.selected = 0;
@@ -164,17 +159,10 @@ namespace thegame
                 GetText("english");
             }
 
-
             instancesound = Textures.gameSound_Effect.CreateInstance();
             instancesound.IsLooped = true;
 
-
             /* DEFAUT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
-
-
-
-
-
 
             this.game = game;
 
@@ -185,21 +173,16 @@ namespace thegame
             this.Execute();
         }
 
-
-
         public void UpdateByKey(GameTime gametime)
         {
             oldkey = keyboardState;
             keyboardState = Keyboard.GetState();
             MouseState mouse1 = Mouse.GetState();
 
-
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
                 game.Exit();
             }
-
-
 
             if (!pause && !game_over_i)
             {
@@ -207,7 +190,6 @@ namespace thegame
                 {
                     (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIsTrue);
                 }
-
 
                 if (this.selected == 0)
                 {
@@ -312,7 +294,6 @@ namespace thegame
                         default:
                             break;
                     }
-
                 }
                 else if (selected == 4) // SOUND SETTINGS
                 {
@@ -338,14 +319,12 @@ namespace thegame
                         default:
                             break;
                     }
-
                 }
 
                 // ES :  I have moved the fullscreen toggle to the option menu.
                 //       This is section is no longer active.
                 else if (selected == 5) // FULLSCREEN SETTINGS
                 {
-
                     switch ((execute as Menu).selected)
                     {
                         case 0:
@@ -373,7 +352,6 @@ namespace thegame
                         default:
                             break;
                     }
-
                 }
                 else if (selected == 6) // SPLASHSCREEN
                 {
@@ -387,8 +365,6 @@ namespace thegame
                         Textures.openingSound_Effect1.Play();
                     }
                 }
-
-
 
                 else // THIS IS THE GAME 
                 {
@@ -404,7 +380,6 @@ namespace thegame
                         /* START OF THE GAME CODE */
                         moveleft = true;
                         moveright = true;
-
 
                         foreach (Rectangle left in blocksLeft)
                         {
@@ -427,14 +402,12 @@ namespace thegame
 
                         this.objects = (execute as Perso).objects;
 
-
                         iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
 
                         foreach (Perso iathings in iaPerso)
                         {
                             moveleft = true;
                             moveright = true;
-
 
                             foreach (Rectangle left in blocksLeft)
                             {
@@ -454,7 +427,6 @@ namespace thegame
                             iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso, ref Health);
                             if (iathings.gameover == true)
                             {
-
                                 game_over_i = true;
                                 /*this.type = instances_type.Game;
                                 this.selected = 2;
@@ -462,8 +434,6 @@ namespace thegame
                                 break;*/
                             }
                         }
-
-
 
                         if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                         {
@@ -473,17 +443,12 @@ namespace thegame
                             Execute();
                             Thread.Sleep(150);
                         }
-
-
                     }
-
                 }
             }
 
-
             if (pause)
             {
-
                 if (Textures.btnPlay.isClicked || (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)))
                 {
                     pause = false;
@@ -496,7 +461,6 @@ namespace thegame
                     this.type = instances_type.Menu;
                     Execute();
                     Thread.Sleep(150);
-
                 }
                 if (Textures.btnQuit.isClicked)
                 {
@@ -517,13 +481,11 @@ namespace thegame
                     this.type = instances_type.Game;
                     this.selected = 2;
                     Execute();
-
                 }
             }
         }
 
         /* END OF THE GAME CODE */
-
 
         public void Execute()
         {
@@ -580,8 +542,6 @@ namespace thegame
                     execute = new Menu(2, Text_Game[_mnuSound]);//sound
                     (execute as Menu).AddElements(Text_Game[_mnuOn]);//on
                     (execute as Menu).AddElements(Text_Game[_mnuOff]);//off
-
-
 
                     break;
                 case 5: /* FULL SCREEN */
@@ -641,12 +601,8 @@ namespace thegame
 
                     int[] iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
-
-
                     objects = new List<Rectangle>();
                     iaPerso = new List<Perso>();
-
-
 
                     for (int x = 0; x < objectsMap.GetLength(1); x++)
                     {
@@ -659,9 +615,7 @@ namespace thegame
                         }
                     }
 
-
                     /* IA CHARACTERS */
-
                     for (int x = 0; x < iaMap.Length; x++)
                     {
                         if (iaMap[x] == 1)
@@ -705,6 +659,7 @@ namespace thegame
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
+                    tree_autumn_entrance_inside = new Drawable(drawable_type.tree);
                     Ground = new Drawable(drawable_type.Ground);
                     moveright = true;
                     moveleft = true;
@@ -734,7 +689,6 @@ namespace thegame
 
         public void Display(SpriteBatch sb)
         {
-
             if (this.selected != 6)
             {
                 if (type == instances_type.Menu)
@@ -743,7 +697,6 @@ namespace thegame
                 }
                 else if (pause)
                 {
-
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
                     sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
                     sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
@@ -751,8 +704,6 @@ namespace thegame
                     Textures.btnPlay.Draw(sb);
                     Textures.btnMenu.Draw(sb);
                     Textures.btnQuit.Draw(sb);
-
-
                 }
                 else if (Perso.game_over && game_over_i)
                 {
@@ -765,6 +716,7 @@ namespace thegame
                 }
                 else
                 {
+                    //tree.Draw(sb, new Vector2(-100, 50));
                     tree.Draw(sb, new Vector2(500, 50));
                     tree.Draw(sb, new Vector2(400, 50));
                     tree.Draw(sb, new Vector2(900, 50));
@@ -778,7 +730,7 @@ namespace thegame
                     tree.Draw(sb, new Vector2(3900, 50));
                     tree.Draw(sb, new Vector2(4050, 50));
                     tree.Draw(sb, new Vector2(4900, 50));
-                    
+
                     for (int truc = 0; truc < 9; truc++)
                     {
                         Ground.Draw(sb, new Vector2(truc * Textures.ground_texture.Width, 408));
@@ -813,28 +765,30 @@ namespace thegame
                         iathings.Draw(sb);
                     }
 
-                    tree.Draw(sb, new Vector2(-100, 50));
+                    tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 50));
 
                     /* DRAW GROUND */
 
                     //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 28), Color.Gray);
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 
+                        451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31, 
+                        Textures.healthBar_texture.Width, 28), Color.Gray);
                     //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, (int)(Textures.healthBar_texture.Width * (double)Health / 10f), 28), new Rectangle(0, 31,
-                        Textures.healthBar_texture.Width, 44), Color.Red);
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 
+                        451, (int)(Textures.healthBar_texture.Width * (double)Health / 10f),
+                        28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
                     //healthBar bounds
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0, Textures.healthBar_texture.Width, 28), Color.White);
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
+                        451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
+                        Textures.healthBar_texture.Width, 28), Color.White);
                     // TODO: Display current score
                     scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
                 }
-
             }
             else // draw splashscreen
             {
                 Drawable.vidTexture = vidPlayer.GetTexture();
-
                 sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
-
             }
         }
     }
