@@ -48,12 +48,8 @@ namespace thegame
                     isClicked = true;
                     colour.A = 255;
                 }
-                
             }
-            else if (colour.A < 255)
-                    colour.A += 3;
-
-            
+            else if (colour.A < 255) colour.A += 3;
         }
 
         public void Draw(SpriteBatch spriteBatch)

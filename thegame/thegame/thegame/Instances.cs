@@ -68,7 +68,7 @@ namespace thegame
         private List<Perso> iaPerso = new List<Perso>();
 
         private int score = 0;          // Score
-                                        // TODO: Should score stay here or should it be elsewhere?
+        // TODO: Should score stay here or should it be elsewhere?
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIsTrue;       // Set to true to switch the sound (on / off)
@@ -80,12 +80,12 @@ namespace thegame
         private Drawable debug;
         //private Drawable scoreDisplay;
 
-        private List<Texture2D>   texlis;
+        private List<Texture2D> texlis;
         private int mapSizeX;
         private int mapSizeY;
 
         public Vector2 cameraPos = Vector2.Zero;
-        
+
         private int Health = 10; //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool game_over_i = false;
@@ -99,7 +99,7 @@ namespace thegame
             switch (language)
             {
                 case "english":
-                        Text_Game = new List<string> { "Play", 
+                    Text_Game = new List<string> { "Play", 
                                                        "Options", 
                                                        "Exit", 
                                                        "Language", 
@@ -111,7 +111,7 @@ namespace thegame
                                                        "On", 
                                                        "Off",
                                                        "Nederlands" };
-                         break;
+                    break;
 
                 case "french":
                     Text_Game = new List<string> { "Jouer",
@@ -143,49 +143,49 @@ namespace thegame
                                                    "Nederlands" };
                     break;
             }
-            
-                    
-                
-            
+
+
+
+
         }
 
         public Instances(Game1 game)
         {
-            
-                /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
-                this.type = instances_type.Menu;
-                this.selected = 0;
-                if (CultureInfo.InstalledUICulture.ToString() == "fr-FR")
-                {
-                    GetText("french");
-                }
-                else
-                {
-                    GetText("english");
-                }
 
-                
-                instancesound = Textures.gameSound_Effect.CreateInstance();
-                instancesound.IsLooped = true;
+            /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
+            this.type = instances_type.Menu;
+            this.selected = 0;
+            if (CultureInfo.InstalledUICulture.ToString() == "fr-FR")
+            {
+                GetText("french");
+            }
+            else
+            {
+                GetText("english");
+            }
 
 
-                /* DEFAUT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
+            instancesound = Textures.gameSound_Effect.CreateInstance();
+            instancesound.IsLooped = true;
+
+
+            /* DEFAUT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
 
 
 
 
-                
-                
-                this.game = game;
 
-                SoundIsTrue = true;
-                moveleft = true;
-                moveright = true;
-                this.selected = 6;
-                this.Execute();
+
+            this.game = game;
+
+            SoundIsTrue = true;
+            moveleft = true;
+            moveright = true;
+            this.selected = 6;
+            this.Execute();
         }
 
-    
+
 
         public void UpdateByKey(GameTime gametime)
         {
@@ -198,293 +198,293 @@ namespace thegame
             {
                 game.Exit();
             }
-            
-            
+
+
 
             if (!pause && !game_over_i)
             {
-                    if (type == instances_type.Menu)// MENU
+                if (type == instances_type.Menu)// MENU
+                {
+                    (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIsTrue);
+                }
+
+
+                if (this.selected == 0)
+                {
+                    switch ((execute as Menu).selected)
                     {
-                        (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIsTrue);
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // START GAME
+                            {
+                                (execute as Menu).MenuBool = false;
+                                this.type = instances_type.Game;
+                                this.selected = 2;
+                                Execute();
+                            }
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OPTIONS SETTINGS
+                            {
+                                this.selected = 1;
+                                Execute();
+                            }
+                            break;
+                        case 2:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // EXIT GAME
+                            {
+                                game.Exit();
+                            }
+                            break;
+                        default:
+                            break;
                     }
-
-
-                        if (this.selected == 0)
-                        {
-                            switch ((execute as Menu).selected)
+                }
+                else if (selected == 1) // OPTION PANNEL
+                {
+                    switch ((execute as Menu).selected)
+                    {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE SETTINGS
                             {
-                                case 0: 
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // START GAME
-                                    {
-                                        (execute as Menu).MenuBool = false;
-                                        this.type = instances_type.Game;
-                                        this.selected = 2;
-                                        Execute();
-                                    }
-                                    break;
-                                case 1:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OPTIONS SETTINGS
-                                    {
-                                        this.selected = 1;
-                                        Execute();
-                                    }
-                                    break;
-                                case 2: 
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // EXIT GAME
-                                    {
-                                        game.Exit();
-                                    }
-                                    break;
-                                default:
-                                    break;
+                                this.selected = 3;
+                                Execute();
                             }
-                        }
-                        else if (selected == 1) // OPTION PANNEL
-                        {
-                            switch ((execute as Menu).selected) 
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // FUllSCREEN
                             {
-                                case 0:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE SETTINGS
-                                    {
-                                        this.selected = 3;
-                                        Execute();
-                                    }
-                                    break;
-                                case 1: 
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // FUllSCREEN
-                                    {
-                                        //this.selected = 5;
-                                        Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
-                                        Game1.graphics.ToggleFullScreen();
-                                        Execute();
-                                    }
-                                    break;
-
-                                case 2:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // SOUND SETTINGS
-                                    {
-                                        //this.selected = 4;
-                                        SoundIsTrue = !SoundIsTrue;
-
-                                        Execute();
-                                    }
-                                    break;
-                                case 3:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // GO BACK
-                                    {
-                                        this.selected = 0;
-                                        Execute();
-                                    }
-                                    break;
-                                default:
-                                    break;
+                                //this.selected = 5;
+                                Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
+                                Game1.graphics.ToggleFullScreen();
+                                Execute();
                             }
-                        }
-                        else if (selected == 3) // LANGUAGE SETTINGS
-                        {
+                            break;
 
-                            switch ((execute as Menu).selected)
+                        case 2:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // SOUND SETTINGS
                             {
-                                case 0:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 1
-                                    {
-                                        GetText("english");
-                                        this.selected = 0;
-                                        Execute();
-                                    }
-                                    break;
-                                case 1:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 2
-                                    {
-                                        GetText("french");
-                                        this.selected = 0;
-                                        Execute();
-                                    }
-                                    break;
-                                case 2:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
-                                    {
-                                        GetText("nederlands");
-                                        this.selected = 0;      // This takes it to the first menu page
-                                        Execute();
-                                    }
-                                    break;
-                                default:
-                                    break;
+                                //this.selected = 4;
+                                SoundIsTrue = !SoundIsTrue;
+
+                                Execute();
                             }
-
-                        }
-                        else if (selected == 4) // SOUND SETTINGS
-                        {
-
-                            switch ((execute as Menu).selected)
+                            break;
+                        case 3:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // GO BACK
                             {
-                                case 0:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
-                                    {
-                                        SoundIsTrue = true;
-                                        this.selected = 0;
-                                        Execute();
-                                    }
-                                    break;
-                                case 1:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF BUTTON
-                                    {
-                                        SoundIsTrue = false;
-                                        this.selected = 0;
-                                        Execute();
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                        }
-
-                        // ES :  I have moved the fullscreen toggle to the option menu.
-                        //       This is section is no longer active.
-                        else if (selected == 5) // FULLSCREEN SETTINGS
-                        {
-
-                            switch ((execute as Menu).selected)
-                            {
-                                case 0:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
-                                    {
-                                        if (!Game1.graphics.IsFullScreen)
-                                        {
-                                            Game1.graphics.ToggleFullScreen();
-                                        }
-                                        this.selected = 0;
-                                        Execute();
-                                    }
-                                    break;
-                                case 1:
-                                    if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF  BUTTON
-                                    {
-                                        if (Game1.graphics.IsFullScreen)
-                                        {
-                                            Game1.graphics.ToggleFullScreen();
-                                        }
-                                        this.selected = 0;
-                                        Execute();
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                        }
-                        else if (selected == 6) // SPLASHSCREEN
-                        {
-                            
-                            if (vidPlayer.State == MediaState.Stopped || mouse1.LeftButton == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Enter))
-                            {
-                                vidPlayer.Stop();
-                                this.type = instances_type.Menu;
                                 this.selected = 0;
                                 Execute();
-                                 Textures.openingSound_Effect1.Play();
                             }
-                        }
-
-
-
-                        else // THIS IS THE GAME 
-                        {
-                            if (Keyboard.GetState().IsKeyDown(Keys.P))
-                            {
-                                pause = true;
-                                Textures.btnPlay.isClicked = false;
-                                Textures.btnMenu.isClicked = false;
-                            }
-                            else
-                            {
-                                cameraPos = (execute as Perso).cameraPos;
-                                /* START OF THE GAME CODE */
-                                moveleft = true;
-                                moveright = true;
-
-
-                                foreach (Rectangle left in blocksLeft)
-                                {
-                                    if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
-                                    {
-                                        moveleft = false;
-                                    }
-                                }
-
-                                foreach (Rectangle right in blocksRight)
-                                {
-                                    if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
-                                    {
-                                        moveright = false;
-                                    }
-                                }
-
-                                projectiles = new List<Projectile>();
-                                (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
-
-                                this.objects = (execute as Perso).objects;
-
-                                
-                                iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
-
-                                foreach (Perso iathings in iaPerso)
-                                {
-                                    moveleft = true;
-                                    moveright = true;
-
-
-                                    foreach (Rectangle left in blocksLeft)
-                                    {
-                                        if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
-                                        {
-                                            moveleft = false;
-                                        }
-                                    }
-
-                                    foreach (Rectangle right in blocksRight)
-                                    {
-                                        if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
-                                        {
-                                            moveright = false;
-                                        }
-                                    }
-                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso, ref Health);
-                                    if (iathings.gameover == true)
-                                    {
-
-                                        game_over_i = true;
-                                        /*this.type = instances_type.Game;
-                                        this.selected = 2;
-                                        Execute();
-                                        break;*/
-                                    }
-                                }
-
-
-
-                                if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
-                                {
-                                    this.selected = 0;
-                                    instancesound.Stop();
-                                    this.type = instances_type.Menu;
-                                    Execute();
-                                    Thread.Sleep(150);
-                                }
-
-
-                            }
-
-                        }
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            
+                else if (selected == 3) // LANGUAGE SETTINGS
+                {
+
+                    switch ((execute as Menu).selected)
+                    {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 1
+                            {
+                                GetText("english");
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 2
+                            {
+                                GetText("french");
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        case 2:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                            {
+                                GetText("nederlands");
+                                this.selected = 0;      // This takes it to the first menu page
+                                Execute();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+                else if (selected == 4) // SOUND SETTINGS
+                {
+
+                    switch ((execute as Menu).selected)
+                    {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
+                            {
+                                SoundIsTrue = true;
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF BUTTON
+                            {
+                                SoundIsTrue = false;
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+
+                // ES :  I have moved the fullscreen toggle to the option menu.
+                //       This is section is no longer active.
+                else if (selected == 5) // FULLSCREEN SETTINGS
+                {
+
+                    switch ((execute as Menu).selected)
+                    {
+                        case 0:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
+                            {
+                                if (!Game1.graphics.IsFullScreen)
+                                {
+                                    Game1.graphics.ToggleFullScreen();
+                                }
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        case 1:
+                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF  BUTTON
+                            {
+                                if (Game1.graphics.IsFullScreen)
+                                {
+                                    Game1.graphics.ToggleFullScreen();
+                                }
+                                this.selected = 0;
+                                Execute();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+                else if (selected == 6) // SPLASHSCREEN
+                {
+
+                    if (vidPlayer.State == MediaState.Stopped || mouse1.LeftButton == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Enter))
+                    {
+                        vidPlayer.Stop();
+                        this.type = instances_type.Menu;
+                        this.selected = 0;
+                        Execute();
+                        Textures.openingSound_Effect1.Play();
+                    }
+                }
+
+
+
+                else // THIS IS THE GAME 
+                {
+                    if (Keyboard.GetState().IsKeyDown(Keys.P))
+                    {
+                        pause = true;
+                        Textures.btnPlay.isClicked = false;
+                        Textures.btnMenu.isClicked = false;
+                    }
+                    else
+                    {
+                        cameraPos = (execute as Perso).cameraPos;
+                        /* START OF THE GAME CODE */
+                        moveleft = true;
+                        moveright = true;
+
+
+                        foreach (Rectangle left in blocksLeft)
+                        {
+                            if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
+                            {
+                                moveleft = false;
+                            }
+                        }
+
+                        foreach (Rectangle right in blocksRight)
+                        {
+                            if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
+                            {
+                                moveright = false;
+                            }
+                        }
+
+                        projectiles = new List<Projectile>();
+                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
+
+                        this.objects = (execute as Perso).objects;
+
+
+                        iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
+
+                        foreach (Perso iathings in iaPerso)
+                        {
+                            moveleft = true;
+                            moveright = true;
+
+
+                            foreach (Rectangle left in blocksLeft)
+                            {
+                                if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
+                                {
+                                    moveleft = false;
+                                }
+                            }
+
+                            foreach (Rectangle right in blocksRight)
+                            {
+                                if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
+                                {
+                                    moveright = false;
+                                }
+                            }
+                            iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso, ref Health);
+                            if (iathings.gameover == true)
+                            {
+
+                                game_over_i = true;
+                                /*this.type = instances_type.Game;
+                                this.selected = 2;
+                                Execute();
+                                break;*/
+                            }
+                        }
+
+
+
+                        if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
+                        {
+                            this.selected = 0;
+                            instancesound.Stop();
+                            this.type = instances_type.Menu;
+                            Execute();
+                            Thread.Sleep(150);
+                        }
+
+
+                    }
+
+                }
+            }
+
 
             if (pause)
             {
-                
-                if (Textures.btnPlay.isClicked|| (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)))
+
+                if (Textures.btnPlay.isClicked || (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)))
                 {
                     pause = false;
                 }
@@ -496,7 +496,7 @@ namespace thegame
                     this.type = instances_type.Menu;
                     Execute();
                     Thread.Sleep(150);
-                    
+
                 }
                 if (Textures.btnQuit.isClicked)
                 {
@@ -509,7 +509,7 @@ namespace thegame
             }
 
             if (game_over_i)
-            { 
+            {
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;
@@ -517,7 +517,7 @@ namespace thegame
                     this.type = instances_type.Game;
                     this.selected = 2;
                     Execute();
-                    
+
                 }
             }
         }
@@ -536,7 +536,7 @@ namespace thegame
                     (execute as Menu).AddElements(Text_Game[_mnuPlay]);//Play
                     (execute as Menu).AddElements(Text_Game[_mnuOptions]);//Options
                     (execute as Menu).AddElements(Text_Game[_mnuExit]);//Exit game
-            
+
                     break;
                 case 1: /* OPTION MENU */
                     Sound("menu");
@@ -564,7 +564,7 @@ namespace thegame
                         (execute as Menu).AddElements((Text_Game[_mnuSound] + " (" + Text_Game[_mnuOff] + ")")); // sound off
                     }
                     (execute as Menu).AddElements(Text_Game[_mnuBack]);//back
-   
+
                     break;
 
                 case 3: /* Select language */
@@ -580,8 +580,8 @@ namespace thegame
                     execute = new Menu(2, Text_Game[_mnuSound]);//sound
                     (execute as Menu).AddElements(Text_Game[_mnuOn]);//on
                     (execute as Menu).AddElements(Text_Game[_mnuOff]);//off
-                    
-                   
+
+
 
                     break;
                 case 5: /* FULL SCREEN */
@@ -620,7 +620,7 @@ namespace thegame
                             {0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
-   int[,] objectsMap = new int[,]
+                    int[,] objectsMap = new int[,]
                         {
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -639,9 +639,9 @@ namespace thegame
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
-                    int[] iaMap = new int[]{0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0};
+                    int[] iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
-                    
+
 
                     objects = new List<Rectangle>();
                     iaPerso = new List<Perso>();
@@ -654,70 +654,66 @@ namespace thegame
                         {
                             if (objectsMap[y, x] == 1)
                             {
-                                objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y  * Textures.buche_texture.Height - 100, 10, 10));
+                                objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 100, 10, 10));
                             }
                         }
                     }
 
 
-            /* IA CHARACTERS */
+                    /* IA CHARACTERS */
 
-            for (int x = 0; x < iaMap.Length; x++)
-            {
-                    if (iaMap[x] == 1)
+                    for (int x = 0; x < iaMap.Length; x++)
                     {
-                        iaPerso.Add(new Perso(new Vector2(x * Textures.buche_texture.Width, 0), CharacType.ia));
+                        if (iaMap[x] == 1)
+                        {
+                            iaPerso.Add(new Perso(new Vector2(x * Textures.buche_texture.Width, 0), CharacType.ia));
+                        }
                     }
-            }
-            
 
+                    texlis = new List<Texture2D>();
+                    mapSizeX = tilemap.GetLength(1);
+                    mapSizeY = tilemap.GetLength(0);
+                    blocks = new List<Rectangle>();
+                    blocksTop = new List<Rectangle>();
+                    blocksLeft = new List<Rectangle>();
+                    blocksRight = new List<Rectangle>();
+                    tile = new List<Rectangle>();
 
-            texlis = new List<Texture2D>();
-            mapSizeX = tilemap.GetLength(1);
-            mapSizeY = tilemap.GetLength(0);
-            blocks = new List<Rectangle>();
-            blocksTop = new List<Rectangle>();
-            blocksLeft = new List<Rectangle>();
-            blocksRight = new List<Rectangle>();
-            tile = new List<Rectangle>();
-
-            for (int x = 0; x < mapSizeX; x++)
-            {
-                for (int y = 0; y < mapSizeY; y++)
-                {
-                    if (tilemap[y, x] == 1)
+                    for (int x = 0; x < mapSizeX; x++)
                     {
-                        blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 80, Textures.buche_texture.Width, Textures.buche_texture.Height));
-
+                        for (int y = 0; y < mapSizeY; y++)
+                        {
+                            if (tilemap[y, x] == 1)
+                            {
+                                blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 80, Textures.buche_texture.Width, Textures.buche_texture.Height));
+                            }
+                        }
                     }
-                }
-            }
 
-            foreach (Rectangle block in blocks)
-            {
-                blocksTop.Add(new Rectangle(block.X, block.Y, Textures.buche_texture.Width, 1));
-            }
-            foreach (Rectangle block in blocks)
-            {
-                blocksRight.Add(new Rectangle(block.X, block.Y + 3, 1, Textures.buche_texture.Height));
-            }
-            foreach (Rectangle block in blocks)
-            {
-                blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture.Width, block.Y + 3, 1, Textures.buche_texture.Height));
-            }
+                    foreach (Rectangle block in blocks)
+                    {
+                        blocksTop.Add(new Rectangle(block.X, block.Y, Textures.buche_texture.Width, 1));
+                    }
+                    foreach (Rectangle block in blocks)
+                    {
+                        blocksRight.Add(new Rectangle(block.X, block.Y + 3, 1, Textures.buche_texture.Height));
+                    }
+                    foreach (Rectangle block in blocks)
+                    {
+                        blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture.Width, block.Y + 3, 1, Textures.buche_texture.Height));
+                    }
 
-                   
-	    execute = new Perso(new Vector2(200, 0), CharacType.player);
-	    tree = new Drawable(drawable_type.tree);
-	    Ground = new Drawable(drawable_type.Ground);
-	    moveright = true;
-	    moveleft = true;
-	    debug = new Drawable(drawable_type.font);
-	    scoreDisplay = new Drawable(drawable_type.font);
-	    break;
-	    
-	    default:
-	      break;
+                    execute = new Perso(new Vector2(200, 0), CharacType.player);
+                    tree = new Drawable(drawable_type.tree);
+                    Ground = new Drawable(drawable_type.Ground);
+                    moveright = true;
+                    moveleft = true;
+                    debug = new Drawable(drawable_type.font);
+                    scoreDisplay = new Drawable(drawable_type.font);
+                    break;
+
+                default:
+                    break;
             }
         }
 
@@ -744,34 +740,31 @@ namespace thegame
                 if (type == instances_type.Menu)
                 {
                     (execute as Menu).Display(sb);
-                    
                 }
                 else if (pause)
                 {
-                 
-                        sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                        sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
-                        sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
-                        sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
-                        Textures.btnPlay.Draw(sb);
-                        Textures.btnMenu.Draw(sb);
-                        Textures.btnQuit.Draw(sb);
-                    
+
+                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                    sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
+                    sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
+                    sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
+                    Textures.btnPlay.Draw(sb);
+                    Textures.btnMenu.Draw(sb);
+                    Textures.btnQuit.Draw(sb);
+
 
                 }
                 else if (Perso.game_over && game_over_i)
                 {
                     Rectangle rec = new Rectangle(0, 0, 800, 480);
-                    
+
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
                     sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
                     sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
                     sb.Draw(Textures.game_overTexture, rec, Color.White);
-                    
                 }
                 else
                 {
-
                     tree.Draw(sb, new Vector2(500, 50));
                     tree.Draw(sb, new Vector2(400, 50));
                     tree.Draw(sb, new Vector2(900, 50));
@@ -785,8 +778,7 @@ namespace thegame
                     tree.Draw(sb, new Vector2(3900, 50));
                     tree.Draw(sb, new Vector2(4050, 50));
                     tree.Draw(sb, new Vector2(4900, 50));
-
-
+                    
                     for (int truc = 0; truc < 9; truc++)
                     {
                         Ground.Draw(sb, new Vector2(truc * Textures.ground_texture.Width, 408));
@@ -845,6 +837,5 @@ namespace thegame
 
             }
         }
-
     }
 }

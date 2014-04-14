@@ -46,7 +46,6 @@ namespace thegame
 
         public void AddElements(string Text)
         {
-            
             this.tab[pos_tab] = Text;
             if (selected == pos_tab)
             {
@@ -87,8 +86,8 @@ namespace thegame
                     if (SoundIsTrue)
                         Textures.buttonSound_Effect.Play();
                 }
-
             }
+
             if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
             {
                 if (this.selected >= 1)
@@ -99,14 +98,7 @@ namespace thegame
                     if (SoundIsTrue)
                         Textures.buttonSound_Effect.Play();
                 }
-
             }
         }
-
-        
-
-       
-     
-
     }
 }

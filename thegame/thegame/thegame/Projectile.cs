@@ -38,7 +38,6 @@ namespace thegame
             this.hitbox = new Rectangle((int)positionProjectile.X, (int)positionProjectile.Y, Textures.nut_texture.Width, Textures.nut_texture.Height);//collision
         }
 
-
         public void Update(GameTime gameTime)
         {
             if (Vector2.Distance(startPosition, positionProjectile) > distance)
@@ -52,9 +51,7 @@ namespace thegame
                 this.hitbox.X = (int)positionProjectile.X;//collision
                 this.hitbox.Y = (int)positionProjectile.Y;//collision
             }
-
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -62,11 +59,6 @@ namespace thegame
             {
                 base.Draw(spriteBatch, positionProjectile);
             }
-
-
         }
-
-
-
     }
 }
