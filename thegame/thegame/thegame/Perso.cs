@@ -300,7 +300,7 @@ namespace thegame
         }
 
 
-        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer)
+        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer, ref int Health)
         {
 
             
@@ -343,9 +343,14 @@ namespace thegame
             {
                 if (projIA[i].hitbox.Intersects(hitboxPlayer))
                 {
+                    Health -= 3;
+                    Health = (int)MathHelper.Clamp(Health, 0, 10);
                     projIA.Remove(projIA[i]);
-                    gameover = true;
-                    game_over = true;
+                    if (Health == 0)
+                    {
+                        gameover = true;
+                        game_over = true;
+                    }
                 }
 
             }
@@ -509,17 +514,14 @@ namespace thegame
                 foreach (Projectile nut in projIA)
                     nut.Draw(spriteBatch);
             }
-/* DEBUUUUGGGG
-            if (typePerso == CharacType.ia)
-            {
-                Drawable debug = new Drawable(drawable_type.font);
-                if(debugbool)
-                    debug.Draw(spriteBatch, "bool" + debug.ToString(), new Vector2(300, 50), Color.White, "normal");
 
-                      
+    
+      /*          Drawable debug = new Drawable(drawable_type.font);
+                if(typePerso == CharacType.player)
+                    debug.Draw(spriteBatch, "h : " + Health, new Vector2(300, 50), Color.White, "normal");
 
-                spriteBatch.Draw(Textures.hitbox, ThrowProjectiles, Color.White * 0.5f);
-            } */
+
+            */
         }
 
      

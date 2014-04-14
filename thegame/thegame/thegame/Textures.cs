@@ -30,6 +30,7 @@ namespace thegame
         public static Texture2D background;
         public static Video vid;
         public static Texture2D nut_texture;
+        public static Texture2D healthBar_texture;
         
         public static Button btnPlay, btnQuit, btnMenu;
         
@@ -52,6 +53,7 @@ namespace thegame
             pausedTexture = cm.Load<Texture2D>(@"Paused");
             pausedRectangle = new Rectangle(0, 0, pausedTexture.Width, pausedTexture.Height);
             nut_texture = cm.Load<Texture2D>(@"Nut");
+            healthBar_texture = cm.Load<Texture2D>(@"HealthBar");
             //Intro
             vid = cm.Load<Video>(@"video\\vid");
            

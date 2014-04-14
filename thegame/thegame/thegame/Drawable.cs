@@ -17,6 +17,7 @@ namespace thegame
         Ground,
         vid,
         game_over_vid,
+        health,
         Nut
     }
 
@@ -54,6 +55,9 @@ namespace thegame
                     break;
                 case drawable_type.Nut:
                     image = Textures.nut_texture;
+                    break;
+                case drawable_type.health:
+                    image = Textures.healthBar_texture;
                     break;
                default:
                     image = null;

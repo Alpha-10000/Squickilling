@@ -37,6 +37,7 @@ namespace thegame
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
 
+        private Drawable scoreDisplay;
         private List<string> Text_Game;     // Contains text of menu options
         private const int _mnuPlay = 0;     // Use this constant to refer to the menu text.
         private const int _mnuOptions = 1;
@@ -85,7 +86,7 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
         
-
+        private int Health = 10; //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool game_over_i = false;
         MouseState mouse = Mouse.GetState();
@@ -450,7 +451,7 @@ namespace thegame
                                             moveright = false;
                                         }
                                     }
-                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
+                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso, ref Health);
                                     if (iathings.gameover == true)
                                     {
 
@@ -512,6 +513,7 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;
+                    Health = 10;
                     this.type = instances_type.Game;
                     this.selected = 2;
                     Execute();
@@ -822,8 +824,16 @@ namespace thegame
                     tree.Draw(sb, new Vector2(-100, 50));
 
                     /* DRAW GROUND */
+
+                    //Negative health
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 28), Color.Gray);
+                    //health left
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, (int)(Textures.healthBar_texture.Width * (double)Health / 10f), 28), new Rectangle(0, 31,
+                        Textures.healthBar_texture.Width, 44), Color.Red);
+                    //healthBar bounds
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0, Textures.healthBar_texture.Width, 28), Color.White);
                     // TODO: Display current score
-                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(10 - cameraPos.X, 10), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
                 }
 
             }
