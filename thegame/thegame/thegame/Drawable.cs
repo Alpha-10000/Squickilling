@@ -18,7 +18,8 @@ namespace thegame
         vid,
         game_over_vid,
         health,
-        Nut
+        Nut,
+        Acorn
     }
 
 
@@ -55,6 +56,9 @@ namespace thegame
                     break;
                 case drawable_type.Nut:
                     image = Textures.nut_texture;
+                    break;
+                case drawable_type.Acorn:
+                    image = Textures.acorn_texture;
                     break;
                 case drawable_type.health:
                     image = Textures.healthBar_texture;

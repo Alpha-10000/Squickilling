@@ -30,6 +30,7 @@ namespace thegame
         public static Texture2D background;
         public static Video vid;
         public static Texture2D nut_texture;
+        public static Texture2D acorn_texture;
         public static Texture2D healthBar_texture;
         
         public static Button btnPlay, btnQuit, btnMenu;
@@ -49,10 +50,11 @@ namespace thegame
             openingSound_Effect1 = cm.Load<SoundEffect>("audio\\opening1");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
             gameSound_Effect = cm.Load<SoundEffect>("audio\\game");
-            background = cm.Load<Texture2D>(@"Background");
+            background = cm.Load<Texture2D>(@"Autumn_Background9");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
             pausedRectangle = new Rectangle(0, 0, pausedTexture.Width, pausedTexture.Height);
             nut_texture = cm.Load<Texture2D>(@"Nut");
+            acorn_texture = cm.Load<Texture2D>(@"Acorn_test2");
             healthBar_texture = cm.Load<Texture2D>(@"HealthBar");
             //Intro
             vid = cm.Load<Video>(@"video\\vid");

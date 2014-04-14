@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace thegame
 {
-    public enum menu {
+    public enum menu_kind {
       START_GAME = 0,
       OPTION_SETTINGS,
       EXIT_GAME,
@@ -27,7 +27,7 @@ namespace thegame
         public int size { get; private set; }
         public int pos_tab { get; private set; }
         public Color[] color_tab { get; private set; }
-        public int selected { get; set; }
+        public menu_kind selected { get; set; }
         public Color defaultColor { get; private set; }
         public string Text { get; private set; }
 

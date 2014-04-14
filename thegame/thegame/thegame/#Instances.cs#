@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +37,6 @@ namespace thegame
         public int selected { get; private set; }
         public SoundEffect sound { get; private set; }
 
-        private Drawable scoreDisplay;
         private List<string> Text_Game;     // Contains text of menu options
         private const int _mnuPlay = 0;     // Use this constant to refer to the menu text.
         private const int _mnuOptions = 1;
@@ -78,7 +77,7 @@ namespace thegame
         private Drawable Ground;
 
         private Drawable debug;
-        //private Drawable scoreDisplay;
+        private Drawable scoreDisplay;
 
         private List<Texture2D>   texlis;
         private int mapSizeX;
@@ -86,7 +85,7 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
         
-        private int Health = 10; //BASIC LEVEL OF PERSO
+
         public bool pause = false;
         public bool game_over_i = false;
         MouseState mouse = Mouse.GetState();
@@ -99,59 +98,55 @@ namespace thegame
             switch (language)
             {
                 case "english":
-                        Text_Game = new List<string> { "Play", 
-                                                       "Options", 
-                                                       "Exit", 
-                                                       "Language", 
-                                                       "Full screen", 
-                                                       "Back", 
-                                                       "English", 
-                                                       "Français", //has to be français
-                                                       "Sound", 
-                                                       "On", 
-                                                       "Off",
-                                                       "Nederlands" };
+		  Text_Game = new List<string> { "Play", 
+						 "Options", 
+						 "Exit", 
+						 "Language", 
+						 "Full screen", 
+						 "Back", 
+						 "English", 
+						 "Français", //has to be français
+						 "Sound", 
+						 "On", 
+						 "Off",
+						 "Nederlands" };
                          break;
 
                 case "french":
-                    Text_Game = new List<string> { "Jouer",
-                                                   "Options", 
-                                                   "Quitter", 
-                                                   "Langue", 
-                                                   "Plein écran", 
-                                                   "Retour", 
-                                                   "English", 
-                                                   "Français", 
-                                                   "Son", 
-                                                   "Actif", 
-                                                   "Inactif",
-                                                   "Nederlands" };
-                    break;
+		  Text_Game = new List<string> { "Jouer",
+						 "Options", 
+						 "Quitter", 
+						 "Langue", 
+						 "Plein écran", 
+						 "Retour", 
+						 "English", 
+						 "Français", 
+						 "Son", 
+						 "Actif", 
+						 "Inactif",
+						 "Nederlands" };
+		  break;
 
                 case "nederlands":
-                    Text_Game = new List<string> { "Spelen", 
-                                                   "Opties", 
-                                                   "Afsluiten", 
-                                                   "Taal",
-                                                   "Volledig scherm",
-                                                   "Terug",
-                                                   "English",
-                                                   "Français",
-                                                   "Geluid",
-                                                   "Aan",
-                                                   "Uit",
-                                                   "Nederlands" };
-                    break;
+		  Text_Game = new List<string> { "Spelen", 
+						 "Opties", 
+						 "Afsluiten", 
+						 "Taal",
+						 "Volledig scherm",
+						 "Terug",
+						 "English",
+						 "Français",
+						 "Geluid",
+						 "Aan",
+						 "Uit",
+						 "Nederlands" };
+		  break;
             }
-            
-                    
-                
-            
-        }
-
+	}
+	
         public Instances(Game1 game)
         {
-            
+	  
                 /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
                 this.type = instances_type.Menu;
                 this.selected = 0;
@@ -170,11 +165,6 @@ namespace thegame
 
 
                 /* DEFAUT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
-
-
-
-
-                
                 
                 this.game = game;
 
@@ -184,8 +174,6 @@ namespace thegame
                 this.selected = 6;
                 this.Execute();
         }
-
-    
 
         public void UpdateByKey(GameTime gametime)
         {
@@ -198,7 +186,6 @@ namespace thegame
             {
                 game.Exit();
             }
-            
             
 
             if (!pause && !game_over_i)
@@ -451,7 +438,7 @@ namespace thegame
                                             moveright = false;
                                         }
                                     }
-                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso, ref Health);
+                                    iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
                                     if (iathings.gameover == true)
                                     {
 
@@ -513,7 +500,6 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;
-                    Health = 10;
                     this.type = instances_type.Game;
                     this.selected = 2;
                     Execute();
@@ -799,7 +785,7 @@ namespace thegame
                     /* On affiche les objets */
                     foreach (Rectangle dessine in objects)
                     {
-                        sb.Draw(Textures.acorn_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
+                        sb.Draw(Textures.nut_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
                     }
 
                     /*  foreach (Rectangle top in blocksRight)
@@ -824,16 +810,8 @@ namespace thegame
                     tree.Draw(sb, new Vector2(-100, 50));
 
                     /* DRAW GROUND */
-
-                    //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 28), Color.Gray);
-                    //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, (int)(Textures.healthBar_texture.Width * (double)Health / 10f), 28), new Rectangle(0, 31,
-                        Textures.healthBar_texture.Width, 44), Color.Red);
-                    //healthBar bounds
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0, Textures.healthBar_texture.Width, 28), Color.White);
                     // TODO: Display current score
-                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(10 - cameraPos.X, 10), Color.Black, "normal");
                 }
 
             }
