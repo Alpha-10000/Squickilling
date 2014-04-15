@@ -32,7 +32,6 @@ namespace thegame
         protected override void Initialize()
         {
             base.Initialize();
-            
         }
 
         protected override void LoadContent()
@@ -58,10 +57,14 @@ namespace thegame
         {
             camera.Position = instancesobject.cameraPos;
             GraphicsDevice.Clear(Color.Beige);
-            if (instancesobject.selected == 2)//for the fixed background. I had to do that
+            if (instancesobject.selected == 2)  //for the fixed background. I had to do that
             {
                 spriteBatch.Begin();
-                spriteBatch.Draw(Textures.background, Vector2.Zero, Color.White * 0.9f);
+                //------------------------------------------------------------------
+                // ES 15APR14
+                // Makes the background move slower than the camera to create an effect of depth.
+                //------------------------------------------------------------------
+                spriteBatch.Draw(Textures.background, new Vector2(camera.Position.X/3,0), Color.White * 0.9f);
                 spriteBatch.End();
             }
 
@@ -73,12 +76,10 @@ namespace thegame
             }
             else
             {
-
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
                        camera.TransformMatrix);
                 instancesobject.Display(spriteBatch);
                 spriteBatch.End();
-
             }
             base.Draw(gameTime);
         }

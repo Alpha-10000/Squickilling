@@ -13,7 +13,9 @@ using System.Globalization;
 
 namespace thegame
 {
-
+    //------------------------------------------------------------------
+    // Define the game modes.
+    //------------------------------------------------------------------
     public enum instances_type
     {
         Game,
@@ -21,6 +23,9 @@ namespace thegame
         SplashScreen
     }
 
+    //------------------------------------------------------------------
+    // Define the character types. (player character / NPC)
+    //------------------------------------------------------------------
     public enum CharacType
     {
         player,
@@ -30,11 +35,13 @@ namespace thegame
     public class Instances
     {
         public Game1 game { get; private set; }
-        KeyboardState keyboardState;
+
+        KeyboardState keyboardState;        // Used to manage the keyboard input.
         KeyboardState oldkey;
-        public instances_type type { get; set; }
-        public object execute { get; private set; }
-        public int selected { get; private set; }
+        
+        public instances_type curGameMode { get; set; }        // Current game mode.
+        public object execute { get; private set; }            // Current activ object (Menu / Perso) 
+        public int selected { get; private set; }              // Selected menu page.
         public SoundEffect sound { get; private set; }
 
         private Drawable scoreDisplay;
@@ -148,7 +155,7 @@ namespace thegame
         public Instances(Game1 game)
         {
             /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
-            this.type = instances_type.Menu;
+            this.curGameMode = instances_type.Menu;
             this.selected = 0;
             if (CultureInfo.InstalledUICulture.ToString() == "fr-FR")
             {
@@ -186,7 +193,7 @@ namespace thegame
 
             if (!pause && !game_over_i)
             {
-                if (type == instances_type.Menu)// MENU
+                if (curGameMode == instances_type.Menu)// MENU
                 {
                     (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIsTrue);
                 }
@@ -199,7 +206,7 @@ namespace thegame
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // START GAME
                             {
                                 (execute as Menu).MenuBool = false;
-                                this.type = instances_type.Game;
+                                this.curGameMode = instances_type.Game;
                                 this.selected = 2;
                                 Execute();
                             }
@@ -353,18 +360,11 @@ namespace thegame
                             break;
                     }
                 }
-                else if (selected == 6) // SPLASHSCREEN
-                {
-
-                    if (vidPlayer.State == MediaState.Stopped || mouse1.LeftButton == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Enter))
-                    {
-                        vidPlayer.Stop();
-                        this.type = instances_type.Menu;
-                        this.selected = 0;
-                        Execute();
-                        Textures.openingSound_Effect1.Play();
-                    }
-                }
+                //------------------------------------------------------------------
+                // ES 15APR14
+                // Moved details of splashscreen handling near the end of this class.
+                //------------------------------------------------------------------
+                else if (selected == 6) HandleSplashScreen(keyboardState, mouse1);
 
                 else // THIS IS THE GAME 
                 {
@@ -439,7 +439,7 @@ namespace thegame
                         {
                             this.selected = 0;
                             instancesound.Stop();
-                            this.type = instances_type.Menu;
+                            this.curGameMode = instances_type.Menu;
                             Execute();
                             Thread.Sleep(150);
                         }
@@ -458,7 +458,7 @@ namespace thegame
                     pause = false;
                     this.selected = 0;
                     instancesound.Stop();
-                    this.type = instances_type.Menu;
+                    this.curGameMode = instances_type.Menu;
                     Execute();
                     Thread.Sleep(150);
                 }
@@ -478,7 +478,7 @@ namespace thegame
                 {
                     game_over_i = false;
                     Health = 10;
-                    this.type = instances_type.Game;
+                    this.curGameMode = instances_type.Game;
                     this.selected = 2;
                     Execute();
                 }
@@ -552,7 +552,7 @@ namespace thegame
                     break;
 
                 case 6: /* INTRODUCTION : SPLASHSCREEN */
-                    this.type = instances_type.SplashScreen;
+                    this.curGameMode = instances_type.SplashScreen;
                     vidPlayer = new VideoPlayer();
                     vidRectangle = new Rectangle(0, 0, 800, 480);
                     vidPlayer.Play(Textures.vid);
@@ -691,7 +691,7 @@ namespace thegame
         {
             if (this.selected != 6)
             {
-                if (type == instances_type.Menu)
+                if (curGameMode == instances_type.Menu)
                 {
                     (execute as Menu).Display(sb);
                 }
@@ -731,6 +731,9 @@ namespace thegame
                     tree.Draw(sb, new Vector2(4050, 50));
                     tree.Draw(sb, new Vector2(4900, 50));
 
+                    //------------------------------------------------------------------
+                    // Draw ground image
+                    //------------------------------------------------------------------
                     for (int truc = 0; truc < 9; truc++)
                     {
                         Ground.Draw(sb, new Vector2(truc * Textures.ground_texture.Width, 408));
@@ -765,10 +768,11 @@ namespace thegame
                         iathings.Draw(sb);
                     }
 
-                    // This tree should be drawn after the squirrel
+                    //------------------------------------------------------------------
+                    // ES 15APR14
+                    // Draw foreground tree so that squirrel appears to enter the hole
+                    //------------------------------------------------------------------
                     tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 50));
-
-                    /* DRAW GROUND */
 
                     //Negative health
                     sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 
@@ -790,6 +794,18 @@ namespace thegame
             {
                 Drawable.vidTexture = vidPlayer.GetTexture();
                 sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
+            }
+        }
+
+        private void HandleSplashScreen(KeyboardState keyboardstate, MouseState mouse1)
+        {
+            if (vidPlayer.State == MediaState.Stopped || mouse1.LeftButton == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Enter))
+            {
+                vidPlayer.Stop();
+                this.curGameMode = instances_type.Menu;
+                this.selected = 0;
+                Execute();
+                Textures.openingSound_Effect1.Play();
             }
         }
     }

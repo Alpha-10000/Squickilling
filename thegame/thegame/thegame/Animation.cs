@@ -29,13 +29,11 @@ namespace thegame
             set { Sprite = value; }
         }
 
-
         public Vector2 CurrentFrame
         {
             get { return currentFrame; }
             set { currentFrame = value; }
         }
-
 
         public bool Actif
         {
@@ -45,7 +43,6 @@ namespace thegame
         public int FrameWidth
         {
             get { return Sprite.Width / (int)nbFrames.X; }
-        
         }
         public int FrameHeight
         {
