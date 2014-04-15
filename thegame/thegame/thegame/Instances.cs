@@ -659,7 +659,7 @@ namespace thegame
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
-                    tree_autumn_entrance_inside = new Drawable(drawable_type.tree);
+                    tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
                     Ground = new Drawable(drawable_type.Ground);
                     moveright = true;
                     moveleft = true;
@@ -716,7 +716,7 @@ namespace thegame
                 }
                 else
                 {
-                    //tree.Draw(sb, new Vector2(-100, 50));
+                    tree.Draw(sb, new Vector2(-100, 50));
                     tree.Draw(sb, new Vector2(500, 50));
                     tree.Draw(sb, new Vector2(400, 50));
                     tree.Draw(sb, new Vector2(900, 50));
@@ -765,6 +765,7 @@ namespace thegame
                         iathings.Draw(sb);
                     }
 
+                    // This tree should be drawn after the squirrel
                     tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 50));
 
                     /* DRAW GROUND */
