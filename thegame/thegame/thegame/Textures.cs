@@ -15,7 +15,8 @@ namespace thegame
         public static Texture2D plateform_texture;
         public static Texture2D hitbox;
         public static Texture2D mario_texture;
-        public static Texture2D ground_texture;
+        public static Texture2D ground_autumn_texture;
+        public static Texture2D ground_winter_texture;
         public static Texture2D buche_texture;
         public static Texture2D tree_texture;
         public static Texture2D tree_autumn_entrance_inside;
@@ -45,7 +46,8 @@ namespace thegame
             hitbox = cm.Load<Texture2D>(@"blank");
             tree_texture = cm.Load<Texture2D>(@"tree");
             tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Tree_Autumn_entrance_inside");
-            ground_texture = cm.Load<Texture2D>(@"Ground");
+            ground_autumn_texture = cm.Load<Texture2D>(@"Autumn_Ground2");
+            ground_winter_texture = cm.Load<Texture2D>(@"Winter_Ground2");
             font_texture = cm.Load<SpriteFont>(@"FPS");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             openingSound_Effect = cm.Load<Song>("audio\\opening");
@@ -70,7 +72,6 @@ namespace thegame
 
             // Game Over
             game_overTexture = cm.Load<Texture2D>(@"game_over");
-            
         }
     }
 }

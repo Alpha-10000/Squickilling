@@ -698,8 +698,8 @@ namespace thegame
                 else if (pause)
                 {
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                    sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
-                    sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
                     sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
                     Textures.btnPlay.Draw(sb);
                     Textures.btnMenu.Draw(sb);
@@ -710,8 +710,8 @@ namespace thegame
                     Rectangle rec = new Rectangle(0, 0, 800, 480);
 
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                    sb.Draw(Textures.ground_texture, new Vector2(0, 408), Color.White);
-                    sb.Draw(Textures.ground_texture, new Vector2(790, 408), Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
                     sb.Draw(Textures.game_overTexture, rec, Color.White);
                 }
                 else
@@ -731,19 +731,17 @@ namespace thegame
                     tree.Draw(sb, new Vector2(4050, 50));
                     tree.Draw(sb, new Vector2(4900, 50));
 
-                    //------------------------------------------------------------------
                     // Draw ground image
-                    //------------------------------------------------------------------
                     for (int truc = 0; truc < 9; truc++)
                     {
-                        Ground.Draw(sb, new Vector2(truc * Textures.ground_texture.Width, 408));
+                        Ground.Draw(sb, new Vector2(truc * Textures.ground_autumn_texture.Width, 405));
                     }
+                    // Draw the platforms
                     foreach (Rectangle top in blocks)
                     {
                         sb.Draw(Textures.buche_texture, new Rectangle(top.X, top.Y, top.Width, top.Height), Color.White);
                     }
-
-                    /* On affiche les objets */
+                    // Draw the objects
                     foreach (Rectangle dessine in objects)
                     {
                         sb.Draw(Textures.acorn_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);

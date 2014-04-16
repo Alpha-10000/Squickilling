@@ -62,7 +62,6 @@ namespace thegame
 
         public Perso(Vector2 pos, CharacType typePerso)
         {
-
             animationPerso = new Animation(positionPerso, new Vector2(8, 2));
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
@@ -79,14 +78,13 @@ namespace thegame
             animationPerso.Position = positionPerso;
             hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
             ThrowProjectiles = new Rectangle((int)positionPerso.X, (int)positionPerso.Y, 150, 40);
-
         }
 
         private void GravityInit()
         {
-            vel = 10f; /* Kind of like the hight of the jump */
-            acc = 150f; /* Duration of jump */
-            Gravity = 0.5f; /* Start folling with this speed */
+            vel = 10f;          // Kind of like the hight of the jump
+            acc = 150f;         // Duration of jump
+            Gravity = 0.5f;     // Start falling with this speed
         }
 
         public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj, List<Rectangle> objects)

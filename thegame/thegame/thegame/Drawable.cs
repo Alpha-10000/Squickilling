@@ -52,7 +52,7 @@ namespace thegame
                     _fontTitle = Textures.fontTitle_texture;
                     break;
                 case drawable_type.Ground:
-                    image = Textures.ground_texture;
+                    image = Textures.ground_autumn_texture;
                     break;
                 case drawable_type.Background:
                     image = Textures.background;

@@ -49,7 +49,6 @@ namespace thegame
             get { return Sprite.Height / (int)nbFrames.Y; }
         }
 
-
         public Animation(Vector2 Position, Vector2 nbframes)
         {
             actif = false;
@@ -84,7 +83,6 @@ namespace thegame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             spriteBatch.Draw(Sprite, Position, SpriteSheet, Color.White);
         }
     }
