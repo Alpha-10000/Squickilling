@@ -18,10 +18,11 @@ namespace thegame
 
         bool down;
         public bool isClicked;
+        public bool isSelected;
 
         public Button()
         {
-    
+            isSelected = false;
         }
 
         public void Load(Texture2D newTexture, Vector2 newPosition)
@@ -30,20 +31,21 @@ namespace thegame
             position = newPosition;
         }
 
-        public void Update(MouseState mouse)
+        public void Update(MouseState mouse, KeyboardState keyboard)
         {
             mouse = Mouse.GetState();
+            keyboard = Keyboard.GetState();
 
             rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
             Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);
 
-            if (mouseRectangle.Intersects(rectangle))
+            if (mouseRectangle.Intersects(rectangle) || isSelected)
             {
                 if (colour.A == 255) down = false;
                 if (colour.A == 0) down = true;
                 if (down) colour.A += 3; else colour.A -= 3;
-                if (mouse.LeftButton == ButtonState.Pressed)
+                if (mouse.LeftButton == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Enter))
                 {
                     isClicked = true;
                     colour.A = 255;

@@ -38,7 +38,7 @@ namespace thegame
 
         KeyboardState keyboardState;        // Used to manage the keyboard input.
         KeyboardState oldkey;
-        
+
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
         public int selected { get; private set; }              // Selected menu page.
@@ -104,7 +104,7 @@ namespace thegame
         public bool game_over_i = false;
         MouseState mouse = Mouse.GetState();
 
-        
+
         /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
         private void Init_Gane()
         {
@@ -195,6 +195,7 @@ namespace thegame
             this.Execute();
         }
 
+
         public void UpdateByKey(GameTime gametime)
         {
             oldkey = keyboardState;
@@ -260,6 +261,8 @@ namespace thegame
                                 //this.selected = 5;
                                 Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
                                 Game1.graphics.ToggleFullScreen();
+                                //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
+                                //Game1.graphics.ApplyChanges();
                                 Execute();
                             }
                             break;
@@ -405,7 +408,7 @@ namespace thegame
                                 moveright = false;
 
                         projectiles = new List<Projectile>();
-                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom,  projectiles, objects, ref nb_nuts);
+                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, projectiles, objects, ref nb_nuts);
 
                         this.objects = (execute as Perso).objects;
 
@@ -449,10 +452,42 @@ namespace thegame
                     }
                 }
             }
-
             if (pause)
             {
-                if (Textures.btnPlay.isClicked || (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)))
+                /* Pause menu with keyboard*/
+
+                if (Textures.btnPlay.isSelected == false && Textures.btnMenu.isSelected == false && Textures.btnQuit.isSelected == false)
+                    Textures.btnPlay.isSelected = true;
+                if (keyboardState.IsKeyDown(Keys.Down))
+                {
+                    if (Textures.btnMenu.isSelected)
+                    {
+                        Textures.btnMenu.isSelected = false;
+                        Textures.btnQuit.isSelected = true;
+                    }
+                    if (Textures.btnPlay.isSelected && !oldkey.IsKeyDown(Keys.Down))
+                    {
+                        Textures.btnPlay.isSelected = false;
+                        Textures.btnMenu.isSelected = true;
+                        System.Threading.Thread.Sleep(180);
+                    }
+                }
+                if (keyboardState.IsKeyDown(Keys.Up))
+                {
+                    if (Textures.btnMenu.isSelected)
+                    {
+                        Textures.btnMenu.isSelected = false;
+                        Textures.btnPlay.isSelected = true;
+                    }
+                    if (Textures.btnQuit.isSelected && !oldkey.IsKeyDown(Keys.Up))
+                    {
+                        Textures.btnQuit.isSelected = false;
+                        Textures.btnMenu.isSelected = true;
+                        System.Threading.Thread.Sleep(180);
+                    }
+                }
+
+                if (Textures.btnPlay.isClicked  /*(||keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))*/)
                 {
                     pause = false;
                 }
@@ -470,9 +505,9 @@ namespace thegame
                     game.Exit();
                 }
 
-                Textures.btnPlay.Update(mouse);
-                Textures.btnMenu.Update(mouse);
-                Textures.btnQuit.Update(mouse);
+                Textures.btnPlay.Update(mouse, keyboardState);
+                Textures.btnMenu.Update(mouse, keyboardState);
+                Textures.btnQuit.Update(mouse, keyboardState);
             }
 
             if (game_over_i)
@@ -645,7 +680,7 @@ namespace thegame
                     foreach (Rectangle block in blocks)
                         blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture.Width, block.Y + 3, 1, Textures.buche_texture.Height));
 
-                    foreach(Rectangle block in blocks)
+                    foreach (Rectangle block in blocks)
                         blocksBottom.Add(new Rectangle(block.X, block.Y + Textures.buche_texture.Height, Textures.buche_texture.Width, 1));
 
 
@@ -731,13 +766,13 @@ namespace thegame
                     foreach (Rectangle dessine in objects)
                         sb.Draw(Textures.acorn_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
 
-    
-                   /* 
-                    foreach (Rectangle top in blocksBottom)
-                     {
-                         sb.Draw(Textures.hitbox, top, Color.Red);
-                     } // debug left collision 
-                    */
+
+                    /* 
+                     foreach (Rectangle top in blocksBottom)
+                      {
+                          sb.Draw(Textures.hitbox, top, Color.Red);
+                      } // debug left collision 
+                     */
                     /*        debug.Draw(sb, "X : " + (execute as Perso).positionPerso.X.ToString() + " offset : " + (execute as Perso).offset.ToString(), new Vector2(300, 50), Color.White, "normal");
                         */
                     (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
@@ -753,25 +788,25 @@ namespace thegame
                     tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 50));
 
                     //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 
-                        451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31, 
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
+                        451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
                         Textures.healthBar_texture.Width, 28), Color.Gray);
                     //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X, 
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
                         451, (int)(Textures.healthBar_texture.Width * (double)Health / 10f),
                         28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
                     //healthBar bounds
                     sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
                         451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
                         Textures.healthBar_texture.Width, 28), Color.White);
-              
+
                     scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
 
                     // this display the number of nuts that the perso has. 
                     //TODO : see with the group what we should do exactly with that
                     scoreDisplay.Draw(sb, "Bonus : " + nb_nuts, new Vector2(-(int)cameraPos.X + 10, 40), Color.Black, "normal");
 
-                     
+
 
                 }
             }
