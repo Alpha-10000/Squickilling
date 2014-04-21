@@ -96,7 +96,7 @@ namespace thegame
             animationPerso.Actif = true;
             movedown = true;
             Adapt = false;
-            Adapt2 = false;
+      
 
             /*PROJECTILE*/
             Vector2 directionNoix;
