@@ -44,6 +44,9 @@ namespace thegame
         public int selected { get; private set; }              // Selected menu page.
         public SoundEffect sound { get; private set; }
 
+        private bool drawBloodScreen = false;//variable for the bloodscreen
+        private float elapsedTimeBloodScreen = 0;
+
         private Drawable scoreDisplay;
         private List<string> Text_Game;     // Contains text of menu options
         private const int _mnuPlay = 0;     // Use this constant to refer to the menu text.
@@ -75,6 +78,7 @@ namespace thegame
         private List<Perso> iaPerso = new List<Perso>();
 
         private int score = 0;          // Score
+        private int nb_nuts;
         // TODO: Should score stay here or should it be elsewhere?
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
@@ -94,10 +98,19 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
 
-        private int Health = 10; //BASIC LEVEL OF PERSO
+        private int Health; //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool game_over_i = false;
         MouseState mouse = Mouse.GetState();
+
+        
+        /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
+        private void Init_Gane()
+        {
+            this.nb_nuts = 0;
+            this.Health = 10;
+            drawBloodScreen = false;
+        }
 
         /*LANGUAGE OPTION */
         private void GetText(string language)
@@ -177,6 +190,7 @@ namespace thegame
             moveleft = true;
             moveright = true;
             this.selected = 6;
+            Init_Gane();
             this.Execute();
         }
 
@@ -398,11 +412,13 @@ namespace thegame
                         }
 
                         projectiles = new List<Projectile>();
-                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects);
+                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects, ref nb_nuts);
 
                         this.objects = (execute as Perso).objects;
 
                         iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
+
+                        int checkBlood = 0;
 
                         foreach (Perso iathings in iaPerso)
                         {
@@ -412,28 +428,26 @@ namespace thegame
                             foreach (Rectangle left in blocksLeft)
                             {
                                 if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
-                                {
                                     moveleft = false;
-                                }
                             }
 
                             foreach (Rectangle right in blocksRight)
                             {
                                 if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
-                                {
                                     moveright = false;
-                                }
                             }
-                            iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso, ref Health);
+
+                            checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso);
+
+                            iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
+
+
                             if (iathings.gameover == true)
-                            {
                                 game_over_i = true;
-                                /*this.type = instances_type.Game;
-                                this.selected = 2;
-                                Execute();
-                                break;*/
-                            }
                         }
+
+                        if (checkBlood > 0)
+                            drawBloodScreen = true;
 
                         if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                         {
@@ -477,7 +491,7 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;
-                    Health = 10;
+                    Init_Gane();
                     this.curGameMode = instances_type.Game;
                     this.selected = 2;
                     Execute();
@@ -561,6 +575,8 @@ namespace thegame
                     Sound("menu");
                     Sound("Game");
                     score = 0;              // We start the game with the score = 0
+
+                    Init_Gane();
                     tilemap = new int[,]
                         {
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -733,19 +749,15 @@ namespace thegame
 
                     // Draw ground image
                     for (int truc = 0; truc < 9; truc++)
-                    {
                         Ground.Draw(sb, new Vector2(truc * Textures.ground_autumn_texture.Width, 405));
-                    }
+
                     // Draw the platforms
                     foreach (Rectangle top in blocks)
-                    {
                         sb.Draw(Textures.buche_texture, new Rectangle(top.X, top.Y, top.Width, top.Height), Color.White);
-                    }
+
                     // Draw the objects
                     foreach (Rectangle dessine in objects)
-                    {
                         sb.Draw(Textures.acorn_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
-                    }
 
                     /*  foreach (Rectangle top in blocksRight)
                      {
@@ -761,10 +773,9 @@ namespace thegame
                         */
                     (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
 
+                    // Draw IA characters
                     foreach (Perso iathings in iaPerso)
-                    {
                         iathings.Draw(sb);
-                    }
 
                     //------------------------------------------------------------------
                     // ES 15APR14
@@ -786,6 +797,13 @@ namespace thegame
                         Textures.healthBar_texture.Width, 28), Color.White);
                     // TODO: Display current score
                     scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
+
+                    // this display the number of nuts that the perso has. 
+                    //TODO : see with the group what we should do exactly with that
+                    scoreDisplay.Draw(sb, "Bonus : " + nb_nuts, new Vector2(-(int)cameraPos.X + 10, 40), Color.Black, "normal");
+
+                     
+
                 }
             }
             else // draw splashscreen
@@ -793,6 +811,26 @@ namespace thegame
                 Drawable.vidTexture = vidPlayer.GetTexture();
                 sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
             }
+        }
+
+        public void Bloodscreen(GameTime gameTime, SpriteBatch sb, int width, int height, Vector2 camera)
+        {
+            if (drawBloodScreen)
+            {
+                elapsedTimeBloodScreen += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                if (elapsedTimeBloodScreen < 50)
+                {
+                    int positionX = (int)(execute as Perso).positionPerso.X - 400;
+                    sb.Draw(Textures.hitbox, new Rectangle(positionX, 0, width + 300, height), Color.Red * 0.5f);
+                }
+                else
+                {
+                    elapsedTimeBloodScreen = 0;
+                    drawBloodScreen = false;
+                }
+            }
+
         }
 
         private void HandleSplashScreen(KeyboardState keyboardstate, MouseState mouse1)

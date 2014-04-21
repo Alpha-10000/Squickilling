@@ -87,7 +87,7 @@ namespace thegame
             Gravity = 0.5f;     // Start falling with this speed
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj, List<Rectangle> objects)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts)
         {
             this.objects = objects;
            
@@ -118,23 +118,15 @@ namespace thegame
                 projs.Add(noix);
             }
 
-            /* CHECK OBJECT COLLISION WITH PROJECTILES */
-            for (int i = 0; i < projs.Count; i++)
-            {
-                bool ifitdoes = false;
+            /* CHECK OBJECT COLLISION WITH HITBOX PERSO. ADD NUTS THEN */
                 for (int j = objects.Count - 1; j >= 0; j--)
                 {
-                    if ((new Rectangle(objects[j].X, objects[j].Y, objects[j].Width, objects[j].Height)).Intersects(projs[i].hitbox))
+                    if (hitBoxPerso.Intersects(objects[j]))
                     {
-                        ifitdoes = true;
                         objects.Remove(objects[j]);
+                        nb_nuts++;
                     }
                 }
-                if (ifitdoes)
-                {
-                    projs.Remove(projs[i]);
-                }
-            }
 
             /* Update list*/
             for (int i = 0; i < projs.Count; i++)
@@ -297,8 +289,32 @@ namespace thegame
             return checkIA;
         }
 
+        public int TryToKill(ref int Health, Rectangle hitboxPlayer)
+        {
+            /* CHECK PERSO COLLISION WITH PROJECTILES */
+            int check = 0;
+            for (int i = 0; i < projIA.Count; i++)
+            {
+                if (projIA[i].hitbox.Intersects(hitboxPlayer))
+                {
+                    Health -= 3;
+                    Health = (int)MathHelper.Clamp(Health, 0, 10);
+                    projIA.Remove(projIA[i]);
+                    if (Health == 0)
+                    {
+                        gameover = true;
+                        game_over = true;
+                    }
+                    check++;
+                }
 
-        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer, ref int Health)
+            }
+
+            return check; // execute blood screen
+        }
+
+
+        public void UpdateIA(GameTime gametime, bool moveleft, bool moveright, List<Rectangle> blocksTop, Rectangle hitboxPlayer)
         {
 
             
@@ -332,26 +348,7 @@ namespace thegame
             }
 
 
-
-
-          
-
-            /* CHECK PERSO COLLISION WITH PROJECTILES */
-            for (int i = 0; i < projIA.Count; i++)
-            {
-                if (projIA[i].hitbox.Intersects(hitboxPlayer))
-                {
-                    Health -= 3;
-                    Health = (int)MathHelper.Clamp(Health, 0, 10);
-                    projIA.Remove(projIA[i]);
-                    if (Health == 0)
-                    {
-                        gameover = true;
-                        game_over = true;
-                    }
-                }
-
-            }
+     
 
             /* Update list*/
             for (int i = 0; i < projIA.Count; i++)

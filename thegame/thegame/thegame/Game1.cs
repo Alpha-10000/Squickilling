@@ -18,6 +18,9 @@ namespace thegame
         SpriteBatch spriteBatch;
         public Instances instancesobject;
 
+        public int width;
+        public int height;
+
         Camera camera = new Camera();
         
         public Game1()
@@ -25,6 +28,10 @@ namespace thegame
             graphics = new GraphicsDeviceManager(this);
             //this.graphics.PreferredBackBufferHeight = 500;
             //this.graphics.PreferredBackBufferWidth = 800;
+
+            width = graphics.PreferredBackBufferWidth;
+            height = graphics.PreferredBackBufferHeight;
+    
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
         }
@@ -79,6 +86,7 @@ namespace thegame
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
                        camera.TransformMatrix);
                 instancesobject.Display(spriteBatch);
+                instancesobject.Bloodscreen(gameTime, spriteBatch, width, height, camera.Position);
                 spriteBatch.End();
             }
             base.Draw(gameTime);
