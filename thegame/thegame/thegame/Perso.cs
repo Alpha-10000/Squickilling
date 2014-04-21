@@ -87,7 +87,7 @@ namespace thegame
             Gravity = 0.5f;     // Start falling with this speed
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop, List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop , List<Rectangle> blocksBottom, List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts)
         {
             this.objects = objects;
            
@@ -96,6 +96,7 @@ namespace thegame
             animationPerso.Actif = true;
             movedown = true;
             Adapt = false;
+            Adapt2 = false;
 
             /*PROJECTILE*/
             Vector2 directionNoix;
@@ -114,9 +115,7 @@ namespace thegame
             Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 200, directionNoix);
 
             if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space))
-            {
                 projs.Add(noix);
-            }
 
             /* CHECK OBJECT COLLISION WITH HITBOX PERSO. ADD NUTS THEN */
                 for (int j = objects.Count - 1; j >= 0; j--)
@@ -139,13 +138,8 @@ namespace thegame
 
             /* CHECK TOP COLLISION */
             foreach (Rectangle top in blocksTop)
-            {
                 if ((new Rectangle(top.X, top.Y, top.Width, top.Height)).Intersects(hitBoxPerso))
-                {
                     movedown = false;
-
-                }
-            }
 
             /* THE PERSO IS JUMPING - PART FROM BOTTOM TO TOP */
             if (jumping)
@@ -181,14 +175,13 @@ namespace thegame
                 minnewYpos = 50000;
                 if (movedown)
                 {
-
                     for (float i = 0; i < Gravity; i++)
                     {
                         newYpos = minnewYpos;
                         foreach (Rectangle top in blocksTop)
                         {
                             newYpos = minnewYpos;
-                            if ((new Rectangle(top.X, top.Y, top.Width, top.Height)).Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + (int)i + 28, 28, 1)))
+                            if (top.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + (int)i + 28, 28, 1)))
                             {
                                 Adapt = true;
                                 minnewYpos = top.Top - 26;
@@ -198,20 +191,19 @@ namespace thegame
                         }
                     }
                 }
+
                 if (Adapt)
-                {
                     positionPerso.Y = minnewYpos;
 
-                }
+
+          
             }
             /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
 
 
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
             if (!jumping && (positionPerso.Y == sol || !movedown || Adapt))
-            {
                 GravityInit();
-            }
 
             /* GRAVITY - PERSO NOT JUMPING AND ON GROUND */
             if (movedown && !jumping && positionPerso.Y + 1 < sol && !Adapt)
@@ -271,7 +263,7 @@ namespace thegame
             hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
         }
 
-        public List<Perso> CollisionIAProjec(List<Perso> checkIA)
+        public List<Perso> CollisionIAProjec(List<Perso> checkIA, ref int score)
         {
             for (int i = 0; i < checkIA.Count; i++)
             {
@@ -280,6 +272,7 @@ namespace thegame
                     if (projs[j].hitbox.Intersects(checkIA[i].hitBoxPerso))
                     {
                         checkIA.Remove(checkIA[i]);
+                        score++;
                         break;
                     }
                 }
@@ -339,7 +332,6 @@ namespace thegame
 
             Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 230, directionNoix);
 
-            debugbool = ThrowProjectiles.Intersects(hitboxPlayer);
 
             if (gametime.TotalGameTime.TotalMilliseconds >= nextprojec && ThrowProjectiles.Intersects(hitboxPlayer))
             {
@@ -510,13 +502,16 @@ namespace thegame
                     nut.Draw(spriteBatch);
             }
 
-    
-      /*          Drawable debug = new Drawable(drawable_type.font);
+    /*
+                Drawable debug = new Drawable(drawable_type.font);
                 if(typePerso == CharacType.player)
-                    debug.Draw(spriteBatch, "h : " + Health, new Vector2(300, 50), Color.White, "normal");
+                    debug.Draw(spriteBatch, "h : " + debugbool, new Vector2(300, 50), Color.White, "normal");
 
 
-            */
+                spriteBatch.Draw(Textures.hitbox, new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, 28, 1), Color.Red);
+
+           */ 
+            
         }
 
      

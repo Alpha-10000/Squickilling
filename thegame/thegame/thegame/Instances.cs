@@ -71,6 +71,7 @@ namespace thegame
         public List<Rectangle> blocksTop;
         public List<Rectangle> blocksLeft;
         public List<Rectangle> blocksRight;
+        public List<Rectangle> blocksBottom;
         public List<Rectangle> tile;
         private List<Projectile> projectiles;
         private List<Rectangle> objects = new List<Rectangle> { };
@@ -396,27 +397,19 @@ namespace thegame
                         moveright = true;
 
                         foreach (Rectangle left in blocksLeft)
-                        {
                             if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
-                            {
                                 moveleft = false;
-                            }
-                        }
 
                         foreach (Rectangle right in blocksRight)
-                        {
                             if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
-                            {
                                 moveright = false;
-                            }
-                        }
 
                         projectiles = new List<Projectile>();
-                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, projectiles, objects, ref nb_nuts);
+                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom,  projectiles, objects, ref nb_nuts);
 
                         this.objects = (execute as Perso).objects;
 
-                        iaPerso = (execute as Perso).CollisionIAProjec(iaPerso);
+                        iaPerso = (execute as Perso).CollisionIAProjec(iaPerso, ref score);
 
                         int checkBlood = 0;
 
@@ -426,16 +419,12 @@ namespace thegame
                             moveright = true;
 
                             foreach (Rectangle left in blocksLeft)
-                            {
                                 if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
                                     moveleft = false;
-                            }
 
                             foreach (Rectangle right in blocksRight)
-                            {
                                 if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
                                     moveright = false;
-                            }
 
                             checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso);
 
@@ -621,24 +610,15 @@ namespace thegame
                     iaPerso = new List<Perso>();
 
                     for (int x = 0; x < objectsMap.GetLength(1); x++)
-                    {
                         for (int y = 0; y < objectsMap.GetLength(0); y++)
-                        {
                             if (objectsMap[y, x] == 1)
-                            {
                                 objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 100, 10, 10));
-                            }
-                        }
-                    }
+
 
                     /* IA CHARACTERS */
                     for (int x = 0; x < iaMap.Length; x++)
-                    {
                         if (iaMap[x] == 1)
-                        {
                             iaPerso.Add(new Perso(new Vector2(x * Textures.buche_texture.Width, 0), CharacType.ia));
-                        }
-                    }
 
                     texlis = new List<Texture2D>();
                     mapSizeX = tilemap.GetLength(1);
@@ -647,31 +627,27 @@ namespace thegame
                     blocksTop = new List<Rectangle>();
                     blocksLeft = new List<Rectangle>();
                     blocksRight = new List<Rectangle>();
+                    blocksBottom = new List<Rectangle>();
                     tile = new List<Rectangle>();
 
                     for (int x = 0; x < mapSizeX; x++)
-                    {
                         for (int y = 0; y < mapSizeY; y++)
-                        {
                             if (tilemap[y, x] == 1)
-                            {
                                 blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 80, Textures.buche_texture.Width, Textures.buche_texture.Height));
-                            }
-                        }
-                    }
+
 
                     foreach (Rectangle block in blocks)
-                    {
                         blocksTop.Add(new Rectangle(block.X, block.Y, Textures.buche_texture.Width, 1));
-                    }
+
                     foreach (Rectangle block in blocks)
-                    {
                         blocksRight.Add(new Rectangle(block.X, block.Y + 3, 1, Textures.buche_texture.Height));
-                    }
+
                     foreach (Rectangle block in blocks)
-                    {
                         blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture.Width, block.Y + 3, 1, Textures.buche_texture.Height));
-                    }
+
+                    foreach(Rectangle block in blocks)
+                        blocksBottom.Add(new Rectangle(block.X, block.Y + Textures.buche_texture.Height, Textures.buche_texture.Width, 1));
+
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
@@ -693,13 +669,9 @@ namespace thegame
             if (SoundIsTrue)
             {
                 if (type == "menu")
-                {
                     Textures.buttonSound_Effect.Play();
-                }
                 else
-                {
                     instancesound.Play();
-                }
             }
         }
 
@@ -759,14 +731,11 @@ namespace thegame
                     foreach (Rectangle dessine in objects)
                         sb.Draw(Textures.acorn_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
 
-                    /*  foreach (Rectangle top in blocksRight)
+    
+                   /* 
+                    foreach (Rectangle top in blocksBottom)
                      {
-                         sb.Draw(Textures.hitbox, top, Color.White);
-                     } // debug right collision 
-                     */
-                    /* foreach (Rectangle top in blocksRight)
-                     {
-                         sb.Draw(Textures.hitbox, new Rectangle(top.X + (int)(execute as Perso).offset, top.Y, top.Width, top.Height), Color.Red);
+                         sb.Draw(Textures.hitbox, top, Color.Red);
                      } // debug left collision 
                     */
                     /*        debug.Draw(sb, "X : " + (execute as Perso).positionPerso.X.ToString() + " offset : " + (execute as Perso).offset.ToString(), new Vector2(300, 50), Color.White, "normal");
@@ -795,7 +764,7 @@ namespace thegame
                     sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
                         451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
                         Textures.healthBar_texture.Width, 28), Color.White);
-                    // TODO: Display current score
+              
                     scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
 
                     // this display the number of nuts that the perso has. 
