@@ -104,6 +104,7 @@ namespace thegame
         private int Health; //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool game_over_i = false;
+        public bool help = false;
         MouseState mouse = Mouse.GetState();
 
 
@@ -394,7 +395,11 @@ namespace thegame
                         Textures.btnPlay.isClicked = false;
                         Textures.btnMenu.isClicked = false;
                     }
-                    else
+                    else if(Keyboard.GetState().IsKeyDown(Keys.H))
+                    {
+                        help = true;
+                    }
+                    else if (!pause && !help)
                     {
                         cameraPos = (execute as Perso).cameraPos;
                         /* START OF THE GAME CODE */
@@ -508,6 +513,9 @@ namespace thegame
                 Textures.btnMenu.Update(mouse, keyboardState);
                 Textures.btnQuit.Update(mouse, keyboardState);
             }
+
+            if (help && (keyboardState.IsKeyDown(Keys.None) || mouse1.LeftButton == ButtonState.Pressed))
+                help = false;
 
             if (game_over_i)
             {
@@ -744,6 +752,21 @@ namespace thegame
                     sb.Draw(Textures.game_overTexture, rec, Color.White);
                     sb.End();
                 }
+                else if(help)
+                {
+                    sb.Begin();
+                    Rectangle rec = new Rectangle(0, 0, 800, 530);
+
+                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                    sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                    scoreDisplay.Draw(sb, "Use the left and right arrow to move the character", new Vector2(190, 100), Color.White, "help");
+                    scoreDisplay.Draw(sb, "Use the top arrow to jump", new Vector2(190, 130), Color.White, "help");
+                    scoreDisplay.Draw(sb, "To fire on ennemies use the space bar", new Vector2(190, 160), Color.White, "help");
+                    scoreDisplay.Draw(sb, "Press any key to exit", new Vector2(190, 200), Color.White, "");
+                    sb.End();
+                }
                 else
                 {
                     sb.Begin();
@@ -809,7 +832,7 @@ namespace thegame
                     scoreDisplay.Draw(sb, "Health :  " + Health + "/10", new Vector2(63, 425), Color.Black, "normal");
 
                     //help text
-                    scoreDisplay.Draw(sb, "Press H to pause ", new Vector2(530, 440), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, "Press P to pause ", new Vector2(530, 440), Color.Black, "normal");
                     scoreDisplay.Draw(sb, "Press H to get help ", new Vector2(530, 468), Color.Black, "normal");
 
                     //Negative health

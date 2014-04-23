@@ -4,11 +4,13 @@ Content\blank.xnb
 Content\tree.xnb
 Content\Buche_test.xnb
 Content\Ground.xnb
-Content\Paused.xnb
 Content\Background.xnb
 Content\Play.xnb
 Content\Menu.xnb
 Content\Quit.xnb
+Content\nut.xnb
+Content\Paused.xnb
+Content\game_over.xnb
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\opening.xnb
@@ -16,8 +18,6 @@ Content\audio\button.xnb
 Content\audio\game.xnb
 Content\audio\opening1.xnb
 Content\video\vid.xnb
-Content\nut.xnb
-Content\game_over.xnb
 Content\HealthBar.xnb
 Content\Autumn_Background9.xnb
 Content\Acorn_test2.xnb
@@ -25,6 +25,7 @@ Content\Tree_autumn_entrance_inside.xnb
 Content\Winter_ground.xnb
 Content\Autumn_Ground2.xnb
 Content\Winter_ground2.xnb
+Content\fontHelp.xnb
 Content\audio\opening.wma
 Content\video\vid.wmv
 Content\mario.png

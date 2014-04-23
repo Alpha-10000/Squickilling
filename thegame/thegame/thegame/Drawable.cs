@@ -30,6 +30,7 @@ namespace thegame
         
         public SpriteFont _font;
         public SpriteFont _fontTitle;
+        public SpriteFont _fonthelp;
 
         public Drawable(drawable_type drawable_t)
         {
@@ -50,6 +51,7 @@ namespace thegame
                 case drawable_type.font:
                     _font = Textures.font_texture;
                     _fontTitle = Textures.fontTitle_texture;
+                    _fonthelp = Textures.fonthelp_texture;
                     break;
                 case drawable_type.Ground:
                     image = Textures.ground_autumn_texture;
@@ -79,13 +81,11 @@ namespace thegame
         public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color, string Type) /* To show text */
         {
             if (Type == "normal")
-            {
                 sb.DrawString(_font, text, pos, color);
-            }
+            else if (Type == "help")
+                sb.DrawString(_fonthelp, text, pos, color);
             else
-            {
                 sb.DrawString(_fontTitle, text, pos, color);
-            }
         }
     }
 }
