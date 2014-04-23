@@ -23,7 +23,7 @@ namespace thegame
         public Rectangle hitBoxPerso;
         public Rectangle ThrowProjectiles;
 
-        float sol = 380;
+        float sol = 330;
         float minnewYpos;
         bool jumping;
         bool Adapt;

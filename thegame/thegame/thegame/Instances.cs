@@ -47,6 +47,8 @@ namespace thegame
         private bool drawBloodScreen = false;//variable for the bloodscreen
         private float elapsedTimeBloodScreen = 0;
 
+        Camera camera = new Camera();
+
         private Drawable scoreDisplay;
         private List<string> Text_Game;     // Contains text of menu options
         private const int _mnuPlay = 0;     // Use this constant to refer to the menu text.
@@ -485,7 +487,7 @@ namespace thegame
                     }
                 }
 
-                if (Textures.btnPlay.isClicked  /*(||keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))*/)
+                if (Textures.btnPlay.isClicked)
                 {
                     pause = false;
                 }
@@ -628,7 +630,7 @@ namespace thegame
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
-                    int[] iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+                    int[] iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
                     objects = new List<Rectangle>();
                     iaPerso = new List<Perso>();
@@ -636,7 +638,7 @@ namespace thegame
                     for (int x = 0; x < objectsMap.GetLength(1); x++)
                         for (int y = 0; y < objectsMap.GetLength(0); y++)
                             if (objectsMap[y, x] == 1)
-                                objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 100, 10, 10));
+                                objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 150, 10, 10));
 
 
                     /* IA CHARACTERS */
@@ -657,7 +659,7 @@ namespace thegame
                     for (int x = 0; x < mapSizeX; x++)
                         for (int y = 0; y < mapSizeY; y++)
                             if (tilemap[y, x] == 1)
-                                blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 80, Textures.buche_texture.Width, Textures.buche_texture.Height));
+                                blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 130, Textures.buche_texture.Width, Textures.buche_texture.Height));
 
 
                     foreach (Rectangle block in blocks)
@@ -699,16 +701,29 @@ namespace thegame
             }
         }
 
-        public void Display(SpriteBatch sb)
+        public void Display(SpriteBatch sb, GameTime gameTime)
         {
+
+            //------------------------------------------------------------------
+            // ES 23APR14
+            // HOW TO DRAW STATIC VS MOVING SCREEN
+            //Just use Sb.Begin() + sb.End() for static
+            // and use sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix); + sb.End()
+            //for shifting screen
+            //------------------------------------------------------------------
+            camera.Position = this.cameraPos;
+
             if (this.selected != 6)
             {
                 if (curGameMode == instances_type.Menu)
                 {
+                    sb.Begin();
                     (execute as Menu).Display(sb);
+                    sb.End();
                 }
                 else if (pause)
                 {
+                    sb.Begin();
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
@@ -716,36 +731,45 @@ namespace thegame
                     Textures.btnPlay.Draw(sb);
                     Textures.btnMenu.Draw(sb);
                     Textures.btnQuit.Draw(sb);
+                    sb.End();
                 }
                 else if (Perso.game_over && game_over_i)
                 {
-                    Rectangle rec = new Rectangle(0, 0, 800, 480);
+                    sb.Begin();
+                    Rectangle rec = new Rectangle(0, 0, 800, 530);
 
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
                     sb.Draw(Textures.game_overTexture, rec, Color.White);
+                    sb.End();
                 }
                 else
                 {
-                    tree.Draw(sb, new Vector2(-100, 50));
-                    tree.Draw(sb, new Vector2(500, 50));
-                    tree.Draw(sb, new Vector2(400, 50));
-                    tree.Draw(sb, new Vector2(900, 50));
-                    tree.Draw(sb, new Vector2(1050, 50));
-                    tree.Draw(sb, new Vector2(1400, 50));
-                    tree.Draw(sb, new Vector2(1800, 50));
-                    tree.Draw(sb, new Vector2(2200, 50));
-                    tree.Draw(sb, new Vector2(2400, 50));
-                    tree.Draw(sb, new Vector2(3000, 50));
-                    tree.Draw(sb, new Vector2(3400, 50));
-                    tree.Draw(sb, new Vector2(3900, 50));
-                    tree.Draw(sb, new Vector2(4050, 50));
-                    tree.Draw(sb, new Vector2(4900, 50));
+                    sb.Begin();
+                    // Makes the background move slower than the camera to create an effect of depth.
+                    sb.Draw(Textures.background, new Vector2(camera.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                    sb.End();
+
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix);
+                    tree.Draw(sb, new Vector2(-100, 0));
+                    tree.Draw(sb, new Vector2(500,  0));
+                    tree.Draw(sb, new Vector2(400,  0));
+                    tree.Draw(sb, new Vector2(900,  0));
+                    tree.Draw(sb, new Vector2(1050, 0));
+                    tree.Draw(sb, new Vector2(1400, 0));
+                    tree.Draw(sb, new Vector2(1800, 0));
+                    tree.Draw(sb, new Vector2(2200, 0));
+                    tree.Draw(sb, new Vector2(2400, 0));
+                    tree.Draw(sb, new Vector2(3000, 0));
+                    tree.Draw(sb, new Vector2(3400, 0));
+                    tree.Draw(sb, new Vector2(3900, 0));
+                    tree.Draw(sb, new Vector2(4050, 0));
+                    tree.Draw(sb, new Vector2(4900, 0));
 
                     // Draw ground image
                     for (int truc = 0; truc < 9; truc++)
-                        Ground.Draw(sb, new Vector2(truc * Textures.ground_autumn_texture.Width, 405));
+                        Ground.Draw(sb, new Vector2(truc * Textures.ground_autumn_texture.Width, 355));
 
                     // Draw the platforms
                     foreach (Rectangle top in blocks)
@@ -755,15 +779,7 @@ namespace thegame
                     foreach (Rectangle dessine in objects)
                         sb.Draw(Textures.acorn_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
 
-
-                    /* 
-                     foreach (Rectangle top in blocksBottom)
-                      {
-                          sb.Draw(Textures.hitbox, top, Color.Red);
-                      } // debug left collision 
-                     */
-                    /*        debug.Draw(sb, "X : " + (execute as Perso).positionPerso.X.ToString() + " offset : " + (execute as Perso).offset.ToString(), new Vector2(300, 50), Color.White, "normal");
-                        */
+                  
                     (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
 
                     // Draw IA characters
@@ -774,39 +790,55 @@ namespace thegame
                     // ES 15APR14
                     // Draw foreground tree so that squirrel appears to enter the hole
                     //------------------------------------------------------------------
-                    tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 50));
+                    tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 0));
 
-                    //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
-                        451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
-                        Textures.healthBar_texture.Width, 28), Color.Gray);
-                    //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
-                        451, (int)(Textures.healthBar_texture.Width * (double)Health / 10f),
-                        28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
-                    //healthBar bounds
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(-(int)cameraPos.X,
-                        451, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
-                        Textures.healthBar_texture.Width, 28), Color.White);
+                    sb.End();
 
-                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(-(int)cameraPos.X + 10, 10), Color.Black, "normal");
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix);
+                    Bloodscreen(gameTime, sb,camera.Position);
+                    sb.End();
+                    sb.Begin();
+                    sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
+
+                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(137, 487), Color.Black, "normal");
 
                     // this display the number of nuts that the perso has. 
-                    //TODO : see with the group what we should do exactly with that
-                    scoreDisplay.Draw(sb, "Bonus : " + nb_nuts, new Vector2(-(int)cameraPos.X + 10, 40), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, "Bonus : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
 
+                    //draw text health
+                    scoreDisplay.Draw(sb, "Health :  " + Health + "/10", new Vector2(63, 425), Color.Black, "normal");
 
+                    //help text
+                    scoreDisplay.Draw(sb, "Press H to pause ", new Vector2(530, 440), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, "Press H to get help ", new Vector2(530, 468), Color.Black, "normal");
 
+                    //Negative health
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
+                        Textures.healthBar_texture.Width, 28), Color.Gray);
+                    //health left
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                        450, (int)(Textures.healthBar_texture.Width * (double)Health / 10f),
+                        28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
+                    //healthBar bounds
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
+                        Textures.healthBar_texture.Width, 28), Color.White);
+
+                    sb.End();
                 }
             }
             else // draw splashscreen
             {
+                sb.Begin();
                 Drawable.vidTexture = vidPlayer.GetTexture();
                 sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
+                sb.End();
             }
+            
         }
 
-        public void Bloodscreen(GameTime gameTime, SpriteBatch sb, int width, int height, Vector2 camera)
+        public void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera)
         {
             if (drawBloodScreen)
             {
@@ -815,7 +847,7 @@ namespace thegame
                 if (elapsedTimeBloodScreen < 50)
                 {
                     int positionX = (int)(execute as Perso).positionPerso.X - 400;
-                    sb.Draw(Textures.hitbox, new Rectangle(positionX, 0, width + 300, height), Color.Red * 0.5f);
+                    sb.Draw(Textures.hitbox, new Rectangle(positionX, 0, 1100, 550), Color.Red * 0.5f);
                 }
                 else
                 {
