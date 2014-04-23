@@ -47,7 +47,7 @@ namespace thegame
         private bool drawBloodScreen = false;//variable for the bloodscreen
         private float elapsedTimeBloodScreen = 0;
 
-        Camera camera = new Camera();
+        private Camera cameraClass = new Camera();
 
         private Drawable scoreDisplay;
         private List<string> Text_Game;     // Contains text of menu options
@@ -711,7 +711,7 @@ namespace thegame
             // and use sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix); + sb.End()
             //for shifting screen
             //------------------------------------------------------------------
-            camera.Position = this.cameraPos;
+            cameraClass.Position = this.cameraPos;
 
             if (this.selected != 6)
             {
@@ -748,10 +748,10 @@ namespace thegame
                 {
                     sb.Begin();
                     // Makes the background move slower than the camera to create an effect of depth.
-                    sb.Draw(Textures.background, new Vector2(camera.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                    sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
                     sb.End();
 
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix);
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
                     tree.Draw(sb, new Vector2(-100, 0));
                     tree.Draw(sb, new Vector2(500,  0));
                     tree.Draw(sb, new Vector2(400,  0));
@@ -794,8 +794,8 @@ namespace thegame
 
                     sb.End();
 
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix);
-                    Bloodscreen(gameTime, sb,camera.Position);
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                    Bloodscreen(gameTime, sb,cameraClass.Position);
                     sb.End();
                     sb.Begin();
                     sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
@@ -840,9 +840,12 @@ namespace thegame
 
         public void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera)
         {
+
             if (drawBloodScreen)
             {
                 elapsedTimeBloodScreen += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                cameraClass.shake = true;
 
                 if (elapsedTimeBloodScreen < 50)
                 {
@@ -853,6 +856,7 @@ namespace thegame
                 {
                     elapsedTimeBloodScreen = 0;
                     drawBloodScreen = false;
+                    cameraClass.shake = false;
                 }
             }
 
