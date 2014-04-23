@@ -63,6 +63,15 @@ namespace thegame
         private const int _mnuOn = 9;
         private const int _mnuOff = 10;
         private const int _mnuDutch = 11;
+        private const int _gameHelp = 12;
+        private const int _gamePause = 13;
+        private const int _gameHealth = 14;
+        private const int _gamescore = 15;
+        private const int _gamebonus = 16;
+        private const int _gameHelpLine1 = 17;
+        private const int _gameHelpLine2 = 18;
+        private const int _gameHelpLine3 = 19;
+        private const int _gameHelpLine4 = 20;
 
         private SoundEffectInstance instancesound;
         public static Rectangle vidRectangle;
@@ -134,8 +143,21 @@ namespace thegame
                                                    "Sound", 
                                                    "On", 
                                                    "Off",
-                                                   "Nederlands" };
+                                                   "Nederlands",
+                                                   "Press P to pause",
+                                                   "Press H to get help",
+                                                   "Health",
+                                                   "score",
+                                                   "bonus",
+                                                   "Use the left and right arrow to move the character",
+                                                   "Use the top arrow to jump",
+                                                   "To fire on ennemies use the space bar",
+                                                   "Press any key to exit"
+                    
+                    };
                     break;
+
+                   
 
                 case "french":
                     Text_Game = new List<string> { "Jouer",
@@ -149,7 +171,16 @@ namespace thegame
                                                    "Son", 
                                                    "Actif", 
                                                    "Inactif",
-                                                   "Nederlands" };
+                                                   "Nederlands",
+                                                   "P = pause",
+                                                   "H = aide",
+                                                   "Vie",
+                                                   "score",
+                                                   "bonus",
+                                                   "Utilisez la flèche gauche/droite pour se déplacer",
+                                                   "Utilisez la flèche du haut pour sauter",
+                                                   "Utilisez la barre espace pour tirer",
+                                                   "Appuyez sur une touche pour quitter"};
                     break;
 
                 case "nederlands":
@@ -164,7 +195,16 @@ namespace thegame
                                                    "Geluid",
                                                    "Aan",
                                                    "Uit",
-                                                   "Nederlands" };
+                                                   "Nederlands",
+                                                   "Press P to pause",
+                                                   "Press H to get help",
+                                                   "Health",
+                                                   "score",
+                                                   "bonus",
+                                                   "Use the left and right arrow to move the character",
+                                                   "Use the top arrow to jump",
+                                                   "To fire on ennemies use the space bar",
+                                                   "Press any key to exit" };
                     break;
             }
         }
@@ -514,7 +554,7 @@ namespace thegame
                 Textures.btnQuit.Update(mouse, keyboardState);
             }
 
-            if (help && (keyboardState.IsKeyDown(Keys.None) || mouse1.LeftButton == ButtonState.Pressed))
+            if (help && !Keyboard.GetState().IsKeyDown(Keys.H) && (Keyboard.GetState().GetPressedKeys().Length > 0 || mouse1.LeftButton == ButtonState.Pressed))
                 help = false;
 
             if (game_over_i)
@@ -761,10 +801,10 @@ namespace thegame
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
                     sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                    scoreDisplay.Draw(sb, "Use the left and right arrow to move the character", new Vector2(190, 100), Color.White, "help");
-                    scoreDisplay.Draw(sb, "Use the top arrow to jump", new Vector2(190, 130), Color.White, "help");
-                    scoreDisplay.Draw(sb, "To fire on ennemies use the space bar", new Vector2(190, 160), Color.White, "help");
-                    scoreDisplay.Draw(sb, "Press any key to exit", new Vector2(190, 200), Color.White, "");
+                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine1], new Vector2(190, 100), Color.White, "help");
+                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine2], new Vector2(190, 130), Color.White, "help");
+                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine3], new Vector2(190, 160), Color.White, "help");
+                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine4], new Vector2(190, 200), Color.White, "help");
                     sb.End();
                 }
                 else
@@ -823,17 +863,17 @@ namespace thegame
                     sb.Begin();
                     sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
 
-                    scoreDisplay.Draw(sb, "Score: " + score, new Vector2(137, 487), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game[_gamescore] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
 
                     // this display the number of nuts that the perso has. 
-                    scoreDisplay.Draw(sb, "Bonus : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game[_gamebonus] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
 
                     //draw text health
-                    scoreDisplay.Draw(sb, "Health :  " + Health + "/10", new Vector2(63, 425), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game[_gameHealth] + " :  " + Health + "/10", new Vector2(63, 425), Color.Black, "normal");
 
                     //help text
-                    scoreDisplay.Draw(sb, "Press P to pause ", new Vector2(530, 440), Color.Black, "normal");
-                    scoreDisplay.Draw(sb, "Press H to get help ", new Vector2(530, 468), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game[_gamePause], new Vector2(530, 440), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game[_gameHelp], new Vector2(530, 468), Color.Black, "normal");
 
                     //Negative health
                     sb.Draw(Textures.healthBar_texture, new Rectangle(0,
