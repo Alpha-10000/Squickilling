@@ -447,7 +447,6 @@ namespace thegame
                             instancesound.Stop();
                             this.curGameMode = instances_type.Menu;
                             Execute();
-                            Thread.Sleep(150);
                         }
                     }
                 }
@@ -458,7 +457,8 @@ namespace thegame
 
                 if (Textures.btnPlay.isSelected == false && Textures.btnMenu.isSelected == false && Textures.btnQuit.isSelected == false)
                     Textures.btnPlay.isSelected = true;
-                if (keyboardState.IsKeyDown(Keys.Down))
+
+                if (keyboardState.IsKeyDown(Keys.Down) && !oldkey.IsKeyDown(Keys.Down))
                 {
                     if (Textures.btnMenu.isSelected)
                     {
@@ -469,10 +469,9 @@ namespace thegame
                     {
                         Textures.btnPlay.isSelected = false;
                         Textures.btnMenu.isSelected = true;
-                        System.Threading.Thread.Sleep(180);
                     }
                 }
-                if (keyboardState.IsKeyDown(Keys.Up))
+                if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
                 {
                     if (Textures.btnMenu.isSelected)
                     {
@@ -483,7 +482,6 @@ namespace thegame
                     {
                         Textures.btnQuit.isSelected = false;
                         Textures.btnMenu.isSelected = true;
-                        System.Threading.Thread.Sleep(180);
                     }
                 }
 
@@ -498,7 +496,6 @@ namespace thegame
                     instancesound.Stop();
                     this.curGameMode = instances_type.Menu;
                     Execute();
-                    Thread.Sleep(150);
                 }
                 if (Textures.btnQuit.isClicked)
                 {
@@ -545,24 +542,16 @@ namespace thegame
                     //(execute as Menu).AddElements(Text_Game[4]);//fullscreen  
                     //     Next section modifies text on display mode.
                     if (Fullscreen)
-                    {
                         (execute as Menu).AddElements(Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOn] + ")"); //fullscreen on
-                    }
                     else
-                    {
                         (execute as Menu).AddElements(Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOff] + ")"); //fullscreen off
-                    }
 
                     //(execute as Menu).AddElements(Text_Game[8]);//sound
                     //      Next section modifies text on sound mode.
                     if (SoundIsTrue)
-                    {
                         (execute as Menu).AddElements(Text_Game[_mnuSound] + " (" + Text_Game[_mnuOn] + ")"); //sound on
-                    }
                     else
-                    {
                         (execute as Menu).AddElements((Text_Game[_mnuSound] + " (" + Text_Game[_mnuOff] + ")")); // sound off
-                    }
                     (execute as Menu).AddElements(Text_Game[_mnuBack]);//back
 
                     break;
