@@ -89,6 +89,17 @@ namespace thegame
 
         public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop , List<Rectangle> blocksBottom, List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts)
         {
+
+
+            foreach(Rectangle block in blocksBottom)
+                if (block.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, hitBoxPerso.Width, 3)))
+                {
+                    GravityInit();
+                    jumping = false;
+                    break;
+                }
+
+
             this.objects = objects;
            
             /* INITIALISATION */
@@ -492,15 +503,11 @@ namespace thegame
 
             animationPerso.Draw(spriteBatch);
             if (typePerso == CharacType.player)
-            {
                 foreach (Projectile nut in projs)
                     nut.Draw(spriteBatch);
-            }
             else
-            {
                 foreach (Projectile nut in projIA)
                     nut.Draw(spriteBatch);
-            }
 
     /*
                 Drawable debug = new Drawable(drawable_type.font);
@@ -510,8 +517,8 @@ namespace thegame
 
                 spriteBatch.Draw(Textures.hitbox, new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, 28, 1), Color.Red);
 
-           */ 
-            
+           */
+
         }
 
      
