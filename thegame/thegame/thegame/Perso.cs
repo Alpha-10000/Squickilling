@@ -232,7 +232,7 @@ namespace thegame
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 positionPerso.X += changement + 10;
-                if (positionPerso.X > 400)
+                if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement - 10, cameraPos.Y);
             }
             else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
@@ -241,7 +241,7 @@ namespace thegame
 
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 positionPerso.X -= changement + 10;
-                if (positionPerso.X > 400)
+                if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X + changement + 10, cameraPos.Y);
             }
 
@@ -250,7 +250,7 @@ namespace thegame
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 positionPerso.X += changement;
-                if (positionPerso.X > 400)
+                if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
             else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))

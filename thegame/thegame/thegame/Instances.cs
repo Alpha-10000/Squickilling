@@ -122,7 +122,7 @@ namespace thegame
 
 
         /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
-        private void Init_Gane()
+        private void Init_Game()
         {
             this.nb_nuts = 0;
             this.Health = 10;
@@ -239,7 +239,7 @@ namespace thegame
             moveleft = true;
             moveright = true;
             this.selected = 6;
-            Init_Gane();
+            Init_Game();
             this.Execute();
         }
 
@@ -473,6 +473,15 @@ namespace thegame
                                 moveright = false;
 
                         projectiles = new List<Projectile>();
+                        if ((execute as Perso).positionPerso.X > 5350)
+                        {
+                            game_over_i = false;
+                            Init_Game();
+                            this.curGameMode = instances_type.Game;
+                            this.selected = 2;
+                            Execute();
+                        }
+
                         (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, projectiles, objects,  ref nb_nuts);
 
 
@@ -603,7 +612,7 @@ namespace thegame
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;
-                    Init_Gane();
+                    Init_Game();
                     this.curGameMode = instances_type.Game;
                     this.selected = 2;
                     Execute();
@@ -680,7 +689,7 @@ namespace thegame
                     Sound("Game");
                     score = 0;              // We start the game with the score = 0
 
-                    Init_Gane();
+                    Init_Game();
                     tilemap = new int[,]
                         {
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
