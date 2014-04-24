@@ -115,6 +115,7 @@ namespace thegame
         public bool pause = false;
         public bool game_over_i = false;
         public bool help = false;
+        public bool endLevel = false;
 
         private float elaspedTimeGetBackHealth = 0;
         private float timeInSecond_GetOnePoint = 30;//Get back 1 point of life every 30 seconds. 
@@ -126,7 +127,7 @@ namespace thegame
         private void Init_Game()
         {
             this.nb_nuts = 0;
-            this.Health = 10;
+            this.Health = 20;
             drawBloodScreen = false;
             bomb = new List<Bomb>();
         }
@@ -455,11 +456,23 @@ namespace thegame
                     {
                         help = true;
                     }
-                    else if (!pause && !help)
+
+                    if ((execute as Perso).positionPerso.X > 5350)
+                    {
+                        endLevel = true;
+                        if (keyboardState.IsKeyDown(Keys.Space))
+                        {
+                            endLevel = false;
+                            Init_Game();
+                            this.curGameMode = instances_type.Game;
+                            this.selected = 2;
+                            Execute();
+                        }
+                    }
+                    else if (!pause && !help && !endLevel)
                     {
 
-                     
-
+                    
                         cameraPos = (execute as Perso).cameraPos;
                         /* START OF THE GAME CODE */
                         moveleft = true;
@@ -467,7 +480,7 @@ namespace thegame
 
 
                         elaspedTimeGetBackHealth += (float)gametime.ElapsedGameTime.TotalSeconds;
-                        if (elaspedTimeGetBackHealth > timeInSecond_GetOnePoint && Health < 10)
+                        if (elaspedTimeGetBackHealth > timeInSecond_GetOnePoint && Health < 20)
                         {
                             Health++;
                             elaspedTimeGetBackHealth = 0;
@@ -482,14 +495,7 @@ namespace thegame
                                 moveright = false;
 
                         projectiles = new List<Projectile>();
-                        if ((execute as Perso).positionPerso.X > 5350)
-                        {
-                            game_over_i = false;
-                            Init_Game();
-                            this.curGameMode = instances_type.Game;
-                            this.selected = 2;
-                            Execute();
-                        }
+
 
                         (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, projectiles, objects,  ref nb_nuts);
 
@@ -881,7 +887,44 @@ namespace thegame
 
                     sb.End();
                 }
-                else if(help)
+                else if (endLevel)
+                {
+                    sb.Begin();
+                    Rectangle rec = new Rectangle(0, 0, 800, 530);
+
+                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                    sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                    if (language == "english")
+                    {
+                        scoreDisplay.Draw(sb, "Yeah, end of the level, etc, etc.", new Vector2(50, 100), Color.Black, "42");
+                        scoreDisplay.Draw(sb, "Your Score is :" + score + ".", new Vector2(50, 150), Color.Black, "osef");
+                        scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                        scoreDisplay.Draw(sb, "Stuff to Add", new Vector2(50, 250), Color.Black, "42");
+                        scoreDisplay.Draw(sb, "Press Space", new Vector2(190, 300), Color.Black, "osef");
+                    }
+                    else if (language == "french")
+                    {
+                        scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");
+                        scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
+                        scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                        scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
+                        scoreDisplay.Draw(sb, "Appuyer sur Espace", new Vector2(50, 300), Color.Black, "osef");
+                    }
+                    else
+                    {
+                        scoreDisplay.Draw(sb, "Dsl je parle pas neerlandais :P", new Vector2(190, 100), Color.Black, "42");
+                        //scoreDisplay.Draw(sb, "Ton Score est de :" + score + "et un bonus de" + nb_nuts + "noisettes", new Vector2(50, 150), Color.Black, "osef");
+                        //scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                        //scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
+                        //scoreDisplay.Draw(sb, "Appuyer sur Space", new Vector2(50, 300), Color.Black, "osef");
+                    }
+
+                    sb.End();
+
+                }
+                else if (help)
                 {
                     sb.Begin();
                     Rectangle rec = new Rectangle(0, 0, 800, 530);
@@ -905,9 +948,9 @@ namespace thegame
 
                     sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
                     tree.Draw(sb, new Vector2(-100, 0));
-                    tree.Draw(sb, new Vector2(500,  0));
-                    tree.Draw(sb, new Vector2(400,  0));
-                    tree.Draw(sb, new Vector2(900,  0));
+                    tree.Draw(sb, new Vector2(500, 0));
+                    tree.Draw(sb, new Vector2(400, 0));
+                    tree.Draw(sb, new Vector2(900, 0));
                     tree.Draw(sb, new Vector2(1050, 0));
                     tree.Draw(sb, new Vector2(1400, 0));
                     tree.Draw(sb, new Vector2(1800, 0));
@@ -934,7 +977,7 @@ namespace thegame
                     //draw bomb
                     foreach (Bomb dessine in bomb)
                         dessine.Draw(sb, gameTime);
-                  
+
                     (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
 
                     // Draw IA characters
@@ -950,7 +993,7 @@ namespace thegame
                     sb.End();
 
                     sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                    Bloodscreen(gameTime, sb,cameraClass.Position);
+                    Bloodscreen(gameTime, sb, cameraClass.Position);
                     sb.End();
                     sb.Begin();
                     sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
@@ -961,7 +1004,7 @@ namespace thegame
                     scoreDisplay.Draw(sb, Text_Game[_gamebonus] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
 
                     //draw text health
-                    scoreDisplay.Draw(sb, Text_Game[_gameHealth] + " :  " + Health + "/10", new Vector2(63, 425), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game[_gameHealth] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
 
                     //help text
                     scoreDisplay.Draw(sb, Text_Game[_gamePause], new Vector2(530, 440), Color.Black, "normal");
@@ -973,7 +1016,7 @@ namespace thegame
                         Textures.healthBar_texture.Width, 28), Color.Gray);
                     //health left
                     sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                        450, (int)(Textures.healthBar_texture.Width * (double)Health / 10f),
+                        450, (int)(Textures.healthBar_texture.Width * (double)Health / 20f),
                         28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
                     //healthBar bounds
                     sb.Draw(Textures.healthBar_texture, new Rectangle(0,
