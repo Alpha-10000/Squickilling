@@ -11,6 +11,7 @@ Content\Quit.xnb
 Content\nut.xnb
 Content\Paused.xnb
 Content\game_over.xnb
+Content\HealthBar.xnb
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\opening.xnb
@@ -18,7 +19,6 @@ Content\audio\button.xnb
 Content\audio\game.xnb
 Content\audio\opening1.xnb
 Content\video\vid.xnb
-Content\HealthBar.xnb
 Content\Autumn_Background9.xnb
 Content\Acorn_test2.xnb
 Content\Tree_autumn_entrance_inside.xnb

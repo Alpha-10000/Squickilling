@@ -672,7 +672,7 @@ namespace thegame
                 case 6: /* INTRODUCTION : SPLASHSCREEN */
                     this.curGameMode = instances_type.SplashScreen;
                     vidPlayer = new VideoPlayer();
-                    vidRectangle = new Rectangle(0, 0, 800, 480);
+                    vidRectangle = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, Game1.graphics.PreferredBackBufferHeight);
                     vidPlayer.Play(Textures.vid);
                     break;
                 case 2: /* GAME START */
