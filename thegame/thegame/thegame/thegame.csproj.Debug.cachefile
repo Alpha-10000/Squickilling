@@ -9,6 +9,12 @@ Content\Background.xnb
 Content\Play.xnb
 Content\Menu.xnb
 Content\Quit.xnb
+<<<<<<< HEAD
+=======
+Content\nut.xnb
+Content\Paused.xnb
+Content\HealthBar.xnb
+>>>>>>> 081eebdd7b5376cc4e6263757ef0656dede00d5a
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\opening.xnb
@@ -16,9 +22,12 @@ Content\audio\button.xnb
 Content\audio\game.xnb
 Content\audio\opening1.xnb
 Content\video\vid.xnb
+<<<<<<< HEAD
 Content\nut.xnb
 Content\game_over.xnb
 Content\HealthBar.xnb
+=======
+>>>>>>> 081eebdd7b5376cc4e6263757ef0656dede00d5a
 Content\Autumn_Background9.xnb
 Content\Acorn_test2.xnb
 Content\Tree_autumn_entrance_inside.xnb
@@ -27,6 +36,9 @@ Content\Autumn_Ground2.xnb
 Content\Winter_ground2.xnb
 Content\fontHelp.xnb
 Content\explosion-sprite-sheet-i0.xnb
+Content\game_over_en.xnb
+Content\game_over_fr.xnb
+Content\game_over_ne.xnb
 Content\audio\opening.wma
 Content\video\vid.wmv
 Content\mario.png

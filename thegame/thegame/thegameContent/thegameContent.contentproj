@@ -182,13 +182,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="game_over.png">
-      <Name>game_over</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="HealthBar.png">
       <Name>HealthBar</Name>
       <Importer>TextureImporter</Importer>
@@ -247,6 +240,27 @@
   <ItemGroup>
     <Compile Include="explosion-sprite-sheet-i0.png">
       <Name>explosion-sprite-sheet-i0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="game_over_en.png">
+      <Name>game_over_en</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="game_over_fr.png">
+      <Name>game_over_fr</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="game_over_ne.png">
+      <Name>game_over_ne</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

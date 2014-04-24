@@ -22,7 +22,9 @@ namespace thegame
         public static Texture2D tree_autumn_entrance_inside;
         public static Texture2D pausedTexture;
         public static Texture2D explosion;
-        public static Texture2D game_overTexture;
+        public static Texture2D game_overTexture_en;
+        public static Texture2D game_overTexture_fr;
+        public static Texture2D game_overTexture_ne;
         public static Rectangle pausedRectangle;
         public static SpriteFont font_texture;
         public static SpriteFont fontTitle_texture;
@@ -36,6 +38,7 @@ namespace thegame
         public static Texture2D nut_texture;
         public static Texture2D acorn_texture;
         public static Texture2D healthBar_texture;
+       
         
         public static Button btnPlay, btnQuit, btnMenu;
         
@@ -75,7 +78,9 @@ namespace thegame
             btnQuit.Load(cm.Load<Texture2D>(@"Quit"), new Vector2(307, 323));
 
             // Game Over
-            game_overTexture = cm.Load<Texture2D>(@"game_over");
+            game_overTexture_en = cm.Load<Texture2D>(@"game_over_en");
+            game_overTexture_fr = cm.Load<Texture2D>(@"game_over_fr");
+            game_overTexture_ne = cm.Load<Texture2D>(@"game_over_ne");
         }
     }
 }
