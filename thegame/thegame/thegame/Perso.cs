@@ -89,17 +89,6 @@ namespace thegame
         public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop , List<Rectangle> blocksBottom, List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts)
         {
 
-            
-
-            foreach(Rectangle block in blocksBottom)
-                if (block.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, hitBoxPerso.Width, 3)))
-                {
-                    GravityInit();
-                    jumping = false;
-                    break;
-                }
-
-
             this.objects = objects;
            
             /* INITIALISATION */
@@ -107,7 +96,10 @@ namespace thegame
             animationPerso.Actif = true;
             movedown = true;
             Adapt = false;
-      
+            
+            /* Keep perso inside the map */
+            if (hitBoxPerso.X <= 0)
+                moveleft = false;
 
             /*PROJECTILE*/
             Vector2 directionNoix;
@@ -149,8 +141,17 @@ namespace thegame
 
             /* CHECK TOP COLLISION */
             foreach (Rectangle top in blocksTop)
-                if ((new Rectangle(top.X, top.Y, top.Width, top.Height)).Intersects(hitBoxPerso))
+                if (top.Intersects(hitBoxPerso))
                     movedown = false;
+
+            /* CHECK BOTTOM COLLISION */
+            foreach (Rectangle block in blocksBottom)
+                if (block.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, hitBoxPerso.Width, 3)))
+                {
+                    GravityInit();
+                    jumping = false;
+                    break;
+                }
 
             /* THE PERSO IS JUMPING - PART FROM BOTTOM TO TOP */
             if (jumping)
@@ -232,7 +233,7 @@ namespace thegame
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 positionPerso.X += changement + 10;
-                if (positionPerso.X > 400 && positionPerso.X < 5000)
+                if (positionPerso.X > 400)
                     cameraPos = new Vector2(cameraPos.X - changement - 10, cameraPos.Y);
             }
             else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
@@ -241,7 +242,7 @@ namespace thegame
 
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 positionPerso.X -= changement + 10;
-                if (positionPerso.X > 400 && positionPerso.X < 5000)
+                if (positionPerso.X > 400)
                     cameraPos = new Vector2(cameraPos.X + changement + 10, cameraPos.Y);
             }
 
@@ -250,7 +251,7 @@ namespace thegame
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 positionPerso.X += changement;
-                if (positionPerso.X > 400 && positionPerso.X < 5000)
+                if (positionPerso.X > 400)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
             else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
@@ -303,6 +304,7 @@ namespace thegame
                 if (projIA[i].hitbox.Intersects(hitboxPlayer))
                 {
                     Health -= 3;
+                    Textures.gamePunch_Effect.Play();
                     Health = (int)MathHelper.Clamp(Health, 0, 10);
                     projIA.Remove(projIA[i]);
                     if (Health == 0)

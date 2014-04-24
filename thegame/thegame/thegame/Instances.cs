@@ -457,6 +457,9 @@ namespace thegame
                     }
                     else if (!pause && !help)
                     {
+
+                     
+
                         cameraPos = (execute as Perso).cameraPos;
                         /* START OF THE GAME CODE */
                         moveleft = true;
@@ -524,19 +527,24 @@ namespace thegame
                         }
 
 
+                        /* CHECK IF CHARACTER CROSS A MINE */
                         foreach (Bomb checkCrossed in bomb)
+                        {
                             if ((execute as Perso).hitBoxPerso.Intersects(checkCrossed.Object))
                             {
                                 checkCrossed.activateExplosion = true;
                                 drawBloodScreen = true;
-                                if (checkCrossed.checkBlood)
-                                    drawBloodScreen = true;
+                                if(checkCrossed.checkBlood)
+                                    Textures.gameExplosion_Effect.Play();
                                 checkCrossed.BloodOnce(ref Health);
                                 break;
                             }
+                            if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
+                                   drawBloodScreen = true;
+                        }
 
 
-                        bomb.RemoveAll(x => x.checkIfFinish);
+                        bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
                         if (Health <= 0)
                             game_over_i = true;
@@ -589,9 +597,8 @@ namespace thegame
                 }
 
                 if (Textures.btnPlay.isClicked)
-                {
                     pause = false;
-                }
+
                 if (Textures.btnMenu.isClicked)
                 {
                     pause = false;
@@ -601,9 +608,7 @@ namespace thegame
                     Execute();
                 }
                 if (Textures.btnQuit.isClicked)
-                {
                     game.Exit();
-                }
 
                 Textures.btnPlay.Update(mouse, keyboardState);
                 Textures.btnMenu.Update(mouse, keyboardState);
@@ -820,12 +825,10 @@ namespace thegame
         public void Sound(string type)
         {
             if (SoundIsTrue)
-            {
                 if (type == "menu")
                     Textures.buttonSound_Effect.Play();
                 else
                     instancesound.Play();
-            }
         }
 
         public void Display(SpriteBatch sb, GameTime gameTime)
@@ -870,14 +873,12 @@ namespace thegame
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
                     
                     if (language == "english")
-                    {
                         sb.Draw(Textures.game_overTexture_en, rec, Color.White);
-                    }
                     else if (language == "french")
-                    {
                         sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
-                    }
-                    else sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
+                    else 
+                        sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
+
                     sb.End();
                 }
                 else if(help)

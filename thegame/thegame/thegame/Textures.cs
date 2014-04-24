@@ -33,6 +33,8 @@ namespace thegame
         public static SoundEffect openingSound_Effect1;
         public static SoundEffect buttonSound_Effect;
         public static SoundEffect gameSound_Effect;
+        public static SoundEffect gameExplosion_Effect;
+        public static SoundEffect gamePunch_Effect;
         public static Texture2D background;
         public static Video vid;
         public static Texture2D nut_texture;
@@ -60,6 +62,8 @@ namespace thegame
             openingSound_Effect1 = cm.Load<SoundEffect>("audio\\opening1");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
             gameSound_Effect = cm.Load<SoundEffect>("audio\\game");
+            gameExplosion_Effect = cm.Load<SoundEffect>("audio\\explosion");
+            gamePunch_Effect = cm.Load<SoundEffect>("audio\\punch");
             background = cm.Load<Texture2D>(@"Autumn_Background9");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
             pausedRectangle = new Rectangle(0, 0, pausedTexture.Width, pausedTexture.Height);
