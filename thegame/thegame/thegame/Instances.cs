@@ -76,7 +76,7 @@ namespace thegame
         private SoundEffectInstance instancesound;
         public static Rectangle vidRectangle;
         public static VideoPlayer vidPlayer, vidPlayer2;
-
+        string language;
         private int[,] tilemap;
         public List<Rectangle> blocks;
         public List<Rectangle> blocksTop;
@@ -119,6 +119,7 @@ namespace thegame
         private float elaspedTimeGetBackHealth = 0;
         private float timeInSecond_GetOnePoint = 30;//Get back 1 point of life every 30 seconds. 
         MouseState mouse = Mouse.GetState();
+        
 
 
         /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
@@ -222,10 +223,12 @@ namespace thegame
             if (CultureInfo.InstalledUICulture.ToString() == "fr-FR")
             {
                 GetText("french");
+                language = "french";
             }
             else
             {
                 GetText("english");
+                language = "english";
             }
 
             instancesound = Textures.gameSound_Effect.CreateInstance();
@@ -349,6 +352,7 @@ namespace thegame
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 1
                             {
                                 GetText("english");
+                                language = "english";
                                 this.selected = 0;
                                 Execute();
                             }
@@ -357,6 +361,7 @@ namespace thegame
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 2
                             {
                                 GetText("french");
+                                language = "french";
                                 this.selected = 0;
                                 Execute();
                             }
@@ -365,6 +370,7 @@ namespace thegame
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                             {
                                 GetText("nederlands");
+                                language = "nederlands";
                                 this.selected = 0;      // This takes it to the first menu page
                                 Execute();
                             }
@@ -853,7 +859,16 @@ namespace thegame
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
-                    sb.Draw(Textures.game_overTexture, rec, Color.White);
+                    
+                    if (language == "english")
+                    {
+                        sb.Draw(Textures.game_overTexture_en, rec, Color.White);
+                    }
+                    else if (language == "french")
+                    {
+                        sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
+                    }
+                    else sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
                     sb.End();
                 }
                 else if(help)

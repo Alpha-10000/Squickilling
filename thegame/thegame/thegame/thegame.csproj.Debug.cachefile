@@ -10,7 +10,6 @@ Content\Menu.xnb
 Content\Quit.xnb
 Content\nut.xnb
 Content\Paused.xnb
-Content\game_over.xnb
 Content\HealthBar.xnb
 Content\FPS.xnb
 Content\Title.xnb
@@ -27,6 +26,9 @@ Content\Autumn_Ground2.xnb
 Content\Winter_ground2.xnb
 Content\fontHelp.xnb
 Content\explosion-sprite-sheet-i0.xnb
+Content\game_over_en.xnb
+Content\game_over_fr.xnb
+Content\game_over_ne.xnb
 Content\audio\opening.wma
 Content\video\vid.wmv
 Content\mario.png
