@@ -86,6 +86,7 @@ namespace thegame
         public List<Rectangle> tile;
         private List<Projectile> projectiles;
         private List<Rectangle> objects = new List<Rectangle> { };
+        private List<Bomb> bomb = new List<Bomb> { };
 
         private List<Perso> iaPerso = new List<Perso>();
 
@@ -126,6 +127,7 @@ namespace thegame
             this.nb_nuts = 0;
             this.Health = 10;
             drawBloodScreen = false;
+            bomb = new List<Bomb>();
         }
 
         /*LANGUAGE OPTION */
@@ -471,13 +473,18 @@ namespace thegame
                                 moveright = false;
 
                         projectiles = new List<Projectile>();
-                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, projectiles, objects, ref nb_nuts);
+                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, projectiles, objects,  ref nb_nuts);
+
+
 
                         this.objects = (execute as Perso).objects;
 
                         iaPerso = (execute as Perso).CollisionIAProjec(iaPerso, ref score);
 
                         int checkBlood = 0;
+
+
+                      
 
                         foreach (Perso iathings in iaPerso)
                         {
@@ -500,6 +507,24 @@ namespace thegame
                             if (iathings.gameover == true)
                                 game_over_i = true;
                         }
+
+
+                        foreach (Bomb checkCrossed in bomb)
+                            if ((execute as Perso).hitBoxPerso.Intersects(checkCrossed.Object))
+                            {
+                                checkCrossed.activateExplosion = true;
+                                drawBloodScreen = true;
+                                if (checkCrossed.checkBlood)
+                                    drawBloodScreen = true;
+                                checkCrossed.BloodOnce(ref Health);
+                                break;
+                            }
+
+
+                        bomb.RemoveAll(x => x.checkIfFinish);
+
+                        if (Health <= 0)
+                            game_over_i = true;
 
                         if (checkBlood > 0)
                             drawBloodScreen = true;
@@ -694,6 +719,25 @@ namespace thegame
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         };
 
+                    int[,] bombMap = new int[,]
+                        {
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        };
+
                     int[] iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
                     objects = new List<Rectangle>();
@@ -704,6 +748,10 @@ namespace thegame
                             if (objectsMap[y, x] == 1)
                                 objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 150, 10, 10));
 
+                    for (int x = 0; x < bombMap.GetLength(1); x++)
+                        for (int y = 0; y < bombMap.GetLength(0); y++)
+                            if (bombMap[y, x] == 1)
+                                bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 138, 15, 10)));
 
                     /* IA CHARACTERS */
                     for (int x = 0; x < iaMap.Length; x++)
@@ -797,7 +845,7 @@ namespace thegame
                     Textures.btnQuit.Draw(sb);
                     sb.End();
                 }
-                else if (Perso.game_over && game_over_i)
+                else if (game_over_i)
                 {
                     sb.Begin();
                     Rectangle rec = new Rectangle(0, 0, 800, 530);
@@ -852,12 +900,15 @@ namespace thegame
 
                     // Draw the platforms
                     foreach (Rectangle top in blocks)
-                        sb.Draw(Textures.buche_texture, new Rectangle(top.X, top.Y, top.Width, top.Height), Color.White);
+                        sb.Draw(Textures.buche_texture, top, Color.White);
 
                     // Draw the objects
                     foreach (Rectangle dessine in objects)
-                        sb.Draw(Textures.acorn_texture, new Rectangle(dessine.X, dessine.Y, dessine.Width, dessine.Height), Color.White);
+                        sb.Draw(Textures.acorn_texture, dessine, Color.White);
 
+                    //draw bomb
+                    foreach (Bomb dessine in bomb)
+                        dessine.Draw(sb, gameTime);
                   
                     (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
 

@@ -49,7 +49,6 @@ namespace thegame
         Animation animationPerso;
         List<Projectile> projs = new List<Projectile>();
         public List<Rectangle> objects = new List<Rectangle>();
-
         /* For the IA */
         bool goright = false;
         bool goleft = true;
@@ -90,6 +89,7 @@ namespace thegame
         public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop , List<Rectangle> blocksBottom, List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts)
         {
 
+            
 
             foreach(Rectangle block in blocksBottom)
                 if (block.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, hitBoxPerso.Width, 3)))

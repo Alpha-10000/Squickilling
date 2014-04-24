@@ -21,6 +21,7 @@ namespace thegame
         public static Texture2D tree_texture;
         public static Texture2D tree_autumn_entrance_inside;
         public static Texture2D pausedTexture;
+        public static Texture2D explosion;
         public static Texture2D game_overTexture;
         public static Rectangle pausedRectangle;
         public static SpriteFont font_texture;
@@ -62,6 +63,7 @@ namespace thegame
             nut_texture = cm.Load<Texture2D>(@"Nut");
             acorn_texture = cm.Load<Texture2D>(@"Acorn_test2");
             healthBar_texture = cm.Load<Texture2D>(@"HealthBar");
+            explosion = cm.Load<Texture2D>(@"explosion-sprite-sheet-i0");
             //Intro
             vid = cm.Load<Video>(@"video\\vid");
            
