@@ -114,6 +114,9 @@ namespace thegame
         public bool pause = false;
         public bool game_over_i = false;
         public bool help = false;
+
+        private float elaspedTimeGetBackHealth = 0;
+        private float timeInSecond_GetOnePoint = 30;//Get back 1 point of life every 30 seconds. 
         MouseState mouse = Mouse.GetState();
 
 
@@ -306,7 +309,10 @@ namespace thegame
                                 Game1.graphics.ToggleFullScreen();
                                 //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
                                 //Game1.graphics.ApplyChanges();
-                                Execute();
+                                if (Fullscreen)
+                                    (execute as Menu).tab[1] = Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOn] + ")"; //fullscreen on
+                                else
+                                    (execute as Menu).tab[1] = Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOff] + ")"; //fullscreen off
                             }
                             break;
 
@@ -315,8 +321,10 @@ namespace thegame
                             {
                                 //this.selected = 4;
                                 SoundIsTrue = !SoundIsTrue;
-
-                                Execute();
+                                if (SoundIsTrue)
+                                    (execute as Menu).tab[2] = Text_Game[_mnuSound] + " (" + Text_Game[_mnuOn] + ")"; //sound on
+                                else
+                                    (execute as Menu).tab[2] = Text_Game[_mnuSound] + " (" + Text_Game[_mnuOff] + ")"; // sound off
                             }
                             break;
                         case 3:
@@ -445,6 +453,14 @@ namespace thegame
                         /* START OF THE GAME CODE */
                         moveleft = true;
                         moveright = true;
+
+
+                        elaspedTimeGetBackHealth += (float)gametime.ElapsedGameTime.TotalSeconds;
+                        if (elaspedTimeGetBackHealth > timeInSecond_GetOnePoint && Health < 10)
+                        {
+                            Health++;
+                            elaspedTimeGetBackHealth = 0;
+                        }
 
                         foreach (Rectangle left in blocksLeft)
                             if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))

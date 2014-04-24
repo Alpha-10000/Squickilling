@@ -48,13 +48,9 @@ namespace thegame
         {
             this.tab[pos_tab] = Text;
             if (selected == pos_tab)
-            {
                 this.color_tab[pos_tab] = Color.Blue;
-            }
             else
-            {
                 this.color_tab[pos_tab] = defaultColor;
-            }
             this.pos_tab++;
         }
 
