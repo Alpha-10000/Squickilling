@@ -225,6 +225,7 @@ namespace thegame
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
+            
 
             if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
             {
@@ -248,9 +249,9 @@ namespace thegame
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-                    positionPerso.X += changement;
-                    if (positionPerso.X > 400)
-                        cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
+                positionPerso.X += changement;
+                if (positionPerso.X > 400)
+                    cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
             else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
             {
@@ -258,8 +259,8 @@ namespace thegame
 
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
                 positionPerso.X -= changement;
-                    if (positionPerso.X > 400)
-                        cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
+                if (positionPerso.X > 400)
+                    cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
             }
 
 

@@ -67,6 +67,7 @@ namespace thegame
             {
                 currentFrame.X = 0;
                 frameCounter = 0;
+                SpriteSheet = new Rectangle((int)currentFrame.X, (int)currentFrame.Y * FrameHeight, FrameWidth, FrameHeight);
             }
 
             if (frameCounter >= switchFrames)
@@ -74,9 +75,7 @@ namespace thegame
                 frameCounter = 0;
                 currentFrame.X += FrameWidth;
                 if (currentFrame.X >= Sprite.Width)
-                {
                     currentFrame.X = 0;
-                }
                 SpriteSheet = new Rectangle((int)currentFrame.X, (int)currentFrame.Y * FrameHeight , FrameWidth, FrameHeight);
             }
         }
