@@ -102,6 +102,10 @@ namespace thegame
 
         public bool Developpermode = false;//this is just for us. Activate the developper mode
 
+        private float developperXMouse;
+        private float developperYMouse;
+        private bool developperCoord = false;
+
         /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
         private void Init_Game()
         {
@@ -631,7 +635,16 @@ namespace thegame
                 Developpermode = false;
 
             if (Developpermode)
+            {
                 SoundIsTrue = false;
+                developperXMouse = mouse1.X;
+                developperYMouse = mouse1.Y;
+                if (getkey.Contains(Keys.C) && !developperCoord)
+                    developperCoord = true;
+                if (getkey.Contains(Keys.X) && developperCoord)
+                    developperCoord = false;
+            }
+            
         }
 
         /* END OF THE GAME CODE */
@@ -1045,6 +1058,12 @@ namespace thegame
                 sb.Begin();
                 Drawable developper = new Drawable(drawable_type.font);
                 developper.Draw(sb, "DEVELOPPER MODE", new Vector2(50, 20), Color.Black, "normal");
+                if (developperCoord)
+                {
+                    sb.Draw(Textures.hitbox, new Rectangle((int)developperXMouse, 0, 2, 1200), Color.Red * 0.5f);
+                    sb.Draw(Textures.hitbox, new Rectangle(0, (int)developperYMouse, 1200, 2), Color.Red * 0.5f);
+                    developper.Draw(sb, "Coord. X : " + (int)developperXMouse + " Y : " + (int)developperYMouse, new Vector2(250, 20), Color.Black, "normal");
+                }
                 sb.End();
             }
             
