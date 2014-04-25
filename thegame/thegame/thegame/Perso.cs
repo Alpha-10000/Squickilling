@@ -35,7 +35,6 @@ namespace thegame
 
         public bool gameover = false;
         public static bool game_over;
-        bool debugbool = false;
 
         float newYpos;
         protected Texture2D imagePerso { get; private set; }
@@ -59,15 +58,7 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
 
-        private List<Rectangle> debugbottom = new List<Rectangle>();
-        private List<Rectangle> debugtop = new List<Rectangle>();
-        private List<Rectangle> debugleft = new List<Rectangle>();
-        private List<Rectangle> debugright = new List<Rectangle>();
 
-        private Rectangle persoLeft;
-        private Rectangle persoRight;
-        private Rectangle persoTop;
-        private Rectangle persoBottom;
 
         private Rectangle toGetNeighborsTiles;
 
@@ -75,10 +66,6 @@ namespace thegame
 
         public bool activateDevelopper = false;
 
-        private bool debug1;
-        private bool debug2;
-        private bool debug3;
-        private bool debug4;
 
 
         public Perso(Vector2 pos, CharacType typePerso)
@@ -119,25 +106,14 @@ namespace thegame
             animationPerso.Actif = true;
             Adapt = false;
 
-            debugbottom = blocksBottom;
-            debugtop = blocksTop;
-            debugright = blocksRight;
-            debugleft = blocksLeft;
 
+            //In developper mode by pressing at the same time the keys T,E,A,M it is the white part.
             toGetNeighborsTiles = new Rectangle(hitBoxPerso.X - 20, hitBoxPerso.Y - 20, hitBoxPerso.Width + 40, hitBoxPerso.Height + 40);
 
-            persoBottom = new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + hitBoxPerso.Height - 1, hitBoxPerso.Width, 4);
-            persoLeft = new Rectangle(hitBoxPerso.X - 8, hitBoxPerso.Y + 2, 8, hitBoxPerso.Height - 6);
-            persoRight = new Rectangle(hitBoxPerso.X + hitBoxPerso.Width + 3, hitBoxPerso.Y , 8, hitBoxPerso.Height - 4);
-            persoTop = new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, hitBoxPerso.Width, 1);
 
             moveleft = true;
             moveright = true;
 
-            debug1 = false;
-            debug2 = false;
-            debug3 = false;
-            debug4 = false;  
             
             /* Keep perso inside the map */
             if (hitBoxPerso.X <= 0)
@@ -182,13 +158,10 @@ namespace thegame
 
             neihborsTiles = new List<Rectangle>();
 
-            //get nearest tiles
+            //get nearest tiles. In developper mode by pressing at the same time the letter T,E,A,M it is the block in green.
             foreach (Rectangle blocky in blocks)
                 if (blocky.Intersects(toGetNeighborsTiles))
                     neihborsTiles.Add(blocky);
-
-          
-
 
 
             /* THE PERSO IS JUMPING - PART FROM BOTTOM TO TOP */
@@ -200,7 +173,6 @@ namespace thegame
                     vel -= acc * dt;// v = u + a*t
                     Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
                     bool check = CheckCollisionTooFar(ref Gravity, blocks, "top");
-                    debug3 = check;
                     if (check)
                     {
                         jumping = false;
@@ -229,14 +201,8 @@ namespace thegame
                 /* KEEP PERSO ON GROUND */
                 if (movedown && positionPerso.Y + Gravity > sol)
                     positionPerso.Y = sol;
-
-
-
-
-
-
             }
-            /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
+
 
 
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
@@ -252,6 +218,8 @@ namespace thegame
                 bool check = CheckCollisionTooFar(ref Gravity, blocks, "bottom");
                 if (check)
                     movedown = false;
+                else
+                    movedown = true;
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
@@ -259,26 +227,32 @@ namespace thegame
             if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
             {
                 tempCurrentFrame.Y = 0;
-                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-                positionPerso.X += changement + 10;
+                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
+                bool check = CheckCollisionTooFar(ref changement, blocks, "right");// this is to check right collision
+                if (check)
+                    moveright = false;
+                positionPerso.X += changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
-                    cameraPos = new Vector2(cameraPos.X - changement - 10, cameraPos.Y);
+                    cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
             else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
             {
                 tempCurrentFrame.Y = 1;
 
-                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-                positionPerso.X -= changement + 10;
+                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
+                bool check = CheckCollisionTooFar(ref changement, blocks, "left");//this is to check left collsion
+                if (check)
+                    moveleft = false;
+                positionPerso.X -= changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
-                    cameraPos = new Vector2(cameraPos.X + changement + 10, cameraPos.Y);
+                    cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
             }
 
             if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-                bool check = CheckCollisionTooFar(ref changement, blocks, "right");
+                bool check = CheckCollisionTooFar(ref changement, blocks, "right");//this is to check right collision
                 if (check)
                     moveright = false;
                 positionPerso.X += changement;
@@ -290,7 +264,7 @@ namespace thegame
                 tempCurrentFrame.Y = 1;
 
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-                bool check = CheckCollisionTooFar(ref changement, blocks, "left");
+                bool check = CheckCollisionTooFar(ref changement, blocks, "left");//this is to check left collision
                 if (check)
                     moveleft = false;
                 positionPerso.X -= changement;
@@ -301,7 +275,6 @@ namespace thegame
 
             else
                 animationPerso.Actif = false;
-
             
 
             tempCurrentFrame.X = animationPerso.CurrentFrame.X;
@@ -310,12 +283,9 @@ namespace thegame
             animationPerso.Update(gametime);
             hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
 
-            
-
-            
         }
 
-        /* VERY IMPORTANT FUNCTION. CHECK IF COLLISION EXIST AND HANDLE IT */
+        /* VERY IMPORTANT FUNCTION. CHECK IF COLLISION EXIST AND HANDLE IT! */
         public bool CheckCollisionTooFar(ref float vitesse, List<Rectangle> blocks, string direction)
         {
                bool check = false;
@@ -611,13 +581,13 @@ namespace thegame
             if (typePerso == CharacType.player && activateDevelopper)
             {
 
-                Drawable debug = new Drawable(drawable_type.font);
+          /*      Drawable debug = new Drawable(drawable_type.font);
                 if (typePerso == CharacType.player)
                 {
                     debug.Draw(spriteBatch, "h : " + debug1 + " " + debug2, new Vector2(300, 50), Color.White, "normal");
                     debug.Draw(spriteBatch, "h : " + debug3 + " " + debug4, new Vector2(300, 80), Color.White, "normal");
                 }
-
+                */
                 spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.Red *0.5f);
 
                 spriteBatch.Draw(Textures.hitbox, toGetNeighborsTiles, Color.White * 0.5f);
