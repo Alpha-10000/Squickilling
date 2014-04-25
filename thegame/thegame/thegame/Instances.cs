@@ -50,28 +50,7 @@ namespace thegame
         private Camera cameraClass = new Camera();
 
         private Drawable scoreDisplay;
-        private List<string> Text_Game;     // Contains text of menu options
-        private const int _mnuPlay = 0;     // Use this constant to refer to the menu text.
-        private const int _mnuOptions = 1;
-        private const int _mnuExit = 2;
-        private const int _mnuLanguage = 3;
-        private const int _mnuFullscreen = 4;
-        private const int _mnuBack = 5;
-        private const int _mnuEnglish = 6;
-        private const int _mnuFrench = 7;
-        private const int _mnuSound = 8;
-        private const int _mnuOn = 9;
-        private const int _mnuOff = 10;
-        private const int _mnuDutch = 11;
-        private const int _gameHelp = 12;
-        private const int _gamePause = 13;
-        private const int _gameHealth = 14;
-        private const int _gamescore = 15;
-        private const int _gamebonus = 16;
-        private const int _gameHelpLine1 = 17;
-        private const int _gameHelpLine2 = 18;
-        private const int _gameHelpLine3 = 19;
-        private const int _gameHelpLine4 = 20;
+        private Dictionary<string, string> Text_Game; // Contains text of menu options
 
         private SoundEffectInstance instancesound;
         public static Rectangle vidRectangle;
@@ -139,27 +118,29 @@ namespace thegame
             switch (language)
             {
                 case "english":
-                    Text_Game = new List<string> { "Play", 
-                                                   "Options", 
-                                                   "Exit", 
-                                                   "Language", 
-                                                   "Full screen", 
-                                                   "Back", 
-                                                   "English", 
-                                                   "Français", //has to be français
-                                                   "Sound", 
-                                                   "On", 
-                                                   "Off",
-                                                   "Nederlands",
-                                                   "Press P to pause",
-                                                   "Press H to get help",
-                                                   "Health",
-                                                   "score",
-                                                   "bonus",
-                                                   "Use the left and right arrow to move the character",
-                                                   "Use the top arrow to jump",
-                                                   "To fire on ennemies use the space bar",
-                                                   "Press any key to exit"
+                    Text_Game = new Dictionary<string, string>()
+                    {
+                                                   {"_mnuPlay","Play"},
+                                                   {"_mnuOptions","Options"}, 
+                                                   {"_mnuExit","Exit"},
+                                                   {"_mnuLanguage","Language"},
+                                                   {"_mnuFullscreen","Full screen"}, 
+                                                   {"_mnuBack","Back"},
+                                                   {"_mnuEnglish","English"},
+                                                   {"_mnuFrench","Français"}, //has to be français
+                                                   {"_mnuSound","Sound"}, 
+                                                   {"_mnuOn","On"},
+                                                   {"_mnuOff","Off"},
+                                                   {"_mnuDutch","Nederlands"},
+                                                   {"_gamePause","Press P to pause"},
+                                                   {"_gameHelp","Press H to get help"},
+                                                   {"_gameHealth","Health"},
+                                                   {"_gamescore","score"},
+                                                   {"_gamebonus","bonus"},
+                                                   {"_gameHelpLine1","Use the left and right arrow to move the character"},
+                                                   {"_gameHelpLine2","Use the top arrow to jump"},
+                                                   {"_gameHelpLine3","To fire on ennemies use the space bar"},
+                                                   {"_gameHelpLine4","Press any key to exit"}
                     
                     };
                     break;
@@ -167,51 +148,57 @@ namespace thegame
                    
 
                 case "french":
-                    Text_Game = new List<string> { "Jouer",
-                                                   "Options", 
-                                                   "Quitter", 
-                                                   "Langue", 
-                                                   "Plein écran", 
-                                                   "Retour", 
-                                                   "English", 
-                                                   "Français", 
-                                                   "Son", 
-                                                   "Actif", 
-                                                   "Inactif",
-                                                   "Nederlands",
-                                                   "P = pause",
-                                                   "H = aide",
-                                                   "Vie",
-                                                   "score",
-                                                   "bonus",
-                                                   "Utilisez la flèche gauche/droite pour se déplacer",
-                                                   "Utilisez la flèche du haut pour sauter",
-                                                   "Utilisez la barre espace pour tirer",
-                                                   "Appuyez sur une touche pour quitter"};
+                    Text_Game = new Dictionary<string, string>()
+                    {                              
+                                                   {"_mnuPlay","Jouer"},
+                                                   {"_mnuOptions","Options"},
+                                                   {"_mnuExit","Quitter"},
+                                                   {"_mnuLanguage","Langue"},
+                                                   {"_mnuFullscreen","Plein écran"}, 
+                                                   {"_mnuBack","Retour"},
+                                                   {"_mnuEnglish","English"},
+                                                   {"_mnuFrench","Français"},
+                                                   {"_mnuSound","Son"},
+                                                   {"_mnuOn","Actif"},
+                                                   {"_mnuOff","Inactif"},
+                                                   {"_mnuDutch","Nederlands"},
+                                                   {"_gamePause","P = pause"},
+                                                   {"_gameHelp","H = aide"},
+                                                   {"_gameHealth","Vie"},
+                                                   {"_gamescore","score"},
+                                                   {"_gamebonus","bonus"},
+                                                   {"_gameHelpLine1","Utilisez la flèche gauche/droite pour se déplacer"},
+                                                   {"_gameHelpLine2","Utilisez la flèche du haut pour sauter"},
+                                                   {"_gameHelpLine3","Utilisez la barre espace pour tirer"},
+                                                   {"_gameHelpLine4","Appuyez sur une touche pour quitter"}
+                    };
                     break;
 
                 case "nederlands":
-                    Text_Game = new List<string> { "Spelen", 
-                                                   "Opties", 
-                                                   "Afsluiten", 
-                                                   "Taal",
-                                                   "Volledig scherm",
-                                                   "Terug",
-                                                   "English",
-                                                   "Français",
-                                                   "Geluid",
-                                                   "Aan",
-                                                   "Uit",
-                                                   "Nederlands",
-                                                   "Press P to pause",
-                                                   "Press H to get help",
-                                                   "Health",
-                                                   "score",
-                                                   "bonus",
-                                                   "Use the left and right arrow to move the character",
-                                                   "Use the top arrow to jump",
-                                                   "To fire on ennemies use the space bar",
-                                                   "Press any key to exit" };
+                    Text_Game = new Dictionary<string, string>()
+                    {
+                                                   {"_mnuPlay","Spelen"},
+                                                   {"_mnuOptions","Opties"}, 
+                                                   {"_mnuExit","Afsluiten"}, 
+                                                   {"_mnuLanguage","Taal"},
+                                                   {"_mnuFullscreen","Volledig scherm"},
+                                                   {"_mnuBack","Terug"},
+                                                   {"_mnuEnglish","English"},
+                                                   {"_mnuFrench","Français"},
+                                                   {"_mnuSound","Geluid"},
+                                                   {"_mnuOn","Aan"},
+                                                   {"_mnuOff","Uit"},
+                                                   {"_mnuDutch","Nederlands"},
+                                                   {"_gamePause","Press P to pause"},
+                                                   {"_gameHelp","Press H to get help"},
+                                                   {"_gameHealth","Health"},
+                                                   {"_gamescore","score"},
+                                                   {"_gamebonus","bonus"},
+                                                   {"_gameHelpLine1","Use the left and right arrow to move the character"},
+                                                   {"_gameHelpLine2","Use the top arrow to jump"},
+                                                   {"_gameHelpLine3","To fire on ennemies use the space bar"},
+                                                   {"_gameHelpLine4","Press any key to exit"}
+                    };
                     break;
             }
         }
@@ -316,9 +303,9 @@ namespace thegame
                                 //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
                                 //Game1.graphics.ApplyChanges();
                                 if (Fullscreen)
-                                    (execute as Menu).tab[1] = Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOn] + ")"; //fullscreen on
+                                    (execute as Menu).tab[1] = Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOn"] + ")"; //fullscreen on
                                 else
-                                    (execute as Menu).tab[1] = Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOff] + ")"; //fullscreen off
+                                    (execute as Menu).tab[1] = Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOff"] + ")"; //fullscreen off
                             }
                             break;
 
@@ -328,9 +315,9 @@ namespace thegame
                                 //this.selected = 4;
                                 SoundIsTrue = !SoundIsTrue;
                                 if (SoundIsTrue)
-                                    (execute as Menu).tab[2] = Text_Game[_mnuSound] + " (" + Text_Game[_mnuOn] + ")"; //sound on
+                                    (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"; //sound on
                                 else
-                                    (execute as Menu).tab[2] = Text_Game[_mnuSound] + " (" + Text_Game[_mnuOff] + ")"; // sound off
+                                    (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")"; // sound off
                             }
                             break;
                         case 3:
@@ -647,52 +634,52 @@ namespace thegame
                 case 0: /* MAIN MENU */
                     Sound("menu");
                     execute = new Menu(3, "Squickilling");
-                    (execute as Menu).AddElements(Text_Game[_mnuPlay]);//Play
-                    (execute as Menu).AddElements(Text_Game[_mnuOptions]);//Options
-                    (execute as Menu).AddElements(Text_Game[_mnuExit]);//Exit game
+                    (execute as Menu).AddElements(Text_Game["_mnuPlay"]);//Play
+                    (execute as Menu).AddElements(Text_Game["_mnuOptions"]);//Options
+                    (execute as Menu).AddElements(Text_Game["_mnuExit"]);//Exit game
 
                     break;
                 case 1: /* OPTION MENU */
                     Sound("menu");
-                    execute = new Menu(4, Text_Game[_mnuOptions]);//options
-                    (execute as Menu).AddElements(Text_Game[_mnuLanguage]);//language 
+                    execute = new Menu(4, Text_Game["_mnuOptions"]);//options
+                    (execute as Menu).AddElements(Text_Game["_mnuLanguage"]);//language 
                     //(execute as Menu).AddElements(Text_Game[4]);//fullscreen  
                     //     Next section modifies text on display mode.
                     if (Fullscreen)
-                        (execute as Menu).AddElements(Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOn] + ")"); //fullscreen on
+                        (execute as Menu).AddElements(Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOn"] + ")"); //fullscreen on
                     else
-                        (execute as Menu).AddElements(Text_Game[_mnuFullscreen] + " (" + Text_Game[_mnuOff] + ")"); //fullscreen off
+                        (execute as Menu).AddElements(Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOff"] + ")"); //fullscreen off
 
                     //(execute as Menu).AddElements(Text_Game[8]);//sound
                     //      Next section modifies text on sound mode.
                     if (SoundIsTrue)
-                        (execute as Menu).AddElements(Text_Game[_mnuSound] + " (" + Text_Game[_mnuOn] + ")"); //sound on
+                        (execute as Menu).AddElements(Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"); //sound on
                     else
-                        (execute as Menu).AddElements((Text_Game[_mnuSound] + " (" + Text_Game[_mnuOff] + ")")); // sound off
-                    (execute as Menu).AddElements(Text_Game[_mnuBack]);//back
+                        (execute as Menu).AddElements((Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")")); // sound off
+                    (execute as Menu).AddElements(Text_Game["_mnuBack"]);//back
 
                     break;
 
                 case 3: /* Select language */
                     Sound("menu");
-                    execute = new Menu(3, Text_Game[_mnuLanguage]);
-                    (execute as Menu).AddElements(Text_Game[_mnuEnglish]);
-                    (execute as Menu).AddElements(Text_Game[_mnuFrench]);
-                    (execute as Menu).AddElements(Text_Game[_mnuDutch]);
+                    execute = new Menu(3, Text_Game["_mnuLanguage"]);
+                    (execute as Menu).AddElements(Text_Game["_mnuEnglish"]);
+                    (execute as Menu).AddElements(Text_Game["_mnuFrench"]);
+                    (execute as Menu).AddElements(Text_Game["_mnuDutch"]);
                     break;
 
                 case 4: /* SOUND MENU */
                     Sound("menu");
-                    execute = new Menu(2, Text_Game[_mnuSound]);//sound
-                    (execute as Menu).AddElements(Text_Game[_mnuOn]);//on
-                    (execute as Menu).AddElements(Text_Game[_mnuOff]);//off
+                    execute = new Menu(2, Text_Game["_mnuSound"]);//sound
+                    (execute as Menu).AddElements(Text_Game["_mnuOn"]);//on
+                    (execute as Menu).AddElements(Text_Game["_mnuOff"]);//off
 
                     break;
                 case 5: /* FULL SCREEN */
                     Sound("menu");
-                    execute = new Menu(2, Text_Game[_mnuFullscreen]);//fullscreen
-                    (execute as Menu).AddElements(Text_Game[_mnuOn]);//on
-                    (execute as Menu).AddElements(Text_Game[_mnuOff]);//off
+                    execute = new Menu(2, Text_Game["_mnuFullscreen"]);//fullscreen
+                    (execute as Menu).AddElements(Text_Game["_mnuOn"]);//on
+                    (execute as Menu).AddElements(Text_Game["_mnuOff"]);//off
                     break;
 
                 case 6: /* INTRODUCTION : SPLASHSCREEN */
@@ -933,10 +920,10 @@ namespace thegame
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
                     sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine1], new Vector2(190, 100), Color.White, "help");
-                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine2], new Vector2(190, 130), Color.White, "help");
-                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine3], new Vector2(190, 160), Color.White, "help");
-                    scoreDisplay.Draw(sb, Text_Game[_gameHelpLine4], new Vector2(190, 200), Color.White, "help");
+                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
+                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
+                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
+                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
                     sb.End();
                 }
                 else
@@ -998,17 +985,17 @@ namespace thegame
                     sb.Begin();
                     sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
 
-                    scoreDisplay.Draw(sb, Text_Game[_gamescore] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
 
                     // this display the number of nuts that the perso has. 
-                    scoreDisplay.Draw(sb, Text_Game[_gamebonus] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game["_gamebonus"] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
 
                     //draw text health
-                    scoreDisplay.Draw(sb, Text_Game[_gameHealth] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
 
                     //help text
-                    scoreDisplay.Draw(sb, Text_Game[_gamePause], new Vector2(530, 440), Color.Black, "normal");
-                    scoreDisplay.Draw(sb, Text_Game[_gameHelp], new Vector2(530, 468), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game["_gamePause"], new Vector2(530, 440), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Text_Game["_gameHelp"], new Vector2(530, 468), Color.Black, "normal");
 
                     //Negative health
                     sb.Draw(Textures.healthBar_texture, new Rectangle(0,
