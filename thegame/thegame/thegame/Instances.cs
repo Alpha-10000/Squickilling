@@ -99,8 +99,8 @@ namespace thegame
         private float elaspedTimeGetBackHealth = 0;
         private float timeInSecond_GetOnePoint = 30;//Get back 1 point of life every 30 seconds. 
         MouseState mouse = Mouse.GetState();
-        
 
+        public bool Developpermode = false;//this is just for us. Activate the developper mode
 
         /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
         private void Init_Game()
@@ -433,6 +433,10 @@ namespace thegame
 
                 else // THIS IS THE GAME 
                 {
+
+                    if (Developpermode)//just a little something for us
+                        Health = 20;
+ 
                     if (Keyboard.GetState().IsKeyDown(Keys.P))
                     {
                         pause = true;
@@ -622,6 +626,18 @@ namespace thegame
                     Execute();
                 }
             }
+
+            Keys[] getkey =  Keyboard.GetState().GetPressedKeys();
+
+            //ACTIVATE DEVELOPPER MODE BY PRESSING THE WORD TEAM. SAME TIME
+            if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
+                Developpermode = true;
+
+            if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
+                Developpermode = false;
+
+            if (Developpermode)
+                SoundIsTrue = false;
         }
 
         /* END OF THE GAME CODE */
@@ -845,6 +861,8 @@ namespace thegame
 
             if (this.selected != 6)
             {
+                
+
                 if (curGameMode == instances_type.Menu)
                 {
                     sb.Begin();
@@ -1025,6 +1043,14 @@ namespace thegame
                 sb.Begin();
                 Drawable.vidTexture = vidPlayer.GetTexture();
                 sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
+                sb.End();
+            }
+
+            if (Developpermode)
+            {
+                sb.Begin();
+                Drawable developper = new Drawable(drawable_type.font);
+                developper.Draw(sb, "DEVELOPPER MODE", new Vector2(50, 20), Color.Black, "normal");
                 sb.End();
             }
             
