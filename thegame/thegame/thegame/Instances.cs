@@ -477,18 +477,12 @@ namespace thegame
                             elaspedTimeGetBackHealth = 0;
                         }
 
-                        foreach (Rectangle left in blocksLeft)
-                            if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects((execute as Perso).hitBoxPerso))
-                                moveleft = false;
-
-                        foreach (Rectangle right in blocksRight)
-                            if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects((execute as Perso).hitBoxPerso))
-                                moveright = false;
+                        
 
                         projectiles = new List<Projectile>();
 
 
-                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, projectiles, objects,  ref nb_nuts);
+                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, blocksLeft, blocksRight, blocks, projectiles, objects,  ref nb_nuts, Developpermode);
 
 
 

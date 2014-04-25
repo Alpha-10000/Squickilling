@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Threading;
 
 namespace thegame
 {
@@ -58,6 +59,27 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
 
+        private List<Rectangle> debugbottom = new List<Rectangle>();
+        private List<Rectangle> debugtop = new List<Rectangle>();
+        private List<Rectangle> debugleft = new List<Rectangle>();
+        private List<Rectangle> debugright = new List<Rectangle>();
+
+        private Rectangle persoLeft;
+        private Rectangle persoRight;
+        private Rectangle persoTop;
+        private Rectangle persoBottom;
+
+        private Rectangle toGetNeighborsTiles;
+
+        private List<Rectangle> neihborsTiles = new List<Rectangle>();
+
+        public bool activateDevelopper = false;
+
+        private bool debug1;
+        private bool debug2;
+        private bool debug3;
+        private bool debug4;
+
 
         public Perso(Vector2 pos, CharacType typePerso)
         {
@@ -67,9 +89,10 @@ namespace thegame
             speed = 100f;
             jumping = false;
 
+            movedown = true;
+
             this.typePerso = typePerso;
             this.initPos = pos;
-            movedown = true;
             newYpos = 0;
             GravityInit();
             imagePerso = Textures.mario_texture;
@@ -86,16 +109,35 @@ namespace thegame
             Gravity = 0.5f;     // Start falling with this speed
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop , List<Rectangle> blocksBottom, List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop , List<Rectangle> blocksBottom, List<Rectangle> blocksLeft, List<Rectangle> blocksRight, List<Rectangle> blocks,  List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts, bool activateDeveloper)
         {
-
+            activateDevelopper = activateDeveloper;
             this.objects = objects;
            
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
-            movedown = true;
             Adapt = false;
+
+            debugbottom = blocksBottom;
+            debugtop = blocksTop;
+            debugright = blocksRight;
+            debugleft = blocksLeft;
+
+            toGetNeighborsTiles = new Rectangle(hitBoxPerso.X - 20, hitBoxPerso.Y - 20, hitBoxPerso.Width + 40, hitBoxPerso.Height + 40);
+
+            persoBottom = new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + hitBoxPerso.Height - 1, hitBoxPerso.Width, 4);
+            persoLeft = new Rectangle(hitBoxPerso.X - 8, hitBoxPerso.Y + 2, 8, hitBoxPerso.Height - 6);
+            persoRight = new Rectangle(hitBoxPerso.X + hitBoxPerso.Width + 3, hitBoxPerso.Y , 8, hitBoxPerso.Height - 4);
+            persoTop = new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, hitBoxPerso.Width, 1);
+
+            moveleft = true;
+            moveright = true;
+
+            debug1 = false;
+            debug2 = false;
+            debug3 = false;
+            debug4 = false;  
             
             /* Keep perso inside the map */
             if (hitBoxPerso.X <= 0)
@@ -137,21 +179,17 @@ namespace thegame
                 if (projs[i].Visible == false)
                     projs.Remove(projs[i]);
             }
-           
 
-            /* CHECK TOP COLLISION */
-            foreach (Rectangle top in blocksTop)
-                if (top.Intersects(hitBoxPerso))
-                    movedown = false;
+            neihborsTiles = new List<Rectangle>();
 
-            /* CHECK BOTTOM COLLISION */
-            foreach (Rectangle block in blocksBottom)
-                if (block.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, hitBoxPerso.Width, 3)))
-                {
-                    GravityInit();
-                    jumping = false;
-                    break;
-                }
+            //get nearest tiles
+            foreach (Rectangle blocky in blocks)
+                if (blocky.Intersects(toGetNeighborsTiles))
+                    neihborsTiles.Add(blocky);
+
+          
+
+
 
             /* THE PERSO IS JUMPING - PART FROM BOTTOM TO TOP */
             if (jumping)
@@ -161,10 +199,19 @@ namespace thegame
                     float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
                     vel -= acc * dt;// v = u + a*t
                     Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
+                    bool check = CheckCollisionTooFar(ref Gravity, blocks, "top");
+                    debug3 = check;
+                    if (check)
+                    {
+                        jumping = false;
+                        movedown = true;
+                        GravityInit();
+                    }
                     positionPerso.Y -= Gravity;
                 }
                 else
                 {
+                    movedown = true;
                     GravityInit();
                     jumping = false;
                 }
@@ -183,50 +230,31 @@ namespace thegame
                 if (movedown && positionPerso.Y + Gravity > sol)
                     positionPerso.Y = sol;
 
-                /* THIS PART IS VERY VERY IMPORTANT */
-                minnewYpos = 50000;
-                if (movedown)
-                {
-                    for (float i = 0; i < Gravity; i++)
-                    {
-                        newYpos = minnewYpos;
-                        foreach (Rectangle top in blocksTop)
-                        {
-                            newYpos = minnewYpos;
-                            if (top.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + (int)i + 28, 28, 1)))
-                            {
-                                Adapt = true;
-                                minnewYpos = top.Top - 26;
-                                minnewYpos = Math.Min(minnewYpos, newYpos);
-
-                            }
-                        }
-                    }
-                }
-
-                if (Adapt)
-                    positionPerso.Y = minnewYpos;
 
 
-          
+
+
+
             }
             /* END OF THE IMPORTANT PART THAT WAS GENERATING BUGS. */
 
 
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
-            if (!jumping && (positionPerso.Y == sol || !movedown || Adapt))
+            if (!jumping && (positionPerso.Y == sol || !movedown))
                 GravityInit();
 
             /* GRAVITY - PERSO NOT JUMPING AND ON GROUND */
-            if (movedown && !jumping && positionPerso.Y + 1 < sol && !Adapt)
+            if ( !jumping && positionPerso.Y + 1 < sol)
             {
                 float dt = (float)gametime.ElapsedGameTime.TotalSeconds;
                 vel += acc * dt;// v = u + a*t
                 Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
+                bool check = CheckCollisionTooFar(ref Gravity, blocks, "bottom");
+                if (check)
+                    movedown = false;
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
-            
 
             if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
             {
@@ -250,6 +278,9 @@ namespace thegame
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                bool check = CheckCollisionTooFar(ref changement, blocks, "right");
+                if (check)
+                    moveright = false;
                 positionPerso.X += changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
@@ -259,6 +290,9 @@ namespace thegame
                 tempCurrentFrame.Y = 1;
 
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                bool check = CheckCollisionTooFar(ref changement, blocks, "left");
+                if (check)
+                    moveleft = false;
                 positionPerso.X -= changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
@@ -268,12 +302,71 @@ namespace thegame
             else
                 animationPerso.Actif = false;
 
-           
+            
+
             tempCurrentFrame.X = animationPerso.CurrentFrame.X;
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
             hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
+
+            
+
+            
+        }
+
+        /* VERY IMPORTANT FUNCTION. CHECK IF COLLISION EXIST AND HANDLE IT */
+        public bool CheckCollisionTooFar(ref float vitesse, List<Rectangle> blocks, string direction)
+        {
+               bool check = false;
+
+               if (direction == "right")//check right collision
+               {
+                   for (int i = 0; i < vitesse; i++)
+                       foreach (Rectangle block in blocks)
+                           if (block.Intersects(new Rectangle(hitBoxPerso.X + hitBoxPerso.Width + i, hitBoxPerso.Y, 1, hitBoxPerso.Height)) && hitBoxPerso.X + hitBoxPerso.Width <= block.X)
+                           {
+                               check = true;
+                               vitesse = block.X - 1 - positionPerso.X - hitBoxPerso.Width;
+                               break;
+                           }
+               }
+               else if (direction == "left")//check bottom collision
+               {
+                   for (int i = 0; i < vitesse; i++)
+                       foreach (Rectangle block in blocks)
+                           if (block.Intersects(new Rectangle(hitBoxPerso.X - i, hitBoxPerso.Y, 1, hitBoxPerso.Height)) && hitBoxPerso.X >= block.X + block.Width)
+                           {
+                               check = true;
+                               vitesse = hitBoxPerso.X -  block.X - block.Width ;
+                               break;
+                           }
+               }
+               else if (direction == "top")//check bottom collision
+               {
+                   for (int i = 0; i < vitesse; i++)
+                       foreach (Rectangle block in blocks)
+                           if (block.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + i, hitBoxPerso.Width, 1)))
+                           {
+                               check = true;
+                               vitesse = hitBoxPerso.Y - block.Y + 1;
+                               break;
+                           }
+               }
+               else if (direction == "bottom")//check bottom collision
+               {
+                   for (int i = 0; i < vitesse; i++)
+                       foreach (Rectangle block in blocks)
+                           if (block.Intersects(new Rectangle(hitBoxPerso.X, hitBoxPerso.Y + hitBoxPerso.Height + i, hitBoxPerso.Width, 1)) && hitBoxPerso.Y + hitBoxPerso.Height <= block.Y)
+                           {
+                               check = true;
+                               vitesse = block.Y -  positionPerso.Y  - hitBoxPerso.Height;
+                               break;
+                           }
+               }
+
+
+               return check;
         }
 
         public List<Perso> CollisionIAProjec(List<Perso> checkIA, ref int score)
@@ -512,16 +605,28 @@ namespace thegame
                 foreach (Projectile nut in projIA)
                     nut.Draw(spriteBatch);
 
-    /*
+    
+
+            
+            if (typePerso == CharacType.player && activateDevelopper)
+            {
+
                 Drawable debug = new Drawable(drawable_type.font);
-                if(typePerso == CharacType.player)
-                    debug.Draw(spriteBatch, "h : " + debugbool, new Vector2(300, 50), Color.White, "normal");
+                if (typePerso == CharacType.player)
+                {
+                    debug.Draw(spriteBatch, "h : " + debug1 + " " + debug2, new Vector2(300, 50), Color.White, "normal");
+                    debug.Draw(spriteBatch, "h : " + debug3 + " " + debug4, new Vector2(300, 80), Color.White, "normal");
+                }
 
+                spriteBatch.Draw(Textures.hitbox, hitBoxPerso, Color.Red *0.5f);
 
-                spriteBatch.Draw(Textures.hitbox, new Rectangle(hitBoxPerso.X, hitBoxPerso.Y, 28, 1), Color.Red);
+                spriteBatch.Draw(Textures.hitbox, toGetNeighborsTiles, Color.White * 0.5f);
 
-           */
+               
 
+                foreach (Rectangle top in neihborsTiles)
+                    spriteBatch.Draw(Textures.hitbox, top, Color.Green * 0.4f);
+            }
         }
 
      

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Threading;
 
 
 namespace thegame
@@ -21,7 +22,6 @@ namespace thegame
         public int width;
         public int height;
 
-        
         
         public Game1()
         {
@@ -55,8 +55,9 @@ namespace thegame
 
         protected override void Update(GameTime gameTime)
         {
+
             instancesobject.UpdateByKey(gameTime);
-            
+
             base.Update(gameTime);
         }
 
@@ -64,7 +65,6 @@ namespace thegame
         {
             GraphicsDevice.Clear(Color.Beige);
                 instancesobject.Display(spriteBatch, gameTime);
-
             
             base.Draw(gameTime);
         }
