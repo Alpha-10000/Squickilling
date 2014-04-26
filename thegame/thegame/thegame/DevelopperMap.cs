@@ -283,12 +283,7 @@ namespace thegame
             if (objectSelect)
                 sb.Draw(Textures.nut_texture, new Rectangle(DrawMouseX - (Textures.nut_texture.Width / 2), DrawMouseY - (Textures.nut_texture.Height / 2), Textures.nut_texture.Width, Textures.nut_texture.Height), Color.Gray);
 
-            Drawable ecri = new Drawable(drawable_type.font);
-            ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
-            ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
-            ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
-            ecri.Draw(sb, "Thibault", new Vector2(525, 470), Color.Black, "normal");
-            ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
+            
 
             ShowSuccessSendMail(sb, gametime);
         }

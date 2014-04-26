@@ -96,6 +96,7 @@ namespace thegame
         public bool game_over_i = false;
         public bool help = false;
         public bool endLevel = false;
+        private bool developpermap = false;
 
         private float elaspedTimeGetBackHealth = 0;
         private float timeInSecond_GetOnePoint = 30;//Get back 1 point of life every 30 seconds. 
@@ -638,7 +639,17 @@ namespace thegame
                 Developpermode = true;
 
             if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
+            {
                 Developpermode = false;
+                if (developpermap)
+                {
+                    developpermap = false;
+                    this.selected = 0;
+                    curGameMode = instances_type.Menu;
+                    Execute();
+                }
+            }
+
 
             if (Developpermode)
             {
@@ -653,6 +664,7 @@ namespace thegame
                 {
                     selected = 7;
                     Execute();
+                    developpermap = true;
                 }
             }
 
@@ -864,11 +876,19 @@ namespace thegame
                     sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
                     tree.Draw(sb, new Vector2(-100, 0));
                     (execute as DevelopperMap).Display(sb, gameTime);
+                    sb.End();
+                    sb.Begin();
                     sb.Draw(Textures.buche_texture, new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
                     sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
                     sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
                     sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
                     Drawable info = new Drawable(drawable_type.font);
+                    Drawable ecri = new Drawable(drawable_type.font);
+                    ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Thibault", new Vector2(525, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
                     info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
                     sb.End();
 
