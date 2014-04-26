@@ -73,7 +73,7 @@ namespace thegame
             animationPerso = new Animation(positionPerso, new Vector2(8, 2));
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
-            speed = 100f;
+            speed = 120f;
             jumping = false;
 
             movedown = true;
@@ -108,7 +108,7 @@ namespace thegame
 
 
             //In developper mode by pressing at the same time the keys T,E,A,M it is the white part.
-            toGetNeighborsTiles = new Rectangle(hitBoxPerso.X - 20, hitBoxPerso.Y - 20, hitBoxPerso.Width + 40, hitBoxPerso.Height + 40);
+            toGetNeighborsTiles = new Rectangle(hitBoxPerso.X - 40, hitBoxPerso.Y - 40, hitBoxPerso.Width + 80, hitBoxPerso.Height + 80);
 
 
             moveleft = true;

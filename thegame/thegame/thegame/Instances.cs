@@ -662,9 +662,10 @@ namespace thegame
                     developperCoord = false;
                 if (getkey.Contains(Keys.M) && getkey.Contains(Keys.A) && getkey.Contains(Keys.P))
                 {
+                    curGameMode = instances_type.MapDevelopper;
                     selected = 7;
-                    Execute();
                     developpermap = true;
+                    Execute();
                 }
             }
 
