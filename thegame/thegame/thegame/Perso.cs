@@ -309,7 +309,7 @@ namespace thegame
                            if (block.Intersects(new Rectangle(hitBoxPerso.X - i, hitBoxPerso.Y, 1, hitBoxPerso.Height)) && hitBoxPerso.X >= block.X + block.Width)
                            {
                                check = true;
-                               vitesse = hitBoxPerso.X -  block.X - block.Width ;
+                               vitesse = hitBoxPerso.X -  block.X - block.Width;
                                break;
                            }
                }
