@@ -205,9 +205,7 @@ namespace thegame
 
 
 
-            /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
-            if (!jumping && (positionPerso.Y == sol || !movedown))
-                GravityInit();
+            
 
             /* GRAVITY - PERSO NOT JUMPING AND ON GROUND */
             if ( !jumping && positionPerso.Y + 1 < sol)
@@ -223,6 +221,9 @@ namespace thegame
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
+            /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
+            if (!jumping && (positionPerso.Y == sol || !movedown))
+                GravityInit();
 
             if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
             {
@@ -281,7 +282,7 @@ namespace thegame
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 24);
 
         }
 
@@ -561,7 +562,7 @@ namespace thegame
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 28);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 26);
 
         }
         public void Draw(SpriteBatch spriteBatch)
