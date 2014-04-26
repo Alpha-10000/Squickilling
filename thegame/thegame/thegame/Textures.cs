@@ -40,6 +40,7 @@ namespace thegame
         public static Texture2D nut_texture;
         public static Texture2D acorn_texture;
         public static Texture2D healthBar_texture;
+        public static Texture2D eraser;
        
         
         public static Button btnPlay, btnQuit, btnMenu;
@@ -50,6 +51,7 @@ namespace thegame
             plateform_texture = cm.Load<Texture2D>(@"plateforme");
             mario_texture = cm.Load<Texture2D>(@"mario");
             buche_texture = cm.Load<Texture2D>(@"Buche_test");
+            eraser = cm.Load<Texture2D>(@"erase");
             hitbox = cm.Load<Texture2D>(@"blank");
             tree_texture = cm.Load<Texture2D>(@"tree");
             tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Tree_Autumn_entrance_inside");

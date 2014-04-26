@@ -125,6 +125,7 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="DevelopperMap.cs" />
     <Compile Include="Drawable.cs" />
     <Compile Include="Instances.cs" />
     <Compile Include="Menu.cs" />

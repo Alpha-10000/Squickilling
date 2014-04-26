@@ -20,7 +20,8 @@ namespace thegame
     {
         Game,
         Menu,
-        SplashScreen
+        SplashScreen,
+        MapDevelopper
     }
 
     //------------------------------------------------------------------
@@ -434,20 +435,25 @@ namespace thegame
                 // Moved details of splashscreen handling near the end of this class.
                 //------------------------------------------------------------------
                 else if (selected == 6) HandleSplashScreen(keyboardState, mouse1);
+                else if (selected == 7)
+                {
+                    cameraPos = (execute as DevelopperMap).cameraPos;
+                    (execute as DevelopperMap).UpdateMap(keyboardState, gametime, mouse1);
+                }
 
                 else // THIS IS THE GAME 
                 {
 
                     if (Developpermode)//just a little something for us
                         Health = 20;
- 
+
                     if (Keyboard.GetState().IsKeyDown(Keys.P))
                     {
                         pause = true;
                         Textures.btnPlay.isClicked = false;
                         Textures.btnMenu.isClicked = false;
                     }
-                    else if(Keyboard.GetState().IsKeyDown(Keys.H))
+                    else if (Keyboard.GetState().IsKeyDown(Keys.H))
                     {
                         help = true;
                     }
@@ -467,7 +473,7 @@ namespace thegame
                     else if (!pause && !help && !endLevel)
                     {
 
-                    
+
                         cameraPos = (execute as Perso).cameraPos;
                         /* START OF THE GAME CODE */
                         moveleft = true;
@@ -481,12 +487,12 @@ namespace thegame
                             elaspedTimeGetBackHealth = 0;
                         }
 
-                        
+
 
                         projectiles = new List<Projectile>();
 
 
-                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, blocksLeft, blocksRight, blocks, projectiles, objects,  ref nb_nuts, Developpermode);
+                        (execute as Perso).Update(gametime, keyboardState, oldkey, moveleft, moveright, blocksTop, blocksBottom, blocksLeft, blocksRight, blocks, projectiles, objects, ref nb_nuts, Developpermode);
 
 
 
@@ -497,7 +503,7 @@ namespace thegame
                         int checkBlood = 0;
 
 
-                      
+
 
                         foreach (Perso iathings in iaPerso)
                         {
@@ -529,13 +535,13 @@ namespace thegame
                             {
                                 checkCrossed.activateExplosion = true;
                                 drawBloodScreen = true;
-                                if(checkCrossed.checkBlood)
+                                if (checkCrossed.checkBlood)
                                     Textures.gameExplosion_Effect.Play();
                                 checkCrossed.BloodOnce(ref Health);
                                 break;
                             }
                             if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
-                                   drawBloodScreen = true;
+                                drawBloodScreen = true;
                         }
 
 
@@ -643,7 +649,14 @@ namespace thegame
                     developperCoord = true;
                 if (getkey.Contains(Keys.X) && developperCoord)
                     developperCoord = false;
+                if (getkey.Contains(Keys.M) && getkey.Contains(Keys.A) && getkey.Contains(Keys.P))
+                {
+                    selected = 7;
+                    Execute();
+                }
             }
+
+            
             
         }
 
@@ -710,6 +723,11 @@ namespace thegame
                     vidPlayer = new VideoPlayer();
                     vidRectangle = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, Game1.graphics.PreferredBackBufferHeight);
                     vidPlayer.Play(Textures.vid);
+                    break;
+                case 7:
+                    this.curGameMode = instances_type.MapDevelopper;
+                    execute = new DevelopperMap(45, 15);
+                    tree = new Drawable(drawable_type.tree);
                     break;
                 case 2: /* GAME START */
                     Sound("menu");
@@ -836,6 +854,26 @@ namespace thegame
                     (execute as Menu).Display(sb);
                     sb.End();
                 }
+                else if (curGameMode == instances_type.MapDevelopper)
+                {
+                    sb.Begin();
+                    // Makes the background move slower than the camera to create an effect of depth.
+                    sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                    sb.End();
+
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                    tree.Draw(sb, new Vector2(-100, 0));
+                    (execute as DevelopperMap).Display(sb);
+                    sb.Draw(Textures.buche_texture, new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
+                    sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
+                    sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
+                    sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
+                    Drawable info = new Drawable(drawable_type.font);
+                    info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
+                    sb.End();
+
+                    
+                }
                 else if (pause)
                 {
                     sb.Begin();
@@ -856,12 +894,12 @@ namespace thegame
                     sb.Draw(Textures.background, Vector2.Zero, Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
                     sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
-                    
+
                     if (language == "english")
                         sb.Draw(Textures.game_overTexture_en, rec, Color.White);
                     else if (language == "french")
                         sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
-                    else 
+                    else
                         sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
 
                     sb.End();
