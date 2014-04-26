@@ -863,7 +863,7 @@ namespace thegame
 
                     sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
                     tree.Draw(sb, new Vector2(-100, 0));
-                    (execute as DevelopperMap).Display(sb);
+                    (execute as DevelopperMap).Display(sb, gameTime);
                     sb.Draw(Textures.buche_texture, new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
                     sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
                     sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
