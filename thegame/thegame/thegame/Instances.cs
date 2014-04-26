@@ -548,11 +548,16 @@ namespace thegame
 
                         bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
-                        if (Health <= 0)
-                            game_over_i = true;
+                        
 
                         if (checkBlood > 0)
                             drawBloodScreen = true;
+
+                        if (Health <= 0)
+                        {
+                            game_over_i = true;
+                            drawBloodScreen = false;//solve a bug. Otherwise the bloodscreen will continue to force the camera to shake
+                        }
 
                         if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                         {
