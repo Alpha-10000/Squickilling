@@ -221,6 +221,8 @@ namespace thegame
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 24);
+
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
             if (!jumping && (positionPerso.Y == sol || !movedown))
                 GravityInit();

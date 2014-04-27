@@ -114,6 +114,7 @@ namespace thegame
             this.nb_nuts = 0;
             this.Health = 20;
             drawBloodScreen = false;
+            cameraClass.shake = false;
             bomb = new List<Bomb>();
         }
 
