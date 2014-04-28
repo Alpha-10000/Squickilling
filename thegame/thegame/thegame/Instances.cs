@@ -963,113 +963,211 @@ namespace thegame
                 }
                 else if (curGameMode == instances_type.MapDevelopper)
                 {
-                    sb.Begin();
-                    // Makes the background move slower than the camera to create an effect of depth.
-                    sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
-                    sb.End();
+                            sb.Begin();
+                            // Makes the background move slower than the camera to create an effect of depth.
+                            sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                            sb.End();
 
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                    tree.Draw(sb, new Vector2(-100, 0));
-                    (execute as DevelopperMap).Display(sb, gameTime);
-                    sb.End();
-                    sb.Begin();
-                    sb.Draw(Textures.buche_texture, new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
-                    sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
-                    sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
-                    sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
-                    Drawable info = new Drawable(drawable_type.font);
-                    Drawable ecri = new Drawable(drawable_type.font);
-                    ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
-                    ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
-                    ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
-                    ecri.Draw(sb, "Thibault", new Vector2(525, 470), Color.Black, "normal");
-                    ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
-                    info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
-                    sb.End();
-
+                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                            tree.Draw(sb, new Vector2(-100, 0));
+                            (execute as DevelopperMap).Display(sb, gameTime);
+                            sb.End();
+                            sb.Begin();
+                            sb.Draw(Textures.buche_texture, new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
+                            sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
+                            sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
+                            sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
+                            Drawable info = new Drawable(drawable_type.font);
+                            Drawable ecri = new Drawable(drawable_type.font);
+                            ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
+                            ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
+                            ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
+                            ecri.Draw(sb, "Thibault", new Vector2(525, 470), Color.Black, "normal");
+                            ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
+                            info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
+                            sb.End();
 
                 }
                 else if (pause)
                 {
-                    sb.Begin();
-                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
-                    sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
-                    Textures.btnPlay.Draw(sb);
-                    Textures.btnMenu.Draw(sb);
-                    Textures.btnQuit.Draw(sb);
-                    sb.End();
+                    switch (this.selected)
+                    {
+                        case 2:
+                            sb.Begin();
+                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
+                            Textures.btnPlay.Draw(sb);
+                            Textures.btnMenu.Draw(sb);
+                            Textures.btnQuit.Draw(sb);
+                            sb.End();
+                            break;
+
+                        case 8:
+                            sb.Begin();
+                            sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
+                            Textures.btnPlay.Draw(sb);
+                            Textures.btnMenu.Draw(sb);
+                            Textures.btnQuit.Draw(sb);
+                            sb.End();
+                            break;
+                    }
                 }
                 else if (game_over_i)
                 {
-                    sb.Begin();
-                    Rectangle rec = new Rectangle(0, 0, 800, 530);
+                    switch (this.selected)
+                    {
+                        case 2:
+                            sb.Begin();
+                            Rectangle rec = new Rectangle(0, 0, 800, 530);
 
-                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
 
-                    if (language == "english")
-                        sb.Draw(Textures.game_overTexture_en, rec, Color.White);
-                    else if (language == "french")
-                        sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
-                    else
-                        sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
+                            if (language == "english")
+                                sb.Draw(Textures.game_overTexture_en, rec, Color.White);
+                            else if (language == "french")
+                                sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
+                            else
+                                sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
 
-                    sb.End();
+                            sb.End();
+                            break;
+
+                        case 8:
+                            sb.Begin();
+                            rec = new Rectangle(0, 0, 800, 530);
+
+                            sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
+
+                            if (language == "english")
+                                sb.Draw(Textures.game_overTexture_en, rec, Color.White);
+                            else if (language == "french")
+                                sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
+                            else
+                                sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
+
+                            sb.End();
+                            break;
+                    }
                 }
                 else if (endLevel)
                 {
-                    sb.Begin();
-                    Rectangle rec = new Rectangle(0, 0, 800, 530);
+                    switch (this.selected)
+                    {
+                        case 2:
+                            sb.Begin();
+                            Rectangle rec = new Rectangle(0, 0, 800, 530);
 
-                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
-                    sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                    if (language == "english")
-                    {
-                        scoreDisplay.Draw(sb, "Yeah, end of the level, etc, etc.", new Vector2(50, 100), Color.Black, "42");
-                        scoreDisplay.Draw(sb, "Your Score is :" + score + ".", new Vector2(50, 150), Color.Black, "osef");
-                        scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                        scoreDisplay.Draw(sb, "Stuff to Add", new Vector2(50, 250), Color.Black, "42");
-                        scoreDisplay.Draw(sb, "Press Space", new Vector2(190, 300), Color.Black, "osef");
-                    }
-                    else if (language == "french")
-                    {
-                        scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");
-                        scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
-                        scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                        scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
-                        scoreDisplay.Draw(sb, "Appuyer sur Espace", new Vector2(50, 300), Color.Black, "osef");
-                    }
-                    else
-                    {
-                        scoreDisplay.Draw(sb, "Dsl je parle pas neerlandais :P", new Vector2(190, 100), Color.Black, "42");
-                        //scoreDisplay.Draw(sb, "Ton Score est de :" + score + "et un bonus de" + nb_nuts + "noisettes", new Vector2(50, 150), Color.Black, "osef");
-                        //scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                        //scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
-                        //scoreDisplay.Draw(sb, "Appuyer sur Space", new Vector2(50, 300), Color.Black, "osef");
-                    }
+                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                            if (language == "english")
+                            {
+                                scoreDisplay.Draw(sb, "Yeah, end of the level, etc, etc.", new Vector2(50, 100), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Your Score is :" + score + ".", new Vector2(50, 150), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Stuff to Add", new Vector2(50, 250), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Press Space", new Vector2(190, 300), Color.Black, "osef");
+                            }
+                            else if (language == "french")
+                            {
+                                scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Appuyer sur Espace", new Vector2(50, 300), Color.Black, "osef");
+                            }
+                            else
+                            {
+                                scoreDisplay.Draw(sb, "Dsl je parle pas neerlandais :P", new Vector2(190, 100), Color.Black, "42");
+                                //scoreDisplay.Draw(sb, "Ton Score est de :" + score + "et un bonus de" + nb_nuts + "noisettes", new Vector2(50, 150), Color.Black, "osef");
+                                //scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                                //scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
+                                //scoreDisplay.Draw(sb, "Appuyer sur Space", new Vector2(50, 300), Color.Black, "osef");
+                            }
+                            sb.End();
+                            break;
 
-                    sb.End();
+                        case 8:
+                            sb.Begin();
+                            rec = new Rectangle(0, 0, 800, 530);
+
+                            sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                            if (language == "english")
+                            {
+                                scoreDisplay.Draw(sb, "Yeah, end of the level, etc, etc.", new Vector2(50, 100), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Your Score is :" + score + ".", new Vector2(50, 150), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Stuff to Add", new Vector2(50, 250), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Press Space", new Vector2(190, 300), Color.Black, "osef");
+                            }
+                            else if (language == "french")
+                            {
+                                scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Appuyer sur Espace", new Vector2(50, 300), Color.Black, "osef");
+                            }
+                            else
+                            {
+                                scoreDisplay.Draw(sb, "Dsl je parle pas neerlandais :P", new Vector2(190, 100), Color.Black, "42");
+                                //scoreDisplay.Draw(sb, "Ton Score est de :" + score + "et un bonus de" + nb_nuts + "noisettes", new Vector2(50, 150), Color.Black, "osef");
+                                //scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                                //scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
+                                //scoreDisplay.Draw(sb, "Appuyer sur Space", new Vector2(50, 300), Color.Black, "osef");
+                            }
+                            sb.End();
+                            break;
+                    }
 
                 }
                 else if (help)
                 {
-                    sb.Begin();
-                    Rectangle rec = new Rectangle(0, 0, 800, 530);
+                    switch (this.selected)
+                    {
+                        case 2:
+                            sb.Begin();
+                            Rectangle rec = new Rectangle(0, 0, 800, 530);
 
-                    sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                    sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
-                    sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
-                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
-                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
-                    scoreDisplay.Draw(sb, Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
-                    sb.End();
+                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
+                            sb.End();
+                            break;
+
+                        case 8:
+                            sb.Begin();
+                            rec = new Rectangle(0, 0, 800, 530);
+
+                            sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
+                            sb.End();
+                            break;
+                    }
                 }
                 else
                 {
