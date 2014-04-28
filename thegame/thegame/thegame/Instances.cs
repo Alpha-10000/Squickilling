@@ -80,6 +80,7 @@ namespace thegame
         private bool moveright;
         private Drawable tree;
         private Drawable tree_autumn_entrance_inside;
+        private Drawable tree_winter_entrance_inside;
         private Drawable Ground;
 
         private Drawable debug;
@@ -152,7 +153,7 @@ namespace thegame
                     };
                     break;
 
-                   
+
 
                 case "french":
                     Text_Game = new Dictionary<string, string>()
@@ -466,9 +467,8 @@ namespace thegame
                         if (keyboardState.IsKeyDown(Keys.Space))
                         {
                             endLevel = false;
-                            Init_Game();
                             this.curGameMode = instances_type.Game;
-                            this.selected = 2;
+                            this.selected = 8;
                             Execute();
                         }
                     }
@@ -549,7 +549,7 @@ namespace thegame
 
                         bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
-                        
+
 
                         if (checkBlood > 0)
                             drawBloodScreen = true;
@@ -638,7 +638,7 @@ namespace thegame
                 }
             }
 
-            Keys[] getkey =  Keyboard.GetState().GetPressedKeys();
+            Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
             //ACTIVATE DEVELOPPER MODE BY PRESSING THE WORD TEAM. SAME TIME
             if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
@@ -675,8 +675,8 @@ namespace thegame
                 }
             }
 
-            
-            
+
+
         }
 
         /* END OF THE GAME CODE */
@@ -748,6 +748,94 @@ namespace thegame
                     execute = new DevelopperMap(45, 15);
                     tree = new Drawable(drawable_type.tree);
                     break;
+
+                case 8: /*Level 2*/
+                    Sound("menu");
+                    Sound("Game");
+                    score = 0;
+                    tilemap = new int[,]
+                        {
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,0,0,0,1,1,1,0,1,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,1,1,1,2,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,2,1,0,0,0,3,1,1,0,0,0,0,0,1,2,2,0,1,0,0,0,0,0,0,0,0,1,2,3,1,0,0,0,0,0,2,0,0,0},
+                            {0,0,0,0,0,3,1,0,0,3,0,1,2,0,0,1,0,0,1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,1,1,1,0,0,2,0,1,1,0,3,0},
+                            {0,0,0,0,1,1,0,0,0,1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1},
+                            {0,0,0,0,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
+                        };
+
+
+
+                    int[] iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+
+                    objects = new List<Rectangle>();
+                    iaPerso = new List<Perso>();
+
+
+
+
+                    /* IA CHARACTERS */
+                    for (int x = 0; x < iaMap.Length; x++)
+                        if (iaMap[x] == 1)
+                            iaPerso.Add(new Perso(new Vector2(x * Textures.buche_texture_winter.Width, 0), CharacType.ia));
+
+                    texlis = new List<Texture2D>();
+                    mapSizeX = tilemap.GetLength(1);
+                    mapSizeY = tilemap.GetLength(0);
+                    blocks = new List<Rectangle>();
+                    blocksTop = new List<Rectangle>();
+                    blocksLeft = new List<Rectangle>();
+                    blocksRight = new List<Rectangle>();
+                    blocksBottom = new List<Rectangle>();
+                    tile = new List<Rectangle>();
+
+                    for (int x = 0; x < mapSizeX; x++)
+                        for (int y = 0; y < mapSizeY; y++)
+                            if (tilemap[y, x] == 1)
+                                blocks.Add(new Rectangle(x * Textures.buche_texture_winter.Width, y * Textures.buche_texture_winter.Height - 95, Textures.buche_texture_winter.Width, Textures.buche_texture_winter.Height));
+                            else if (tilemap[y, x] == 2)
+                                objects.Add(new Rectangle(x * Textures.buche_texture_winter.Width + 50, y * Textures.buche_texture_winter.Height - 86, 10, 10));
+                            else if (tilemap[y, x] == 3)
+                            {
+                                int h;
+                                if (y == tilemap.GetLength(0) - 1)
+                                    h = 345;
+                                else
+                                    h = y * Textures.buche_texture_winter.Height - 73;
+                                bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture_winter.Width + 50, h, 15, 10)));
+                            }
+
+                    foreach (Rectangle block in blocks)
+                        blocksTop.Add(new Rectangle(block.X, block.Y, Textures.buche_texture_winter.Width, 1));
+
+                    foreach (Rectangle block in blocks)
+                        blocksRight.Add(new Rectangle(block.X, block.Y + 3, 1, Textures.buche_texture_winter.Height));
+
+                    foreach (Rectangle block in blocks)
+                        blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture_winter.Width, block.Y + 3, 1, Textures.buche_texture_winter.Height));
+
+                    foreach (Rectangle block in blocks)
+                        blocksBottom.Add(new Rectangle(block.X, block.Y + Textures.buche_texture_winter.Height, Textures.buche_texture_winter.Width, 1));
+
+
+                    execute = new Perso(new Vector2(200, 0), CharacType.player);
+                    tree = new Drawable(drawable_type.winterTree);
+                    tree_winter_entrance_inside = new Drawable(drawable_type.tree_winter_entrance_inside);
+                    Ground = new Drawable(drawable_type.WinterGround);
+                    moveright = true;
+                    moveleft = true;
+                    debug = new Drawable(drawable_type.font);
+                    scoreDisplay = new Drawable(drawable_type.font);
+
+                    break;
                 case 2: /* GAME START */
                     Sound("menu");
                     Sound("Game");
@@ -773,15 +861,15 @@ namespace thegame
                             {0,0,1,2,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
                         };
 
-         
 
-                    int[] iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+
+                    iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
                     objects = new List<Rectangle>();
                     iaPerso = new List<Perso>();
 
-                    
-   
+
+
 
                     /* IA CHARACTERS */
                     for (int x = 0; x < iaMap.Length; x++)
@@ -802,7 +890,7 @@ namespace thegame
                         for (int y = 0; y < mapSizeY; y++)
                             if (tilemap[y, x] == 1)
                                 blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 95, Textures.buche_texture.Width, Textures.buche_texture.Height));
-                            else if(tilemap[y, x] == 2)
+                            else if (tilemap[y, x] == 2)
                                 objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 86, 10, 10));
                             else if (tilemap[y, x] == 3)
                             {
@@ -830,7 +918,7 @@ namespace thegame
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
                     tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
-                    Ground = new Drawable(drawable_type.Ground);
+                    Ground = new Drawable(drawable_type.AutumnGround);
                     moveright = true;
                     moveleft = true;
                     debug = new Drawable(drawable_type.font);
@@ -865,7 +953,7 @@ namespace thegame
 
             if (this.selected != 6)
             {
-                
+
 
                 if (curGameMode == instances_type.Menu)
                 {
@@ -899,7 +987,7 @@ namespace thegame
                     info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
                     sb.End();
 
-                    
+
                 }
                 else if (pause)
                 {
@@ -985,89 +1073,175 @@ namespace thegame
                 }
                 else
                 {
-                    sb.Begin();
-                    // Makes the background move slower than the camera to create an effect of depth.
-                    sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
-                    sb.End();
+                    switch (this.selected)
+                    {
+                        case 2:
+                            sb.Begin();
+                            // Makes the background move slower than the camera to create an effect of depth.
+                            sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                            sb.End();
 
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                    tree.Draw(sb, new Vector2(-100, 0));
-                    tree.Draw(sb, new Vector2(500, 0));
-                    tree.Draw(sb, new Vector2(400, 0));
-                    tree.Draw(sb, new Vector2(900, 0));
-                    tree.Draw(sb, new Vector2(1050, 0));
-                    tree.Draw(sb, new Vector2(1400, 0));
-                    tree.Draw(sb, new Vector2(1800, 0));
-                    tree.Draw(sb, new Vector2(2200, 0));
-                    tree.Draw(sb, new Vector2(2400, 0));
-                    tree.Draw(sb, new Vector2(3000, 0));
-                    tree.Draw(sb, new Vector2(3400, 0));
-                    tree.Draw(sb, new Vector2(3900, 0));
-                    tree.Draw(sb, new Vector2(4050, 0));
-                    tree.Draw(sb, new Vector2(4900, 0));
+                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                            tree.Draw(sb, new Vector2(-100, 0));
+                            tree.Draw(sb, new Vector2(500, 0));
+                            tree.Draw(sb, new Vector2(400, 0));
+                            tree.Draw(sb, new Vector2(900, 0));
+                            tree.Draw(sb, new Vector2(1050, 0));
+                            tree.Draw(sb, new Vector2(1400, 0));
+                            tree.Draw(sb, new Vector2(1800, 0));
+                            tree.Draw(sb, new Vector2(2200, 0));
+                            tree.Draw(sb, new Vector2(2400, 0));
+                            tree.Draw(sb, new Vector2(3000, 0));
+                            tree.Draw(sb, new Vector2(3400, 0));
+                            tree.Draw(sb, new Vector2(3900, 0));
+                            tree.Draw(sb, new Vector2(4050, 0));
+                            tree.Draw(sb, new Vector2(4900, 0));
 
-                    // Draw ground image
-                    for (int truc = 0; truc < 9; truc++)
-                        Ground.Draw(sb, new Vector2(truc * Textures.ground_autumn_texture.Width, 355));
+                            // Draw ground image
+                            for (int truc = 0; truc < 9; truc++)
+                                Ground.Draw(sb, new Vector2(truc * Textures.ground_autumn_texture.Width, 355));
 
-                    // Draw the platforms
-                    foreach (Rectangle top in blocks)
-                        sb.Draw(Textures.buche_texture, top, Color.White);
+                            // Draw the platforms
+                            foreach (Rectangle top in blocks)
+                                sb.Draw(Textures.buche_texture, top, Color.White);
 
-                    // Draw the objects
-                    foreach (Rectangle dessine in objects)
-                        sb.Draw(Textures.acorn_texture, dessine, Color.White);
+                            // Draw the objects
+                            foreach (Rectangle dessine in objects)
+                                sb.Draw(Textures.acorn_texture, dessine, Color.White);
 
-                    //draw bomb
-                    foreach (Bomb dessine in bomb)
-                        dessine.Draw(sb, gameTime);
+                            //draw bomb
+                            foreach (Bomb dessine in bomb)
+                                dessine.Draw(sb, gameTime);
 
-                    (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
+                            (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
 
-                    // Draw IA characters
-                    foreach (Perso iathings in iaPerso)
-                        iathings.Draw(sb);
+                            // Draw IA characters
+                            foreach (Perso iathings in iaPerso)
+                                iathings.Draw(sb);
 
-                    //------------------------------------------------------------------
-                    // ES 15APR14
-                    // Draw foreground tree so that squirrel appears to enter the hole
-                    //------------------------------------------------------------------
-                    tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 0));
+                            //------------------------------------------------------------------
+                            // ES 15APR14
+                            // Draw foreground tree so that squirrel appears to enter the hole
+                            //------------------------------------------------------------------
+                            tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 0));
 
-                    sb.End();
+                            sb.End();
 
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                    Bloodscreen(gameTime, sb, cameraClass.Position);
-                    sb.End();
-                    sb.Begin();
-                    sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
+                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                            Bloodscreen(gameTime, sb, cameraClass.Position);
+                            sb.End();
+                            sb.Begin();
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
 
-                    scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
+                            scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
 
-                    // this display the number of nuts that the perso has. 
-                    scoreDisplay.Draw(sb, Text_Game["_gamebonus"] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
+                            // this display the number of nuts that the perso has. 
+                            scoreDisplay.Draw(sb, Text_Game["_gamebonus"] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
 
-                    //draw text health
-                    scoreDisplay.Draw(sb, Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
+                            //draw text health
+                            scoreDisplay.Draw(sb, Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
 
-                    //help text
-                    scoreDisplay.Draw(sb, Text_Game["_gamePause"], new Vector2(530, 440), Color.Black, "normal");
-                    scoreDisplay.Draw(sb, Text_Game["_gameHelp"], new Vector2(530, 468), Color.Black, "normal");
+                            //help text
+                            scoreDisplay.Draw(sb, Text_Game["_gamePause"], new Vector2(530, 440), Color.Black, "normal");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelp"], new Vector2(530, 468), Color.Black, "normal");
 
-                    //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
-                        Textures.healthBar_texture.Width, 28), Color.Gray);
-                    //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                        450, (int)(Textures.healthBar_texture.Width * (double)Health / 20f),
-                        28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
-                    //healthBar bounds
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
-                        Textures.healthBar_texture.Width, 28), Color.White);
+                            //Negative health
+                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
+                                Textures.healthBar_texture.Width, 28), Color.Gray);
+                            //health left
+                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                                450, (int)(Textures.healthBar_texture.Width * (double)Health / 20f),
+                                28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
+                            //healthBar bounds
+                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
+                                Textures.healthBar_texture.Width, 28), Color.White);
 
-                    sb.End();
+                            sb.End();
+                            break;
+
+                        case 8:
+                            sb.Begin();
+                            // Makes the background move slower than the camera to create an effect of depth.
+                            sb.Draw(Textures.winterBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                            sb.End();
+
+                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                            tree.Draw(sb, new Vector2(-100, 0));
+                            tree.Draw(sb, new Vector2(500, 0));
+                            tree.Draw(sb, new Vector2(400, 0));
+                            tree.Draw(sb, new Vector2(900, 0));
+                            tree.Draw(sb, new Vector2(1050, 0));
+                            tree.Draw(sb, new Vector2(1400, 0));
+                            tree.Draw(sb, new Vector2(1800, 0));
+                            tree.Draw(sb, new Vector2(2200, 0));
+                            tree.Draw(sb, new Vector2(2400, 0));
+                            tree.Draw(sb, new Vector2(3000, 0));
+                            tree.Draw(sb, new Vector2(3400, 0));
+                            tree.Draw(sb, new Vector2(3900, 0));
+                            tree.Draw(sb, new Vector2(4050, 0));
+                            tree.Draw(sb, new Vector2(4900, 0));
+
+                            // Draw ground image
+                            for (int truc = 0; truc < 9; truc++)
+                                Ground.Draw(sb, new Vector2(truc * Textures.ground_winter_texture.Width, 355));
+
+                            // Draw the platforms
+                            foreach (Rectangle top in blocks)
+                                sb.Draw(Textures.buche_texture_winter, top, Color.White);
+
+                            // Draw the objects
+                            foreach (Rectangle dessine in objects)
+                                sb.Draw(Textures.acorn_texture, dessine, Color.White);
+
+                            //draw bomb
+                            foreach (Bomb dessine in bomb)
+                                dessine.Draw(sb, gameTime);
+
+                            (execute as Perso).Draw(sb);
+
+                            // Draw IA characters
+                            foreach (Perso iathings in iaPerso)
+                                iathings.Draw(sb);
+
+                            tree_winter_entrance_inside.Draw(sb, new Vector2(-100, 0));
+
+                            sb.End();
+
+                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                            Bloodscreen(gameTime, sb, cameraClass.Position);
+                            sb.End();
+                            sb.Begin();
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
+
+                            scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
+
+                            // this display the number of nuts that the perso has. 
+                            scoreDisplay.Draw(sb, Text_Game["_gamebonus"] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
+
+                            //draw text health
+                            scoreDisplay.Draw(sb, Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
+
+                            //help text
+                            scoreDisplay.Draw(sb, Text_Game["_gamePause"], new Vector2(530, 440), Color.Black, "normal");
+                            scoreDisplay.Draw(sb, Text_Game["_gameHelp"], new Vector2(530, 468), Color.Black, "normal");
+
+                            //Negative health
+                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
+                                Textures.healthBar_texture.Width, 28), Color.Gray);
+                            //health left
+                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                                450, (int)(Textures.healthBar_texture.Width * (double)Health / 20f),
+                                28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
+                            //healthBar bounds
+                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
+                                Textures.healthBar_texture.Width, 28), Color.White);
+                            sb.End();
+                            break;
+                    }
                 }
             }
             else // draw splashscreen
@@ -1091,7 +1265,6 @@ namespace thegame
                 }
                 sb.End();
             }
-            
         }
 
         public void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera)

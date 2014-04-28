@@ -18,8 +18,11 @@ namespace thegame
         public static Texture2D ground_autumn_texture;
         public static Texture2D ground_winter_texture;
         public static Texture2D buche_texture;
+        public static Texture2D buche_texture_winter;
         public static Texture2D tree_texture;
+        public static Texture2D tree_winter_texture;
         public static Texture2D tree_autumn_entrance_inside;
+        public static Texture2D tree_winter_entrance_inside;
         public static Texture2D pausedTexture;
         public static Texture2D explosion;
         public static Texture2D game_overTexture_en;
@@ -36,6 +39,7 @@ namespace thegame
         public static SoundEffect gameExplosion_Effect;
         public static SoundEffect gamePunch_Effect;
         public static Texture2D background;
+        public static Texture2D winterBackground;
         public static Video vid;
         public static Texture2D nut_texture;
         public static Texture2D acorn_texture;
@@ -51,10 +55,13 @@ namespace thegame
             plateform_texture = cm.Load<Texture2D>(@"plateforme");
             mario_texture = cm.Load<Texture2D>(@"mario");
             buche_texture = cm.Load<Texture2D>(@"Buche_test");
+            buche_texture_winter = cm.Load<Texture2D>(@"Buche_winter_test");
             eraser = cm.Load<Texture2D>(@"erase");
             hitbox = cm.Load<Texture2D>(@"blank");
             tree_texture = cm.Load<Texture2D>(@"tree");
+            tree_winter_texture = cm.Load<Texture2D>(@"tree_winter");
             tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Tree_Autumn_entrance_inside");
+            tree_winter_entrance_inside = cm.Load<Texture2D>(@"Tree_test_winter_entrance_inside");
             ground_autumn_texture = cm.Load<Texture2D>(@"Autumn_Ground2");
             ground_winter_texture = cm.Load<Texture2D>(@"Winter_Ground2");
             font_texture = cm.Load<SpriteFont>(@"FPS");
@@ -67,6 +74,7 @@ namespace thegame
             gameExplosion_Effect = cm.Load<SoundEffect>("audio\\explosion");
             gamePunch_Effect = cm.Load<SoundEffect>("audio\\punch");
             background = cm.Load<Texture2D>(@"Autumn_Background9");
+            winterBackground = cm.Load<Texture2D>(@"Winter_Background-01");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
             pausedRectangle = new Rectangle(0, 0, pausedTexture.Width, pausedTexture.Height);
             nut_texture = cm.Load<Texture2D>(@"Nut");

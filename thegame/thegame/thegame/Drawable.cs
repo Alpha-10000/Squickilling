@@ -10,12 +10,16 @@ namespace thegame
     public enum drawable_type
     {
         Plateform_default,
-        buche,
+        autumnBuche,
+        winterBuche,
         tree,
+        winterTree,
         tree_autumn_entrance_inside,
+        tree_winter_entrance_inside,
         font,
         Background,
-        Ground,
+        AutumnGround,
+        WinterGround,
         vid,
         game_over_vid,
         health,
@@ -39,22 +43,34 @@ namespace thegame
                 case drawable_type.Plateform_default:
                     image = Textures.plateform_texture;
                     break;
-                case drawable_type.buche:
+                case drawable_type.autumnBuche:
                     image = Textures.buche_texture;
+                    break;
+                case drawable_type.winterBuche:
+                    image = Textures.buche_texture_winter;
                     break;
                 case drawable_type.tree:
                     image = Textures.tree_texture;
                     break;
+                case drawable_type.winterTree:
+                    image = Textures.tree_winter_texture;
+                    break;
                 case drawable_type.tree_autumn_entrance_inside:
                     image = Textures.tree_autumn_entrance_inside;
+                    break;
+                case drawable_type.tree_winter_entrance_inside:
+                    image = Textures.tree_winter_entrance_inside;
                     break;
                 case drawable_type.font:
                     _font = Textures.font_texture;
                     _fontTitle = Textures.fontTitle_texture;
                     _fonthelp = Textures.fonthelp_texture;
                     break;
-                case drawable_type.Ground:
+                case drawable_type.AutumnGround:
                     image = Textures.ground_autumn_texture;
+                    break;
+                case drawable_type.WinterGround:
+                    image = Textures.ground_winter_texture;
                     break;
                 case drawable_type.Background:
                     image = Textures.background;

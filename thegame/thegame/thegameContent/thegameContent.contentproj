@@ -280,15 +280,36 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="endLevel.png">
-      <Name>endLevel</Name>
+    <Compile Include="erase.png">
+      <Name>erase</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="erase.png">
-      <Name>erase</Name>
+    <Compile Include="Buche_winter_test.png">
+      <Name>Buche_winter_test</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="tree_winter.png">
+      <Name>tree_winter</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Winter_Background-01.png">
+      <Name>Winter_Background-01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tree_test_winter_entrance_inside.png">
+      <Name>Tree_test_winter_entrance_inside</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
