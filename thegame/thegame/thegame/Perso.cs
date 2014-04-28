@@ -96,7 +96,7 @@ namespace thegame
             Gravity = 0.5f;     // Start falling with this speed
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool moveleft, bool moveright, List<Rectangle> blocksTop , List<Rectangle> blocksBottom, List<Rectangle> blocksLeft, List<Rectangle> blocksRight, List<Rectangle> blocks,  List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts, bool activateDeveloper)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, List<Rectangle> blocks,  List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts, bool activateDeveloper)
         {
             activateDevelopper = activateDeveloper;
             this.objects = objects;
@@ -111,8 +111,8 @@ namespace thegame
             toGetNeighborsTiles = new Rectangle(hitBoxPerso.X - 40, hitBoxPerso.Y - 40, hitBoxPerso.Width + 80, hitBoxPerso.Height + 80);
 
 
-            moveleft = true;
-            moveright = true;
+            bool moveleft = true;
+            bool moveright = true;
 
             
             /* Keep perso inside the map */
