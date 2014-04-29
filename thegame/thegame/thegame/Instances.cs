@@ -481,7 +481,8 @@ namespace thegame
 
                         foreach (Perso iathings in iaPerso)
                         {
-                            checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso);
+                            if(playerActivate)
+                                checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso);
 
                             iathings.UpdateIA(gametime, blocks, (execute as Perso).hitBoxPerso);
                         }
