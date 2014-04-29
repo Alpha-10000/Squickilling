@@ -76,8 +76,6 @@ namespace thegame
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIsTrue;       // Set to true to switch the sound (on / off)
-        private bool moveleft;
-        private bool moveright;
         private Drawable tree;
         private Drawable tree_autumn_entrance_inside;
         private Drawable tree_winter_entrance_inside;
@@ -92,6 +90,10 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
 
+
+        private float timeElaspedGameOver = 0;
+        private bool playerActivate = true;
+        private float transparencyAnimation = 0;
         private int Health; //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool game_over_i = false;
@@ -235,8 +237,6 @@ namespace thegame
             this.game = game;
 
             SoundIsTrue = true;
-            moveleft = true;
-            moveright = true;
             this.selected = 6;
             Init_Game();
             this.Execute();
@@ -461,6 +461,8 @@ namespace thegame
                         help = true;
                     }
 
+
+
                     if ((execute as Perso).positionPerso.X > 5350)
                     {
                         endLevel = true;
@@ -475,66 +477,23 @@ namespace thegame
                     else if (!pause && !help && !endLevel)
                     {
 
-
-                        cameraPos = (execute as Perso).cameraPos;
-                        /* START OF THE GAME CODE */
-                        moveleft = true;
-                        moveright = true;
-
-
-                        elaspedTimeGetBackHealth += (float)gametime.ElapsedGameTime.TotalSeconds;
-                        if (elaspedTimeGetBackHealth > timeInSecond_GetOnePoint && Health < 20)
-                        {
-                            Health++;
-                            elaspedTimeGetBackHealth = 0;
-                        }
-
-
-
-                        projectiles = new List<Projectile>();
-
-
-                        (execute as Perso).Update(gametime, keyboardState, oldkey, blocks, projectiles, objects, ref nb_nuts, Developpermode);
-
-
-
-                        this.objects = (execute as Perso).objects;
-
-                        iaPerso = (execute as Perso).CollisionIAProjec(iaPerso, ref score);
-
                         int checkBlood = 0;
-
-
-
 
                         foreach (Perso iathings in iaPerso)
                         {
-                            moveleft = true;
-                            moveright = true;
-
-                            foreach (Rectangle left in blocksLeft)
-                                if ((new Rectangle(left.X, left.Y, left.Width, left.Height)).Intersects(iathings.hitBoxPerso))
-                                    moveleft = false;
-
-                            foreach (Rectangle right in blocksRight)
-                                if ((new Rectangle(right.X, right.Y, right.Width, right.Height)).Intersects(iathings.hitBoxPerso))
-                                    moveright = false;
-
                             checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso);
 
-                            iathings.UpdateIA(gametime, moveleft, moveright, blocksTop, (execute as Perso).hitBoxPerso);
-
-
-                            if (iathings.gameover == true)
-                                game_over_i = true;
+                            iathings.UpdateIA(gametime, blocks, (execute as Perso).hitBoxPerso);
                         }
 
+                        bool touchedByBomb = false;
 
                         /* CHECK IF CHARACTER CROSS A MINE */
                         foreach (Bomb checkCrossed in bomb)
                         {
-                            if ((execute as Perso).hitBoxPerso.Intersects(checkCrossed.Object))
+                            if ((execute as Perso).hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)
                             {
+                                touchedByBomb = true;
                                 checkCrossed.activateExplosion = true;
                                 drawBloodScreen = true;
                                 if (checkCrossed.checkBlood)
@@ -544,20 +503,75 @@ namespace thegame
                             }
                             if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
                                 drawBloodScreen = true;
+
+                        }
+
+                        if (touchedByBomb)//fait clignoter le perso
+                        {
+                            (execute as Perso).PersoHitted = true;
+                            (execute as Perso).compteurHitted = 0;
                         }
 
 
                         bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
-
-
-                        if (checkBlood > 0)
-                            drawBloodScreen = true;
-
-                        if (Health <= 0)
+                        if (playerActivate)
                         {
-                            game_over_i = true;
-                            drawBloodScreen = false;//solve a bug. Otherwise the bloodscreen will continue to force the camera to shake
+                            cameraPos = (execute as Perso).cameraPos;
+
+
+                            elaspedTimeGetBackHealth += (float)gametime.ElapsedGameTime.TotalSeconds;
+                            if (elaspedTimeGetBackHealth > timeInSecond_GetOnePoint && Health < 20)
+                            {
+                                Health++;
+                                elaspedTimeGetBackHealth = 0;
+                            }
+
+
+
+                            projectiles = new List<Projectile>();
+
+
+                            (execute as Perso).Update(gametime, keyboardState, oldkey, blocks, projectiles, objects, ref nb_nuts, Developpermode);
+
+
+
+                            this.objects = (execute as Perso).objects;
+
+                            iaPerso = (execute as Perso).CollisionIAProjec(iaPerso, ref score);
+
+
+
+
+                            if (checkBlood > 0)
+                            {
+                                drawBloodScreen = true;
+                                (execute as Perso).PersoHitted = true;
+                                (execute as Perso).compteurHitted = 0;
+                            }
+
+                            if (Health <= 0)
+                            {
+                                Health = 0;
+                                playerActivate = false;
+                                drawBloodScreen = false;//solve a bug. Otherwise the bloodscreen will continue to force the camera to shake
+                            }
+                        }
+                        else
+                        {
+                            timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
+                            if (timeElaspedGameOver > 2500)
+                            {
+                                timeElaspedGameOver = 0;
+                                playerActivate = true;
+                                game_over_i = true;
+                            }
+                            if (timeElaspedGameOver > 1500)
+                            {
+                                transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
+
+                            }
+
                         }
 
                         if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
@@ -570,6 +584,7 @@ namespace thegame
                     }
                 }
             }
+            
             if (pause)
             {
                 /* Pause menu with keyboard*/
@@ -753,6 +768,8 @@ namespace thegame
                     Sound("menu");
                     Sound("Game");
                     score = 0;
+
+                    Init_Game();
                     tilemap = new int[,]
                      {
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -791,10 +808,6 @@ namespace thegame
                     mapSizeX = tilemap.GetLength(1);
                     mapSizeY = tilemap.GetLength(0);
                     blocks = new List<Rectangle>();
-                    blocksTop = new List<Rectangle>();
-                    blocksLeft = new List<Rectangle>();
-                    blocksRight = new List<Rectangle>();
-                    blocksBottom = new List<Rectangle>();
                     tile = new List<Rectangle>();
 
                     for (int x = 0; x < mapSizeX; x++)
@@ -813,25 +826,10 @@ namespace thegame
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture_winter.Width + 50, h, 15, 10)));
                             }
 
-                    foreach (Rectangle block in blocks)
-                        blocksTop.Add(new Rectangle(block.X, block.Y, Textures.buche_texture_winter.Width, 1));
-
-                    foreach (Rectangle block in blocks)
-                        blocksRight.Add(new Rectangle(block.X, block.Y + 3, 1, Textures.buche_texture_winter.Height));
-
-                    foreach (Rectangle block in blocks)
-                        blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture_winter.Width, block.Y + 3, 1, Textures.buche_texture_winter.Height));
-
-                    foreach (Rectangle block in blocks)
-                        blocksBottom.Add(new Rectangle(block.X, block.Y + Textures.buche_texture_winter.Height, Textures.buche_texture_winter.Width, 1));
-
-
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.winterTree);
                     tree_winter_entrance_inside = new Drawable(drawable_type.tree_winter_entrance_inside);
                     Ground = new Drawable(drawable_type.WinterGround);
-                    moveright = true;
-                    moveleft = true;
                     debug = new Drawable(drawable_type.font);
                     scoreDisplay = new Drawable(drawable_type.font);
 
@@ -880,10 +878,6 @@ namespace thegame
                     mapSizeX = tilemap.GetLength(1);
                     mapSizeY = tilemap.GetLength(0);
                     blocks = new List<Rectangle>();
-                    blocksTop = new List<Rectangle>();
-                    blocksLeft = new List<Rectangle>();
-                    blocksRight = new List<Rectangle>();
-                    blocksBottom = new List<Rectangle>();
                     tile = new List<Rectangle>();
 
                     for (int x = 0; x < mapSizeX; x++)
@@ -902,25 +896,11 @@ namespace thegame
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
 
-                    foreach (Rectangle block in blocks)
-                        blocksTop.Add(new Rectangle(block.X, block.Y, Textures.buche_texture.Width, 1));
-
-                    foreach (Rectangle block in blocks)
-                        blocksRight.Add(new Rectangle(block.X, block.Y + 3, 1, Textures.buche_texture.Height));
-
-                    foreach (Rectangle block in blocks)
-                        blocksLeft.Add(new Rectangle(block.X + Textures.buche_texture.Width, block.Y + 3, 1, Textures.buche_texture.Height));
-
-                    foreach (Rectangle block in blocks)
-                        blocksBottom.Add(new Rectangle(block.X, block.Y + Textures.buche_texture.Height, Textures.buche_texture.Width, 1));
-
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
                     tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
                     Ground = new Drawable(drawable_type.AutumnGround);
-                    moveright = true;
-                    moveleft = true;
                     debug = new Drawable(drawable_type.font);
                     scoreDisplay = new Drawable(drawable_type.font);
                     break;
@@ -937,6 +917,23 @@ namespace thegame
                     Textures.buttonSound_Effect.Play();
                 else
                     instancesound.Play();
+        }
+
+        public void GameOverAnimation(SpriteBatch sb, float transparency)
+        {
+            sb.Begin();
+            Rectangle rec = new Rectangle(0, 0, 800, 530);
+            sb.Draw(Textures.background, Vector2.Zero, Color.White * transparency);
+            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White * transparency);
+            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White * transparency);
+
+            if (language == "english")
+                sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
+            else if (language == "french")
+                sb.Draw(Textures.game_overTexture_fr, rec, Color.White * transparency);
+            else
+                sb.Draw(Textures.game_overTexture_ne, rec, Color.White * transparency);
+            sb.End();
         }
 
         public void Display(SpriteBatch sb, GameTime gameTime)
@@ -1017,47 +1014,8 @@ namespace thegame
                             break;
                     }
                 }
-                else if (game_over_i)
-                {
-                    switch (this.selected)
-                    {
-                        case 2:
-                            sb.Begin();
-                            Rectangle rec = new Rectangle(0, 0, 800, 530);
-
-                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
-
-                            if (language == "english")
-                                sb.Draw(Textures.game_overTexture_en, rec, Color.White);
-                            else if (language == "french")
-                                sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
-                            else
-                                sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
-
-                            sb.End();
-                            break;
-
-                        case 8:
-                            sb.Begin();
-                            rec = new Rectangle(0, 0, 800, 530);
-
-                            sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
-
-                            if (language == "english")
-                                sb.Draw(Textures.game_overTexture_en, rec, Color.White);
-                            else if (language == "french")
-                                sb.Draw(Textures.game_overTexture_fr, rec, Color.White);
-                            else
-                                sb.Draw(Textures.game_overTexture_ne, rec, Color.White);
-
-                            sb.End();
-                            break;
-                    }
-                }
+                else if (game_over_i && playerActivate)
+                    GameOverAnimation(sb, 1);
                 else if (endLevel)
                 {
                     switch (this.selected)
@@ -1211,11 +1169,12 @@ namespace thegame
                             foreach (Bomb dessine in bomb)
                                 dessine.Draw(sb, gameTime);
 
-                            (execute as Perso).Draw(sb); /* Should be execute in the Drawable class */
+                            if (playerActivate)
+                                (execute as Perso).Draw(sb, gameTime); /* Should be execute in the Drawable class */
 
                             // Draw IA characters
                             foreach (Perso iathings in iaPerso)
-                                iathings.Draw(sb);
+                                iathings.Draw(sb, gameTime);
 
                             //------------------------------------------------------------------
                             // ES 15APR14
@@ -1255,8 +1214,11 @@ namespace thegame
                             sb.Draw(Textures.healthBar_texture, new Rectangle(0,
                                 450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
                                 Textures.healthBar_texture.Width, 28), Color.White);
-
+                            
                             sb.End();
+
+                            if (!playerActivate && timeElaspedGameOver > 1500)
+                                GameOverAnimation(sb, transparencyAnimation);
                             break;
 
                         case 8:
@@ -1297,11 +1259,12 @@ namespace thegame
                             foreach (Bomb dessine in bomb)
                                 dessine.Draw(sb, gameTime);
 
-                            (execute as Perso).Draw(sb);
+                            if (playerActivate)
+                                (execute as Perso).Draw(sb, gameTime);
 
                             // Draw IA characters
                             foreach (Perso iathings in iaPerso)
-                                iathings.Draw(sb);
+                                iathings.Draw(sb, gameTime);
 
                             tree_winter_entrance_inside.Draw(sb, new Vector2(-100, 0));
 
@@ -1337,7 +1300,12 @@ namespace thegame
                             sb.Draw(Textures.healthBar_texture, new Rectangle(0,
                                 450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
                                 Textures.healthBar_texture.Width, 28), Color.White);
+
+                            
+
                             sb.End();
+                            if (!playerActivate && timeElaspedGameOver > 1500)
+                                GameOverAnimation(sb, transparencyAnimation);
                             break;
                     }
                 }
