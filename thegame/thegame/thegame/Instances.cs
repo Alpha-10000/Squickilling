@@ -1025,7 +1025,7 @@ namespace thegame
                             }
                             else if (language == "french")
                             {
-                                scoreDisplay.Draw(sb, "Fini, trop balèze.", new Vector2(50, 100), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");//Attention genere des beugs à cause des accents!!
                                 scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
                                 scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
                                 scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
