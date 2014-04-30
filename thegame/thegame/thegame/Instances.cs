@@ -164,7 +164,12 @@ namespace thegame
                                                    {"_gameHelpLine1","Use the left and right arrow to move the character"},
                                                    {"_gameHelpLine2","Use the top arrow to jump"},
                                                    {"_gameHelpLine3","To fire on ennemies use the space bar"},
-                                                   {"_gameHelpLine4","Press any key to exit"}
+                                                   {"_gameHelpLine4","Press any key to exit"},
+                                                   {"congrats","End of the level, so badass..."},
+                                                   {"finalScore","Ennemies Killed : "},
+                                                   {"finalBonus","Bonus Score : "},
+                                                   {"total","Total : "},
+                                                   {"space","Press Space key"}
                     
                     };
                     break;
@@ -194,7 +199,12 @@ namespace thegame
                                                    {"_gameHelpLine1","Utilisez la flèche gauche/droite pour se déplacer"},
                                                    {"_gameHelpLine2","Utilisez la flèche du haut pour sauter"},
                                                    {"_gameHelpLine3","Utilisez la barre espace pour tirer"},
-                                                   {"_gameHelpLine4","Appuyez sur une touche pour quitter"}
+                                                   {"_gameHelpLine4","Appuyez sur une touche pour quitter"},
+                                                   {"congrats","Fin du niveau, trop badass..."},
+                                                   {"finalScore","Nombre d'ennemis morts : "},
+                                                   {"finalBonus","Score bonus : "},
+                                                   {"total","Total : "},
+                                                   {"space","Appuyer sur la touche Espace"}
                     };
                     break;
 
@@ -221,7 +231,12 @@ namespace thegame
                                                    {"_gameHelpLine1","Use the left and right arrow to move the character"},
                                                    {"_gameHelpLine2","Use the top arrow to jump"},
                                                    {"_gameHelpLine3","To fire on ennemies use the space bar"},
-                                                   {"_gameHelpLine4","Press any key to exit"}
+                                                   {"_gameHelpLine4","Press any key to exit"},
+                                                   {"congrats","Yeah, end of the level, so badass..."},
+                                                   {"finalScore","Your Score is : "},
+                                                   {"finalBonus","Bonus Score : "},
+                                                   {"total","Total : "},
+                                                   {"space","Press Space key"}
                     };
                     break;
             }
@@ -1015,30 +1030,11 @@ namespace thegame
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                            if (language == "english")
-                            {
-                                scoreDisplay.Draw(sb, "Yeah, end of the level, etc, etc.", new Vector2(50, 100), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Your Score is :" + score + ".", new Vector2(50, 150), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Stuff to Add", new Vector2(50, 250), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Press Space", new Vector2(190, 300), Color.Black, "osef");
-                            }
-                            else if (language == "french")
-                            {
-                                scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");//Attention genere des beugs à cause des accents!!
-                                scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Appuyer sur Espace", new Vector2(50, 300), Color.Black, "osef");
-                            }
-                            else
-                            {
-                                scoreDisplay.Draw(sb, "Goed gedaan jochie!", new Vector2(190, 100), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Je score is :" + score + "en een bonus van " + nb_nuts + "hazelnoten", new Vector2(50, 150), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Andere dingen", new Vector2(50, 250), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Druk op de spatie balk", new Vector2(50, 300), Color.Black, "osef");
-                            }
+                            scoreDisplay.Draw(sb, Text_Game["congrats"], new Vector2(50, 100), Color.Black, "42");
+                            scoreDisplay.Draw(sb, Text_Game["finalScore"] + score, new Vector2(50, 150), Color.Black, "osef");
+                            scoreDisplay.Draw(sb, Text_Game["finalBonus"] + nb_nuts, new Vector2(50, 200), Color.Black, "osef");
+                            scoreDisplay.Draw(sb, Text_Game["total"] + (score + nb_nuts*0.5), new Vector2(50, 250), Color.Black, "42");
+                            scoreDisplay.Draw(sb, Text_Game["space"], new Vector2(70, 300), Color.Black, "osef");
                             sb.End();
                             break;
 
@@ -1050,30 +1046,11 @@ namespace thegame
                             sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
                             sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                            if (language == "english")
-                            {
-                                scoreDisplay.Draw(sb, "Yeah, end of the level, etc, etc.", new Vector2(50, 100), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Your Score is :" + score + ".", new Vector2(50, 150), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Stuff to Add", new Vector2(50, 250), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Press Space", new Vector2(190, 300), Color.Black, "osef");
-                            }
-                            else if (language == "french")
-                            {
-                                scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                                scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
-                                scoreDisplay.Draw(sb, "Appuyer sur Espace", new Vector2(50, 300), Color.Black, "osef");
-                            }
-                            else
-                            {
-                                scoreDisplay.Draw(sb, "Dsl je parle pas neerlandais :P", new Vector2(190, 100), Color.Black, "42");
-                                //scoreDisplay.Draw(sb, "Ton Score est de :" + score + "et un bonus de" + nb_nuts + "noisettes", new Vector2(50, 150), Color.Black, "osef");
-                                //scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                                //scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
-                                //scoreDisplay.Draw(sb, "Appuyer sur Space", new Vector2(50, 300), Color.Black, "osef");
-                            }
+                            scoreDisplay.Draw(sb, Text_Game["congrats"], new Vector2(50, 100), Color.Black, "42");
+                            scoreDisplay.Draw(sb, Text_Game["finalScore"] + score, new Vector2(50, 150), Color.Black, "osef");
+                            scoreDisplay.Draw(sb, Text_Game["finalBonus"] + nb_nuts, new Vector2(50, 200), Color.Black, "osef");
+                            scoreDisplay.Draw(sb, Text_Game["total"] + (score + nb_nuts*1.5), new Vector2(50, 250), Color.Black, "42");
+                            scoreDisplay.Draw(sb, Text_Game["space"], new Vector2(70, 300), Color.Black, "osef");
                             sb.End();
                             break;
                     }
