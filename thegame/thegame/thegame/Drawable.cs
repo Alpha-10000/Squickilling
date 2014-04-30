@@ -67,10 +67,10 @@ namespace thegame
                     _fonthelp = Textures.fonthelp_texture;
                     break;
                 case drawable_type.AutumnGround:
-                    image = Textures.ground_autumn_texture;
+                    image = Textures.autumn_ground_texture;
                     break;
                 case drawable_type.WinterGround:
-                    image = Textures.ground_winter_texture;
+                    image = Textures.winter_ground_texture;
                     break;
                 case drawable_type.Background:
                     image = Textures.background;

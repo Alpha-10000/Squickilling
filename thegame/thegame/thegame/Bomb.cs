@@ -37,7 +37,8 @@ namespace thegame
             height = Object.Height;
         }
 
-        public void BloodOnce(ref int health)//draw only once the blood screen and health - 5 only once
+        // draw only once the blood screen and health - 5 only once
+        public void BloodOnce(ref int health)
         {
             if(checkBlood)
             {
@@ -45,8 +46,7 @@ namespace thegame
                 checkBlood = false;
             }
         }
-
-
+        
         public void Draw(SpriteBatch sb, GameTime gameTime)
         {
             if (activateExplosion)
@@ -71,7 +71,9 @@ namespace thegame
                 }
             }
             else
+            {
                 sb.Draw(Textures.hitbox, Object, Color.Gray);
+            }
         }
     }
 }

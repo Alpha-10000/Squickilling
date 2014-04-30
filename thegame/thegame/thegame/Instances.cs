@@ -32,6 +32,20 @@ namespace thegame
         player,
         ia
     }
+    public enum gameState
+    {
+        MainMenu = 0,
+        OptionMenu = 1,
+        AutumnLevel = 2,
+        LanguageMenu = 3,
+        SoundMenu = 4,
+        FullscreenMenu = 5,
+        SplashScreen = 6,
+        DeveloperMode = 7,
+        WinterLevel = 8,
+        SpringLevel,
+        SummerLevel
+    }
 
     public class Instances
     {
@@ -42,7 +56,7 @@ namespace thegame
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
-        public int selected { get; private set; }              // Selected menu page.
+        public gameState selected { get; private set; }              // Selected menu page.
         public SoundEffect sound { get; private set; }
 
         private bool drawBloodScreen = false;//variable for the bloodscreen
@@ -237,7 +251,7 @@ namespace thegame
             this.game = game;
 
             SoundIsTrue = true;
-            this.selected = 6;
+            this.selected = gameState.SplashScreen;
             Init_Game();
             this.Execute();
         }
@@ -270,14 +284,14 @@ namespace thegame
                             {
                                 (execute as Menu).MenuBool = false;
                                 this.curGameMode = instances_type.Game;
-                                this.selected = 2;
+                                this.selected = gameState.AutumnLevel;
                                 Execute();
                             }
                             break;
                         case 1:
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OPTIONS SETTINGS
                             {
-                                this.selected = 1;
+                                this.selected = gameState.OptionMenu;
                                 Execute();
                             }
                             break;
@@ -291,14 +305,14 @@ namespace thegame
                             break;
                     }
                 }
-                else if (selected == 1) // OPTION PANNEL
+                else if (selected == gameState.OptionMenu) // OPTION PANNEL
                 {
                     switch ((execute as Menu).selected)
                     {
                         case 0:
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE SETTINGS
                             {
-                                this.selected = 3;
+                                this.selected = gameState.LanguageMenu;
                                 Execute();
                             }
                             break;
@@ -331,7 +345,7 @@ namespace thegame
                         case 3:
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // GO BACK
                             {
-                                this.selected = 0;
+                                this.selected = gameState.MainMenu;
                                 Execute();
                             }
                             break;
@@ -339,7 +353,7 @@ namespace thegame
                             break;
                     }
                 }
-                else if (selected == 3) // LANGUAGE SETTINGS
+                else if (selected == gameState.LanguageMenu) // LANGUAGE SETTINGS
                 {
 
                     switch ((execute as Menu).selected)
@@ -375,7 +389,7 @@ namespace thegame
                             break;
                     }
                 }
-                else if (selected == 4) // SOUND SETTINGS
+                else if (selected == gameState.SoundMenu) // SOUND SETTINGS
                 {
 
                     switch ((execute as Menu).selected)
@@ -384,7 +398,7 @@ namespace thegame
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
                             {
                                 SoundIsTrue = true;
-                                this.selected = 0;
+                                this.selected = gameState.MainMenu;
                                 Execute();
                             }
                             break;
@@ -392,7 +406,7 @@ namespace thegame
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF BUTTON
                             {
                                 SoundIsTrue = false;
-                                this.selected = 0;
+                                this.selected = gameState.MainMenu;
                                 Execute();
                             }
                             break;
@@ -403,7 +417,7 @@ namespace thegame
 
                 // ES :  I have moved the fullscreen toggle to the option menu.
                 //       This is section is no longer active.
-                else if (selected == 5) // FULLSCREEN SETTINGS
+                else if (selected == gameState.FullscreenMenu) // FULLSCREEN SETTINGS
                 {
                     switch ((execute as Menu).selected)
                     {
@@ -414,7 +428,7 @@ namespace thegame
                                 {
                                     Game1.graphics.ToggleFullScreen();
                                 }
-                                this.selected = 0;
+                                this.selected = gameState.MainMenu;
                                 Execute();
                             }
                             break;
@@ -425,7 +439,7 @@ namespace thegame
                                 {
                                     Game1.graphics.ToggleFullScreen();
                                 }
-                                this.selected = 0;
+                                this.selected = gameState.MainMenu;
                                 Execute();
                             }
                             break;
@@ -437,8 +451,8 @@ namespace thegame
                 // ES 15APR14
                 // Moved details of splashscreen handling near the end of this class.
                 //------------------------------------------------------------------
-                else if (selected == 6) HandleSplashScreen(keyboardState, mouse1);
-                else if (selected == 7)
+                else if (selected == gameState.SplashScreen) HandleSplashScreen(keyboardState, mouse1);
+                else if (selected == gameState.DeveloperMode)
                 {
                     cameraPos = (execute as DevelopperMap).cameraPos;
                     (execute as DevelopperMap).UpdateMap(keyboardState, gametime, mouse1);
@@ -462,7 +476,6 @@ namespace thegame
                     }
 
 
-
                     if ((execute as Perso).positionPerso.X > 5350)
                     {
                         endLevel = true;
@@ -470,7 +483,7 @@ namespace thegame
                         {
                             endLevel = false;
                             this.curGameMode = instances_type.Game;
-                            this.selected = 8;
+                            this.selected = gameState.WinterLevel;
                             Execute();
                         }
                     }
@@ -512,15 +525,13 @@ namespace thegame
                             (execute as Perso).PersoHitted = true;
                             (execute as Perso).compteurHitted = 0;
                         }
-
-
+                        
                         bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
                         if (playerActivate)
                         {
                             cameraPos = (execute as Perso).cameraPos;
-
-
+                            
                             elaspedTimeGetBackHealth += (float)gametime.ElapsedGameTime.TotalSeconds;
                             if (elaspedTimeGetBackHealth > timeInSecond_GetOnePoint && Health < 20)
                             {
@@ -528,22 +539,11 @@ namespace thegame
                                 elaspedTimeGetBackHealth = 0;
                             }
 
-
-
                             projectiles = new List<Projectile>();
-
-
                             (execute as Perso).Update(gametime, keyboardState, oldkey, blocks, projectiles, objects, ref nb_nuts, Developpermode);
-
-
-
                             this.objects = (execute as Perso).objects;
-
                             iaPerso = (execute as Perso).CollisionIAProjec(iaPerso, ref score);
-
-
-
-
+                            
                             if (checkBlood > 0)
                             {
                                 drawBloodScreen = true;
@@ -570,9 +570,7 @@ namespace thegame
                             if (timeElaspedGameOver > 1500)
                             {
                                 transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
-
                             }
-
                         }
 
                         if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
@@ -649,14 +647,14 @@ namespace thegame
                     game_over_i = false;
                     Init_Game();
                     this.curGameMode = instances_type.Game;
-                    this.selected = 2;
+                    this.selected = gameState.AutumnLevel;
                     Execute();
                 }
             }
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
-            //ACTIVATE DEVELOPPER MODE BY PRESSING THE WORD TEAM. SAME TIME
+            //ACTIVATE DEVELOPER MODE BY PRESSING THE WORD TEAM. SAME TIME
             if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
                 Developpermode = true;
 
@@ -672,7 +670,6 @@ namespace thegame
                 }
             }
 
-
             if (Developpermode)
             {
                 SoundIsTrue = false;
@@ -685,14 +682,11 @@ namespace thegame
                 if (getkey.Contains(Keys.M) && getkey.Contains(Keys.A) && getkey.Contains(Keys.P))
                 {
                     curGameMode = instances_type.MapDevelopper;
-                    selected = 7;
+                    selected = gameState.DeveloperMode;
                     developpermap = true;
                     Execute();
                 }
             }
-
-
-
         }
 
         /* END OF THE GAME CODE */
@@ -710,7 +704,7 @@ namespace thegame
                     (execute as Menu).AddElements(Text_Game["_mnuExit"]);//Exit game
 
                     break;
-                case 1: /* OPTION MENU */
+                case gameState.OptionMenu: /* OPTION MENU */
                     Sound("menu");
                     execute = new Menu(4, Text_Game["_mnuOptions"]);//options
                     (execute as Menu).AddElements(Text_Game["_mnuLanguage"]);//language 
@@ -731,7 +725,7 @@ namespace thegame
 
                     break;
 
-                case 3: /* Select language */
+                case gameState.LanguageMenu: /* Select language */
                     Sound("menu");
                     execute = new Menu(3, Text_Game["_mnuLanguage"]);
                     (execute as Menu).AddElements(Text_Game["_mnuEnglish"]);
@@ -739,33 +733,33 @@ namespace thegame
                     (execute as Menu).AddElements(Text_Game["_mnuDutch"]);
                     break;
 
-                case 4: /* SOUND MENU */
+                case gameState.SoundMenu: /* SOUND MENU */
                     Sound("menu");
                     execute = new Menu(2, Text_Game["_mnuSound"]);//sound
                     (execute as Menu).AddElements(Text_Game["_mnuOn"]);//on
                     (execute as Menu).AddElements(Text_Game["_mnuOff"]);//off
 
                     break;
-                case 5: /* FULL SCREEN */
+                case gameState.FullscreenMenu: /* FULL SCREEN */
                     Sound("menu");
                     execute = new Menu(2, Text_Game["_mnuFullscreen"]);//fullscreen
                     (execute as Menu).AddElements(Text_Game["_mnuOn"]);//on
                     (execute as Menu).AddElements(Text_Game["_mnuOff"]);//off
                     break;
 
-                case 6: /* INTRODUCTION : SPLASHSCREEN */
+                case gameState.SplashScreen: /* INTRODUCTION : SPLASHSCREEN */
                     this.curGameMode = instances_type.SplashScreen;
                     vidPlayer = new VideoPlayer();
                     vidRectangle = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, Game1.graphics.PreferredBackBufferHeight);
                     vidPlayer.Play(Textures.vid);
                     break;
-                case 7:
+                case gameState.DeveloperMode:
                     this.curGameMode = instances_type.MapDevelopper;
                     execute = new DevelopperMap(45, 15);
                     tree = new Drawable(drawable_type.tree);
                     break;
 
-                case 8: /*Level 2*/
+                case gameState.WinterLevel: /*Level 2*/
                     Sound("menu");
                     Sound("Game");
                     score = 0;
@@ -835,7 +829,7 @@ namespace thegame
                     scoreDisplay = new Drawable(drawable_type.font);
 
                     break;
-                case 2: /* GAME START */
+                case gameState.AutumnLevel: /* GAME START */
                     Sound("menu");
                     Sound("Game");
                     score = 0;              // We start the game with the score = 0
@@ -860,15 +854,10 @@ namespace thegame
                             {0,0,1,2,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
                         };
 
-
-
                     iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
                     objects = new List<Rectangle>();
                     iaPerso = new List<Perso>();
-
-
-
 
                     /* IA CHARACTERS */
                     for (int x = 0; x < iaMap.Length; x++)
@@ -897,7 +886,6 @@ namespace thegame
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
 
-
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
                     tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
@@ -925,8 +913,8 @@ namespace thegame
             sb.Begin();
             Rectangle rec = new Rectangle(0, 0, 800, 530);
             sb.Draw(Textures.background, Vector2.Zero, Color.White * transparency);
-            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White * transparency);
-            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White * transparency);
+            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White * transparency);
+            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White * transparency);
 
             if (language == "english")
                 sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
@@ -943,16 +931,14 @@ namespace thegame
             //------------------------------------------------------------------
             // ES 23APR14
             // HOW TO DRAW STATIC VS MOVING SCREEN
-            //Just use Sb.Begin() + sb.End() for static
+            // Just use Sb.Begin() + sb.End() for static
             // and use sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix); + sb.End()
-            //for shifting screen
+            // for shifting screen
             //------------------------------------------------------------------
             cameraClass.Position = this.cameraPos;
 
-            if (this.selected != 6)
+            if (this.selected != gameState.SplashScreen)
             {
-
-
                 if (curGameMode == instances_type.Menu)
                 {
                     sb.Begin();
@@ -990,11 +976,11 @@ namespace thegame
                 {
                     switch (this.selected)
                     {
-                        case 2:
+                        case gameState.AutumnLevel:
                             sb.Begin();
                             sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
                             Textures.btnPlay.Draw(sb);
                             Textures.btnMenu.Draw(sb);
@@ -1002,11 +988,11 @@ namespace thegame
                             sb.End();
                             break;
 
-                        case 8:
+                        case gameState.WinterLevel:
                             sb.Begin();
                             sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
                             Textures.btnPlay.Draw(sb);
                             Textures.btnMenu.Draw(sb);
@@ -1021,13 +1007,13 @@ namespace thegame
                 {
                     switch (this.selected)
                     {
-                        case 2:
+                        case gameState.AutumnLevel:
                             sb.Begin();
                             Rectangle rec = new Rectangle(0, 0, 800, 530);
 
                             sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
                             if (language == "english")
                             {
@@ -1039,7 +1025,7 @@ namespace thegame
                             }
                             else if (language == "french")
                             {
-                                scoreDisplay.Draw(sb, "Fini, trop balaise.", new Vector2(50, 100), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Fini, trop balèze.", new Vector2(50, 100), Color.Black, "42");
                                 scoreDisplay.Draw(sb, "Ton Score est de : " + score + ".", new Vector2(50, 150), Color.Black, "osef");
                                 scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
                                 scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
@@ -1047,22 +1033,22 @@ namespace thegame
                             }
                             else
                             {
-                                scoreDisplay.Draw(sb, "Dsl je parle pas neerlandais :P", new Vector2(190, 100), Color.Black, "42");
-                                //scoreDisplay.Draw(sb, "Ton Score est de :" + score + "et un bonus de" + nb_nuts + "noisettes", new Vector2(50, 150), Color.Black, "osef");
-                                //scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
-                                //scoreDisplay.Draw(sb, "Autres trucs au besoin", new Vector2(50, 250), Color.Black, "42");
-                                //scoreDisplay.Draw(sb, "Appuyer sur Space", new Vector2(50, 300), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Goed gedaan jochie!", new Vector2(190, 100), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Je score is :" + score + "en een bonus van " + nb_nuts + "hazelnoten", new Vector2(50, 150), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Bonus : " + nb_nuts + ".", new Vector2(50, 200), Color.Black, "osef");
+                                scoreDisplay.Draw(sb, "Andere dingen", new Vector2(50, 250), Color.Black, "42");
+                                scoreDisplay.Draw(sb, "Druk op de spatie balk", new Vector2(50, 300), Color.Black, "osef");
                             }
                             sb.End();
                             break;
 
-                        case 8:
+                        case gameState.WinterLevel:
                             sb.Begin();
                             rec = new Rectangle(0, 0, 800, 530);
 
                             sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
                             if (language == "english")
                             {
@@ -1097,13 +1083,13 @@ namespace thegame
                 {
                     switch (this.selected)
                     {
-                        case 2:
+                        case gameState.AutumnLevel:
                             sb.Begin();
                             Rectangle rec = new Rectangle(0, 0, 800, 530);
 
                             sb.Draw(Textures.background, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_autumn_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
                             scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
                             scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
@@ -1112,13 +1098,13 @@ namespace thegame
                             sb.End();
                             break;
 
-                        case 8:
+                        case gameState.WinterLevel:
                             sb.Begin();
                             rec = new Rectangle(0, 0, 800, 530);
 
                             sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.ground_winter_texture, new Vector2(790, 405), Color.White);
+                            sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
+                            sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
                             scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
                             scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
@@ -1132,7 +1118,7 @@ namespace thegame
                 {
                     switch (this.selected)
                     {
-                        case 2:
+                        case gameState.AutumnLevel:
                             sb.Begin();
                             // Makes the background move slower than the camera to create an effect of depth.
                             sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
@@ -1156,7 +1142,7 @@ namespace thegame
 
                             // Draw ground image
                             for (int truc = 0; truc < 9; truc++)
-                                Ground.Draw(sb, new Vector2(truc * Textures.ground_autumn_texture.Width, 355));
+                                Ground.Draw(sb, new Vector2(truc * Textures.autumn_ground_texture.Width, 355));
 
                             // Draw the platforms
                             foreach (Rectangle top in blocks)
@@ -1222,7 +1208,7 @@ namespace thegame
                                 GameOverAnimation(sb, transparencyAnimation);
                             break;
 
-                        case 8:
+                        case gameState.WinterLevel:
                             sb.Begin();
                             // Makes the background move slower than the camera to create an effect of depth.
                             sb.Draw(Textures.winterBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
@@ -1246,7 +1232,7 @@ namespace thegame
 
                             // Draw ground image
                             for (int truc = 0; truc < 9; truc++)
-                                Ground.Draw(sb, new Vector2(truc * Textures.ground_winter_texture.Width, 355));
+                                Ground.Draw(sb, new Vector2(truc * Textures.winter_ground_texture.Width, 355));
 
                             // Draw the platforms
                             foreach (Rectangle top in blocks)

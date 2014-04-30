@@ -189,8 +189,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Autumn_Background9.png">
-      <Name>Autumn_Background9</Name>
+    <Compile Include="Autumn_Background.png">
+      <Name>Autumn_Background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -217,8 +217,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Autumn_Ground2.png">
-      <Name>Autumn_Ground2</Name>
+    <Compile Include="Autumn_Ground.png">
+      <Name>Autumn_Ground</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -294,15 +294,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tree_winter.png">
-      <Name>tree_winter</Name>
+    <Compile Include="tree_winter_entrance.png">
+      <Name>tree_winter_entrance</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Winter_Background-01.png">
-      <Name>Winter_Background-01</Name>
+    <Compile Include="Winter_Background.png">
+      <Name>Winter_Background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -310,6 +310,27 @@
   <ItemGroup>
     <Compile Include="Tree_test_winter_entrance_inside.png">
       <Name>Tree_test_winter_entrance_inside</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mine_grey.png">
+      <Name>Mine_grey</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tree_winter.png">
+      <Name>Tree_winter</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mine_red.png">
+      <Name>Mine_red</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
