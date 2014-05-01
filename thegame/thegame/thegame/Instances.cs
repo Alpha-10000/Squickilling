@@ -92,6 +92,8 @@ namespace thegame
         private bool SoundIsTrue;       // Set to true to switch the sound (on / off)
         private Drawable tree;
         private Drawable tree_autumn_entrance_inside;
+        private Drawable tree_autumn_exit;
+        private Drawable tree_autumn_exit_inside;
         private Drawable tree_winter_entrance_inside;
         private Drawable Ground;
 
@@ -173,8 +175,6 @@ namespace thegame
                     
                     };
                     break;
-
-
 
                 case "french":
                     Text_Game = new Dictionary<string, string>()
@@ -431,7 +431,7 @@ namespace thegame
                 }
 
                 // ES :  I have moved the fullscreen toggle to the option menu.
-                //       This is section is no longer active.
+                //       This section is no longer active.
                 else if (selected == gameState.FullscreenMenu) // FULLSCREEN SETTINGS
                 {
                     switch ((execute as Menu).selected)
@@ -490,7 +490,6 @@ namespace thegame
                         help = true;
                     }
 
-
                     if ((execute as Perso).positionPerso.X > 5350)
                     {
                         endLevel = true;
@@ -504,7 +503,6 @@ namespace thegame
                     }
                     else if (!pause && !help && !endLevel)
                     {
-
                         int checkBlood = 0;
 
                         foreach (Perso iathings in iaPerso)
@@ -532,7 +530,6 @@ namespace thegame
                             }
                             if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
                                 drawBloodScreen = true;
-
                         }
 
                         if (touchedByBomb)//fait clignoter le perso
@@ -904,6 +901,8 @@ namespace thegame
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
                     tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
+                    tree_autumn_exit = new Drawable(drawable_type.tree_autumn_exit);
+                    tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
                     Ground = new Drawable(drawable_type.AutumnGround);
                     debug = new Drawable(drawable_type.font);
                     scoreDisplay = new Drawable(drawable_type.font);
@@ -1116,6 +1115,7 @@ namespace thegame
                             tree.Draw(sb, new Vector2(3900, 0));
                             tree.Draw(sb, new Vector2(4050, 0));
                             tree.Draw(sb, new Vector2(4900, 0));
+                            tree_autumn_exit.Draw(sb, new Vector2(5000, 0));
 
                             // Draw ground image
                             for (int truc = 0; truc < 9; truc++)
@@ -1145,6 +1145,8 @@ namespace thegame
                             // Draw foreground tree so that squirrel appears to enter the hole
                             //------------------------------------------------------------------
                             tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 0));
+                            tree_autumn_exit_inside.Draw(sb,new Vector2(5000,0));
+                            
 
                             sb.End();
 
