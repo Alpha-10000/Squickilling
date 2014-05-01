@@ -223,8 +223,8 @@ namespace thegame
                                                    {"_mnuOn","Aan"},
                                                    {"_mnuOff","Uit"},
                                                    {"_mnuDutch","Nederlands"},
-                                                   {"_gamePause","Press P to pause"},
-                                                   {"_gameHelp","Press H to get help"},
+                                                   {"_gamePause","Druk P voor pause"},
+                                                   {"_gameHelp","Druk H voor help"},
                                                    {"_gameHealth","Health"},
                                                    {"_gamescore","score"},
                                                    {"_gamebonus","bonus"},
@@ -290,7 +290,7 @@ namespace thegame
                     (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIsTrue);
                 }
 
-                if (this.selected == 0)
+                if (this.selected == gameState.MainMenu)
                 {
                     switch ((execute as Menu).selected)
                     {
@@ -429,39 +429,7 @@ namespace thegame
                             break;
                     }
                 }
-
-                // ES :  I have moved the fullscreen toggle to the option menu.
-                //       This section is no longer active.
-                else if (selected == gameState.FullscreenMenu) // FULLSCREEN SETTINGS
-                {
-                    switch ((execute as Menu).selected)
-                    {
-                        case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
-                            {
-                                if (!Game1.graphics.IsFullScreen)
-                                {
-                                    Game1.graphics.ToggleFullScreen();
-                                }
-                                this.selected = gameState.MainMenu;
-                                Execute();
-                            }
-                            break;
-                        case 1:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF  BUTTON
-                            {
-                                if (Game1.graphics.IsFullScreen)
-                                {
-                                    Game1.graphics.ToggleFullScreen();
-                                }
-                                this.selected = gameState.MainMenu;
-                                Execute();
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                               
                 //------------------------------------------------------------------
                 // ES 15APR14
                 // Moved details of splashscreen handling near the end of this class.
@@ -941,7 +909,6 @@ namespace thegame
 
         public void Display(SpriteBatch sb, GameTime gameTime)
         {
-
             //------------------------------------------------------------------
             // ES 23APR14
             // HOW TO DRAW STATIC VS MOVING SCREEN
@@ -1115,7 +1082,7 @@ namespace thegame
                             tree.Draw(sb, new Vector2(3900, 0));
                             tree.Draw(sb, new Vector2(4050, 0));
                             tree.Draw(sb, new Vector2(4900, 0));
-                            tree_autumn_exit.Draw(sb, new Vector2(5000, 0));
+                            //tree_autumn_exit.Draw(sb, new Vector2(5000, 0));
 
                             // Draw ground image
                             for (int truc = 0; truc < 9; truc++)
@@ -1145,7 +1112,7 @@ namespace thegame
                             // Draw foreground tree so that squirrel appears to enter the hole
                             //------------------------------------------------------------------
                             tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 0));
-                            tree_autumn_exit_inside.Draw(sb,new Vector2(5000,0));
+                            //tree_autumn_exit_inside.Draw(sb,new Vector2(5000,0));
                             
 
                             sb.End();

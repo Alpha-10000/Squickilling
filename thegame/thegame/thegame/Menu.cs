@@ -59,6 +59,10 @@ namespace thegame
             int i = 0;
             int x = 0;
             int y = 0;
+
+            // Draw Menu Background Here
+            sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
+
             while (i < this.pos_tab && tab[i] != null)
             {
                 this.Draw(sb, tab[i], new Vector2(100 + x, 200 + y), color_tab[i], "normal");

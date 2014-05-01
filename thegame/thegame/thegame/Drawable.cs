@@ -9,6 +9,7 @@ namespace thegame
 {
     public enum drawable_type
     {
+        menu_main_page,
         Plateform_default,
         autumnBuche,
         winterBuche,
@@ -42,6 +43,9 @@ namespace thegame
         {
             switch (drawable_t)
             {
+                case drawable_type.menu_main_page:
+                    image = Textures.menu_main_page;
+                    break;
                 case drawable_type.Plateform_default:
                     image = Textures.plateform_texture;
                     break;
