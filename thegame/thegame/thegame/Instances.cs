@@ -800,11 +800,8 @@ namespace thegame
                                 if (y == tilemap.GetLength(0) - 1)
                                     h = 345;
                                 else
-                                    h = y * Textures.buche_texture_winter.Height - 73;
-                                int minePosX = x * Textures.buche_texture_winter.Width;
-                                minePosX += (Textures.buche_texture_winter.Width / 2)-(Textures.mine_grey.Width/2);
-                                int minePosY = y * Textures.buche_texture_winter.Height - 95;
-                                bomb.Add(new Bomb(new Rectangle(minePosX, minePosY, Textures.mine_grey.Width, Textures.mine_grey.Height)));
+                                    h = y * Textures.buche_texture.Height - 73;
+                                bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
@@ -1167,24 +1164,24 @@ namespace thegame
                             sb.End();
 
                             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            tree.Draw(sb, new Vector2(-100, 0));
-                            tree.Draw(sb, new Vector2(500, 0));
-                            tree.Draw(sb, new Vector2(400, 0));
-                            tree.Draw(sb, new Vector2(900, 0));
-                            tree.Draw(sb, new Vector2(1050, 0));
-                            tree.Draw(sb, new Vector2(1400, 0));
-                            tree.Draw(sb, new Vector2(1800, 0));
-                            tree.Draw(sb, new Vector2(2200, 0));
-                            tree.Draw(sb, new Vector2(2400, 0));
-                            tree.Draw(sb, new Vector2(3000, 0));
-                            tree.Draw(sb, new Vector2(3400, 0));
-                            tree.Draw(sb, new Vector2(3900, 0));
-                            tree.Draw(sb, new Vector2(4050, 0));
-                            tree.Draw(sb, new Vector2(4900, 0));
+                            tree.Draw(sb, new Vector2(-100, 10));
+                            tree.Draw(sb, new Vector2(500,  10));
+                            tree.Draw(sb, new Vector2(400,  10));
+                            tree.Draw(sb, new Vector2(900,  10));
+                            tree.Draw(sb, new Vector2(1050, 10));
+                            tree.Draw(sb, new Vector2(1400, 10));
+                            tree.Draw(sb, new Vector2(1800, 10));
+                            tree.Draw(sb, new Vector2(2200, 10));
+                            tree.Draw(sb, new Vector2(2400, 10));
+                            tree.Draw(sb, new Vector2(3000, 10));
+                            tree.Draw(sb, new Vector2(3400, 10));
+                            tree.Draw(sb, new Vector2(3900, 10));
+                            tree.Draw(sb, new Vector2(4050, 10));
+                            tree.Draw(sb, new Vector2(4900, 10));
 
                             // Draw ground image
                             for (int truc = 0; truc < 9; truc++)
-                                Ground.Draw(sb, new Vector2(truc * Textures.winter_ground_texture.Width, 355));
+                                Ground.Draw(sb, new Vector2(truc * Textures.winter_ground_texture.Width, 345));
 
                             // Draw the platforms
                             foreach (Rectangle top in blocks)
@@ -1284,7 +1281,10 @@ namespace thegame
                 if (elapsedTimeBloodScreen < 50)
                 {
                     int positionX = (int)(execute as Perso).positionPerso.X - 400;
-                    sb.Draw(Textures.hitbox, new Rectangle(positionX, 0, 1100, 550), Color.Red * 0.5f);
+                    float correction = 0;
+                    if (positionX + 400 >= 5000)
+                        correction = 600;
+                    sb.Draw(Textures.hitbox, new Rectangle(positionX - 20 - (int)correction, -20, 1800, 650), Color.Red * 0.5f);
                 }
                 else
                 {
