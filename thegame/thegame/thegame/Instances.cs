@@ -423,9 +423,12 @@ namespace thegame
                         Textures.btnPlay.isClicked = false;
                         Textures.btnMenu.isClicked = false;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.H))
+                    else if (Keyboard.GetState().IsKeyDown(Keys.H) && !oldkey.IsKeyDown(Keys.H))
                     {
-                        help = true;
+                        if (help)
+                            help = false;
+                        else
+                            help = true;
                     }
 
                     if ((execute as Perso).positionPerso.X > 5350)
@@ -1265,6 +1268,7 @@ namespace thegame
             }
 
         }
+
 
         private void HandleSplashScreen(KeyboardState keyboardstate, MouseState mouse1)
         {
