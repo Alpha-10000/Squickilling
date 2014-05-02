@@ -89,7 +89,7 @@ namespace thegame
         // TODO: Should score stay here or should it be elsewhere?
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
-        private bool SoundIsTrue;       // Set to true to switch the sound (on / off)
+        private bool SoundIs;       // Set to true to switch the sound (on / off)
         private Drawable tree;
         private Drawable tree_autumn_entrance_inside;
         private Drawable tree_autumn_exit;
@@ -265,7 +265,7 @@ namespace thegame
 
             this.game = game;
 
-            SoundIsTrue = true;
+            SoundIs = true;
             this.selected = gameState.SplashScreen;
             Init_Game();
             this.Execute();
@@ -287,7 +287,7 @@ namespace thegame
             {
                 if (curGameMode == instances_type.Menu)// MENU
                 {
-                    (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIsTrue);
+                    (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIs);
                 }
 
                 if (this.selected == gameState.MainMenu)
@@ -350,8 +350,8 @@ namespace thegame
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // SOUND SETTINGS
                             {
                                 //this.selected = 4;
-                                SoundIsTrue = !SoundIsTrue;
-                                if (SoundIsTrue)
+                                SoundIs = !SoundIs;
+                                if (SoundIs)
                                     (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"; //sound on
                                 else
                                     (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")"; // sound off
@@ -412,7 +412,7 @@ namespace thegame
                         case 0:
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
                             {
-                                SoundIsTrue = true;
+                                SoundIs = true;
                                 this.selected = gameState.MainMenu;
                                 Execute();
                             }
@@ -420,7 +420,7 @@ namespace thegame
                         case 1:
                             if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF BUTTON
                             {
-                                SoundIsTrue = false;
+                                SoundIs = false;
                                 this.selected = gameState.MainMenu;
                                 Execute();
                             }
@@ -652,7 +652,7 @@ namespace thegame
 
             if (Developpermode)
             {
-                SoundIsTrue = false;
+                SoundIs = false;
                 developperXMouse = mouse1.X;
                 developperYMouse = mouse1.Y;
                 if (getkey.Contains(Keys.C) && !developperCoord)
@@ -697,7 +697,7 @@ namespace thegame
 
                     //(execute as Menu).AddElements(Text_Game[8]);//sound
                     //      Next section modifies text on sound mode.
-                    if (SoundIsTrue)
+                    if (SoundIs)
                         (execute as Menu).AddElements(Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"); //sound on
                     else
                         (execute as Menu).AddElements((Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")")); // sound off
@@ -883,7 +883,7 @@ namespace thegame
 
         public void Sound(string type)
         {
-            if (SoundIsTrue)
+            if (SoundIs)
                 if (type == "menu")
                     Textures.buttonSound_Effect.Play();
                 else

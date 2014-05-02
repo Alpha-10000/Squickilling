@@ -27,7 +27,9 @@ namespace thegame
         game_over_vid,
         health,
         Nut,
-        Acorn
+        Acorn,
+        mine_grey,
+        mine_red
     }
 
     public class Drawable
@@ -95,6 +97,9 @@ namespace thegame
                     break;
                 case drawable_type.health:
                     image = Textures.healthBar_texture;
+                    break;
+                case drawable_type.mine_grey:
+                    image = Textures.mine_grey;
                     break;
                default:
                     image = null;

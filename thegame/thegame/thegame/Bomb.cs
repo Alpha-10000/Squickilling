@@ -14,6 +14,8 @@ namespace thegame
 {
     class Bomb
     {
+        private Drawable mine_grey = new Drawable(drawable_type.mine_grey);
+
         public Rectangle Object;
         private int x;
         private int y;
@@ -72,7 +74,8 @@ namespace thegame
             }
             else
             {
-                sb.Draw(Textures.hitbox, Object, Color.Gray);
+                //sb.Draw(Textures.hitbox, Object, Color.Gray);
+                mine_grey.Draw(sb, new Vector2(x, y));
             }
         }
     }
