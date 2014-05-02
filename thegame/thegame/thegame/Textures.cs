@@ -67,7 +67,7 @@ namespace thegame
             mario_texture = cm.Load<Texture2D>(@"mario");
             eraser = cm.Load<Texture2D>(@"erase");
             hitbox = cm.Load<Texture2D>(@"blank");
-            menu_main_page = cm.Load<Texture2D>(@"Menu_Page");
+            menu_main_page = cm.Load<Texture2D>(@"Menu_Main_Page");
             font_texture = cm.Load<SpriteFont>(@"FPS");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             fonthelp_texture = cm.Load<SpriteFont>(@"fontHelp");
