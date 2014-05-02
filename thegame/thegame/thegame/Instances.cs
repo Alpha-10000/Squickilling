@@ -228,15 +228,15 @@ namespace thegame
                                                    {"_gameHealth","Health"},
                                                    {"_gamescore","score"},
                                                    {"_gamebonus","bonus"},
-                                                   {"_gameHelpLine1","Use the left and right arrow to move the character"},
-                                                   {"_gameHelpLine2","Use the top arrow to jump"},
-                                                   {"_gameHelpLine3","To fire on ennemies use the space bar"},
-                                                   {"_gameHelpLine4","Press any key to exit"},
-                                                   {"congrats","Yeah, end of the level, so badass..."},
-                                                   {"finalScore","Your Score is : "},
-                                                   {"finalBonus","Bonus Score : "},
-                                                   {"total","Total : "},
-                                                   {"space","Press Space key"}
+                                                   {"_gameHelpLine1","Cursor links en rechts om te bewegen"},
+                                                   {"_gameHelpLine2","Cursor omhoog om te springen"},
+                                                   {"_gameHelpLine3","Spaciebalk om te schieten"},
+                                                   {"_gameHelpLine4","Druk een willekeurige om werder te spelen"},
+                                                   {"congrats","Geweldig! Je hebt het level gehaald"},
+                                                   {"finalScore","Je score is : "},
+                                                   {"finalBonus","Bonus score : "},
+                                                   {"total","Totaal : "},
+                                                   {"space","Druk spacie balk"}
                     };
                     break;
             }
