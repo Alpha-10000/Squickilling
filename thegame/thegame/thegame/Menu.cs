@@ -23,7 +23,7 @@ namespace thegame
     public class Menu : Drawable
     {
         public bool MenuBool = true;
-        public string[] tab { get; private set; }       // C'est quoi???? Ya quoi dedans????
+        public string[] tab { get; private set; } //nom des élements du menu
         public int size { get; private set; }
         public int pos_tab { get; private set; }
         public Color[] color_tab { get; private set; }
@@ -31,6 +31,14 @@ namespace thegame
         public Color defaultColor { get; private set; }
         public string Text { get; private set; }
 
+        private List<Rectangle> AreaListMouse = new List<Rectangle>();//List that contains rectangle for text element in order to detect the mouse
+        private int x = 100;
+        private int y = 200;
+
+        private bool useMouse = false;
+        private Point mouseLocation;
+
+        public bool IChooseSomething = false;
 
         public Menu(int size, string Text)
             : base(drawable_type.font)
@@ -52,53 +60,104 @@ namespace thegame
             else
                 this.color_tab[pos_tab] = defaultColor;
             this.pos_tab++;
+
+            int width = (int)Textures.font_texture.MeasureString(Text).X;
+            int height = Textures.font_texture.LineSpacing + 5;
+            AreaListMouse.Add(new Rectangle(x, y, width, height));
+
+            x = 70 + x;
+            y = 60 + y;
+            
         }
 
-        public void Display(SpriteBatch sb)
+        public void Display(SpriteBatch sb, bool developperMode)
         {
             int i = 0;
-            int x = 0;
-            int y = 0;
+            int x = 100;
+            int y = 200;
 
             // Draw Menu Background Here
             sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
 
             while (i < this.pos_tab && tab[i] != null)
             {
-                this.Draw(sb, tab[i], new Vector2(100 + x, 200 + y), color_tab[i], "normal");
+                this.Draw(sb, tab[i], new Vector2(x,y), color_tab[i], "normal");
                 x = 70 + x;
                 y = 60 + y;
                 i++;
             }
 
             this.Draw(sb, Text, new Vector2(50, 60), Color.Black, "titre");
+            if(developperMode)
+                foreach (Rectangle dessine in AreaListMouse)
+                    sb.Draw(Textures.hitbox, dessine, Color.White * 0.5f);
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool SoundIsTrue)
+        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool SoundIsTrue, MouseState mouse, MouseState oldMouse)
         {
-            if (keyboardState.IsKeyDown(Keys.Down) && !oldkey.IsKeyDown(Keys.Down))
-            {
-                if (this.selected < this.color_tab.Length - 1)
-                {
-                    this.selected++;
-                    this.color_tab[this.selected] = Color.Blue;
-                    this.color_tab[this.selected - 1] = this.defaultColor;
-                    if (SoundIsTrue)
-                        Textures.buttonSound_Effect.Play();
-                }
-            }
+            
+            mouseLocation = new Point(mouse.X, mouse.Y);
+            bool MouseOnSOmething = false;
 
-            if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
+            if (mouse != oldMouse)
+                useMouse = true;
+
+            if (oldkey != keyboardState)
+                useMouse = false;
+
+            int index = 0;
+
+            if (useMouse)
             {
-                if (this.selected >= 1)
+                foreach (Rectangle check in AreaListMouse)
+                    if (check.Contains(mouseLocation))
+                    {
+                        index = AreaListMouse.FindIndex(x => x == check);
+                        MouseOnSOmething = true;
+                        if (mouse.LeftButton == ButtonState.Pressed && mouse != oldMouse)
+                            IChooseSomething = true;
+                        break;
+                    }
+
+                if (MouseOnSOmething)
                 {
-                    this.color_tab[this.selected] = this.defaultColor;
-                    this.selected--;
-                    this.color_tab[this.selected] = Color.Blue;
-                    if (SoundIsTrue)
-                        Textures.buttonSound_Effect.Play();
+                    for (int i = 0; i < color_tab.GetLength(0); i++)
+                        color_tab[i] = defaultColor;
+                    color_tab[index] = Color.Blue;
+                    this.selected = index;
                 }
             }
+            else
+            {
+
+
+                if (keyboardState.IsKeyDown(Keys.Down) && !oldkey.IsKeyDown(Keys.Down))
+                {
+                    if (this.selected < this.color_tab.Length - 1)
+                    {
+                        this.selected++;
+                        this.color_tab[this.selected] = Color.Blue;
+                        this.color_tab[this.selected - 1] = this.defaultColor;
+                        if (SoundIsTrue)
+                            Textures.buttonSound_Effect.Play();
+                    }
+                }
+
+                if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
+                {
+                    if (this.selected >= 1)
+                    {
+                        this.color_tab[this.selected] = this.defaultColor;
+                        this.selected--;
+                        this.color_tab[this.selected] = Color.Blue;
+                        if (SoundIsTrue)
+                            Textures.buttonSound_Effect.Play();
+                    }
+                }
+
+                if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                    IChooseSomething = true;
+            }   
         }
     }
 }

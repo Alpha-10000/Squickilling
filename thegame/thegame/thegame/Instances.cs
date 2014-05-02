@@ -53,6 +53,8 @@ namespace thegame
 
         KeyboardState keyboardState;        // Used to manage the keyboard input.
         KeyboardState oldkey;
+        MouseState OldMouse;
+        MouseState mouse1;
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
@@ -276,7 +278,9 @@ namespace thegame
         {
             oldkey = keyboardState;
             keyboardState = Keyboard.GetState();
-            MouseState mouse1 = Mouse.GetState();
+
+            OldMouse = mouse1;
+            mouse1 = Mouse.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
@@ -287,53 +291,39 @@ namespace thegame
             {
                 if (curGameMode == instances_type.Menu)// MENU
                 {
-                    (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIs);
+                    (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIs, mouse1, OldMouse);
                 }
 
-                if (this.selected == gameState.MainMenu)
+                if (this.selected == gameState.MainMenu && (execute as Menu).IChooseSomething)
                 {
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // START GAME
-                            {
                                 (execute as Menu).MenuBool = false;
                                 this.curGameMode = instances_type.Game;
                                 this.selected = gameState.AutumnLevel;
                                 Execute();
-                            }
                             break;
                         case 1:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OPTIONS SETTINGS
-                            {
                                 this.selected = gameState.OptionMenu;
                                 Execute();
-                            }
                             break;
                         case 2:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // EXIT GAME
-                            {
                                 game.Exit();
-                            }
                             break;
                         default:
                             break;
                     }
                 }
-                else if (selected == gameState.OptionMenu) // OPTION PANNEL
+                else if (selected == gameState.OptionMenu && (execute as Menu).IChooseSomething) // OPTION PANNEL
                 {
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE SETTINGS
-                            {
                                 this.selected = gameState.LanguageMenu;
                                 Execute();
-                            }
                             break;
                         case 1:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // FUllSCREEN
-                            {
                                 //this.selected = 5;
                                 Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
                                 Game1.graphics.ToggleFullScreen();
@@ -343,87 +333,67 @@ namespace thegame
                                     (execute as Menu).tab[1] = Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOn"] + ")"; //fullscreen on
                                 else
                                     (execute as Menu).tab[1] = Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOff"] + ")"; //fullscreen off
-                            }
+                                (execute as Menu).IChooseSomething = false;
                             break;
 
                         case 2:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // SOUND SETTINGS
-                            {
                                 //this.selected = 4;
                                 SoundIs = !SoundIs;
                                 if (SoundIs)
                                     (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"; //sound on
                                 else
                                     (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")"; // sound off
-                            }
+                                (execute as Menu).IChooseSomething = false;
                             break;
                         case 3:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // GO BACK
-                            {
                                 this.selected = gameState.MainMenu;
                                 Execute();
-                            }
                             break;
                         default:
                             break;
                     }
                 }
-                else if (selected == gameState.LanguageMenu) // LANGUAGE SETTINGS
+                else if (selected == gameState.LanguageMenu && (execute as Menu).IChooseSomething) // LANGUAGE SETTINGS
                 {
 
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 1
-                            {
                                 GetText("english");
                                 language = "english";
                                 this.selected = 0;
                                 Execute();
-                            }
                             break;
                         case 1:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // LANGUAGE 2
-                            {
                                 GetText("french");
                                 language = "french";
                                 this.selected = 0;
                                 Execute();
-                            }
                             break;
                         case 2:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
-                            {
                                 GetText("nederlands");
                                 language = "nederlands";
                                 this.selected = 0;      // This takes it to the first menu page
                                 Execute();
-                            }
                             break;
                         default:
                             break;
                     }
                 }
-                else if (selected == gameState.SoundMenu) // SOUND SETTINGS
+                else if (selected == gameState.SoundMenu && (execute as Menu).IChooseSomething) // SOUND SETTINGS
                 {
 
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // ON BUTTON
-                            {
                                 SoundIs = true;
                                 this.selected = gameState.MainMenu;
                                 Execute();
-                            }
                             break;
                         case 1:
-                            if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter)) // OFF BUTTON
-                            {
                                 SoundIs = false;
                                 this.selected = gameState.MainMenu;
                                 Execute();
-                            }
                             break;
                         default:
                             break;
@@ -441,7 +411,7 @@ namespace thegame
                     (execute as DevelopperMap).UpdateMap(keyboardState, gametime, mouse1);
                 }
 
-                else // THIS IS THE GAME 
+                else if (selected == gameState.AutumnLevel || selected == gameState.WinterLevel || selected == gameState.SummerLevel || selected == gameState.SpringLevel)// THIS IS THE GAME 
                 {
 
                     if (Developpermode)//just a little something for us
@@ -926,7 +896,7 @@ namespace thegame
                 if (curGameMode == instances_type.Menu)
                 {
                     sb.Begin();
-                    (execute as Menu).Display(sb);
+                    (execute as Menu).Display(sb, Developpermode);
                     sb.End();
                 }
                 else if (curGameMode == instances_type.MapDevelopper)
