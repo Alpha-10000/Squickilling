@@ -788,9 +788,12 @@ namespace thegame
                     for (int x = 0; x < mapSizeX; x++)
                         for (int y = 0; y < mapSizeY; y++)
                             if (tilemap[y, x] == 1)
-                                blocks.Add(new Rectangle(x * Textures.buche_texture_winter.Width, y * Textures.buche_texture_winter.Height - 95, Textures.buche_texture_winter.Width, Textures.buche_texture_winter.Height));
+                                blocks.Add(new Rectangle(x * Textures.buche_texture_winter.Width,
+                                                         y * Textures.buche_texture_winter.Height - 95,
+                                                         Textures.buche_texture_winter.Width, Textures.buche_texture_winter.Height));
                             else if (tilemap[y, x] == 2)
-                                objects.Add(new Rectangle(x * Textures.buche_texture_winter.Width + 50, y * Textures.buche_texture_winter.Height - 86, 10, 10));
+                                objects.Add(new Rectangle(x * Textures.buche_texture_winter.Width + 50,
+                                                          y * Textures.buche_texture_winter.Height - 86, 10, 10));
                             else if (tilemap[y, x] == 3)
                             {
                                 int h;
@@ -798,7 +801,10 @@ namespace thegame
                                     h = 345;
                                 else
                                     h = y * Textures.buche_texture_winter.Height - 73;
-                                bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture_winter.Width + 50, h, 15, 10)));
+                                int minePosX = x * Textures.buche_texture_winter.Width;
+                                minePosX += (Textures.buche_texture_winter.Width / 2)-(Textures.mine_grey.Width/2);
+                                int minePosY = y * Textures.buche_texture_winter.Height - 95;
+                                bomb.Add(new Bomb(new Rectangle(minePosX, minePosY, Textures.mine_grey.Width, Textures.mine_grey.Height)));
                             }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);

@@ -74,8 +74,9 @@ namespace thegame
             }
             else
             {
-                sb.Draw(Textures.hitbox, Object, Color.Gray);
-                //mine_grey.Draw(sb, new Vector2(x, y));
+                //sb.Draw(Textures.hitbox, Object, Color.Gray);
+                // Draw the bomb according to
+                mine_grey.Draw(sb, new Vector2(x, y+2));
             }
         }
     }
