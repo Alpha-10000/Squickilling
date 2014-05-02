@@ -15,6 +15,7 @@ namespace thegame
     class Bomb
     {
         private Drawable mine_grey = new Drawable(drawable_type.mine_grey);
+        private Drawable mine_red = new Drawable(drawable_type.mine_red);
 
         public Rectangle Object;
         private int x;
@@ -74,9 +75,12 @@ namespace thegame
             }
             else
             {
-                //sb.Draw(Textures.hitbox, Object, Color.Gray);
-                // Draw the bomb according to
-                mine_grey.Draw(sb, new Vector2(x, y+2));
+                // Draw the bomb according to x and y. I had to add 2 to y, otherwise it was too high
+                // ES: J'essaye de les faire clignoter, mais ca marche pas...
+                if (gameTime.ElapsedGameTime.Milliseconds < 200)
+                    mine_grey.Draw(sb, new Vector2(x, y + 2));
+                else 
+                    mine_red.Draw(sb, new Vector2(x, y + 2));
             }
         }
     }

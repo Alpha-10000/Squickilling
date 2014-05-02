@@ -315,13 +315,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mine_red.png">
-      <Name>Mine_red</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="tree_winter.png">
       <Name>tree_winter</Name>
       <Importer>TextureImporter</Importer>
@@ -357,6 +350,13 @@
   <ItemGroup>
     <Compile Include="Mine_grey.png">
       <Name>Mine_grey</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mine_red.png">
+      <Name>Mine_red</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -101,6 +101,9 @@ namespace thegame
                 case drawable_type.mine_grey:
                     image = Textures.mine_grey;
                     break;
+                case drawable_type.mine_red:
+                    image = Textures.mine_red;
+                    break;
                default:
                     image = null;
                     break;
