@@ -72,6 +72,7 @@ namespace thegame
         private Dictionary<string, string> Text_Game; // Contains text of menu options
 
         private SoundEffectInstance instancesound;
+        private SoundEffectInstance instancesoundMenu;//sound for the menu
         public static Rectangle vidRectangle;
         public static VideoPlayer vidPlayer, vidPlayer2;
         string language;
@@ -162,6 +163,17 @@ namespace thegame
             testEmitter2.Opacity = 255;
 
             particleComponent.particleEmitterList.Add(testEmitter2);
+
+            instancesoundMenu.Stop();
+
+            instancesound.Stop();
+
+            if (selected == gameState.AutumnLevel)
+                instancesound = Textures.gameSound_Effect.CreateInstance();
+            else
+                instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+
+            instancesound.Play();
         }
 
         /*LANGUAGE OPTION */
@@ -288,6 +300,10 @@ namespace thegame
             instancesound = Textures.gameSound_Effect.CreateInstance();
             instancesound.IsLooped = true;
 
+            instancesoundMenu = Textures.gameSound_EffectMenu.CreateInstance();
+            instancesoundMenu.IsLooped = true;
+
+
             /* DEFAUT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
 
             this.game = game;
@@ -348,6 +364,7 @@ namespace thegame
                         case 0:
                                 (execute as Menu).MenuBool = false;
                                 this.curGameMode = instances_type.Game;
+                                instancesoundMenu.Stop();
                                 this.selected = gameState.AutumnLevel;
                                 Execute();
                             break;
@@ -386,10 +403,17 @@ namespace thegame
                         case 2:
                                 //this.selected = 4;
                                 SoundIs = !SoundIs;
+
                                 if (SoundIs)
+                                {
                                     (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"; //sound on
+                                    instancesoundMenu.Play();
+                                }
                                 else
+                                {
                                     (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")"; // sound off
+                                    instancesoundMenu.Stop();
+                                }
                                 (execute as Menu).IChooseSomething = false;
                             break;
                         case 3:
@@ -914,9 +938,15 @@ namespace thegame
         {
             if (SoundIs)
                 if (type == "menu")
+                {
                     Textures.buttonSound_Effect.Play();
+                    if (instancesoundMenu.State != SoundState.Playing && !Developpermode)
+                        instancesoundMenu.Play();
+                }
                 else
+                {
                     instancesound.Play();
+                }
         }
 
         public void GameOverAnimation(SpriteBatch sb, float transparency)
@@ -1331,7 +1361,6 @@ namespace thegame
                 this.curGameMode = instances_type.Menu;
                 this.selected = 0;
                 Execute();
-                Textures.openingSound_Effect1.Play();
             }
         }
     }

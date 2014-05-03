@@ -44,10 +44,11 @@ namespace thegame
         public static SpriteFont fontTitle_texture;
         public static SpriteFont fonthelp_texture;
 
-        public static Song openingSound_Effect;
-        public static SoundEffect openingSound_Effect1;
+
         public static SoundEffect buttonSound_Effect;
         public static SoundEffect gameSound_Effect;
+        public static SoundEffect gameSound_EffectMenu;
+        public static SoundEffect gameSound_EffectWinter;
         public static SoundEffect gameExplosion_Effect;
         public static SoundEffect gamePunch_Effect;
 
@@ -73,10 +74,10 @@ namespace thegame
             font_texture = cm.Load<SpriteFont>(@"FPS");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             fonthelp_texture = cm.Load<SpriteFont>(@"fontHelp");
-            openingSound_Effect = cm.Load<Song>("audio\\opening");
-            openingSound_Effect1 = cm.Load<SoundEffect>("audio\\opening1");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
-            gameSound_Effect = cm.Load<SoundEffect>("audio\\game");
+            gameSound_Effect = cm.Load<SoundEffect>("audio\\autumn");
+            gameSound_EffectWinter = cm.Load<SoundEffect>("audio\\winter");
+            gameSound_EffectMenu = cm.Load<SoundEffect>("audio\\menu");
             gameExplosion_Effect = cm.Load<SoundEffect>("audio\\explosion");
             gamePunch_Effect = cm.Load<SoundEffect>("audio\\punch");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
