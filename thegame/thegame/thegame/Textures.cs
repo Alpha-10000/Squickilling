@@ -59,6 +59,8 @@ namespace thegame
        
         
         public static Button btnPlay, btnQuit, btnMenu;
+
+        public static Texture2D snowdrop;
         
 
         public static void load(ContentManager cm)
@@ -116,6 +118,9 @@ namespace thegame
             game_overTexture_en = cm.Load<Texture2D>(@"game_over_en");
             game_overTexture_fr = cm.Load<Texture2D>(@"game_over_fr");
             game_overTexture_ne = cm.Load<Texture2D>(@"game_over_ne");
+
+            //Particles
+            snowdrop = cm.Load<Texture2D>("Sprites\\snowdrop");
         }
     }
 }

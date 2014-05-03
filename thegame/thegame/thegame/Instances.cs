@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Data.SqlClient;
 using System.Globalization;
+using X2DPE;
+using X2DPE.Helpers;
 
 namespace thegame
 {
@@ -128,6 +130,13 @@ namespace thegame
         private float developperXMouse;
         private float developperYMouse;
         private bool developperCoord = false;
+        
+
+        public static ParticleComponent particleComponent;
+        Random random;
+        Emitter testEmitter2;
+        bool snow = false;
+        
 
         /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
         private void Init_Game()
@@ -137,6 +146,22 @@ namespace thegame
             drawBloodScreen = false;
             cameraClass.shake = false;
             bomb = new List<Bomb>();
+            random = new Random();
+            
+            testEmitter2 = new Emitter();
+            testEmitter2.Active = false;
+            testEmitter2.TextureList.Add(Textures.snowdrop);
+            testEmitter2.RandomEmissionInterval = new RandomMinMax(64.0d);
+            testEmitter2.ParticleLifeTime = 4000;
+            testEmitter2.ParticleDirection = new RandomMinMax(170);
+            testEmitter2.ParticleSpeed = new RandomMinMax(2.5f);
+            testEmitter2.ParticleRotation = new RandomMinMax(0);
+            testEmitter2.RotationSpeed = new RandomMinMax(0f);
+            testEmitter2.ParticleFader = new ParticleFader(false, true, 800);
+            testEmitter2.ParticleScaler = new ParticleScaler(false, 1.0f);
+            testEmitter2.Opacity = 255;
+
+            particleComponent.particleEmitterList.Add(testEmitter2);
         }
 
         /*LANGUAGE OPTION */
@@ -281,6 +306,7 @@ namespace thegame
 
             OldMouse = mouse1;
             mouse1 = Mouse.GetState();
+           
 
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
@@ -289,6 +315,27 @@ namespace thegame
 
             if (!pause && !game_over_i)
             {
+                if (keyboardState.IsKeyDown(Keys.S))
+                {
+                    snow = !snow;
+                }
+                
+                if (snow)
+                {
+                    particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
+                }
+                if (selected == gameState.WinterLevel)
+                {
+                    particleComponent.particleEmitterList[0].Active = true;
+                }
+
+                Emitter t2 = particleComponent.particleEmitterList[0];
+                t2.Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
+                if (t2.EmittedNewParticle)
+                {
+                    float f = MathHelper.ToRadians(t2.LastEmittedParticle.Direction + 180);
+                    t2.LastEmittedParticle.Rotation = f;
+                }
                 if (curGameMode == instances_type.Menu)// MENU
                 {
                     (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIs, mouse1, OldMouse);
@@ -413,7 +460,7 @@ namespace thegame
 
                 else if (selected == gameState.AutumnLevel || selected == gameState.WinterLevel || selected == gameState.SummerLevel || selected == gameState.SpringLevel)// THIS IS THE GAME 
                 {
-
+                    
                     if (Developpermode)//just a little something for us
                         Health = 20;
 
@@ -540,7 +587,11 @@ namespace thegame
             if (pause)
             {
                 /* Pause menu with keyboard*/
-
+                if (particleComponent.particleEmitterList[0].Active)
+                {
+                    
+                    particleComponent.particleEmitterList[0].Active = false;
+                }
                 if (Textures.btnPlay.isSelected == false && Textures.btnMenu.isSelected == false && Textures.btnQuit.isSelected == false)
                     Textures.btnPlay.isSelected = true;
 
@@ -595,6 +646,8 @@ namespace thegame
 
             if (game_over_i)
             {
+                if (particleComponent.particleEmitterList[0].Active)
+                    particleComponent.particleEmitterList[0].Active = false;
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;

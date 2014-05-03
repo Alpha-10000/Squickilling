@@ -9,7 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Threading;
-
+using X2DPE;
+using X2DPE.Helpers;
 
 namespace thegame
 {
@@ -31,7 +32,9 @@ namespace thegame
 
             width = graphics.PreferredBackBufferWidth;
             height = graphics.PreferredBackBufferHeight;
-    
+
+            Instances.particleComponent = new ParticleComponent(this);
+            this.Components.Add(Instances.particleComponent);
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
         }
