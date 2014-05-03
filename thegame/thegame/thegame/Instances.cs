@@ -148,32 +148,42 @@ namespace thegame
             cameraClass.shake = false;
             bomb = new List<Bomb>();
             random = new Random();
-            
-            testEmitter2 = new Emitter();
-            testEmitter2.Active = false;
-            testEmitter2.TextureList.Add(Textures.snowdrop);
-            testEmitter2.RandomEmissionInterval = new RandomMinMax(64.0d);
-            testEmitter2.ParticleLifeTime = 4000;
-            testEmitter2.ParticleDirection = new RandomMinMax(170);
-            testEmitter2.ParticleSpeed = new RandomMinMax(2.5f);
-            testEmitter2.ParticleRotation = new RandomMinMax(0);
-            testEmitter2.RotationSpeed = new RandomMinMax(0f);
-            testEmitter2.ParticleFader = new ParticleFader(false, true, 800);
-            testEmitter2.ParticleScaler = new ParticleScaler(false, 1.0f);
-            testEmitter2.Opacity = 255;
 
-            particleComponent.particleEmitterList.Add(testEmitter2);
+            if (selected == gameState.WinterLevel)
+            {
+                testEmitter2 = new Emitter();
+                testEmitter2.Active = false;
+                testEmitter2.TextureList.Add(Textures.snowdrop);
+                testEmitter2.RandomEmissionInterval = new RandomMinMax(64.0d);
+                testEmitter2.ParticleLifeTime = 4000;
+                testEmitter2.ParticleDirection = new RandomMinMax(170);
+                testEmitter2.ParticleSpeed = new RandomMinMax(2.5f);
+                testEmitter2.ParticleRotation = new RandomMinMax(0);
+                testEmitter2.RotationSpeed = new RandomMinMax(0f);
+                testEmitter2.ParticleFader = new ParticleFader(false, true, 800);
+                testEmitter2.ParticleScaler = new ParticleScaler(false, 1.0f);
+                testEmitter2.Opacity = 255;
 
+                particleComponent.particleEmitterList.Add(testEmitter2);
+            }
             instancesoundMenu.Stop();
 
             instancesound.Stop();
 
             if (selected == gameState.AutumnLevel)
+            {
                 instancesound = Textures.gameSound_Effect.CreateInstance();
-            else
-                instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+                snow = false;
 
-            instancesound.Play();
+            }
+            else
+            {
+                instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+                snow = true;
+            }
+
+            if(!Developpermode)
+                instancesound.Play();
         }
 
         /*LANGUAGE OPTION */
@@ -331,27 +341,30 @@ namespace thegame
 
             if (!pause && !game_over_i)
             {
-                if (keyboardState.IsKeyDown(Keys.S))
-                {
-                    snow = !snow;
-                }
                 
-                if (snow)
-                {
-                    particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
-                }
                 if (selected == gameState.WinterLevel)
                 {
+                    if (keyboardState.IsKeyDown(Keys.S) && Developpermode)
+                    {
+                        snow = !snow;
+                    }
+
+                    if (snow)
+                    {
+                        particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
+                    }
+
                     particleComponent.particleEmitterList[0].Active = true;
+                    Emitter t2 = particleComponent.particleEmitterList[0];
+                    t2.Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
+                    if (t2.EmittedNewParticle)
+                    {
+                        float f = MathHelper.ToRadians(t2.LastEmittedParticle.Direction + 180);
+                        t2.LastEmittedParticle.Rotation = f;
+                    }
                 }
 
-                Emitter t2 = particleComponent.particleEmitterList[0];
-                t2.Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
-                if (t2.EmittedNewParticle)
-                {
-                    float f = MathHelper.ToRadians(t2.LastEmittedParticle.Direction + 180);
-                    t2.LastEmittedParticle.Rotation = f;
-                }
+               
                 if (curGameMode == instances_type.Menu)// MENU
                 {
                     (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIs, mouse1, OldMouse);
@@ -677,7 +690,6 @@ namespace thegame
                     game_over_i = false;
                     Init_Game();
                     this.curGameMode = instances_type.Game;
-                    this.selected = gameState.AutumnLevel;
                     Execute();
                 }
             }
@@ -714,6 +726,20 @@ namespace thegame
                     curGameMode = instances_type.MapDevelopper;
                     selected = gameState.DeveloperMode;
                     developpermap = true;
+                    Execute();
+                }
+                if(getkey.Contains(Keys.NumPad2))
+                {
+                    Init_Game();
+                    this.curGameMode = instances_type.Game;
+                    selected = gameState.WinterLevel;
+                    Execute();
+                }
+                if (getkey.Contains(Keys.NumPad1))
+                {
+                    Init_Game();
+                    this.curGameMode = instances_type.Game;
+                    selected = gameState.AutumnLevel;
                     Execute();
                 }
             }
