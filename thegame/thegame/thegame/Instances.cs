@@ -936,6 +936,7 @@ namespace thegame
 
         public void Sound(string type)
         {
+            instancesound.Stop();
             if (SoundIs)
                 if (type == "menu")
                 {
