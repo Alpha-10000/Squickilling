@@ -138,13 +138,12 @@ namespace thegame
 
             /* CHECK OBJECT COLLISION WITH HITBOX PERSO. ADD NUTS THEN */
                 for (int j = objects.Count - 1; j >= 0; j--)
-                {
                     if (hitBoxPerso.Intersects(objects[j]))
                     {
                         objects.Remove(objects[j]);
                         nb_nuts++;
+                        break;
                     }
-                }
 
             /* Update list*/
             for (int i = 0; i < projs.Count; i++)

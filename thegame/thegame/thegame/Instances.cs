@@ -86,6 +86,7 @@ namespace thegame
         private List<Projectile> projectiles;
         private List<Rectangle> objects = new List<Rectangle> { };
         private List<Bomb> bomb = new List<Bomb> { };
+        private List<Rectangle> medecines = new List<Rectangle>();
 
         private List<Perso> iaPerso = new List<Perso>();
 
@@ -148,6 +149,7 @@ namespace thegame
             cameraClass.shake = false;
             bomb = new List<Bomb>();
             random = new Random();
+            medecines = new List<Rectangle>();
 
             if (selected == gameState.WinterLevel)
             {
@@ -503,6 +505,19 @@ namespace thegame
                     
                     if (Developpermode)//just a little something for us
                         Health = 20;
+
+
+                 
+
+                    for (int j = medecines.Count - 1; j >= 0; j--)
+                    {
+                        if ((execute as Perso).hitBoxPerso.Intersects(medecines[j]))
+                        {
+                            medecines.Remove(medecines[j]);
+                            Health += 5;
+                            break;
+                        }
+                    }
 
                     if (Keyboard.GetState().IsKeyDown(Keys.P))
                     {
@@ -886,6 +901,15 @@ namespace thegame
                                     h = y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
+                            else if (tilemap[y, x] == 4)
+                            {
+                                int h;
+                                if (y == tilemap.GetLength(0) - 1)
+                                    h = 345;
+                                else
+                                    h = y * Textures.buche_texture.Height - 73;
+                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
+                            }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.winterTree);
@@ -913,11 +937,11 @@ namespace thegame
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,0,0,0,1,1,1,0,1,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,1,1,1,2,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,4,1,1,1,2,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,2,1,0,0,0,3,1,1,0,0,0,0,0,1,2,2,0,1,0,0,0,0,0,0,0,0,1,2,3,1,0,0,0,0,0,2,0,0,0},
                             {0,0,0,0,0,3,1,0,0,3,0,1,2,0,0,1,0,0,1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,1,1,1,0,0,2,0,1,1,0,3,0},
                             {0,0,3,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1},
-                            {0,0,1,2,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
+                            {0,0,1,4,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
                         };
 
                     iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
@@ -950,6 +974,15 @@ namespace thegame
                                 else
                                     h = y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
+                            }
+                            else if (tilemap[y, x] == 4)
+                            {
+                                int h;
+                                if (y == tilemap.GetLength(0) - 1)
+                                    h = 345;
+                                else
+                                    h = y * Textures.buche_texture.Height - 73;
+                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
                             }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
@@ -1214,6 +1247,9 @@ namespace thegame
                             foreach (Bomb dessine in bomb)
                                 dessine.Draw(sb, gameTime);
 
+                            foreach (Rectangle dessine in medecines)
+                                sb.Draw(Textures.hitbox, dessine, Color.Green);
+
                             if (playerActivate)
                                 (execute as Perso).Draw(sb, gameTime); /* Should be execute in the Drawable class */
 
@@ -1305,6 +1341,9 @@ namespace thegame
                             //draw bomb
                             foreach (Bomb dessine in bomb)
                                 dessine.Draw(sb, gameTime);
+
+                            foreach (Rectangle dessine in medecines)
+                                sb.Draw(Textures.hitbox, dessine, Color.Green);
 
                             if (playerActivate)
                                 (execute as Perso).Draw(sb, gameTime);
