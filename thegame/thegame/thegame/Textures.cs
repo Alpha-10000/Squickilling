@@ -107,13 +107,26 @@ namespace thegame
 
             //Intro
             vid = cm.Load<Video>(@"video\\vid");
-           
-            btnPlay = new Button();
-            btnMenu = new Button();
-            btnQuit = new Button();
-            btnPlay.Load(cm.Load<Texture2D>(@"Play"), new Vector2(313, 183));
-            btnMenu.Load(cm.Load<Texture2D>(@"Menu"), new Vector2(318, 253));
-            btnQuit.Load(cm.Load<Texture2D>(@"Quit"), new Vector2(307, 323));
+
+
+            if (Instances.language_pause == "french")
+            {
+                btnPlay = new Button();
+                btnMenu = new Button();
+                btnQuit = new Button();
+                btnPlay.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_fr"), new Vector2(313, 183));
+                btnMenu.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_fr"), new Vector2(318, 253));
+                btnQuit.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_fr"), new Vector2(307, 323));
+            }
+            else 
+            {
+                btnPlay = new Button();
+                btnMenu = new Button();
+                btnQuit = new Button();
+                btnPlay.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_en"), new Vector2(313, 183));
+                btnMenu.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_en"), new Vector2(318, 253));
+                btnQuit.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_en"), new Vector2(307, 323));
+            }
 
             // Game Over
             game_overTexture_en = cm.Load<Texture2D>(@"game_over_en");
@@ -123,5 +136,6 @@ namespace thegame
             //Particles
             snowdrop = cm.Load<Texture2D>("Sprites\\snowdrop");
         }
+
     }
 }

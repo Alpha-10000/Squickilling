@@ -117,6 +117,7 @@ namespace thegame
         private float transparencyAnimation = 0;
         private int Health; //BASIC LEVEL OF PERSO
         public bool pause = false;
+        public static string language_pause;
         public bool game_over_i = false;
         public bool help = false;
         public bool endLevel = false;
@@ -300,11 +301,13 @@ namespace thegame
             {
                 GetText("french");
                 language = "french";
+                language_pause = "french";
             }
             else
             {
                 GetText("english");
                 language = "english";
+                language_pause = "english";
             }
 
             instancesound = Textures.gameSound_Effect.CreateInstance();
@@ -452,18 +455,21 @@ namespace thegame
                         case 0:
                                 GetText("english");
                                 language = "english";
+                                language_pause = "english";
                                 this.selected = 0;
                                 Execute();
                             break;
                         case 1:
                                 GetText("french");
                                 language = "french";
+                                language_pause = "french";
                                 this.selected = 0;
                                 Execute();
                             break;
                         case 2:
                                 GetText("nederlands");
                                 language = "nederlands";
+                                language_pause = "nederlands";
                                 this.selected = 0;      // This takes it to the first menu page
                                 Execute();
                             break;

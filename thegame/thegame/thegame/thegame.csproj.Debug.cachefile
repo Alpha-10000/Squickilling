@@ -47,6 +47,12 @@ Content\Sprites\snowdrop.xnb
 Content\audio\menu.xnb
 Content\audio\autumn.xnb
 Content\audio\winter.xnb
+Content\MenuPause_language\Menu_en.xnb
+Content\MenuPause_language\Menu_fr.xnb
+Content\MenuPause_language\Play_en.xnb
+Content\MenuPause_language\Play_fr.xnb
+Content\MenuPause_language\Quit_en.xnb
+Content\MenuPause_language\Quit_fr.xnb
 Content\video\vid.wmv
 Content\mario.png
 Content\plateforme.png
