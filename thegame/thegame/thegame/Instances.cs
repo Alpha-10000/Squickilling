@@ -612,6 +612,7 @@ namespace thegame
 
                         if (keyboardState.IsKeyDown(Keys.Back)) /* Go to options settings */
                         {
+                            particleComponent.particleEmitterList[0].Active = false;
                             this.selected = 0;
                             instancesound.Stop();
                             this.curGameMode = instances_type.Menu;
