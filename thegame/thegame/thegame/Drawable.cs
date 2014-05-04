@@ -14,6 +14,7 @@ namespace thegame
         autumnBuche,
         winterBuche,
         tree,
+        tree_autumn_entrance,
         tree_autumn_entrance_inside,
         tree_autumn_exit,
         tree_autumn_exit_inside,
@@ -61,6 +62,9 @@ namespace thegame
                     break;
                 case drawable_type.tree:
                     image = Textures.tree_texture;
+                    break;
+                case drawable_type.tree_autumn_entrance:
+                    image = Textures.tree_autumn_entrance;
                     break;
                 case drawable_type.tree_autumn_entrance_inside:
                     image = Textures.tree_autumn_entrance_inside;

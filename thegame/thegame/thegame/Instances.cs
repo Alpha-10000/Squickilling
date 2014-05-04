@@ -97,6 +97,7 @@ namespace thegame
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIs;       // Set to true to switch the sound (on / off)
         private Drawable tree;
+        private Drawable tree_autumn_entrance;
         private Drawable tree_autumn_entrance_inside;
         private Drawable tree_autumn_exit;
         private Drawable tree_autumn_exit_inside;
@@ -997,6 +998,7 @@ namespace thegame
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
+                    tree_autumn_entrance = new Drawable(drawable_type.tree_autumn_entrance);
                     tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
                     tree_autumn_exit = new Drawable(drawable_type.tree_autumn_exit);
                     tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
@@ -1226,7 +1228,7 @@ namespace thegame
                             sb.End();
 
                             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            tree.Draw(sb, new Vector2(-100, 0));
+                            tree_autumn_entrance.Draw(sb, new Vector2(-100, 0));
                             tree.Draw(sb, new Vector2(500, 0));
                             tree.Draw(sb, new Vector2(400, 0));
                             tree.Draw(sb, new Vector2(900, 0));
