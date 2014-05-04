@@ -16,6 +16,7 @@ namespace thegame
     {
         private Drawable mine_grey = new Drawable(drawable_type.mine_grey);
         private Drawable mine_red = new Drawable(drawable_type.mine_red);
+        Animation animationMine;
 
         public Rectangle Object;
         private int x;
@@ -30,7 +31,6 @@ namespace thegame
         public bool checkBlood = true;
 
         private Vector2 currentFrame = Vector2.Zero;
-
         public Bomb(Rectangle Object)
         {
             this.Object = Object;
@@ -38,24 +38,26 @@ namespace thegame
             y = Object.Y;
             width = Object.Width;
             height = Object.Height;
+            animationMine = new Animation(new Vector2(x, y - 1), new Vector2(9, 1));
+            animationMine.AnimationSprite = Textures.animation_mine;
         }
 
         // draw only once the blood screen and health - 5 only once
         public void BloodOnce(ref int health)
         {
-            if(checkBlood)
+            if (checkBlood)
             {
                 health -= 5;
                 checkBlood = false;
             }
         }
-        
+
         public void Draw(SpriteBatch sb, GameTime gameTime)
         {
             if (activateExplosion)
             {
                 elaspedTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (elaspedTime >= 10)
+                if (elaspedTime >= 0)
                 {
                     elaspedTime = 0;
                     currentFrame.X += 64;
@@ -75,13 +77,10 @@ namespace thegame
             }
             else
             {
-                // Draw the bomb according to x and y. I had to add 2 to y, otherwise it was too high
-                // ES: J'essaye de les faire clignoter, mais ca marche pas...
-                if (gameTime.ElapsedGameTime.Milliseconds < 200)
-                    mine_grey.Draw(sb, new Vector2(x, y + 2));
-                else 
-                    mine_red.Draw(sb, new Vector2(x, y + 2));
+                animationMine.Update(gameTime);
+                animationMine.Draw(sb);
             }
         }
     }
 }
+
