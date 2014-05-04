@@ -120,6 +120,11 @@ namespace thegame
                 sb.DrawString(_font, text, pos, color);
             else if (Type == "help")
                 sb.DrawString(_fonthelp, text, pos, color);
+            else if (Type == "menu")
+            {
+                text = text.ToUpper();
+                sb.DrawString(_font, text, pos, color);
+            }
             else
                 sb.DrawString(_fontTitle, text, pos, color);
         }

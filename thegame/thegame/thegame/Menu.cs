@@ -81,7 +81,7 @@ namespace thegame
 
             while (i < this.pos_tab && tab[i] != null)
             {
-                this.Draw(sb, tab[i], new Vector2(x,y), color_tab[i], "normal");
+                this.Draw(sb, tab[i], new Vector2(x,y), color_tab[i], "menu");
                 x = 70 + x;
                 y = 60 + y;
                 i++;
