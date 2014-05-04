@@ -324,7 +324,6 @@ namespace thegame
 
             SoundIs = true;
             this.selected = gameState.SplashScreen;
-            Init_Game();
             this.Execute();
         }
 
