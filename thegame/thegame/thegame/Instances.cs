@@ -336,7 +336,10 @@ namespace thegame
 
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
-                pause = true;
+                if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
+                    pause = true;
+                else
+                    game.Exit();
             }
 
             if (!pause && !game_over_i)
@@ -981,19 +984,40 @@ namespace thegame
 
         public void GameOverAnimation(SpriteBatch sb, float transparency)
         {
-            sb.Begin();
-            Rectangle rec = new Rectangle(0, 0, 800, 530);
-            sb.Draw(Textures.background, Vector2.Zero, Color.White * transparency);
-            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White * transparency);
-            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White * transparency);
+            switch (this.selected)
+            {
+                case gameState.AutumnLevel:
+                    sb.Begin();
+                    Rectangle rec = new Rectangle(0, 0, 800, 530);
+                    sb.Draw(Textures.background, Vector2.Zero, Color.White * transparency);
+                    sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White * transparency);
+                    sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White * transparency);
 
-            if (language == "english")
-                sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
-            else if (language == "french")
-                sb.Draw(Textures.game_overTexture_fr, rec, Color.White * transparency);
-            else
-                sb.Draw(Textures.game_overTexture_ne, rec, Color.White * transparency);
-            sb.End();
+                    if (language == "english")
+                        sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
+                    else if (language == "french")
+                        sb.Draw(Textures.game_overTexture_fr, rec, Color.White * transparency);
+                    else
+                        sb.Draw(Textures.game_overTexture_ne, rec, Color.White * transparency);
+                    sb.End();
+                    break;
+                case gameState.WinterLevel:
+                    sb.Begin();
+                    rec = new Rectangle(0, 0, 800, 530);
+                    sb.Draw(Textures.winter_ground_texture, Vector2.Zero, Color.White * transparency);
+                    sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White * transparency);
+                    sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White * transparency);
+
+                    if (language == "english")
+                        sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
+                    else if (language == "french")
+                        sb.Draw(Textures.game_overTexture_fr, rec, Color.White * transparency);
+                    else
+                        sb.Draw(Textures.game_overTexture_ne, rec, Color.White * transparency);
+                    sb.End();
+                    break;
+            }
+
         }
 
         public void Display(SpriteBatch sb, GameTime gameTime)
