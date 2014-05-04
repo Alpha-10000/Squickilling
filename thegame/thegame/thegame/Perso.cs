@@ -248,7 +248,7 @@ namespace thegame
                     cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
@@ -259,7 +259,7 @@ namespace thegame
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
-            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right))
+            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
             {
                 tempCurrentFrame.Y = 1;
 
@@ -449,7 +449,7 @@ namespace thegame
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 26);
+
 
             if (moveright)
             {
