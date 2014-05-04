@@ -337,7 +337,11 @@ namespace thegame
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
                 if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
+                {
                     pause = true;
+                    Textures.btnPlay.isClicked = false;
+                    Textures.btnMenu.isClicked = false;
+                }
                 else
                     game.Exit();
             }
