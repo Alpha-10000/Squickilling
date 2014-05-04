@@ -385,7 +385,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="MenuPause_language\Menu_en.png">
       <Name>Menu_en</Name>
       <Importer>TextureImporter</Importer>
@@ -420,7 +419,20 @@
       <Name>normal</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
-
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Medecine2.png">
+      <Name>Medecine2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Medecine3.png">
+      <Name>Medecine3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

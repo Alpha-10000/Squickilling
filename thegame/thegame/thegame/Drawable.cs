@@ -29,7 +29,8 @@ namespace thegame
         Nut,
         Acorn,
         mine_grey,
-        mine_red
+        mine_red,
+        medecine
     }
 
     public class Drawable
@@ -105,6 +106,9 @@ namespace thegame
                     break;
                 case drawable_type.mine_red:
                     image = Textures.mine_red;
+                    break;
+                case drawable_type.medecine:
+                    image = Textures.medecine;
                     break;
                default:
                     image = null;

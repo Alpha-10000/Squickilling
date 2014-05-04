@@ -7,12 +7,20 @@ Content\Ground.xnb
 Content\Background.xnb
 Content\nut.xnb
 Content\Paused.xnb
-Content\HealthBar.xnb
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\button.xnb
 Content\audio\game.xnb
 Content\video\vid.xnb
+Content\HealthBar.xnb
+<<<<<<< HEAD
+Content\FPS.xnb
+Content\Title.xnb
+Content\audio\button.xnb
+Content\audio\game.xnb
+Content\video\vid.xnb
+=======
+>>>>>>> f111490bc89cada38cdcdb11725048685c467cfb
 Content\Acorn_test2.xnb
 Content\Tree_autumn_entrance_inside.xnb
 Content\Winter_ground.xnb
@@ -26,34 +34,54 @@ Content\Play.xnb
 Content\Menu.xnb
 Content\Quit.xnb
 Content\erase.xnb
+<<<<<<< HEAD
 Content\audio\explosion.xnb
 Content\audio\punch.xnb
 Content\Autumn_Background.xnb
 Content\Autumn_Ground.xnb
+=======
+Content\fontHelp.xnb
+Content\audio\explosion.xnb
+Content\audio\punch.xnb
+>>>>>>> f111490bc89cada38cdcdb11725048685c467cfb
 Content\Buche_winter_test.xnb
-Content\tree_winter_entrance.xnb
-Content\Winter_Background.xnb
-Content\Tree_test_winter_entrance_inside.xnb
 Content\tree_winter.xnb
+Content\Tree_test_winter_entrance_inside.xnb
+Content\Autumn_Background.xnb
+Content\Autumn_Ground.xnb
+Content\Winter_Background.xnb
+Content\Mine_grey.xnb
+Content\tree_winter_entrance.xnb
+Content\Mine_red.xnb
 Content\Tree_autumn_exit.xnb
 Content\Tree_autumn_exit_inside.xnb
 Content\Menu_Main_Page.xnb
 Content\Menu_Page.xnb
-Content\Mine_grey.xnb
-Content\Mine_red.xnb
 Content\Sprites\fire.xnb
 Content\Sprites\smoke.xnb
+<<<<<<< HEAD
 Content\Sprites\snowdrop.xnb
 Content\audio\menu.xnb
 Content\audio\autumn.xnb
 Content\audio\winter.xnb
+=======
+Content\audio\menu.xnb
+Content\audio\autumn.xnb
+Content\audio\winter.xnb
+Content\normal.xnb
+>>>>>>> f111490bc89cada38cdcdb11725048685c467cfb
 Content\MenuPause_language\Menu_en.xnb
 Content\MenuPause_language\Menu_fr.xnb
 Content\MenuPause_language\Play_en.xnb
 Content\MenuPause_language\Play_fr.xnb
 Content\MenuPause_language\Quit_en.xnb
 Content\MenuPause_language\Quit_fr.xnb
+<<<<<<< HEAD
 Content\normal.xnb
+=======
+Content\Medecine2.xnb
+Content\Medecine3.xnb
+>>>>>>> f111490bc89cada38cdcdb11725048685c467cfb
 Content\video\vid.wmv
 Content\mario.png
 Content\plateforme.png

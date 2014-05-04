@@ -352,7 +352,6 @@ namespace thegame
                     game.Exit();
             }
 
-
             if (!pause && !game_over_i)
             {
                 
@@ -999,7 +998,7 @@ namespace thegame
                                     h = 345;
                                 else
                                     h = y * Textures.buche_texture.Height - 73;
-                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
+                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h-7, Textures.medecine.Width, Textures.medecine.Height));
                             }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
@@ -1266,7 +1265,7 @@ namespace thegame
                                 dessine.Draw(sb, gameTime);
 
                             foreach (Rectangle dessine in medecines)
-                                sb.Draw(Textures.hitbox, dessine, Color.Green);
+                                sb.Draw(Textures.medecine, dessine, Color.White);
 
                             if (playerActivate)
                                 (execute as Perso).Draw(sb, gameTime); /* Should be execute in the Drawable class */
@@ -1361,7 +1360,7 @@ namespace thegame
                                 dessine.Draw(sb, gameTime);
 
                             foreach (Rectangle dessine in medecines)
-                                sb.Draw(Textures.hitbox, dessine, Color.Green);
+                                sb.Draw(Textures.medecine, dessine, Color.White);
 
                             if (playerActivate)
                                 (execute as Perso).Draw(sb, gameTime);
