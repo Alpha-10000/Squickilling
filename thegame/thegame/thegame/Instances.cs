@@ -734,16 +734,24 @@ namespace thegame
                     developpermap = true;
                     Execute();
                 }
-                if(getkey.Contains(Keys.NumPad2))
+                if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
                 {
                     Init_Game();
                     this.curGameMode = instances_type.Game;
                     selected = gameState.WinterLevel;
                     Execute();
                 }
-                if (getkey.Contains(Keys.NumPad1))
+                if (getkey.Contains(Keys.NumPad1) || getkey.Contains(Keys.D1))
                 {
                     Init_Game();
+                    try
+                    {
+                        if (particleComponent.particleEmitterList[0].Active == true)
+                        {
+                            particleComponent.particleEmitterList[0].Active = false;
+                        }
+                    }
+                    catch { }
                     this.curGameMode = instances_type.Game;
                     selected = gameState.AutumnLevel;
                     Execute();
