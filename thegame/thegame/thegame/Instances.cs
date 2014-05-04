@@ -1086,12 +1086,13 @@ namespace thegame
                             sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
                             sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
+                            sb.Draw(Textures.hitbox, new Rectangle(280, 452, 15, 10), Color.Green);
                             Drawable info = new Drawable(drawable_type.font);
                             Drawable ecri = new Drawable(drawable_type.font);
                             ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
                             ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
                             ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
-                            ecri.Draw(sb, "Thibault", new Vector2(525, 470), Color.Black, "normal");
+                            ecri.Draw(sb, "Thibault", new Vector2(535, 470), Color.Black, "normal");
                             ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
                             info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
                             sb.End();

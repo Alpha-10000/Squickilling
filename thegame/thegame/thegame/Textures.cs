@@ -43,6 +43,7 @@ namespace thegame
         public static SpriteFont font_texture;
         public static SpriteFont fontTitle_texture;
         public static SpriteFont fonthelp_texture;
+        public static SpriteFont fontnormal_texture;
 
 
         public static SoundEffect buttonSound_Effect;
@@ -72,6 +73,7 @@ namespace thegame
             hitbox = cm.Load<Texture2D>(@"blank");
             menu_main_page = cm.Load<Texture2D>(@"Menu_Main_Page");
             font_texture = cm.Load<SpriteFont>(@"FPS");
+            fontnormal_texture = cm.Load<SpriteFont>(@"normal");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             fonthelp_texture = cm.Load<SpriteFont>(@"fontHelp");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
