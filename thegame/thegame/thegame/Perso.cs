@@ -211,10 +211,7 @@ namespace thegame
                 vel += acc * dt;// v = u + a*t
                 Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
                 bool check = CheckCollisionTooFar(ref Gravity, blocks, "bottom");
-                if (check)
-                    movedown = false;
-                else
-                    movedown = true;
+                movedown = check ? false : true;
                 positionPerso.Y += Gravity;
             }
 
@@ -442,10 +439,7 @@ namespace thegame
                 vel += acc * dt;// v = u + a*t
                 Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
                 bool check = CheckCollisionTooFar(ref Gravity, blocks, "bottom");
-                if (check)
-                    movedown = false;
-                else
-                    movedown = true;
+                movedown = check ? false : true;
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 

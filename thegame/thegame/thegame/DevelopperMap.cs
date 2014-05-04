@@ -273,30 +273,17 @@ namespace thegame
                         sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width, j * Textures.buche_texture.Height - 95 + Textures.buche_texture.Height, Textures.buche_texture.Width, 1), Color.White * 0.5f);
                     }
                     if (array[i, j] == 1)
-                    {
                         sb.Draw(Textures.buche_texture, new Rectangle(i * Textures.buche_texture.Width, j * Textures.buche_texture.Height - 95, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.Wheat);
-                    }
                     else if (array[i, j] == 2)
-                    {
                         sb.Draw(Textures.nut_texture, new Rectangle(i * Textures.buche_texture.Width + 50, j * Textures.buche_texture.Height - 86, 10, 10), Color.White);
-                    }
                     else if (array[i, j] == 3)
                     {
-                        int h;
-                        if (j == array.GetLength(0) - 1)
-                            h = 345;
-                        else
-                            h = j * Textures.buche_texture.Height - 73;
-
+                        int h = (j == array.GetLength(0) - 1) ? 345 : j * Textures.buche_texture.Height - 73;
                         sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width + 50, h, 15, 10), Color.Gray);
                     }
                     else if (array[i , j] == 4)
                     {
-                        int h;
-                        if (j == array.GetLength(0) - 1)
-                            h = 345;
-                        else
-                            h = j * Textures.buche_texture.Height - 73;
+                        int h = (j == array.GetLength(0) - 1) ? 345 : j * Textures.buche_texture.Height - 73;
                         sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width + 50, h, 15, 10), Color.Green);
                     }
                 }

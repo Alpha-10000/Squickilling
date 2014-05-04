@@ -529,10 +529,7 @@ namespace thegame
                         if ((execute as Perso).hitBoxPerso.Intersects(medecines[j]))
                         {
                             medecines.Remove(medecines[j]);
-                            if (Health <= 15)
-                                Health += 5;
-                            else
-                                Health = 20;
+                            Health += (Health <= 15) ? 5 : (20 - Health);
                         }
 
 
@@ -544,12 +541,7 @@ namespace thegame
                         Textures.btnMenu.isClicked = false;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.H) && !oldkey.IsKeyDown(Keys.H))
-                    {
-                        if (help)
-                            help = false;
-                        else
-                            help = true;
-                    }
+                        help = help ? false : true;
 
                     if ((execute as Perso).positionPerso.X > 5350)
                     {
@@ -912,20 +904,12 @@ namespace thegame
                                                           y * Textures.buche_texture_winter.Height - 86, 10, 10));
                             else if (tilemap[y, x] == 3)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
                             else if (tilemap[y, x] == 4)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
                             }
 
@@ -986,20 +970,12 @@ namespace thegame
                                 objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 86, 10, 10));
                             else if (tilemap[y, x] == 3)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
                             else if (tilemap[y, x] == 4)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h-7, Textures.medecine.Width, Textures.medecine.Height));
                             }
 
