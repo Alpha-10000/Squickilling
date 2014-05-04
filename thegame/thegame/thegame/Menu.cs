@@ -32,11 +32,14 @@ namespace thegame
         public string Text { get; private set; }
 
         private List<Rectangle> AreaListMouse = new List<Rectangle>();//List that contains rectangle for text element in order to detect the mouse
-        private int x = 100;
-        private int y = 200;
+        private List<Rectangle> CenterText = new List<Rectangle>();
+        private int x = 400;
+        private int y = 150;
 
         private bool useMouse = false;
         private Point mouseLocation;
+
+        private Color change_Color = Color.OrangeRed;
 
         public bool IChooseSomething = false;
 
@@ -48,7 +51,7 @@ namespace thegame
             this.pos_tab = 0;
             this.selected = 0;
             color_tab = new Color[this.size];
-            this.defaultColor = Color.Black;
+            this.defaultColor = Color.White;
             this.Text = Text;
         }
 
@@ -56,16 +59,16 @@ namespace thegame
         {
             this.tab[pos_tab] = Text;
             if (selected == pos_tab)
-                this.color_tab[pos_tab] = Color.Blue;
+                this.color_tab[pos_tab] = change_Color;
             else
                 this.color_tab[pos_tab] = defaultColor;
             this.pos_tab++;
 
-            int width = (int)Textures.font_texture.MeasureString(Text).X;
-            int height = Textures.font_texture.LineSpacing + 5;
-            AreaListMouse.Add(new Rectangle(x, y, width, height));
+            int width = (int)Textures.font_texture.MeasureString(Text).X + 25;
+            int height = Textures.font_texture.LineSpacing + 25;
+            AreaListMouse.Add(new Rectangle(0, y - 10, 800, height));
+            CenterText.Add(new Rectangle(x - 10, y - 10, width, height));
 
-            x = 70 + x;
             y = 60 + y;
             
         }
@@ -73,22 +76,33 @@ namespace thegame
         public void Display(SpriteBatch sb, bool developperMode)
         {
             int i = 0;
-            int x = 100;
-            int y = 200;
+            int x = 400;//correspond to the center
+            int y = 150;
+
+            
 
             // Draw Menu Background Here
             if(!Game1.graphics.IsFullScreen)
             sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
+<<<<<<< HEAD
             else sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
+=======
+
+            sb.Draw(Textures.white_tree, new Vector2(195, 100), Color.Black * 0.6f);
+            
+
+>>>>>>> 543d9aa73c8c6f037d48441fe4fab0c45e794046
             while (i < this.pos_tab && tab[i] != null)
             {
-                this.Draw(sb, tab[i], new Vector2(x,y), color_tab[i], "menu");
-                x = 70 + x;
+                this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2,y), color_tab[i], "menu");
                 y = 60 + y;
                 i++;
             }
 
-            this.Draw(sb, Text, new Vector2(50, 60), Color.Black, "titre");
+
+
+            this.Draw(sb, Text, new Vector2(400 - ((int)Textures.fontTitle_texture.MeasureString(Text).X + 25) / 2, 20), Color.Black, "titre");
+
             if(developperMode)
                 foreach (Rectangle dessine in AreaListMouse)
                     sb.Draw(Textures.hitbox, dessine, Color.White * 0.5f);
@@ -124,7 +138,7 @@ namespace thegame
                 {
                     for (int i = 0; i < color_tab.GetLength(0); i++)
                         color_tab[i] = defaultColor;
-                    color_tab[index] = Color.Blue;
+                    color_tab[index] = change_Color;
                     this.selected = index;
                 }
             }
@@ -137,7 +151,7 @@ namespace thegame
                     if (this.selected < this.color_tab.Length - 1)
                     {
                         this.selected++;
-                        this.color_tab[this.selected] = Color.Blue;
+                        this.color_tab[this.selected] = change_Color;
                         this.color_tab[this.selected - 1] = this.defaultColor;
                         if (SoundIsTrue)
                             Textures.buttonSound_Effect.Play();
@@ -150,7 +164,7 @@ namespace thegame
                     {
                         this.color_tab[this.selected] = this.defaultColor;
                         this.selected--;
-                        this.color_tab[this.selected] = Color.Blue;
+                        this.color_tab[this.selected] = change_Color;
                         if (SoundIsTrue)
                             Textures.buttonSound_Effect.Play();
                     }
