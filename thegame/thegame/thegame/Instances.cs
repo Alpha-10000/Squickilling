@@ -124,8 +124,6 @@ namespace thegame
         public bool endLevel = false;
         private bool developpermap = false;
 
-        private float elaspedTimeGetBackHealth = 0;
-        private float timeInSecond_GetOnePoint = 30;//Get back 1 point of life every 30 seconds. 
         MouseState mouse = Mouse.GetState();
 
         public bool Developpermode = false;//this is just for us. Activate the developper mode
@@ -601,12 +599,7 @@ namespace thegame
                         {
                             cameraPos = (execute as Perso).cameraPos;
                             
-                            elaspedTimeGetBackHealth += (float)gametime.ElapsedGameTime.TotalSeconds;
-                            if (elaspedTimeGetBackHealth > timeInSecond_GetOnePoint && Health < 20)
-                            {
-                                Health++;
-                                elaspedTimeGetBackHealth = 0;
-                            }
+                          
 
                             projectiles = new List<Projectile>();
                             (execute as Perso).Update(gametime, keyboardState, oldkey, blocks, projectiles, objects, ref nb_nuts, Developpermode);
