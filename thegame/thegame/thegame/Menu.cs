@@ -36,7 +36,7 @@ namespace thegame
         private int x = 400;
         private int y = 150;
 
-        private int YExcavator = 100;
+        private int YExcavator = 140;
 
         private Color change_Color = Color.OrangeRed;
 
