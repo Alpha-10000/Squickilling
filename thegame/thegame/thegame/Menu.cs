@@ -77,8 +77,9 @@ namespace thegame
             int y = 200;
 
             // Draw Menu Background Here
+            if(!Game1.graphics.IsFullScreen)
             sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
-
+            else sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
             while (i < this.pos_tab && tab[i] != null)
             {
                 this.Draw(sb, tab[i], new Vector2(x,y), color_tab[i], "menu");
