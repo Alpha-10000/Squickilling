@@ -675,7 +675,7 @@ namespace thegame
                         Textures.btnMenu.isSelected = true;
                     }
                 }
-
+                
                 if (Textures.btnPlay.isClicked)
                     pause = false;
 
@@ -1269,7 +1269,7 @@ namespace thegame
                             Bloodscreen(gameTime, sb, cameraClass.Position);
                             sb.End();
                             sb.Begin();
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth, 100), Color.DimGray);//draw panel life + bonus + help + pause
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth+40, 120), Color.DimGray);//draw panel life + bonus + help + pause
 
                             scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
 
