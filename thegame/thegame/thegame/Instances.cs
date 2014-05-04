@@ -498,7 +498,7 @@ namespace thegame
                     if (Developpermode)//just a little something for us
                         Health = 20;
 
-<<<<<<< HEAD
+
 
                  
 
@@ -512,10 +512,9 @@ namespace thegame
                         }
                     }
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.P))
-=======
+
                     if (Keyboard.GetState().IsKeyDown(Keys.P) || keyboardState.IsKeyDown(Keys.Escape))
->>>>>>> 85b18ae20fe877a1a3e58ecd4bcf108f408bca35
+
                     {
                         pause = true;
                         Textures.btnPlay.isClicked = false;
