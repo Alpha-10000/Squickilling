@@ -26,6 +26,7 @@ namespace thegame
         Rectangle eraser = new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height);
         Rectangle bomb = new Rectangle(180, 452, 15, 10);
         Rectangle objectMap = new Rectangle(250, 452, 10, 10);
+        Rectangle medecine = new Rectangle(280, 452, 15, 10);
 
         Rectangle Alpha = new Rectangle(409, 470, 59, 25);
         Rectangle Elise = new Rectangle(470, 470, 55, 25);
@@ -38,6 +39,7 @@ namespace thegame
         bool eraseSelected = false;
         bool bombSelected = false;
         bool objectSelect = false;
+        bool medecineSelect = false;
 
         bool showinfoMail = false;
         bool showError = false;
@@ -85,6 +87,16 @@ namespace thegame
                 eraseSelected = false;
                 bombSelected = false;
                 objectSelect = false;
+                medecineSelect = false;
+            }
+
+            if (medecine.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            {
+                bucheSelected = false;
+                eraseSelected = false;
+                bombSelected = false;
+                objectSelect = false;
+                medecineSelect = true;
             }
 
             if (eraser.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
@@ -93,6 +105,7 @@ namespace thegame
                 eraseSelected = true;
                 bombSelected = false;
                 objectSelect = false;
+                medecineSelect = false;
             }
 
             if (bomb.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
@@ -101,6 +114,7 @@ namespace thegame
                 eraseSelected = false;
                 bombSelected = true;
                 objectSelect = false;
+                medecineSelect = false;
             }
 
             if (objectMap.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
@@ -109,6 +123,7 @@ namespace thegame
                 eraseSelected = false;
                 bombSelected = false;
                 objectSelect = true;
+                medecineSelect = false;
             }
 
             if (Alpha.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
@@ -140,6 +155,7 @@ namespace thegame
                 eraseSelected = false;
                 bombSelected = false;
                 objectSelect = false;
+                medecineSelect = false;
             }
 
             if (bucheSelected && mouse.LeftButton == ButtonState.Pressed)
@@ -150,6 +166,8 @@ namespace thegame
                 UpdateArray(DrawMouseX, DrawMouseY, 3);
             if (objectSelect && mouse.LeftButton == ButtonState.Pressed)
                 UpdateArray(DrawMouseX, DrawMouseY, 2);
+            if (medecineSelect && mouse.LeftButton == ButtonState.Pressed)
+                UpdateArray(DrawMouseX, DrawMouseY, 4);
 
         }
 
@@ -272,6 +290,15 @@ namespace thegame
 
                         sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width + 50, h, 15, 10), Color.Gray);
                     }
+                    else if (array[i , j] == 4)
+                    {
+                        int h;
+                        if (j == array.GetLength(0) - 1)
+                            h = 345;
+                        else
+                            h = j * Textures.buche_texture.Height - 73;
+                        sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width + 50, h, 15, 10), Color.Green);
+                    }
                 }
 
             if(bucheSelected)
@@ -282,6 +309,8 @@ namespace thegame
                 sb.Draw(Textures.hitbox, new Rectangle(DrawMouseX - (15 / 2), DrawMouseY - 5, 15, 10), Color.Gray);
             if (objectSelect)
                 sb.Draw(Textures.nut_texture, new Rectangle(DrawMouseX - (Textures.nut_texture.Width / 2), DrawMouseY - (Textures.nut_texture.Height / 2), Textures.nut_texture.Width, Textures.nut_texture.Height), Color.Gray);
+            if (medecineSelect)
+                sb.Draw(Textures.hitbox, new Rectangle(DrawMouseX - (15 / 2), DrawMouseY - 5, 15, 10), Color.Green);
 
             
 
