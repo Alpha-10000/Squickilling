@@ -5,31 +5,38 @@ Content\tree.xnb
 Content\Buche_test.xnb
 Content\Ground.xnb
 Content\Background.xnb
+Content\Play.xnb
+Content\Menu.xnb
+Content\Quit.xnb
 Content\nut.xnb
 Content\Paused.xnb
 Content\HealthBar.xnb
+<<<<<<< HEAD
 Content\FPS.xnb
 Content\Title.xnb
 Content\audio\button.xnb
 Content\audio\game.xnb
 Content\video\vid.xnb
+=======
+Content\Autumn_Background.xnb
+>>>>>>> fce33ec04fcd967f48c1a80c07b43c366a7304c9
 Content\Acorn_test2.xnb
 Content\Tree_autumn_entrance_inside.xnb
 Content\Winter_ground.xnb
+Content\Autumn_Ground.xnb
 Content\Winter_ground2.xnb
-Content\fontHelp.xnb
 Content\explosion-sprite-sheet-i0.xnb
 Content\game_over_en.xnb
 Content\game_over_fr.xnb
 Content\game_over_ne.xnb
-Content\Play.xnb
-Content\Menu.xnb
-Content\Quit.xnb
 Content\erase.xnb
+<<<<<<< HEAD
 Content\audio\explosion.xnb
 Content\audio\punch.xnb
 Content\Autumn_Background.xnb
 Content\Autumn_Ground.xnb
+=======
+>>>>>>> fce33ec04fcd967f48c1a80c07b43c366a7304c9
 Content\Buche_winter_test.xnb
 Content\tree_winter_entrance.xnb
 Content\Winter_Background.xnb
@@ -42,18 +49,37 @@ Content\Menu_Page.xnb
 Content\Mine_grey.xnb
 Content\Mine_red.xnb
 Content\Sprites\fire.xnb
+<<<<<<< HEAD
 Content\Sprites\smoke.xnb
+=======
+>>>>>>> fce33ec04fcd967f48c1a80c07b43c366a7304c9
 Content\Sprites\snowdrop.xnb
+Content\Sprites\smoke.xnb
+Content\FPS.xnb
+Content\Title.xnb
+Content\fontHelp.xnb
+Content\audio\button.xnb
+Content\audio\game.xnb
+Content\audio\explosion.xnb
+Content\audio\punch.xnb
 Content\audio\menu.xnb
 Content\audio\autumn.xnb
 Content\audio\winter.xnb
+<<<<<<< HEAD
+=======
+Content\video\vid.xnb
+Content\normal.xnb
+>>>>>>> fce33ec04fcd967f48c1a80c07b43c366a7304c9
 Content\MenuPause_language\Menu_en.xnb
 Content\MenuPause_language\Menu_fr.xnb
 Content\MenuPause_language\Play_en.xnb
 Content\MenuPause_language\Play_fr.xnb
 Content\MenuPause_language\Quit_en.xnb
 Content\MenuPause_language\Quit_fr.xnb
+<<<<<<< HEAD
 Content\normal.xnb
+=======
+>>>>>>> fce33ec04fcd967f48c1a80c07b43c366a7304c9
 Content\Medecine2.xnb
 Content\Medecine3.xnb
 Content\video\vid.wmv

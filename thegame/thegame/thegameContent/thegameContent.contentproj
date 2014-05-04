@@ -319,13 +319,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu_Main_Page.png">
-      <Name>Menu_Main_Page</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Menu_Page.png">
       <Name>Menu_Page</Name>
       <Importer>TextureImporter</Importer>
@@ -431,6 +424,13 @@
   <ItemGroup>
     <Compile Include="Medecine3.png">
       <Name>Medecine3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Menu_Main_Page.png">
+      <Name>Menu_Main_Page</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
