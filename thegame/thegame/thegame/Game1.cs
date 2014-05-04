@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Threading;
+using System.Windows.Forms;
 using X2DPE;
 using X2DPE.Helpers;
 
@@ -26,6 +27,8 @@ namespace thegame
         
         public Game1()
         {
+
+
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 520;
             //this.graphics.PreferredBackBufferWidth = 800;
@@ -37,6 +40,10 @@ namespace thegame
             this.Components.Add(Instances.particleComponent);
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
+
+            Application.EnableVisualStyles();
+            Form gameForm = (Form)Form.FromHandle(Window.Handle);
+            gameForm.FormBorderStyle = FormBorderStyle.None;
         }
 
         protected override void Initialize()

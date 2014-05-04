@@ -23,11 +23,15 @@ namespace thegame
         public static Texture2D buche_texture_winter;
         public static Texture2D tree_texture;
         public static Texture2D tree_winter_texture;
+        public static Texture2D tree_autumn_entrance;
         public static Texture2D tree_autumn_entrance_inside;
         public static Texture2D tree_winter_entrance_inside;
         public static Texture2D tree_autumn_exit;
         public static Texture2D tree_autumn_exit_inside;
         public static Texture2D white_tree;
+        public static Texture2D excavatorArm;
+        public static Texture2D SquirrelMenu;
+        public static Texture2D animation_mine;
         
         public static Texture2D autumnBackground;
         public static Texture2D winterBackground;
@@ -94,10 +98,14 @@ namespace thegame
             mine_red = cm.Load<Texture2D>(@"Mine_red");
             medecine = cm.Load<Texture2D>(@"Medecine3");
             white_tree = cm.Load<Texture2D>(@"White_Tree");
+            excavatorArm = cm.Load<Texture2D>(@"Excavator_arm2");
+            SquirrelMenu = cm.Load<Texture2D>(@"Squirrel_menu");
+            animation_mine = cm.Load<Texture2D>(@"mine-animation");
 
             // Autumn
             autumn_ground_texture = cm.Load<Texture2D>(@"Autumn_Ground");
-            tree_texture = cm.Load<Texture2D>(@"tree");
+            tree_texture = cm.Load<Texture2D>(@"Tree_autumn3");
+            tree_autumn_entrance = cm.Load<Texture2D>(@"tree");
             tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Tree_autumn_entrance_inside");
             tree_autumn_exit = cm.Load<Texture2D>(@"tree_autumn_exit");
             tree_autumn_exit_inside = cm.Load<Texture2D>(@"Tree_autumn_exit_inside");

@@ -211,10 +211,7 @@ namespace thegame
                 vel += acc * dt;// v = u + a*t
                 Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
                 bool check = CheckCollisionTooFar(ref Gravity, blocks, "bottom");
-                if (check)
-                    movedown = false;
-                else
-                    movedown = true;
+                movedown = check ? false : true;
                 positionPerso.Y += Gravity;
             }
 
@@ -248,7 +245,7 @@ namespace thegame
                     cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
+            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && ((activateDeveloper) ? (keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt)) : true))
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
@@ -259,7 +256,7 @@ namespace thegame
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
-            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt))
+            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && ((activateDeveloper) ? (keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt)) : true))
             {
                 tempCurrentFrame.Y = 1;
 
@@ -354,7 +351,7 @@ namespace thegame
             return checkIA;
         }
 
-        public int TryToKill(ref int Health, Rectangle hitboxPlayer)
+        public int TryToKill(ref int Health, Rectangle hitboxPlayer, bool soundIs)
         {
             /* CHECK PERSO COLLISION WITH PROJECTILES */
             int check = 0;
@@ -363,7 +360,8 @@ namespace thegame
                 if (projIA[i].hitbox.Intersects(hitboxPlayer))
                 {
                     Health -= 3;
-                    Textures.gamePunch_Effect.Play();
+                    if(soundIs)
+                        Textures.gamePunch_Effect.Play();
                     projIA.Remove(projIA[i]);
                     if (Health == 0)
                     {
@@ -442,14 +440,11 @@ namespace thegame
                 vel += acc * dt;// v = u + a*t
                 Gravity += vel * dt;// s = u*t + 0.5*a*t*t,
                 bool check = CheckCollisionTooFar(ref Gravity, blocks, "bottom");
-                if (check)
-                    movedown = false;
-                else
-                    movedown = true;
+                movedown = check ? false : true;
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
-
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 26);
 
             if (moveright)
             {

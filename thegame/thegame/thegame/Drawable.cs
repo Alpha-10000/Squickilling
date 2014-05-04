@@ -14,6 +14,7 @@ namespace thegame
         autumnBuche,
         winterBuche,
         tree,
+        tree_autumn_entrance,
         tree_autumn_entrance_inside,
         tree_autumn_exit,
         tree_autumn_exit_inside,
@@ -30,7 +31,9 @@ namespace thegame
         Acorn,
         mine_grey,
         mine_red,
-        medecine
+        medecine,
+        excavatorArm,
+        Squirrel
     }
 
     public class Drawable
@@ -50,6 +53,12 @@ namespace thegame
                 case drawable_type.menu_main_page:
                     image = Textures.menu_main_page;
                     break;
+                case drawable_type.excavatorArm:
+                    image = Textures.excavatorArm;
+                    break;
+                case drawable_type.Squirrel:
+                    image = Textures.SquirrelMenu;
+                    break;
                 case drawable_type.Plateform_default:
                     image = Textures.plateform_texture;
                     break;
@@ -61,6 +70,9 @@ namespace thegame
                     break;
                 case drawable_type.tree:
                     image = Textures.tree_texture;
+                    break;
+                case drawable_type.tree_autumn_entrance:
+                    image = Textures.tree_autumn_entrance;
                     break;
                 case drawable_type.tree_autumn_entrance_inside:
                     image = Textures.tree_autumn_entrance_inside;

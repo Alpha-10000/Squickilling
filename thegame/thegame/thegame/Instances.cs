@@ -97,6 +97,7 @@ namespace thegame
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIs;       // Set to true to switch the sound (on / off)
         private Drawable tree;
+        private Drawable tree_autumn_entrance;
         private Drawable tree_autumn_entrance_inside;
         private Drawable tree_autumn_exit;
         private Drawable tree_autumn_exit_inside;
@@ -183,7 +184,7 @@ namespace thegame
                 snow = true;
             }
 
-            if(!Developpermode)
+            if(!Developpermode && SoundIs)
                 instancesound.Play();
         }
 
@@ -475,6 +476,10 @@ namespace thegame
                                 this.selected = 0;      // This takes it to the first menu page
                                 Execute();
                             break;
+                        case 3:
+                            this.selected = gameState.OptionMenu;
+                            Execute();
+                            break;
                         default:
                             break;
                     }
@@ -524,10 +529,7 @@ namespace thegame
                         if ((execute as Perso).hitBoxPerso.Intersects(medecines[j]))
                         {
                             medecines.Remove(medecines[j]);
-                            if (Health <= 15)
-                                Health += 5;
-                            else
-                                Health = 20;
+                            Health += (Health <= 15) ? 5 : (20 - Health);
                         }
 
 
@@ -539,12 +541,7 @@ namespace thegame
                         Textures.btnMenu.isClicked = false;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.H) && !oldkey.IsKeyDown(Keys.H))
-                    {
-                        if (help)
-                            help = false;
-                        else
-                            help = true;
-                    }
+                        help = help ? false : true;
 
                     if ((execute as Perso).positionPerso.X > 5350)
                     {
@@ -564,7 +561,7 @@ namespace thegame
                         foreach (Perso iathings in iaPerso)
                         {
                             if(playerActivate)
-                                checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso);
+                                checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso, SoundIs);
 
                             iathings.UpdateIA(gametime, blocks, (execute as Perso).hitBoxPerso);
                         }
@@ -579,7 +576,7 @@ namespace thegame
                                 touchedByBomb = true;
                                 checkCrossed.activateExplosion = true;
                                 drawBloodScreen = true;
-                                if (checkCrossed.checkBlood)
+                                if (checkCrossed.checkBlood && SoundIs)
                                     Textures.gameExplosion_Effect.Play();
                                 checkCrossed.BloodOnce(ref Health);
                                 break;
@@ -727,6 +724,8 @@ namespace thegame
             if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
             {
                 Developpermode = false;
+                instancesound.Play();
+                SoundIs = true;
                 if (developpermap)
                 {
                     developpermap = false;
@@ -741,6 +740,7 @@ namespace thegame
                 SoundIs = false;
                 developperXMouse = mouse1.X;
                 developperYMouse = mouse1.Y;
+                instancesound.Stop();
                 if (getkey.Contains(Keys.C) && !developperCoord)
                     developperCoord = true;
                 if (getkey.Contains(Keys.X) && developperCoord)
@@ -795,6 +795,7 @@ namespace thegame
                 case gameState.OptionMenu: /* OPTION MENU */
                     Sound("menu");
                     execute = new Menu(4, Text_Game["_mnuOptions"]);//options
+                    (execute as Menu).activateBackSpace = true;
                     (execute as Menu).AddElements(Text_Game["_mnuLanguage"]);//language 
                     //(execute as Menu).AddElements(Text_Game[4]);//fullscreen  
                     //     Next section modifies text on display mode.
@@ -815,10 +816,12 @@ namespace thegame
 
                 case gameState.LanguageMenu: /* Select language */
                     Sound("menu");
-                    execute = new Menu(3, Text_Game["_mnuLanguage"]);
+                    execute = new Menu(4, Text_Game["_mnuLanguage"]);
+                    (execute as Menu).activateBackSpace = true;
                     (execute as Menu).AddElements(Text_Game["_mnuEnglish"]);
                     (execute as Menu).AddElements(Text_Game["_mnuFrench"]);
                     (execute as Menu).AddElements(Text_Game["_mnuDutch"]);
+                    (execute as Menu).AddElements(Text_Game["_mnuBack"]);//back
                     break;
 
                 case gameState.SoundMenu: /* SOUND MENU */
@@ -904,20 +907,12 @@ namespace thegame
                                                           y * Textures.buche_texture_winter.Height - 86, 10, 10));
                             else if (tilemap[y, x] == 3)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
                             else if (tilemap[y, x] == 4)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
                             }
 
@@ -978,25 +973,18 @@ namespace thegame
                                 objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 86, 10, 10));
                             else if (tilemap[y, x] == 3)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
                             else if (tilemap[y, x] == 4)
                             {
-                                int h;
-                                if (y == tilemap.GetLength(0) - 1)
-                                    h = 345;
-                                else
-                                    h = y * Textures.buche_texture.Height - 73;
+                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
                                 medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h-7, Textures.medecine.Width, Textures.medecine.Height));
                             }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.tree);
+                    tree_autumn_entrance = new Drawable(drawable_type.tree_autumn_entrance);
                     tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
                     tree_autumn_exit = new Drawable(drawable_type.tree_autumn_exit);
                     tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
@@ -1226,7 +1214,7 @@ namespace thegame
                             sb.End();
 
                             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            tree.Draw(sb, new Vector2(-100, 0));
+                            tree_autumn_entrance.Draw(sb, new Vector2(-100, 0));
                             tree.Draw(sb, new Vector2(500, 0));
                             tree.Draw(sb, new Vector2(400, 0));
                             tree.Draw(sb, new Vector2(900, 0));

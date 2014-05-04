@@ -51,7 +51,7 @@ namespace thegame
 
         public Animation(Vector2 Position, Vector2 nbframes)
         {
-            actif = false;
+            actif = true;
             switchFrames = 80;
             this.Position = Position;
             this.nbFrames = nbframes;
