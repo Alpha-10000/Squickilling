@@ -385,7 +385,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+
     <Compile Include="MenuPause_language\Menu_en.png">
       <Name>Menu_en</Name>
       <Importer>TextureImporter</Importer>
@@ -415,12 +415,12 @@
       <Name>Quit_fr</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-=======
+    </Compile>
     <Compile Include="normal.spritefont">
       <Name>normal</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
->>>>>>> 9b1cf2cca489a59789c495c636ff02c313b61306
+
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

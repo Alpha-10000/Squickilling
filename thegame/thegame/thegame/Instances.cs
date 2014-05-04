@@ -339,7 +339,7 @@ namespace thegame
             mouse1 = Mouse.GetState();
            
 
-<<<<<<< HEAD
+
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
                 if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
@@ -352,8 +352,7 @@ namespace thegame
                     game.Exit();
             }
 
-=======
->>>>>>> 9b1cf2cca489a59789c495c636ff02c313b61306
+
             if (!pause && !game_over_i)
             {
                 
