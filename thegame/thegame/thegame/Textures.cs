@@ -29,6 +29,8 @@ namespace thegame
         public static Texture2D tree_autumn_exit;
         public static Texture2D tree_autumn_exit_inside;
         public static Texture2D white_tree;
+        public static Texture2D excavatorArm;
+        public static Texture2D SquirrelMenu;
         
         public static Texture2D autumnBackground;
         public static Texture2D winterBackground;
@@ -95,6 +97,8 @@ namespace thegame
             mine_red = cm.Load<Texture2D>(@"Mine_red");
             medecine = cm.Load<Texture2D>(@"Medecine3");
             white_tree = cm.Load<Texture2D>(@"White_Tree");
+            excavatorArm = cm.Load<Texture2D>(@"Excavator_arm2");
+            SquirrelMenu = cm.Load<Texture2D>(@"Squirrel_menu");
 
             // Autumn
             autumn_ground_texture = cm.Load<Texture2D>(@"Autumn_Ground");

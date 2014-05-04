@@ -36,10 +36,14 @@ namespace thegame
         private int x = 400;
         private int y = 150;
 
+        private int YExcavator = 100;
+
+        private Color change_Color = Color.OrangeRed;
+
         private bool useMouse = false;
         private Point mouseLocation;
 
-        private Color change_Color = Color.OrangeRed;
+        public bool activateBackSpace = false;
 
         public bool IChooseSomething = false;
 
@@ -69,6 +73,7 @@ namespace thegame
             AreaListMouse.Add(new Rectangle(0, y - 10, 800, height));
             CenterText.Add(new Rectangle(x - 10, y - 10, width, height));
 
+
             y = 60 + y;
             
         }
@@ -88,10 +93,17 @@ namespace thegame
             else sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
 
             sb.Draw(Textures.white_tree, new Vector2(195, 100), Color.Black * 0.6f);
+
+            Drawable squirrel = new Drawable(drawable_type.Squirrel);
+            squirrel.Draw(sb, new Vector2(630, 120));
+
+            Drawable excator = new Drawable(drawable_type.excavatorArm);
+            excator.Draw(sb, new Vector2(0, YExcavator));
+
             
             while (i < this.pos_tab && tab[i] != null)
             {
-                this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2,y), color_tab[i], "menu");
+                this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2, y), color_tab[i], "menu");
                 y = 60 + y;
                 i++;
             }
@@ -125,6 +137,7 @@ namespace thegame
                     if (check.Contains(mouseLocation))
                     {
                         index = AreaListMouse.FindIndex(x => x == check);
+                        YExcavator = 140 + index * 60;
                         MouseOnSOmething = true;
                         if (mouse.LeftButton == ButtonState.Pressed && mouse != oldMouse)
                             IChooseSomething = true;
@@ -149,6 +162,7 @@ namespace thegame
                     {
                         this.selected++;
                         this.color_tab[this.selected] = change_Color;
+                        YExcavator = 140 + selected * 60;
                         this.color_tab[this.selected - 1] = this.defaultColor;
                         if (SoundIsTrue)
                             Textures.buttonSound_Effect.Play();
@@ -162,6 +176,7 @@ namespace thegame
                         this.color_tab[this.selected] = this.defaultColor;
                         this.selected--;
                         this.color_tab[this.selected] = change_Color;
+                        YExcavator = 140 + selected * 60;
                         if (SoundIsTrue)
                             Textures.buttonSound_Effect.Play();
                     }
@@ -169,6 +184,13 @@ namespace thegame
 
                 if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                     IChooseSomething = true;
+
+                if (keyboardState.IsKeyDown(Keys.Back) && activateBackSpace && !oldkey.IsKeyDown(Keys.Back))
+                {
+                    IChooseSomething = true;
+                    selected = this.color_tab.Length - 1;
+                }
+
             }   
         }
     }
