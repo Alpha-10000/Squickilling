@@ -232,7 +232,7 @@ namespace thegame
                                                    {"_mnuOptions","Options"},
                                                    {"_mnuExit","Quitter"},
                                                    {"_mnuLanguage","Langue"},
-                                                   {"_mnuFullscreen","Plein écran"}, 
+                                                   {"_mnuFullscreen","Plein ecran"}, 
                                                    {"_mnuBack","Retour"},
                                                    {"_mnuEnglish","English"},
                                                    {"_mnuFrench","Français"},
