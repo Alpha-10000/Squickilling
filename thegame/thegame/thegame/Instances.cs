@@ -1019,7 +1019,7 @@ namespace thegame
             {
                 case gameState.AutumnLevel:
                     sb.Begin();
-                    Rectangle rec = new Rectangle(0, 0, 800, 530);
+                    Rectangle rec = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 50, 530);
                     sb.Draw(Textures.autumnBackground, Vector2.Zero, Color.White * transparency);
                     sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White * transparency);
                     sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White * transparency);
@@ -1034,7 +1034,7 @@ namespace thegame
                     break;
                 case gameState.WinterLevel:
                     sb.Begin();
-                    rec = new Rectangle(0, 0, 800, 530);
+                    rec = new Rectangle(-2, -2, Game1.graphics.PreferredBackBufferWidth + 50, 530);
                     sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White * transparency);
                     sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White * transparency);
                     sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White * transparency);
