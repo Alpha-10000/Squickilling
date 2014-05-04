@@ -334,14 +334,6 @@ namespace thegame
             mouse1 = Mouse.GetState();
            
 
-            if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
-            {
-                if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
-                    pause = true;
-                else
-                    game.Exit();
-            }
-
             if (!pause && !game_over_i)
             {
                 
@@ -504,7 +496,7 @@ namespace thegame
                     if (Developpermode)//just a little something for us
                         Health = 20;
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.P))
+                    if (Keyboard.GetState().IsKeyDown(Keys.P) || keyboardState.IsKeyDown(Keys.Escape))
                     {
                         pause = true;
                         Textures.btnPlay.isClicked = false;
