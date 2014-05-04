@@ -624,11 +624,10 @@ namespace thegame
             if (pause)
             {
                 /* Pause menu with keyboard*/
-                if (particleComponent.particleEmitterList[0].Active)
-                {
-                    
-                    particleComponent.particleEmitterList[0].Active = false;
-                }
+                if (selected == gameState.WinterLevel)
+                    if (particleComponent.particleEmitterList[0].Active)
+                        particleComponent.particleEmitterList[0].Active = false;
+
                 if (Textures.btnPlay.isSelected == false && Textures.btnMenu.isSelected == false && Textures.btnQuit.isSelected == false)
                     Textures.btnPlay.isSelected = true;
 
@@ -683,8 +682,11 @@ namespace thegame
 
             if (game_over_i)
             {
-                if (particleComponent.particleEmitterList[0].Active)
-                    particleComponent.particleEmitterList[0].Active = false;
+                if (selected == gameState.WinterLevel)
+                {
+                    if (particleComponent.particleEmitterList[0].Active)
+                        particleComponent.particleEmitterList[0].Active = false;
+                }
                 if (keyboardState.IsKeyDown(Keys.Space))
                 {
                     game_over_i = false;
@@ -1341,7 +1343,7 @@ namespace thegame
             {
                 sb.Begin();
                 Drawable developper = new Drawable(drawable_type.font);
-                developper.Draw(sb, "DEVELOPPER MODE", new Vector2(50, 20), Color.Black, "normal");
+                developper.Draw(sb, "DEVELOPER MODE", new Vector2(50, 20), Color.Black, "normal");
                 if (developperCoord)
                 {
                     sb.Draw(Textures.hitbox, new Rectangle((int)developperXMouse, 0, 2, 1200), Color.Red * 0.5f);
