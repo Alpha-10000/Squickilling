@@ -91,16 +91,14 @@ namespace thegame
             sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
 
             else sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
-<<<<<<< HEAD
 
-=======
->>>>>>> 0c0b1cb05859a3c7edff058c8b67b282900034b1
+
 
             sb.Draw(Textures.white_tree, new Vector2(195, 100), Color.Black * 0.6f);
 
-<<<<<<< HEAD
 
-=======
+
+
             Drawable squirrel = new Drawable(drawable_type.Squirrel);
             squirrel.Draw(sb, new Vector2(630, 120));
 
@@ -108,7 +106,7 @@ namespace thegame
             excator.Draw(sb, new Vector2(0, YExcavator));
 
             
->>>>>>> 0c0b1cb05859a3c7edff058c8b67b282900034b1
+
             while (i < this.pos_tab && tab[i] != null)
             {
                 this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2, y), color_tab[i], "menu");
