@@ -526,7 +526,10 @@ namespace thegame
                         if ((execute as Perso).hitBoxPerso.Intersects(medecines[j]))
                         {
                             medecines.Remove(medecines[j]);
-                            Health += 5;
+                            if (Health > 15)
+                                Health += (20 - Health);
+                            else
+                                Health += 5;
                             break;
                         }
                     }
