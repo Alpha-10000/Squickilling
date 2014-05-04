@@ -224,7 +224,7 @@ namespace thegame
             if (!jumping && (positionPerso.Y == sol || !movedown))
                 GravityInit();
 
-            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
+            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)) && activateDevelopper)
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
@@ -235,7 +235,7 @@ namespace thegame
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
-            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)))
+            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)) && activateDevelopper)
             {
                 tempCurrentFrame.Y = 1;
 
@@ -364,7 +364,6 @@ namespace thegame
                 {
                     Health -= 3;
                     Textures.gamePunch_Effect.Play();
-                    Health = (int)MathHelper.Clamp(Health, 0, 10);
                     projIA.Remove(projIA[i]);
                     if (Health == 0)
                     {
