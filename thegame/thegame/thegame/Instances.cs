@@ -1041,7 +1041,7 @@ namespace thegame
                 case gameState.AutumnLevel:
                     sb.Begin();
                     Rectangle rec = new Rectangle(0, 0, 800, 530);
-                    sb.Draw(Textures.background, Vector2.Zero, Color.White * transparency);
+                    sb.Draw(Textures.autumnBackground, Vector2.Zero, Color.White * transparency);
                     sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White * transparency);
                     sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White * transparency);
 
@@ -1095,7 +1095,7 @@ namespace thegame
                 {
                             sb.Begin();
                             // Makes the background move slower than the camera to create an effect of depth.
-                            sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                            sb.Draw(Textures.autumnBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
                             sb.End();
 
                             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
@@ -1125,7 +1125,7 @@ namespace thegame
                     {
                         case gameState.AutumnLevel:
                             sb.Begin();
-                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.autumnBackground, Vector2.Zero, Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
@@ -1158,7 +1158,7 @@ namespace thegame
                             sb.Begin();
                             Rectangle rec = new Rectangle(0, 0, 800, 530);
 
-                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.autumnBackground, Vector2.Zero, Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
@@ -1196,7 +1196,7 @@ namespace thegame
                             sb.Begin();
                             Rectangle rec = new Rectangle(0, 0, 800, 530);
 
-                            sb.Draw(Textures.background, Vector2.Zero, Color.White);
+                            sb.Draw(Textures.autumnBackground, Vector2.Zero, Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
@@ -1230,7 +1230,7 @@ namespace thegame
                         case gameState.AutumnLevel:
                             sb.Begin();
                             // Makes the background move slower than the camera to create an effect of depth.
-                            sb.Draw(Textures.background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                            sb.Draw(Textures.autumnBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
                             sb.End();
 
                             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);

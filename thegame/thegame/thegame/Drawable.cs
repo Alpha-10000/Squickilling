@@ -89,7 +89,7 @@ namespace thegame
                     image = Textures.winter_ground_texture;
                     break;
                 case drawable_type.Background:
-                    image = Textures.background;
+                    image = Textures.autumnBackground;
                     break;
                 case drawable_type.Nut:
                     image = Textures.nut_texture;

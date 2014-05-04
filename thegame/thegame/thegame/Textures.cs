@@ -28,7 +28,7 @@ namespace thegame
         public static Texture2D tree_autumn_exit;
         public static Texture2D tree_autumn_exit_inside;
         
-        public static Texture2D background;
+        public static Texture2D autumnBackground;
         public static Texture2D winterBackground;
 
         public static Texture2D explosion;
@@ -91,13 +91,14 @@ namespace thegame
             mine_grey = cm.Load<Texture2D>(@"Mine_grey");
             mine_red = cm.Load<Texture2D>(@"Mine_red");
 
+
             // Autumn
             autumn_ground_texture = cm.Load<Texture2D>(@"Autumn_Ground");
             tree_texture = cm.Load<Texture2D>(@"tree");
             tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Tree_autumn_entrance_inside");
             tree_autumn_exit = cm.Load<Texture2D>(@"tree_autumn_exit");
             tree_autumn_exit_inside = cm.Load<Texture2D>(@"Tree_autumn_exit_inside");
-            background = cm.Load<Texture2D>(@"Autumn_Background");
+            autumnBackground = cm.Load<Texture2D>(@"Autumn_Background");
             buche_texture = cm.Load<Texture2D>(@"Buche_test");
 
             // Winter
