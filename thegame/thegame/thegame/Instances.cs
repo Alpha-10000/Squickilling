@@ -158,7 +158,7 @@ namespace thegame
                 testEmitter2.Active = false;
                 testEmitter2.TextureList.Add(Textures.snowdrop);
                 testEmitter2.RandomEmissionInterval = new RandomMinMax(64.0d);
-                testEmitter2.ParticleLifeTime = 4000;
+                testEmitter2.ParticleLifeTime = 3000;
                 testEmitter2.ParticleDirection = new RandomMinMax(170);
                 testEmitter2.ParticleSpeed = new RandomMinMax(2.5f);
                 testEmitter2.ParticleRotation = new RandomMinMax(0);
@@ -205,7 +205,7 @@ namespace thegame
                                                    {"_mnuFullscreen","Full screen"}, 
                                                    {"_mnuBack","Back"},
                                                    {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Français"}, //has to be français
+                                                   {"_mnuFrench","Francais"}, //has to be français
                                                    {"_mnuSound","Sound"}, 
                                                    {"_mnuOn","On"},
                                                    {"_mnuOff","Off"},
@@ -270,7 +270,7 @@ namespace thegame
                                                    {"_mnuFullscreen","Volledig scherm"},
                                                    {"_mnuBack","Terug"},
                                                    {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Français"},
+                                                   {"_mnuFrench","Francais"},
                                                    {"_mnuSound","Geluid"},
                                                    {"_mnuOn","Aan"},
                                                    {"_mnuOff","Uit"},
