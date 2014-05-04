@@ -336,7 +336,7 @@ namespace thegame
 
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
-                game.Exit();
+                pause = true;
             }
 
             if (!pause && !game_over_i)
