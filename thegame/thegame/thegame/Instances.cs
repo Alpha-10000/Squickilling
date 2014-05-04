@@ -475,6 +475,10 @@ namespace thegame
                                 this.selected = 0;      // This takes it to the first menu page
                                 Execute();
                             break;
+                        case 3:
+                            this.selected = gameState.OptionMenu;
+                            Execute();
+                            break;
                         default:
                             break;
                     }
@@ -795,6 +799,7 @@ namespace thegame
                 case gameState.OptionMenu: /* OPTION MENU */
                     Sound("menu");
                     execute = new Menu(4, Text_Game["_mnuOptions"]);//options
+                    (execute as Menu).activateBackSpace = true;
                     (execute as Menu).AddElements(Text_Game["_mnuLanguage"]);//language 
                     //(execute as Menu).AddElements(Text_Game[4]);//fullscreen  
                     //     Next section modifies text on display mode.
@@ -815,10 +820,12 @@ namespace thegame
 
                 case gameState.LanguageMenu: /* Select language */
                     Sound("menu");
-                    execute = new Menu(3, Text_Game["_mnuLanguage"]);
+                    execute = new Menu(4, Text_Game["_mnuLanguage"]);
+                    (execute as Menu).activateBackSpace = true;
                     (execute as Menu).AddElements(Text_Game["_mnuEnglish"]);
                     (execute as Menu).AddElements(Text_Game["_mnuFrench"]);
                     (execute as Menu).AddElements(Text_Game["_mnuDutch"]);
+                    (execute as Menu).AddElements(Text_Game["_mnuBack"]);//back
                     break;
 
                 case gameState.SoundMenu: /* SOUND MENU */

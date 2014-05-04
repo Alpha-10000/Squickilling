@@ -36,6 +36,8 @@ namespace thegame
         private int x = 400;
         private int y = 150;
 
+        public bool activateBackSpace = false;
+
         private int YExcavator = 140;
 
         private bool useMouse = false;
@@ -86,14 +88,14 @@ namespace thegame
             // Draw Menu Background Here
             if(!Game1.graphics.IsFullScreen)
             sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
-<<<<<<< HEAD
+
             else sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
-=======
+
 
             sb.Draw(Textures.white_tree, new Vector2(195, 100), Color.Black * 0.6f);
             
 
->>>>>>> 543d9aa73c8c6f037d48441fe4fab0c45e794046
+
             while (i < this.pos_tab && tab[i] != null)
             {
                 this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2,y), color_tab[i], "menu");
@@ -183,6 +185,12 @@ namespace thegame
 
                 if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
                     IChooseSomething = true;
+
+                if (keyboardState.IsKeyDown(Keys.Back) && activateBackSpace && !oldkey.IsKeyDown(Keys.Back))
+                {
+                    IChooseSomething = true;
+                    selected = this.color_tab.Length - 1;
+                }
             }   
         }
     }
