@@ -205,7 +205,7 @@ namespace thegame
                                                    {"_mnuFullscreen","Full screen"}, 
                                                    {"_mnuBack","Back"},
                                                    {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Français"}, //has to be français
+                                                   {"_mnuFrench","Francais"}, //has to be français
                                                    {"_mnuSound","Sound"}, 
                                                    {"_mnuOn","On"},
                                                    {"_mnuOff","Off"},
@@ -522,7 +522,6 @@ namespace thegame
                  
 
                     for (int j = medecines.Count - 1; j >= 0; j--)
-                    {
                         if ((execute as Perso).hitBoxPerso.Intersects(medecines[j]))
                         {
                             medecines.Remove(medecines[j]);
@@ -531,7 +530,6 @@ namespace thegame
                             else
                                 Health = 20;
                         }
-                    }
 
 
                     if (Keyboard.GetState().IsKeyDown(Keys.P) || keyboardState.IsKeyDown(Keys.Escape))
