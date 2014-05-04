@@ -414,6 +414,7 @@ namespace thegame
                         case 1:
                                 //this.selected = 5;
                                 Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
+                                
                                 Game1.graphics.ToggleFullScreen();
                                 //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
                                 //Game1.graphics.ApplyChanges();
