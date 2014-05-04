@@ -477,7 +477,7 @@ namespace thegame
                                 Execute();
                             break;
                         case 3:
-                            this.selected = gameState.MainMenu;
+                            this.selected = gameState.OptionMenu;
                             Execute();
                             break;
                         default:
