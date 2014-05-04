@@ -336,14 +336,6 @@ namespace thegame
             mouse1 = Mouse.GetState();
            
 
-            if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
-            {
-                if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
-                    pause = true;
-                else
-                    game.Exit();
-            }
-
             if (!pause && !game_over_i)
             {
                 
@@ -506,6 +498,7 @@ namespace thegame
                     if (Developpermode)//just a little something for us
                         Health = 20;
 
+<<<<<<< HEAD
 
                  
 
@@ -520,6 +513,9 @@ namespace thegame
                     }
 
                     if (Keyboard.GetState().IsKeyDown(Keys.P))
+=======
+                    if (Keyboard.GetState().IsKeyDown(Keys.P) || keyboardState.IsKeyDown(Keys.Escape))
+>>>>>>> 85b18ae20fe877a1a3e58ecd4bcf108f408bca35
                     {
                         pause = true;
                         Textures.btnPlay.isClicked = false;
@@ -1038,7 +1034,7 @@ namespace thegame
                 case gameState.WinterLevel:
                     sb.Begin();
                     rec = new Rectangle(0, 0, 800, 530);
-                    sb.Draw(Textures.winter_ground_texture, Vector2.Zero, Color.White * transparency);
+                    sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White * transparency);
                     sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White * transparency);
                     sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White * transparency);
 
