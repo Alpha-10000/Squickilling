@@ -36,6 +36,8 @@ namespace thegame
         private int x = 400;
         private int y = 150;
 
+        private int YExcavator = 140;
+
         private bool useMouse = false;
         private Point mouseLocation;
 
@@ -98,6 +100,12 @@ namespace thegame
 
             this.Draw(sb, Text, new Vector2(400 - ((int)Textures.fontTitle_texture.MeasureString(Text).X + 25) / 2, 20), Color.Black, "titre");
 
+            Drawable squirrel = new Drawable(drawable_type.Squirrel);
+            squirrel.Draw(sb, new Vector2(630, 120));
+
+            Drawable excator = new Drawable(drawable_type.excavatorArm);
+            excator.Draw(sb, new Vector2(0, YExcavator));
+
             if(developperMode)
                 foreach (Rectangle dessine in AreaListMouse)
                     sb.Draw(Textures.hitbox, dessine, Color.White * 0.5f);
@@ -123,6 +131,7 @@ namespace thegame
                     if (check.Contains(mouseLocation))
                     {
                         index = AreaListMouse.FindIndex(x => x == check);
+                        YExcavator = 140 + index * 60;
                         MouseOnSOmething = true;
                         if (mouse.LeftButton == ButtonState.Pressed && mouse != oldMouse)
                             IChooseSomething = true;
@@ -148,6 +157,7 @@ namespace thegame
                         this.selected++;
                         this.color_tab[this.selected] = change_Color;
                         this.color_tab[this.selected - 1] = this.defaultColor;
+                        YExcavator = 140 + selected * 60;
                         if (SoundIsTrue)
                             Textures.buttonSound_Effect.Play();
                     }
@@ -159,6 +169,7 @@ namespace thegame
                     {
                         this.color_tab[this.selected] = this.defaultColor;
                         this.selected--;
+                        YExcavator = 140 + selected * 60;
                         this.color_tab[this.selected] = change_Color;
                         if (SoundIsTrue)
                             Textures.buttonSound_Effect.Play();

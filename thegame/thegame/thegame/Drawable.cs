@@ -30,7 +30,9 @@ namespace thegame
         Acorn,
         mine_grey,
         mine_red,
-        medecine
+        medecine,
+        Squirrel,
+        excavatorArm
     }
 
     public class Drawable
@@ -61,6 +63,12 @@ namespace thegame
                     break;
                 case drawable_type.tree:
                     image = Textures.tree_texture;
+                    break;
+                case drawable_type.excavatorArm:
+                    image = Textures.excavatorArm;
+                    break;
+                case drawable_type.Squirrel:
+                    image = Textures.SquirrelMenu;
                     break;
                 case drawable_type.tree_autumn_entrance_inside:
                     image = Textures.tree_autumn_entrance_inside;

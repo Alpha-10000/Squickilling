@@ -429,15 +429,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu_Main_Page.png">
-      <Name>Menu_Main_Page</Name>
+    <Compile Include="White_Tree.png">
+      <Name>White_Tree</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="White_Tree.png">
-      <Name>White_Tree</Name>
+    <Compile Include="Squirrel_menu.png">
+      <Name>Squirrel_menu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Excavator_arm2.png">
+      <Name>Excavator_arm2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Menu_Main_Page.png">
+      <Name>Menu_Main_Page</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
