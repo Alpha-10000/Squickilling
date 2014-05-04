@@ -86,6 +86,7 @@ namespace thegame
         private List<Projectile> projectiles;
         private List<Rectangle> objects = new List<Rectangle> { };
         private List<Bomb> bomb = new List<Bomb> { };
+        private List<Rectangle> medecines = new List<Rectangle>();
 
         private List<Perso> iaPerso = new List<Perso>();
 
@@ -149,6 +150,7 @@ namespace thegame
             cameraClass.shake = false;
             bomb = new List<Bomb>();
             random = new Random();
+            medecines = new List<Rectangle>();
 
             if (selected == gameState.WinterLevel)
             {
@@ -212,7 +214,7 @@ namespace thegame
                                                    {"_gameHelp","Press H to get help"},
                                                    {"_gameHealth","Health"},
                                                    {"_gamescore","score"},
-                                                   {"_gamebonus","bonus"},
+                                                   {"_gamebonus","points"},
                                                    {"_gameHelpLine1","Use the left and right arrow to move the character"},
                                                    {"_gameHelpLine2","Use the top arrow to jump"},
                                                    {"_gameHelpLine3","To fire on ennemies use the space bar"},
@@ -233,10 +235,10 @@ namespace thegame
                                                    {"_mnuOptions","Options"},
                                                    {"_mnuExit","Quitter"},
                                                    {"_mnuLanguage","Langue"},
-                                                   {"_mnuFullscreen","Plein écran"}, 
+                                                   {"_mnuFullscreen","Plein ecran"}, 
                                                    {"_mnuBack","Retour"},
                                                    {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Français"},
+                                                   {"_mnuFrench","Francais"},
                                                    {"_mnuSound","Son"},
                                                    {"_mnuOn","Actif"},
                                                    {"_mnuOff","Inactif"},
@@ -245,7 +247,7 @@ namespace thegame
                                                    {"_gameHelp","H = aide"},
                                                    {"_gameHealth","Vie"},
                                                    {"_gamescore","score"},
-                                                   {"_gamebonus","bonus"},
+                                                   {"_gamebonus","points"},
                                                    {"_gameHelpLine1","Utilisez la flèche gauche/droite pour se déplacer"},
                                                    {"_gameHelpLine2","Utilisez la flèche du haut pour sauter"},
                                                    {"_gameHelpLine3","Utilisez la barre espace pour tirer"},
@@ -337,6 +339,7 @@ namespace thegame
             mouse1 = Mouse.GetState();
            
 
+<<<<<<< HEAD
             if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
             {
                 if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
@@ -349,6 +352,8 @@ namespace thegame
                     game.Exit();
             }
 
+=======
+>>>>>>> 9b1cf2cca489a59789c495c636ff02c313b61306
             if (!pause && !game_over_i)
             {
                 
@@ -514,7 +519,23 @@ namespace thegame
                     if (Developpermode)//just a little something for us
                         Health = 20;
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.P))
+
+
+                 
+
+                    for (int j = medecines.Count - 1; j >= 0; j--)
+                    {
+                        if ((execute as Perso).hitBoxPerso.Intersects(medecines[j]))
+                        {
+                            medecines.Remove(medecines[j]);
+                            Health += 5;
+                            break;
+                        }
+                    }
+
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.P) || keyboardState.IsKeyDown(Keys.Escape))
+
                     {
                         pause = true;
                         Textures.btnPlay.isClicked = false;
@@ -622,6 +643,8 @@ namespace thegame
                                 transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
                             }
                         }
+
+                        
 
                        
                     }
@@ -896,6 +919,15 @@ namespace thegame
                                     h = y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
                             }
+                            else if (tilemap[y, x] == 4)
+                            {
+                                int h;
+                                if (y == tilemap.GetLength(0) - 1)
+                                    h = 345;
+                                else
+                                    h = y * Textures.buche_texture.Height - 73;
+                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
+                            }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
                     tree = new Drawable(drawable_type.winterTree);
@@ -923,11 +955,11 @@ namespace thegame
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,0,0,0,1,1,1,0,1,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,1,1,1,2,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,4,1,1,1,2,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
                             {0,0,0,0,0,0,2,1,0,0,0,3,1,1,0,0,0,0,0,1,2,2,0,1,0,0,0,0,0,0,0,0,1,2,3,1,0,0,0,0,0,2,0,0,0},
                             {0,0,0,0,0,3,1,0,0,3,0,1,2,0,0,1,0,0,1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,1,1,1,0,0,2,0,1,1,0,3,0},
                             {0,0,3,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1},
-                            {0,0,1,2,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
+                            {0,0,1,4,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
                         };
 
                     iaMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
@@ -960,6 +992,15 @@ namespace thegame
                                 else
                                     h = y * Textures.buche_texture.Height - 73;
                                 bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
+                            }
+                            else if (tilemap[y, x] == 4)
+                            {
+                                int h;
+                                if (y == tilemap.GetLength(0) - 1)
+                                    h = 345;
+                                else
+                                    h = y * Textures.buche_texture.Height - 73;
+                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
                             }
 
                     execute = new Perso(new Vector2(200, 0), CharacType.player);
@@ -1015,7 +1056,7 @@ namespace thegame
                 case gameState.WinterLevel:
                     sb.Begin();
                     rec = new Rectangle(0, 0, 800, 530);
-                    sb.Draw(Textures.winter_ground_texture, Vector2.Zero, Color.White * transparency);
+                    sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White * transparency);
                     sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White * transparency);
                     sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White * transparency);
 
@@ -1066,12 +1107,13 @@ namespace thegame
                             sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
                             sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
                             sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
+                            sb.Draw(Textures.hitbox, new Rectangle(280, 452, 15, 10), Color.Green);
                             Drawable info = new Drawable(drawable_type.font);
                             Drawable ecri = new Drawable(drawable_type.font);
                             ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
                             ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
                             ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
-                            ecri.Draw(sb, "Thibault", new Vector2(525, 470), Color.Black, "normal");
+                            ecri.Draw(sb, "Thibault", new Vector2(535, 470), Color.Black, "normal");
                             ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
                             info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
                             sb.End();
@@ -1224,6 +1266,9 @@ namespace thegame
                             foreach (Bomb dessine in bomb)
                                 dessine.Draw(sb, gameTime);
 
+                            foreach (Rectangle dessine in medecines)
+                                sb.Draw(Textures.hitbox, dessine, Color.Green);
+
                             if (playerActivate)
                                 (execute as Perso).Draw(sb, gameTime); /* Should be execute in the Drawable class */
 
@@ -1315,6 +1360,9 @@ namespace thegame
                             //draw bomb
                             foreach (Bomb dessine in bomb)
                                 dessine.Draw(sb, gameTime);
+
+                            foreach (Rectangle dessine in medecines)
+                                sb.Draw(Textures.hitbox, dessine, Color.Green);
 
                             if (playerActivate)
                                 (execute as Perso).Draw(sb, gameTime);

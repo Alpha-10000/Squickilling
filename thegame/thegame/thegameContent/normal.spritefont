@@ -11,7 +11,7 @@ with.
     <!--
     Modify this string to change the font that will be imported.
     -->
-    <FontName>Pericles Light</FontName>
+    <FontName>Tahoma</FontName>
 
     <!--
     Size is a float value, measured in points. Modify this value to change
@@ -36,8 +36,8 @@ with.
     and "Bold, Italic", and are case sensitive.
     -->
     <Style>Regular</Style>
-    
-    
+
+
 
     <!--
     If you uncomment this line, the default character will be substituted if you draw
