@@ -184,7 +184,7 @@ namespace thegame
                 snow = true;
             }
 
-            if(!Developpermode)
+            if(!Developpermode && SoundIs)
                 instancesound.Play();
         }
 
@@ -561,7 +561,7 @@ namespace thegame
                         foreach (Perso iathings in iaPerso)
                         {
                             if(playerActivate)
-                                checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso);
+                                checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso, SoundIs);
 
                             iathings.UpdateIA(gametime, blocks, (execute as Perso).hitBoxPerso);
                         }
@@ -576,7 +576,7 @@ namespace thegame
                                 touchedByBomb = true;
                                 checkCrossed.activateExplosion = true;
                                 drawBloodScreen = true;
-                                if (checkCrossed.checkBlood)
+                                if (checkCrossed.checkBlood && SoundIs)
                                     Textures.gameExplosion_Effect.Play();
                                 checkCrossed.BloodOnce(ref Health);
                                 break;
@@ -724,6 +724,8 @@ namespace thegame
             if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
             {
                 Developpermode = false;
+                instancesound.Play();
+                SoundIs = true;
                 if (developpermap)
                 {
                     developpermap = false;
@@ -738,6 +740,7 @@ namespace thegame
                 SoundIs = false;
                 developperXMouse = mouse1.X;
                 developperYMouse = mouse1.Y;
+                instancesound.Stop();
                 if (getkey.Contains(Keys.C) && !developperCoord)
                     developperCoord = true;
                 if (getkey.Contains(Keys.X) && developperCoord)

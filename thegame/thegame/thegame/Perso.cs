@@ -351,7 +351,7 @@ namespace thegame
             return checkIA;
         }
 
-        public int TryToKill(ref int Health, Rectangle hitboxPlayer)
+        public int TryToKill(ref int Health, Rectangle hitboxPlayer, bool soundIs)
         {
             /* CHECK PERSO COLLISION WITH PROJECTILES */
             int check = 0;
@@ -360,7 +360,8 @@ namespace thegame
                 if (projIA[i].hitbox.Intersects(hitboxPlayer))
                 {
                     Health -= 3;
-                    Textures.gamePunch_Effect.Play();
+                    if(soundIs)
+                        Textures.gamePunch_Effect.Play();
                     projIA.Remove(projIA[i]);
                     if (Health == 0)
                     {
