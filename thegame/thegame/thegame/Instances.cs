@@ -235,7 +235,7 @@ namespace thegame
                                                    {"_mnuFullscreen","Plein ecran"}, 
                                                    {"_mnuBack","Retour"},
                                                    {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Français"},
+                                                   {"_mnuFrench","Francais"},
                                                    {"_mnuSound","Son"},
                                                    {"_mnuOn","Actif"},
                                                    {"_mnuOff","Inactif"},
