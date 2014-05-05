@@ -346,8 +346,8 @@ namespace thegame
                 if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
                 {
                     pause = true;
-                    Textures.btnPlay.isClicked = false;
-                    Textures.btnMenu.isClicked = false;
+                    Textures.btnPlay_en.isClicked = false;
+                    Textures.btnMenu_en.isClicked = false;
                 }
                 else
                     game.Exit();
@@ -539,8 +539,9 @@ namespace thegame
 
                     {
                         pause = true;
-                        Textures.btnPlay.isClicked = false;
-                        Textures.btnMenu.isClicked = false;
+                        Textures.btnPlay_en.isClicked = false;
+                        Textures.btnMenu_en.isClicked = false;
+                        Textures.btnPlay_fr.isClicked = false;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.H) && !oldkey.IsKeyDown(Keys.H))
                         help = help ? false : true;
@@ -649,40 +650,40 @@ namespace thegame
                     if (particleComponent.particleEmitterList[0].Active)
                         particleComponent.particleEmitterList[0].Active = false;
 
-                if (Textures.btnPlay.isSelected == false && Textures.btnMenu.isSelected == false && Textures.btnQuit.isSelected == false)
-                    Textures.btnPlay.isSelected = true;
+                if (Textures.btnPlay_en.isSelected == false && Textures.btnMenu_en.isSelected == false && Textures.btnQuit_en.isSelected == false)
+                    Textures.btnPlay_en.isSelected = true;
 
                 if (keyboardState.IsKeyDown(Keys.Down) && !oldkey.IsKeyDown(Keys.Down))
                 {
-                    if (Textures.btnMenu.isSelected)
+                    if (Textures.btnMenu_en.isSelected)
                     {
-                        Textures.btnMenu.isSelected = false;
-                        Textures.btnQuit.isSelected = true;
+                        Textures.btnMenu_en.isSelected = false;
+                        Textures.btnQuit_en.isSelected = true;
                     }
-                    if (Textures.btnPlay.isSelected && !oldkey.IsKeyDown(Keys.Down))
+                    if (Textures.btnPlay_en.isSelected && !oldkey.IsKeyDown(Keys.Down))
                     {
-                        Textures.btnPlay.isSelected = false;
-                        Textures.btnMenu.isSelected = true;
+                        Textures.btnPlay_en.isSelected = false;
+                        Textures.btnMenu_en.isSelected = true;
                     }
                 }
                 if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
                 {
-                    if (Textures.btnMenu.isSelected)
+                    if (Textures.btnMenu_en.isSelected)
                     {
-                        Textures.btnMenu.isSelected = false;
-                        Textures.btnPlay.isSelected = true;
+                        Textures.btnMenu_en.isSelected = false;
+                        Textures.btnPlay_en.isSelected = true;
                     }
-                    if (Textures.btnQuit.isSelected && !oldkey.IsKeyDown(Keys.Up))
+                    if (Textures.btnQuit_en.isSelected && !oldkey.IsKeyDown(Keys.Up))
                     {
-                        Textures.btnQuit.isSelected = false;
-                        Textures.btnMenu.isSelected = true;
+                        Textures.btnQuit_en.isSelected = false;
+                        Textures.btnMenu_en.isSelected = true;
                     }
                 }
                 
-                if (Textures.btnPlay.isClicked)
+                if (Textures.btnPlay_en.isClicked)
                     pause = false;
 
-                if (Textures.btnMenu.isClicked)
+                if (Textures.btnMenu_en.isClicked)
                 {
                     pause = false;
                     this.selected = 0;
@@ -690,12 +691,12 @@ namespace thegame
                     this.curGameMode = instances_type.Menu;
                     Execute();
                 }
-                if (Textures.btnQuit.isClicked)
+                if (Textures.btnQuit_en.isClicked)
                     game.Exit();
 
-                Textures.btnPlay.Update(mouse, keyboardState);
-                Textures.btnMenu.Update(mouse, keyboardState);
-                Textures.btnQuit.Update(mouse, keyboardState);
+                Textures.btnPlay_en.Update(mouse, keyboardState);
+                Textures.btnMenu_en.Update(mouse, keyboardState);
+                Textures.btnQuit_en.Update(mouse, keyboardState);
             }
 
             if (help && !Keyboard.GetState().IsKeyDown(Keys.H) && (Keyboard.GetState().GetPressedKeys().Length > 0 || mouse1.LeftButton == ButtonState.Pressed))
@@ -1111,9 +1112,18 @@ namespace thegame
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
                             sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
-                            Textures.btnPlay.Draw(sb);
-                            Textures.btnMenu.Draw(sb);
-                            Textures.btnQuit.Draw(sb);
+                            //if (language_pause == "english")
+                            //{
+                                Textures.btnPlay_en.Draw(sb);
+                                Textures.btnMenu_en.Draw(sb);
+                                Textures.btnQuit_en.Draw(sb);
+                            //}
+                            /*else
+                            {
+                                Textures.btnPlay_fr.Draw(sb);
+                                Textures.btnMenu_fr.Draw(sb);
+                                Textures.btnQuit_fr.Draw(sb);
+                            }*/
                             sb.End();
                             break;
 
@@ -1123,9 +1133,9 @@ namespace thegame
                             sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
                             sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
                             sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
-                            Textures.btnPlay.Draw(sb);
-                            Textures.btnMenu.Draw(sb);
-                            Textures.btnQuit.Draw(sb);
+                            Textures.btnPlay_en.Draw(sb);
+                            Textures.btnMenu_en.Draw(sb);
+                            Textures.btnQuit_en.Draw(sb);
                             sb.End();
                             break;
                     }

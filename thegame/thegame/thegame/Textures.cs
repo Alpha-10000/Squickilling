@@ -32,7 +32,7 @@ namespace thegame
         public static Texture2D excavatorArm;
         public static Texture2D SquirrelMenu;
         public static Texture2D animation_mine;
-        
+
         public static Texture2D autumnBackground;
         public static Texture2D winterBackground;
 
@@ -64,12 +64,12 @@ namespace thegame
         public static Texture2D acorn_texture;
         public static Texture2D healthBar_texture;
         public static Texture2D eraser;
-       
-        
-        public static Button btnPlay, btnQuit, btnMenu;
+
+
+        public static Button btnPlay_en, btnQuit_en, btnMenu_en, btnPlay_fr, btnQuit_fr, btnMenu_fr;
 
         public static Texture2D snowdrop;
-        
+
 
         public static void load(ContentManager cm)
         {
@@ -89,7 +89,7 @@ namespace thegame
             gameExplosion_Effect = cm.Load<SoundEffect>("audio\\explosion");
             gamePunch_Effect = cm.Load<SoundEffect>("audio\\punch");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
-            pausedRectangle = new Rectangle(0, 0, pausedTexture.Width+40, pausedTexture.Height);
+            pausedRectangle = new Rectangle(0, 0, pausedTexture.Width + 40, pausedTexture.Height);
             nut_texture = cm.Load<Texture2D>(@"Nut");
             acorn_texture = cm.Load<Texture2D>(@"Acorn_test2");
             healthBar_texture = cm.Load<Texture2D>(@"HealthBar");
@@ -122,25 +122,22 @@ namespace thegame
             //Intro
             vid = cm.Load<Video>(@"video\\vid");
 
+            //Menu Pause
+            btnPlay_fr = new Button();
+            btnMenu_fr = new Button();
+            btnQuit_fr = new Button();
+            btnPlay_fr.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_fr"), new Vector2(313, 183));
+            btnMenu_fr.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_fr"), new Vector2(318, 253));
+            btnQuit_fr.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_fr"), new Vector2(307, 323));
 
-            if (Instances.language_pause == "french")
-            {
-                btnPlay = new Button();
-                btnMenu = new Button();
-                btnQuit = new Button();
-                btnPlay.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_fr"), new Vector2(313, 183));
-                btnMenu.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_fr"), new Vector2(318, 253));
-                btnQuit.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_fr"), new Vector2(307, 323));
-            }
-            else 
-            {
-                btnPlay = new Button();
-                btnMenu = new Button();
-                btnQuit = new Button();
-                btnPlay.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_en"), new Vector2(313, 183));
-                btnMenu.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_en"), new Vector2(318, 253));
-                btnQuit.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_en"), new Vector2(307, 323));
-            }
+
+            btnPlay_en = new Button();
+            btnMenu_en = new Button();
+            btnQuit_en = new Button();
+            btnPlay_en.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_en"), new Vector2(313, 183));
+            btnMenu_en.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_en"), new Vector2(318, 253));
+            btnQuit_en.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_en"), new Vector2(307, 323));
+
 
             // Game Over
             game_overTexture_en = cm.Load<Texture2D>(@"game_over_en");
