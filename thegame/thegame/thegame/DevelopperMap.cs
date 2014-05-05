@@ -84,46 +84,31 @@ namespace thegame
             if (buche.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
             {
                 bucheSelected = true;
-                eraseSelected = false;
-                bombSelected = false;
-                objectSelect = false;
-                medecineSelect = false;
+                eraseSelected = bombSelected = objectSelect = medecineSelect= false;
             }
 
             if (medecine.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
             {
-                bucheSelected = false;
-                eraseSelected = false;
-                bombSelected = false;
-                objectSelect = false;
+                bucheSelected = eraseSelected = bombSelected = objectSelect =  false;
                 medecineSelect = true;
             }
 
             if (eraser.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
             {
-                bucheSelected = false;
+                bucheSelected = bombSelected = objectSelect = medecineSelect=  false;
                 eraseSelected = true;
-                bombSelected = false;
-                objectSelect = false;
-                medecineSelect = false;
             }
 
             if (bomb.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
             {
-                bucheSelected = false;
-                eraseSelected = false;
+                bucheSelected = eraseSelected = objectSelect = medecineSelect=  false;
                 bombSelected = true;
-                objectSelect = false;
-                medecineSelect = false;
             }
 
             if (objectMap.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
             {
-                bucheSelected = false;
-                eraseSelected = false;
-                bombSelected = false;
+                bucheSelected = eraseSelected = bombSelected = medecineSelect =  false;
                 objectSelect = true;
-                medecineSelect = false;
             }
 
             if (Alpha.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
@@ -151,11 +136,7 @@ namespace thegame
 
             if (mouse.RightButton == ButtonState.Pressed)
             {
-                bucheSelected = false;
-                eraseSelected = false;
-                bombSelected = false;
-                objectSelect = false;
-                medecineSelect = false;
+                bucheSelected = eraseSelected = bombSelected = objectSelect = medecineSelect =  false;
             }
 
             if (bucheSelected && mouse.LeftButton == ButtonState.Pressed)
@@ -252,8 +233,7 @@ namespace thegame
                     }
                     else
                     {
-                        showinfoMail = false;
-                        showError = false;
+                        showinfoMail = showError =  false;
                         timeElaspedShow = 0;
                     }
                 }

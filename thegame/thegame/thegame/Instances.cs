@@ -539,9 +539,7 @@ namespace thegame
 
                     {
                         pause = true;
-                        Textures.btnPlay_en.isClicked = false;
-                        Textures.btnMenu_en.isClicked = false;
-                        Textures.btnPlay_fr.isClicked = false;
+                        Textures.btnPlay_en.isClicked = Textures.btnMenu_en.isClicked = Textures.btnPlay_fr.isClicked = false;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.H) && !oldkey.IsKeyDown(Keys.H))
                         help = help ? false : true;
@@ -617,8 +615,7 @@ namespace thegame
                             if (Health <= 0)
                             {
                                 Health = 0;
-                                playerActivate = false;
-                                drawBloodScreen = false;//solve a bug. Otherwise the bloodscreen will continue to force the camera to shake
+                                playerActivate = drawBloodScreen = false;
                             }
                         }
                         else
@@ -627,8 +624,7 @@ namespace thegame
                             if (timeElaspedGameOver > 2500)
                             {
                                 timeElaspedGameOver = 0;
-                                playerActivate = true;
-                                game_over_i = true;
+                                playerActivate = game_over_i =  true;
                             }
                             if (timeElaspedGameOver > 1500)
                             {
@@ -768,9 +764,7 @@ namespace thegame
                     try
                     {
                         if (particleComponent.particleEmitterList[0].Active == true)
-                        {
                             particleComponent.particleEmitterList[0].Active = false;
-                        }
                     }
                     catch { }
                     this.curGameMode = instances_type.Game;
@@ -1450,8 +1444,7 @@ namespace thegame
                 else
                 {
                     elapsedTimeBloodScreen = 0;
-                    drawBloodScreen = false;
-                    cameraClass.shake = false;
+                    drawBloodScreen = cameraClass.shake =  false;
                 }
             }
 
