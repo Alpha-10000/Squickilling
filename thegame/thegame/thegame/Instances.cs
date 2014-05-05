@@ -150,6 +150,7 @@ namespace thegame
             bomb = new List<Bomb>();
             random = new Random();
             medecines = new List<Rectangle>();
+            
 
             if (selected == gameState.WinterLevel)
             {
@@ -175,12 +176,14 @@ namespace thegame
             if (selected == gameState.AutumnLevel)
             {
                 instancesound = Textures.gameSound_Effect.CreateInstance();
+                instancesound.IsLooped = true;
                 snow = false;
 
             }
             else
             {
                 instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+                instancesound.IsLooped = true;
                 snow = true;
             }
 
@@ -1358,7 +1361,7 @@ namespace thegame
                             Bloodscreen(gameTime, sb, cameraClass.Position);
                             sb.End();
                             sb.Begin();
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, 810, 100), Color.DimGray);//draw panel life + bonus + help + pause
+                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth+40, 120), Color.DimGray);//draw panel life + bonus + help + pause
 
                             scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
 
