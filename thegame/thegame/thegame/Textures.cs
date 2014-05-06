@@ -89,7 +89,7 @@ namespace thegame
             gameExplosion_Effect = cm.Load<SoundEffect>("audio\\explosion");
             gamePunch_Effect = cm.Load<SoundEffect>("audio\\punch");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
-            pausedRectangle = new Rectangle(0, 0, pausedTexture.Width + 40, pausedTexture.Height);
+            pausedRectangle = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40, Game1.graphics.PreferredBackBufferHeight+20);
             nut_texture = cm.Load<Texture2D>(@"Nut");
             acorn_texture = cm.Load<Texture2D>(@"Acorn_test2");
             healthBar_texture = cm.Load<Texture2D>(@"HealthBar");
