@@ -132,7 +132,7 @@ namespace thegame
         {
            sb.Draw(image, pos, Color.White);
         }
-        public void Draw(SpriteBatch sb, string text,  Vector2 pos, Color color, string Type) /* To show text */
+        public void Draw(SpriteBatch sb, string text, Vector2 pos, Color color, string Type) /* To show text */
         {
             if (Type == "normal")
                 sb.DrawString(_normalfont, text, pos, color);
