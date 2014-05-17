@@ -48,7 +48,7 @@ namespace thegame
                     if (colour.A == 255) down = false;
                     if (colour.A == 0) down = true;
                     if (down) colour.A += 3; else colour.A -= 3;
-                    if (/*mouse.LeftButton == ButtonState.Pressed || */keyboard.IsKeyDown(Keys.Enter))
+                    if (mouse.LeftButton == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Enter))
                     {
                         isClicked = true;
                         colour.A = 255;
