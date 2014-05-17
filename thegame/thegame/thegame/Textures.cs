@@ -50,6 +50,7 @@ namespace thegame
         public static SpriteFont fontTitle_texture;
         public static SpriteFont fonthelp_texture;
         public static SpriteFont fontnormal_texture;
+        public static SpriteFont font_pause;
 
 
         public static SoundEffect buttonSound_Effect;
@@ -66,7 +67,7 @@ namespace thegame
         public static Texture2D eraser;
 
 
-        public static Button btnPlay_en, btnQuit_en, btnMenu_en, btnPlay_fr, btnQuit_fr, btnMenu_fr;
+        public static Button btnPlay_Autumn, btnQuit_Autumn, btnMenu_Autumn, btnPlay_Winter, btnQuit_Winter, btnMenu_Winter, btnMute;
 
         public static Texture2D snowdrop;
 
@@ -82,6 +83,7 @@ namespace thegame
             fontnormal_texture = cm.Load<SpriteFont>(@"normal");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             fonthelp_texture = cm.Load<SpriteFont>(@"fontHelp");
+            font_pause = cm.Load<SpriteFont>(@"PauseMenuFont");
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
             gameSound_Effect = cm.Load<SoundEffect>("audio\\autumn");
             gameSound_EffectWinter = cm.Load<SoundEffect>("audio\\winter");
@@ -123,22 +125,26 @@ namespace thegame
             vid = cm.Load<Video>(@"video\\vid");
 
             //Menu Pause
-            btnPlay_fr = new Button();
-            btnMenu_fr = new Button();
-            btnQuit_fr = new Button();
-            btnPlay_fr.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_fr"), new Vector2(313, 183));
-            btnMenu_fr.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_fr"), new Vector2(318, 253));
-            btnQuit_fr.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_fr"), new Vector2(307, 323));
+            btnPlay_Autumn = new Button();
+            btnMenu_Autumn = new Button();
+            btnQuit_Autumn = new Button();
+           
+            btnPlay_Winter = new Button();
+            btnMenu_Winter = new Button();
+            btnQuit_Winter = new Button();
 
+            btnMute = new Button();
+            
+            btnPlay_Autumn.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Autumn"), new Vector2(313, 183));
+            btnMenu_Autumn.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Autumn"), new Vector2(313, 253));
+            btnQuit_Autumn.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Autumn"), new Vector2(313, 323));
+            
+            btnPlay_Winter.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Winter"), new Vector2(313, 183));
+            btnMenu_Winter.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Winter"), new Vector2(313, 253));
+            btnQuit_Winter.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Winter"), new Vector2(313, 323));
 
-            btnPlay_en = new Button();
-            btnMenu_en = new Button();
-            btnQuit_en = new Button();
-            btnPlay_en.Load(cm.Load<Texture2D>(@"MenuPause_language\\Play_en"), new Vector2(313, 183));
-            btnMenu_en.Load(cm.Load<Texture2D>(@"MenuPause_language\\Menu_en"), new Vector2(318, 253));
-            btnQuit_en.Load(cm.Load<Texture2D>(@"MenuPause_language\\Quit_en"), new Vector2(307, 323));
-
-
+            btnMute.Load(cm.Load<Texture2D>(@"MenuPause_language\\mute"), new Vector2(50,50));
+            
             // Game Over
             game_overTexture_en = cm.Load<Texture2D>(@"game_over_en");
             game_overTexture_fr = cm.Load<Texture2D>(@"game_over_fr");

@@ -19,6 +19,7 @@ namespace thegame
         bool down;
         public bool isClicked;
         public bool isSelected;
+        private bool useKeyboard = false;
 
         public Button()
         {
@@ -39,24 +40,32 @@ namespace thegame
             rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
             Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);
-
-            if (mouseRectangle.Intersects(rectangle) || isSelected)
+            
+            if (!useKeyboard)
             {
-                if (colour.A == 255) down = false;
-                if (colour.A == 0) down = true;
-                if (down) colour.A += 3; else colour.A -= 3;
-                if (mouse.LeftButton == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Enter))
+                if (mouseRectangle.Intersects(rectangle) || isSelected)
                 {
-                    isClicked = true;
-                    colour.A = 255;
+                    if (colour.A == 255) down = false;
+                    if (colour.A == 0) down = true;
+                    if (down) colour.A += 3; else colour.A -= 3;
+                    if (/*mouse.LeftButton == ButtonState.Pressed || */keyboard.IsKeyDown(Keys.Enter))
+                    {
+                        isClicked = true;
+                        colour.A = 255;
+                    }
                 }
+                else if (colour.A < 255) colour.A += 3;
             }
-            else if (colour.A < 255) colour.A += 3;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, rectangle, colour);
+        }
+
+        public void Draw(SpriteBatch spritBatch, Rectangle rectangle1)
+        {
+            spritBatch.Draw(texture, rectangle1, colour);
         }
     }
 }
