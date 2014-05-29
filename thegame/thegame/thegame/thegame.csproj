@@ -136,6 +136,7 @@
     <Compile Include="GameComponents\X2DPE\Particle.cs" />
     <Compile Include="GameComponents\X2DPE\ParticleGameComponent.cs" />
     <Compile Include="Instances.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Perso.cs" />
     <Compile Include="Plateforme.cs" />
