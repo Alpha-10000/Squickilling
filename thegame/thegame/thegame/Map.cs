@@ -69,7 +69,6 @@ namespace thegame
         private static int[] winterAiMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
 
-        MouseState mouse1;
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
@@ -79,7 +78,7 @@ namespace thegame
         private bool drawBloodScreen = false;//variable for the bloodscreen
         private float elapsedTimeBloodScreen = 0;
 
-        private Camera cameraClass = new Camera();
+
 
         private Drawable scoreDisplay;
 
@@ -112,7 +111,7 @@ namespace thegame
         private int mapSizeX;
         private int mapSizeY;
 
-        public Vector2 cameraPos = Vector2.Zero;
+  
 
 
         private float timeElaspedGameOver = 0;
@@ -120,18 +119,12 @@ namespace thegame
         private float transparencyAnimation = 0;
         private int Health; //BASIC LEVEL OF PERSO
         public bool pause = false;
-        public bool game_over_i = false;
         public bool help = false;
         public bool endLevel = false;
-        private bool developpermap = false;
 
         MouseState mouse = Mouse.GetState();
 
-        public bool Developpermode = false;//this is just for us. Activate the developper mode
 
-        private float developperXMouse;
-        private float developperYMouse;
-        private bool developperCoord = false;
 
         private Language Language = new Language();
         public static ParticleComponent particleComponent;
@@ -144,22 +137,22 @@ namespace thegame
 
         private Perso theperso;
 
-        private Texture2D ground_texture;
-        private Texture2D Background;
+        private Texture2D Background, buche_texture, ground_texture;
         Drawable thetree, tree_entrance_inside, Ground;
 
         public MapState themapstate = MapState.game;
 
         private PauseMenu pauseMenu = new PauseMenu();
 
-        public Map(gameState thegamestate)
+        public Map(gameState thegamestate, ref Camera cameraClass)
         {
             this.thegamestate = thegamestate;
-            this.NewGame();
+            this.NewGame(ref cameraClass);
         }
 
-        private void NewGame()
+        private void NewGame(ref Camera cameraClass)
         {
+            Init_Game(ref cameraClass);
             int[,] thetile;
             int[] IAtile;
             themapstate = MapState.game;
@@ -171,6 +164,7 @@ namespace thegame
                         Background = Textures.autumnBackground;
                         thetile = autumnTileMap;
                         IAtile = autumnAiMap;
+                        buche_texture = Textures.buche_texture;
                         thetree = new Drawable(drawable_type.tree);
                         tree_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance);
                         Ground = new Drawable(drawable_type.AutumnGround);
@@ -180,13 +174,13 @@ namespace thegame
                         Background = Textures.winterBackground;
                         thetile = winterTileMap;
                         IAtile = winterAiMap;
+                        buche_texture = Textures.buche_texture_winter;
                         thetree = new Drawable(drawable_type.winterTree);
                         tree_entrance_inside = new Drawable(drawable_type.tree_winter_entrance_inside);
                         Ground = new Drawable(drawable_type.WinterGround);
                     break;
             }
 
-             Init_Game();
              objects = new List<Rectangle>();
              iaPerso = new List<Perso>();
            /* IA CHARACTERS */
@@ -223,7 +217,7 @@ namespace thegame
         }
 
         /* EVERYTHING THAT HAS TO BE INIT AT EACH LEVEL*/
-        private void Init_Game()
+        private void Init_Game(ref Camera cameraClass)
         {
             score = 0;
             this.nb_nuts = 0;
@@ -266,12 +260,11 @@ namespace thegame
                 snow = true;
             }
 
-            if (!Developpermode && SoundIs)
-                instancesound.Play();
+           
         }
 
 
-        public void Update(GameTime gametime, Game game, Camera  cameraClass, Vector2 cameraPos)
+        public void Update(GameTime gametime, Game game, ref Camera  cameraClass, ref Vector2 cameraPos, bool Developpermode)
         {
 
 
@@ -313,8 +306,7 @@ namespace thegame
                 {
                     endLevel = false;
                     thegamestate = gameState.WinterLevel;
-                    NewGame();
-                    Init_Game();
+                    NewGame(ref cameraClass);
                 }
             }
             else if (themapstate == MapState.game)
@@ -377,8 +369,7 @@ namespace thegame
 
                     if (checkBlood > 0)
                     {
-                        drawBloodScreen = true;
-                        theperso.PersoHitted = true;
+                        theperso.PersoHitted = drawBloodScreen = true;
                         theperso.compteurHitted = 0;
                     }
 
@@ -394,7 +385,8 @@ namespace thegame
                     if (timeElaspedGameOver > 2500)
                     {
                         timeElaspedGameOver = 0;
-                        playerActivate = game_over_i = true;
+                        playerActivate = true;
+                        themapstate = MapState.gameover;
                     }
                     if (timeElaspedGameOver > 1500)
                         transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
@@ -437,76 +429,38 @@ namespace thegame
                     if (Inputs.isKeyRelease(Keys.Space))
                     {
                         themapstate = MapState.game;
-                        Init_Game();
-                        NewGame();
+                        NewGame(ref cameraClass);
                     }
                 }
 
-                Keys[] getkey = Keyboard.GetState().GetPressedKeys();
+            Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
-                //ACTIVATE DEVELOPER MODE BY PRESSING THE WORD TEAM. SAME TIME
-                if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
-                    Developpermode = true;
-
-                if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
+            if (Developpermode)
+            {
+                if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
                 {
-                    Developpermode = false;
-                    instancesound.Play();
-                    SoundIs = true;
-                    if (developpermap)
-                    {
-                        developpermap = false;
-                        this.selected = 0;
-                        //TODO : GO BACK TO THE MENU
-                    }
+                    thegamestate = gameState.WinterLevel;
+                    NewGame(ref cameraClass);
                 }
-
-                if (Developpermode)
+                if (getkey.Contains(Keys.NumPad1) || getkey.Contains(Keys.D1))
                 {
-                    SoundIs = false;
-                    developperXMouse = mouse1.X;
-                    developperYMouse = mouse1.Y;
-                    instancesound.Stop();
-                    if (getkey.Contains(Keys.C) && !developperCoord)
-                        developperCoord = true;
-                    if (getkey.Contains(Keys.X) && developperCoord)
-                        developperCoord = false;
-                    if (getkey.Contains(Keys.M) && getkey.Contains(Keys.A) && getkey.Contains(Keys.P))
+                    try
                     {
-                        curGameMode = instances_type.MapDevelopper;
-                        selected = gameState.DeveloperMode;
-                        developpermap = true;
-                        // TODO MOVE THAT
+                        if (particleComponent.particleEmitterList[0].Active == true)
+                            particleComponent.particleEmitterList[0].Active = false;
                     }
-                    if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
-                    {
-                        Init_Game();
-                        this.curGameMode = instances_type.Game;
-                        selected = gameState.WinterLevel;
-                        //TODO: MOVE THAT
-                    }
-                    if (getkey.Contains(Keys.NumPad1) || getkey.Contains(Keys.D1))
-                    {
-                        Init_Game();
-                        try
-                        {
-                            if (particleComponent.particleEmitterList[0].Active == true)
-                                particleComponent.particleEmitterList[0].Active = false;
-                        }
-                        catch { }
-                        thegamestate = gameState.AutumnLevel;
-                        Init_Game();
-                    }
-
+                    catch { }
+                    thegamestate = gameState.AutumnLevel;
+                    NewGame(ref cameraClass);
                 }
-
+            }
                 
 
             
         }
         
 
-        public void Display(SpriteBatch sb, GameTime gameTime)
+        public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)
         {
             
          if (themapstate == MapState.gameover && playerActivate)
@@ -541,7 +495,7 @@ namespace thegame
                 }
                 else if(themapstate == MapState.pause)
                     pauseMenu.Display(sb, thegamestate);
-                else
+                else if (themapstate == MapState.game)
                 {
                             sb.Begin();
                             // Makes the background move slower than the camera to create an effect of depth.
@@ -570,7 +524,7 @@ namespace thegame
 
                             // Draw the platforms
                             foreach (Rectangle top in blocks)
-                                sb.Draw(Textures.buche_texture, top, Color.White);
+                                sb.Draw(buche_texture, top, Color.White);
 
                             // Draw the objects
                             foreach (Rectangle dessine in objects)
@@ -601,7 +555,7 @@ namespace thegame
                             sb.End();
 
                             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            Bloodscreen(gameTime, sb, cameraClass.Position);
+                            Bloodscreen(gameTime, sb, cameraClass.Position, cameraClass);
                             sb.End();
                             sb.Begin();
                             sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth+40, 120), Color.DimGray);//draw panel life + bonus + help + pause
@@ -648,13 +602,12 @@ namespace thegame
                     sb.Draw(ground_texture, new Vector2(0, 405), Color.White * transparency);
                     sb.Draw(ground_texture, new Vector2(790, 405), Color.White * transparency);
 
-                   
-                        sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
+                    sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
                    
                     sb.End();
         }
 
-        private void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera)
+        private void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera, Camera cameraClass)
         {
 
             if (drawBloodScreen)

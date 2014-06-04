@@ -72,36 +72,23 @@ namespace thegame
         public static Rectangle vidRectangle;
         public static VideoPlayer vidPlayer, vidPlayer2;
 
-        public List<Rectangle> blocks;
-        public List<Rectangle> blocksTop;
-        public List<Rectangle> blocksLeft;
-        public List<Rectangle> blocksRight;
-        public List<Rectangle> blocksBottom;
-        public List<Rectangle> tile;
-        private List<Rectangle> objects = new List<Rectangle> { };
-        private List<Bomb> bomb = new List<Bomb> { };
-        private List<Rectangle> medecines = new List<Rectangle>();
 
-        private List<Perso> iaPerso = new List<Perso>();
 
+        private bool developpermap = false;
 
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIs;       // Set to true to switch the sound (on / off)
         private Drawable tree;
       
-
+        private int developperXMouse;
+        private int  developperYMouse;
        
 
         public Vector2 cameraPos = Vector2.Zero;
 
 
 
-        public bool pause = false;
-        public static string language_pause;
-        public bool game_over_i = false;
-        public bool help = false;
-        public bool endLevel = false;
       
 
         MouseState mouse = Mouse.GetState();
@@ -123,7 +110,6 @@ namespace thegame
             /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
             this.curGameMode = instances_type.Menu;
             this.selected = 0;
-            
 
             instancesound = Textures.gameSound_Effect.CreateInstance();
             instancesound.IsLooped = true;
@@ -281,7 +267,8 @@ namespace thegame
 
                 else if (selected == gameState.AutumnLevel || selected == gameState.WinterLevel || selected == gameState.SummerLevel || selected == gameState.SpringLevel)// THIS IS THE GAME 
                 {
-                    thecurrentmap.Update(gametime, game,cameraClass, cameraPos);
+
+                    thecurrentmap.Update(gametime, game,ref cameraClass, ref cameraPos, Developpermode);
                     if (thecurrentmap.themapstate == Map.MapState.gobackmenu)
                     {
                         curGameMode = instances_type.Menu;
@@ -289,6 +276,51 @@ namespace thegame
                         Execute();
                     }
                 }
+
+                Keys[] getkey = Keyboard.GetState().GetPressedKeys();
+
+                //ACTIVATE DEVELOPER MODE BY PRESSING THE WORD TEAM. SAME TIME
+                if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
+                    Developpermode = true;
+
+                if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
+                {
+                    Developpermode = false;
+                    instancesound.Play();
+                    SoundIs = true;
+                    if (developpermap)
+                    {
+                        developpermap = false;
+                        this.selected = 0;
+                        curGameMode = instances_type.Menu;
+                        Execute();
+                    }
+                }
+
+                if (Developpermode)
+                {
+                    SoundIs = false;
+                    developperXMouse = mouse1.X - (int)cameraPos.X;
+                    developperYMouse = mouse1.Y;
+                    instancesound.Stop();
+                    if (getkey.Contains(Keys.C) && !developperCoord)
+                        developperCoord = true;
+                    if (getkey.Contains(Keys.X) && developperCoord)
+                        developperCoord = false;
+
+                    if (getkey.Contains(Keys.M) && getkey.Contains(Keys.A) && getkey.Contains(Keys.P))
+                    {
+                        curGameMode = instances_type.MapDevelopper;
+                        selected = gameState.DeveloperMode;
+                        developpermap = true;
+                        Execute();
+                    }
+                    
+
+                }
+
+                if (!Developpermode && SoundIs)
+                    instancesound.Play();
             
         }
 
@@ -317,7 +349,6 @@ namespace thegame
                         (execute as Menu).AddElements(Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOn"] + ")"); //fullscreen on
                     else
                         (execute as Menu).AddElements(Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOff"] + ")"); //fullscreen off
-
 
                     if (SoundIs)
                         (execute as Menu).AddElements(Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOn"] + ")"); //sound on
@@ -366,14 +397,15 @@ namespace thegame
                 case gameState.AutumnLevel: /* GAME START */
                     Sound("menu");
                     Sound("Game");
-                    thecurrentmap = new Map(selected);
+                    thecurrentmap = new Map(selected, ref cameraClass);
+                    
                     curGameMode = instances_type.Game;
                     break;
 
                 case gameState.WinterLevel: /* GAME START */
                     Sound("menu");
                     Sound("Game");
-                    thecurrentmap = new Map(selected);
+                    thecurrentmap = new Map(selected, ref cameraClass);
                     curGameMode = instances_type.Game;
                     break;
 
@@ -448,7 +480,7 @@ namespace thegame
                 }
                 else if (curGameMode == instances_type.Game)
                 {
-                    thecurrentmap.Display(sb, gameTime);
+                    thecurrentmap.Display(sb, gameTime, cameraClass);
                 }
                 else // draw splashscreen
                 {
@@ -464,12 +496,12 @@ namespace thegame
                     Drawable developper = new Drawable(drawable_type.font);
                     developper.Draw(sb, "DEVELOPER MODE", new Vector2(50, 20), Color.Black, "normal");
                     //TODO : reactivate
-                 //   if (developperCoord)
-                 //   {
-                  //      sb.Draw(Textures.hitbox, new Rectangle((int)developperXMouse, 0, 2, 1200), Color.Red * 0.5f);
-                  //      sb.Draw(Textures.hitbox, new Rectangle(0, (int)developperYMouse, 1200, 2), Color.Red * 0.5f);
-                   //     developper.Draw(sb, "Coord. X : " + (int)developperXMouse + " Y : " + (int)developperYMouse, new Vector2(250, 20), Color.Black, "normal");
-                  //  }
+                    if (developperCoord)
+                    {
+                        sb.Draw(Textures.hitbox, new Rectangle((int)developperXMouse + (int)cameraPos.X, 0, 2, 1200), Color.Red * 0.5f);
+                        sb.Draw(Textures.hitbox, new Rectangle(0, (int)developperYMouse, 1200, 2), Color.Red * 0.5f);
+                       developper.Draw(sb, "Coord. X : " + (int)developperXMouse + " Y : " + (int)developperYMouse, new Vector2(250, 20), Color.Black, "normal");
+                   }
                     sb.End();
                 }
             
