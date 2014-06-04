@@ -57,76 +57,76 @@ namespace thegame
                     array[y, x] = 0;
         }
 
-        public void UpdateMap(KeyboardState keyboardState, GameTime gametime, MouseState mouse)
+        public void UpdateMap(GameTime gametime)
         {
 
-            DrawMouseX = mouse.X - (int)cameraPos.X;
-            DrawMouseY = mouse.Y + (int)cameraPos.Y;
+            DrawMouseX = (int)Inputs.getMousePos().X - (int)cameraPos.X;
+            DrawMouseY = (int)Inputs.getMousePos().X + (int)cameraPos.Y;
 
-            if (keyboardState.IsKeyDown(Keys.S))
+            if (Inputs.isKeyDown(Keys.S))
                 showGrid = true;
-            if (keyboardState.IsKeyDown(Keys.H))
+            if (Inputs.isKeyDown(Keys.H))
                 showGrid = false;
 
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (Inputs.isKeyDown(Keys.Right))
             {
                 float changement = 500f * (float)gametime.ElapsedGameTime.TotalSeconds;
                 if (cameraPos.X < 5500)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (Inputs.isKeyDown(Keys.Left))
             {
                 float changement = 500f * (float)gametime.ElapsedGameTime.TotalSeconds;
                 if (cameraPos.X < 5500)
                     cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
             }
 
-            if (buche.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (buche.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 bucheSelected = true;
                 eraseSelected = bombSelected = objectSelect = medecineSelect= false;
             }
 
-            if (medecine.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (medecine.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 bucheSelected = eraseSelected = bombSelected = objectSelect =  false;
                 medecineSelect = true;
             }
 
-            if (eraser.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (eraser.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 bucheSelected = bombSelected = objectSelect = medecineSelect=  false;
                 eraseSelected = true;
             }
 
-            if (bomb.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (bomb.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 bucheSelected = eraseSelected = objectSelect = medecineSelect=  false;
                 bombSelected = true;
             }
 
-            if (objectMap.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (objectMap.Contains(Inputs.getMousePoint())  && Inputs.isLMBClick())
             {
                 bucheSelected = eraseSelected = bombSelected = medecineSelect =  false;
                 objectSelect = true;
             }
 
-            if (Alpha.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (Alpha.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 email = "alphamft@gmail.com";
                 SendMail();
             }
-            if (Elise.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (Elise.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 email = "elise.schrav@gmail.com";
                 SendMail();
             }
-            if (Thibault.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (Thibault.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 email = "thibault.liotier@gmail.com";
                 SendMail();
             }
-            if (Victor.Intersects(new Rectangle(mouse.X, mouse.Y, 1, 1)) && mouse.LeftButton == ButtonState.Pressed)
+            if (Victor.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 email = "victor.boissiere@gmail.com";
                 SendMail();
@@ -134,20 +134,20 @@ namespace thegame
 
 
 
-            if (mouse.RightButton == ButtonState.Pressed)
+            if (Inputs.isRightClick())
             {
                 bucheSelected = eraseSelected = bombSelected = objectSelect = medecineSelect =  false;
             }
 
-            if (bucheSelected && mouse.LeftButton == ButtonState.Pressed)
+            if (bucheSelected && Inputs.isLMBClick())
                 UpdateArray(DrawMouseX, DrawMouseY, 1);
-            if (eraseSelected && mouse.LeftButton == ButtonState.Pressed)
+            if (eraseSelected && Inputs.isLMBClick())
                 UpdateArray(DrawMouseX, DrawMouseY, 0);
-            if (bombSelected && mouse.LeftButton == ButtonState.Pressed)
+            if (bombSelected && Inputs.isLMBClick())
                 UpdateArray(DrawMouseX, DrawMouseY, 3);
-            if (objectSelect && mouse.LeftButton == ButtonState.Pressed)
+            if (objectSelect && Inputs.isLMBClick())
                 UpdateArray(DrawMouseX, DrawMouseY, 2);
-            if (medecineSelect && mouse.LeftButton == ButtonState.Pressed)
+            if (medecineSelect && Inputs.isLMBClick())
                 UpdateArray(DrawMouseX, DrawMouseY, 4);
 
         }

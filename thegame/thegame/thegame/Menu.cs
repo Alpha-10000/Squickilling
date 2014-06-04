@@ -40,8 +40,6 @@ namespace thegame
 
         private Color change_Color = Color.OrangeRed;
 
-        private bool useMouse = false;
-        private Point mouseLocation;
 
         public bool activateBackSpace = false;
 
@@ -88,16 +86,11 @@ namespace thegame
 
             // Draw Menu Background Here
             if(!Game1.graphics.IsFullScreen)
-            sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
-
-            else sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
-
-
+                sb.Draw(Textures.menu_main_page, new Vector2(0,0),Color.White);
+            else 
+                sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
 
             sb.Draw(Textures.white_tree, new Vector2(195, 100), Color.Black * 0.6f);
-
-
-
 
             Drawable squirrel = new Drawable(drawable_type.Squirrel);
             squirrel.Draw(sb, new Vector2(630, 120));
@@ -123,29 +116,21 @@ namespace thegame
                     sb.Draw(Textures.hitbox, dessine, Color.White * 0.5f);
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, bool SoundIsTrue, MouseState mouse, MouseState oldMouse)
+        public void Update(GameTime gametime, bool SoundIsTrue)
         {
             
-            mouseLocation = new Point(mouse.X, mouse.Y);
             bool MouseOnSOmething = false;
-
-            if (mouse != oldMouse)
-                useMouse = true;
-
-            if (oldkey != keyboardState)
-                useMouse = false;
-
             int index = 0;
 
-            if (useMouse)
+            if (Inputs.UseMouse())
             {
                 foreach (Rectangle check in AreaListMouse)
-                    if (check.Contains(mouseLocation))
+                    if (check.Contains(Inputs.getMousePoint()))
                     {
                         index = AreaListMouse.FindIndex(x => x == check);
                         YExcavator = 140 + index * 60;
                         MouseOnSOmething = true;
-                        if (mouse.LeftButton == ButtonState.Pressed && mouse != oldMouse)
+                        if (Inputs.isLMBClick())
                             IChooseSomething = true;
                         break;
                     }
@@ -160,9 +145,7 @@ namespace thegame
             }
             else
             {
-
-
-                if (keyboardState.IsKeyDown(Keys.Down) && !oldkey.IsKeyDown(Keys.Down))
+                if (Inputs.isKeyRelease(Keys.Down))
                 {
                     if (this.selected < this.color_tab.Length - 1)
                     {
@@ -175,7 +158,7 @@ namespace thegame
                     }
                 }
 
-                if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
+                if (Inputs.isKeyRelease(Keys.Up))
                 {
                     if (this.selected >= 1)
                     {
@@ -188,10 +171,10 @@ namespace thegame
                     }
                 }
 
-                if (keyboardState.IsKeyDown(Keys.Enter) && !oldkey.IsKeyDown(Keys.Enter))
+                if (Inputs.isKeyRelease(Keys.Enter))
                     IChooseSomething = true;
 
-                if (keyboardState.IsKeyDown(Keys.Back) && activateBackSpace && !oldkey.IsKeyDown(Keys.Back))
+                if (Inputs.isKeyRelease(Keys.Back) && activateBackSpace)
                 {
                     IChooseSomething = true;
                     selected = this.color_tab.Length - 1;

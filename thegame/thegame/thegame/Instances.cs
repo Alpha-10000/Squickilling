@@ -53,8 +53,7 @@ namespace thegame
     {
         public Game1 game { get; private set; }
 
-        KeyboardState keyboardState;        // Used to manage the keyboard input.
-        KeyboardState oldkey;
+
         MouseState OldMouse;
         MouseState mouse1;
 
@@ -63,265 +62,68 @@ namespace thegame
         public gameState selected { get; private set; }              // Selected menu page.
         public SoundEffect sound { get; private set; }
 
-        private bool drawBloodScreen = false;//variable for the bloodscreen
-        private float elapsedTimeBloodScreen = 0;
+
 
         private Camera cameraClass = new Camera();
 
-        private Drawable scoreDisplay;
-        private Dictionary<string, string> Text_Game; // Contains text of menu options
 
         private SoundEffectInstance instancesound;
         private SoundEffectInstance instancesoundMenu;//sound for the menu
         public static Rectangle vidRectangle;
         public static VideoPlayer vidPlayer, vidPlayer2;
-        string language;
-        private int[,] tilemap;
+
         public List<Rectangle> blocks;
         public List<Rectangle> blocksTop;
         public List<Rectangle> blocksLeft;
         public List<Rectangle> blocksRight;
         public List<Rectangle> blocksBottom;
         public List<Rectangle> tile;
-        private List<Projectile> projectiles;
         private List<Rectangle> objects = new List<Rectangle> { };
         private List<Bomb> bomb = new List<Bomb> { };
         private List<Rectangle> medecines = new List<Rectangle>();
 
         private List<Perso> iaPerso = new List<Perso>();
 
-        private int score = 0;          // Score
-        private int nb_nuts;
-        // TODO: Should score stay here or should it be elsewhere?
+
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIs;       // Set to true to switch the sound (on / off)
         private Drawable tree;
-        private Drawable tree_autumn_entrance;
-        private Drawable tree_autumn_entrance_inside;
-        private Drawable tree_autumn_exit;
-        private Drawable tree_autumn_exit_inside;
-        private Drawable tree_winter_entrance_inside;
-        private Drawable Ground;
+      
 
-        private Drawable debug;
-        //private Drawable scoreDisplay;
-
-        private List<Texture2D> texlis;
-        private int mapSizeX;
-        private int mapSizeY;
+       
 
         public Vector2 cameraPos = Vector2.Zero;
 
 
-        private float timeElaspedGameOver = 0;
-        private bool playerActivate = true;
-        private float transparencyAnimation = 0;
-        private int Health; //BASIC LEVEL OF PERSO
+
         public bool pause = false;
         public static string language_pause;
         public bool game_over_i = false;
         public bool help = false;
         public bool endLevel = false;
-        private bool developpermap = false;
+      
 
         MouseState mouse = Mouse.GetState();
 
         public bool Developpermode = false;//this is just for us. Activate the developper mode
 
-        private float developperXMouse;
-        private float developperYMouse;
+    
         private bool developperCoord = false;
-        
 
         public static ParticleComponent particleComponent;
-        Random random;
-        Emitter testEmitter2;
-        bool snow = false;
-        
 
-        /* EVERYTHING THAT HAS TO BE RESET AT GAME OVER OR BEGINNING OF THE GAME */
-        private void Init_Game()
-        {
-            this.nb_nuts = 0;
-            this.Health = 20;
-            drawBloodScreen = false;
-            cameraClass.shake = false;
-            bomb = new List<Bomb>();
-            random = new Random();
-            medecines = new List<Rectangle>();
-            
+        private Map thecurrentmap;
 
-            if (selected == gameState.WinterLevel)
-            {
-                testEmitter2 = new Emitter();
-                testEmitter2.Active = false;
-                testEmitter2.TextureList.Add(Textures.snowdrop);
-                testEmitter2.RandomEmissionInterval = new RandomMinMax(64.0d);
-                testEmitter2.ParticleLifeTime = 3000;
-                testEmitter2.ParticleDirection = new RandomMinMax(170);
-                testEmitter2.ParticleSpeed = new RandomMinMax(2.5f);
-                testEmitter2.ParticleRotation = new RandomMinMax(0);
-                testEmitter2.RotationSpeed = new RandomMinMax(0f);
-                testEmitter2.ParticleFader = new ParticleFader(false, true, 800);
-                testEmitter2.ParticleScaler = new ParticleScaler(false, 1.0f);
-                testEmitter2.Opacity = 255;
 
-                particleComponent.particleEmitterList.Add(testEmitter2);
-            }
-            instancesoundMenu.Stop();
 
-            instancesound.Stop();
-
-            if (selected == gameState.AutumnLevel)
-            {
-                instancesound = Textures.gameSound_Effect.CreateInstance();
-                instancesound.IsLooped = true;
-                snow = false;
-
-            }
-            else
-            {
-                instancesound = Textures.gameSound_EffectWinter.CreateInstance();
-                instancesound.IsLooped = true;
-                snow = true;
-            }
-
-            if(!Developpermode && SoundIs)
-                instancesound.Play();
-        }
-
-        /*LANGUAGE OPTION */
-        private void GetText(string language)
-        {
-            CultureInfo ci = CultureInfo.InstalledUICulture;
-            switch (language)
-            {
-                case "english":
-                    Text_Game = new Dictionary<string, string>()
-                    {
-                                                   {"_mnuPlay","Play"},
-                                                   {"_mnuOptions","Options"}, 
-                                                   {"_mnuExit","Exit"},
-                                                   {"_mnuLanguage","Language"},
-                                                   {"_mnuFullscreen","Full screen"}, 
-                                                   {"_mnuBack","Back"},
-                                                   {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Francais"}, //has to be français
-                                                   {"_mnuSound","Sound"}, 
-                                                   {"_mnuOn","On"},
-                                                   {"_mnuOff","Off"},
-                                                   {"_mnuDutch","Nederlands"},
-                                                   {"_gamePause","Press P to pause"},
-                                                   {"_gameHelp","Press H to get help"},
-                                                   {"_gameHealth","Health"},
-                                                   {"_gamescore","score"},
-                                                   {"_gamebonus","points"},
-                                                   {"_gameHelpLine1","Use the left and right arrow to move the character"},
-                                                   {"_gameHelpLine2","Use the top arrow to jump"},
-                                                   {"_gameHelpLine3","To fire on ennemies use the space bar"},
-                                                   {"_gameHelpLine4","Press any key to exit"},
-                                                   {"congrats","End of the level, so badass..."},
-                                                   {"finalScore","Ennemies Killed : "},
-                                                   {"finalBonus","Bonus Score : "},
-                                                   {"total","Total : "},
-                                                   {"space","Press Space key"},
-                                                   {"_btnPlay","Resume"},
-                                                   {"_btnMenu","Menu"},
-                                                   {"_btnQuit","Exit"},
-                    
-                    };
-                    break;
-
-                case "french":
-                    Text_Game = new Dictionary<string, string>()
-                    {                              
-                                                   {"_mnuPlay","Jouer"},
-                                                   {"_mnuOptions","Options"},
-                                                   {"_mnuExit","Quitter"},
-                                                   {"_mnuLanguage","Langue"},
-                                                   {"_mnuFullscreen","Plein ecran"}, 
-                                                   {"_mnuBack","Retour"},
-                                                   {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Francais"},
-                                                   {"_mnuSound","Son"},
-                                                   {"_mnuOn","Actif"},
-                                                   {"_mnuOff","Inactif"},
-                                                   {"_mnuDutch","Nederlands"},
-                                                   {"_gamePause","P = pause"},
-                                                   {"_gameHelp","H = aide"},
-                                                   {"_gameHealth","Vie"},
-                                                   {"_gamescore","score"},
-                                                   {"_gamebonus","points"},
-                                                   {"_gameHelpLine1","Utilisez la flèche gauche/droite pour se déplacer"},
-                                                   {"_gameHelpLine2","Utilisez la flèche du haut pour sauter"},
-                                                   {"_gameHelpLine3","Utilisez la barre espace pour tirer"},
-                                                   {"_gameHelpLine4","Appuyez sur une touche pour quitter"},
-                                                   {"congrats","Fin du niveau, trop badass..."},
-                                                   {"finalScore","Nombre d'ennemis morts : "},
-                                                   {"finalBonus","Score bonus : "},
-                                                   {"total","Total : "},
-                                                   {"space","Appuyer sur la touche Espace"},
-                                                   {"_btnPlay", "Reprendre"},
-                                                   {"_btnMenu","Menu"},
-                                                   {"_btnQuit","Quitter"},
-                    };
-                    break;
-
-                case "nederlands":
-                    Text_Game = new Dictionary<string, string>()
-                    {
-                                                   {"_mnuPlay","Spelen"},
-                                                   {"_mnuOptions","Opties"}, 
-                                                   {"_mnuExit","Afsluiten"}, 
-                                                   {"_mnuLanguage","Taal"},
-                                                   {"_mnuFullscreen","Volledig scherm"},
-                                                   {"_mnuBack","Terug"},
-                                                   {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Francais"},
-                                                   {"_mnuSound","Geluid"},
-                                                   {"_mnuOn","Aan"},
-                                                   {"_mnuOff","Uit"},
-                                                   {"_mnuDutch","Nederlands"},
-                                                   {"_gamePause","Druk P voor pause"},
-                                                   {"_gameHelp","Druk H voor help"},
-                                                   {"_gameHealth","Health"},
-                                                   {"_gamescore","score"},
-                                                   {"_gamebonus","bonus"},
-                                                   {"_gameHelpLine1","Cursor links en rechts om te bewegen"},
-                                                   {"_gameHelpLine2","Cursor omhoog om te springen"},
-                                                   {"_gameHelpLine3","Spaciebalk om te schieten"},
-                                                   {"_gameHelpLine4","Druk een willekeurige om werder te spelen"},
-                                                   {"congrats","Geweldig! Je hebt het level gehaald"},
-                                                   {"finalScore","Je score is : "},
-                                                   {"finalBonus","Bonus score : "},
-                                                   {"total","Totaal : "},
-                                                   {"space","Druk spacie balk"},
-                                                   {"_btnPlay","Hervatten"},
-                                                   {"_btnMenu","Menu"},
-                                                   {"_btnQuit","Afsluiten"},
-                    };
-                    break;
-            }
-        }
 
         public Instances(Game1 game)
         {
             /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
             this.curGameMode = instances_type.Menu;
             this.selected = 0;
-            if (CultureInfo.InstalledUICulture.ToString() == "fr-FR")
-            {
-                GetText("french");
-                language = "french";
-                language_pause = "french";
-            }
-            else
-            {
-                GetText("english");
-                language = "english";
-                language_pause = "english";
-            }
+            
 
             instancesound = Textures.gameSound_Effect.CreateInstance();
             instancesound.IsLooped = true;
@@ -342,58 +144,17 @@ namespace thegame
 
         public void UpdateByKey(GameTime gametime)
         {
-            oldkey = keyboardState;
-            keyboardState = Keyboard.GetState();
 
             OldMouse = mouse1;
             mouse1 = Mouse.GetState();
+
+            Inputs.upDate();
+
            
 
-
-            if (keyboardState.IsKeyDown(Keys.Escape)) /* Exit the game */
-            {
-                if (this.selected == gameState.AutumnLevel || this.selected == gameState.WinterLevel)
-                {
-                    pause = true;
-                    Textures.btnPlay_Autumn.isClicked = false;
-                    Textures.btnMenu_Autumn.isClicked = false;
-                    Textures.btnPlay_Winter.isClicked = false;
-                    Textures.btnMenu_Winter.isClicked = false;
-                    Textures.btnMute.isClicked = false;
-                }
-                else
-                    game.Exit();
-            }
-
-            if (!pause && !game_over_i)
-            {
-                
-                if (selected == gameState.WinterLevel)
-                {
-                    if (keyboardState.IsKeyDown(Keys.S) && Developpermode)
-                    {
-                        snow = !snow;
-                    }
-
-                    if (snow)
-                    {
-                        particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
-                    }
-
-                    particleComponent.particleEmitterList[0].Active = true;
-                    Emitter t2 = particleComponent.particleEmitterList[0];
-                    t2.Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
-                    if (t2.EmittedNewParticle)
-                    {
-                        float f = MathHelper.ToRadians(t2.LastEmittedParticle.Direction + 180);
-                        t2.LastEmittedParticle.Rotation = f;
-                    }
-                }
-
-               
                 if (curGameMode == instances_type.Menu)// MENU
                 {
-                    (execute as Menu).Update(gametime, keyboardState, oldkey, SoundIs, mouse1, OldMouse);
+                    (execute as Menu).Update(gametime, SoundIs);
                 }
 
                 if (this.selected == gameState.MainMenu && (execute as Menu).IChooseSomething)
@@ -401,18 +162,18 @@ namespace thegame
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                                (execute as Menu).MenuBool = false;
-                                this.curGameMode = instances_type.Game;
-                                instancesoundMenu.Stop();
-                                this.selected = gameState.AutumnLevel;
-                                Execute();
+                            (execute as Menu).MenuBool = false;
+                            this.curGameMode = instances_type.Game;
+                            instancesoundMenu.Stop();
+                            this.selected = gameState.AutumnLevel;
+                            Execute();
                             break;
                         case 1:
-                                this.selected = gameState.OptionMenu;
-                                Execute();
+                            this.selected = gameState.OptionMenu;
+                            Execute();
                             break;
                         case 2:
-                                game.Exit();
+                            game.Exit();
                             break;
                         default:
                             break;
@@ -423,42 +184,42 @@ namespace thegame
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                                this.selected = gameState.LanguageMenu;
-                                Execute();
+                            this.selected = gameState.LanguageMenu;
+                            Execute();
                             break;
                         case 1:
-                                //this.selected = 5;
-                                Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
-                                
-                                Game1.graphics.ToggleFullScreen();
-                                //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
-                                //Game1.graphics.ApplyChanges();
-                                if (Fullscreen)
-                                    (execute as Menu).tab[1] = Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOn"] + ")"; //fullscreen on
-                                else
-                                    (execute as Menu).tab[1] = Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOff"] + ")"; //fullscreen off
-                                (execute as Menu).IChooseSomething = false;
+                            //this.selected = 5;
+                            Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
+
+                            Game1.graphics.ToggleFullScreen();
+                            //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
+                            //Game1.graphics.ApplyChanges();
+                            if (Fullscreen)
+                                (execute as Menu).tab[1] = Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOn"] + ")"; //fullscreen on
+                            else
+                                (execute as Menu).tab[1] = Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOff"] + ")"; //fullscreen off
+                            (execute as Menu).IChooseSomething = false;
                             break;
 
                         case 2:
-                                //this.selected = 4;
-                                SoundIs = !SoundIs;
+                            //this.selected = 4;
+                            SoundIs = !SoundIs;
 
-                                if (SoundIs)
-                                {
-                                    (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"; //sound on
-                                    instancesoundMenu.Play();
-                                }
-                                else
-                                {
-                                    (execute as Menu).tab[2] = Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")"; // sound off
-                                    instancesoundMenu.Stop();
-                                }
-                                (execute as Menu).IChooseSomething = false;
+                            if (SoundIs)
+                            {
+                                (execute as Menu).tab[2] = Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOn"] + ")"; //sound on
+                                instancesoundMenu.Play();
+                            }
+                            else
+                            {
+                                (execute as Menu).tab[2] = Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOff"] + ")"; // sound off
+                                instancesoundMenu.Stop();
+                            }
+                            (execute as Menu).IChooseSomething = false;
                             break;
                         case 3:
-                                this.selected = gameState.MainMenu;
-                                Execute();
+                            this.selected = gameState.MainMenu;
+                            Execute();
                             break;
                         default:
                             break;
@@ -470,25 +231,19 @@ namespace thegame
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                                GetText("english");
-                                language = "english";
-                                language_pause = "english";
-                                this.selected = 0;
-                                Execute();
+                            Language.change("english");
+                            this.selected = 0;
+                            Execute();
                             break;
                         case 1:
-                                GetText("french");
-                                language = "french";
-                                language_pause = "french";
-                                this.selected = 0;
-                                Execute();
+                            Language.change("french");
+                            this.selected = 0;
+                            Execute();
                             break;
                         case 2:
-                                GetText("nederlands");
-                                language = "nederlands";
-                                language_pause = "nederlands";
-                                this.selected = 0;      // This takes it to the first menu page
-                                Execute();
+                            Language.change("nederlands");
+                            this.selected = 0;      // This takes it to the first menu page
+                            Execute();
                             break;
                         case 3:
                             this.selected = gameState.OptionMenu;
@@ -504,306 +259,37 @@ namespace thegame
                     switch ((execute as Menu).selected)
                     {
                         case 0:
-                                SoundIs = true;
-                                this.selected = gameState.MainMenu;
-                                Execute();
+                            SoundIs = true;
+                            this.selected = gameState.MainMenu;
+                            Execute();
                             break;
                         case 1:
-                                SoundIs = false;
-                                this.selected = gameState.MainMenu;
-                                Execute();
+                            SoundIs = false;
+                            this.selected = gameState.MainMenu;
+                            Execute();
                             break;
                         default:
                             break;
                     }
                 }
-                               
-                //------------------------------------------------------------------
-                // ES 15APR14
-                // Moved details of splashscreen handling near the end of this class.
-                //------------------------------------------------------------------
-                else if (selected == gameState.SplashScreen) HandleSplashScreen(keyboardState, mouse1);
+                else if (selected == gameState.SplashScreen) HandleSplashScreen(mouse1);
                 else if (selected == gameState.DeveloperMode)
                 {
                     cameraPos = (execute as DevelopperMap).cameraPos;
-                    (execute as DevelopperMap).UpdateMap(keyboardState, gametime, mouse1);
+                    (execute as DevelopperMap).UpdateMap(gametime);
                 }
 
                 else if (selected == gameState.AutumnLevel || selected == gameState.WinterLevel || selected == gameState.SummerLevel || selected == gameState.SpringLevel)// THIS IS THE GAME 
                 {
-                    
-                    if (Developpermode)//just a little something for us
-                        Health = 20;
-
-
-
-                 
-
-                    for (int j = medecines.Count - 1; j >= 0; j--)
-                        if ((execute as Perso).hitBoxPerso.Intersects(medecines[j]))
-                        {
-                            medecines.Remove(medecines[j]);
-                            Health += (Health <= 15) ? 5 : (20 - Health);
-                        }
-
-
-                    if (Keyboard.GetState().IsKeyDown(Keys.P) || keyboardState.IsKeyDown(Keys.Escape))
-
+                    thecurrentmap.Update(gametime, game,cameraClass, cameraPos);
+                    if (thecurrentmap.themapstate == Map.MapState.gobackmenu)
                     {
-                        pause = true;
-                        Textures.btnPlay_Autumn.isClicked = Textures.btnMenu_Autumn.isClicked = Textures.btnPlay_Winter.isClicked = Textures.btnMenu_Winter.isClicked = Textures.btnMute.isClicked = false;
-                    }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.H) && !oldkey.IsKeyDown(Keys.H))
-                        help = help ? false : true;
-
-                    if ((execute as Perso).positionPerso.X > 5350)
-                    {
-                        endLevel = true;
-                        if (keyboardState.IsKeyDown(Keys.Space))
-                        {
-                            endLevel = false;
-                            this.curGameMode = instances_type.Game;
-                            this.selected = gameState.WinterLevel;
-                            Execute();
-                        }
-                    }
-                    else if (!pause && !help && !endLevel)
-                    {
-                        int checkBlood = 0;
-
-                        foreach (Perso iathings in iaPerso)
-                        {
-                            if(playerActivate)
-                                checkBlood += iathings.TryToKill(ref Health, (execute as Perso).hitBoxPerso, SoundIs);
-
-                            iathings.UpdateIA(gametime, blocks, (execute as Perso).hitBoxPerso);
-                        }
-
-                        bool touchedByBomb = false;
-
-                        /* CHECK IF CHARACTER CROSS A MINE */
-                        foreach (Bomb checkCrossed in bomb)
-                        {
-                            if ((execute as Perso).hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)
-                            {
-                                touchedByBomb = true;
-                                checkCrossed.activateExplosion = true;
-                                drawBloodScreen = true;
-                                if (checkCrossed.checkBlood && SoundIs)
-                                    Textures.gameExplosion_Effect.Play();
-                                checkCrossed.BloodOnce(ref Health);
-                                break;
-                            }
-                            if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
-                                drawBloodScreen = true;
-                        }
-
-                        if (touchedByBomb)//fait clignoter le perso
-                        {
-                            (execute as Perso).PersoHitted = true;
-                            (execute as Perso).compteurHitted = 0;
-                        }
-                        
-                        bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
-
-                        if (playerActivate)
-                        {
-                            cameraPos = (execute as Perso).cameraPos;
-                            
-                          
-
-                            projectiles = new List<Projectile>();
-                            (execute as Perso).Update(gametime, keyboardState, oldkey, blocks, projectiles, objects, ref nb_nuts, Developpermode);
-                            this.objects = (execute as Perso).objects;
-                            iaPerso = (execute as Perso).CollisionIAProjec(iaPerso, ref score);
-                            
-                            if (checkBlood > 0)
-                            {
-                                drawBloodScreen = true;
-                                (execute as Perso).PersoHitted = true;
-                                (execute as Perso).compteurHitted = 0;
-                            }
-
-                            if (Health <= 0)
-                            {
-                                Health = 0;
-                                playerActivate = drawBloodScreen = false;
-                            }
-                        }
-                        else
-                        {
-                            timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
-                            if (timeElaspedGameOver > 2500)
-                            {
-                                timeElaspedGameOver = 0;
-                                playerActivate = game_over_i =  true;
-                            }
-                            if (timeElaspedGameOver > 1500)
-                            {
-                                transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
-                            }
-                        }
-
-                        
-
-                       
+                        curGameMode = instances_type.Menu;
+                        this.selected = gameState.MainMenu;
+                        Execute();
                     }
                 }
-            }
             
-            if (pause)
-            {
-                /* Pause menu with keyboard*/
-                if (selected == gameState.WinterLevel)
-                    if (particleComponent.particleEmitterList[0].Active)
-                        particleComponent.particleEmitterList[0].Active = false;
-
-                if (Textures.btnPlay_Autumn.isSelected == false && Textures.btnMenu_Autumn.isSelected == false && Textures.btnQuit_Autumn.isSelected == false && Textures.btnPlay_Winter.isSelected == false && Textures.btnMenu_Winter.isSelected == false && Textures.btnQuit_Winter.isSelected == false)
-                {
-                    Textures.btnPlay_Autumn.isSelected = true;
-                    Textures.btnPlay_Winter.isSelected = true;
-                }
-                if (keyboardState.IsKeyDown(Keys.Down) && !oldkey.IsKeyDown(Keys.Down))
-                {
-                    if (Textures.btnMenu_Autumn.isSelected || Textures.btnMenu_Winter.isSelected)
-                    {
-                        Textures.btnMenu_Autumn.isSelected = false;
-                        Textures.btnQuit_Autumn.isSelected = true;
-                        Textures.btnMenu_Winter.isSelected = false;
-                        Textures.btnQuit_Winter.isSelected = true;
-                    }
-                    if (Textures.btnPlay_Autumn.isSelected || Textures.btnPlay_Winter.isSelected && !oldkey.IsKeyDown(Keys.Down))
-                    {
-                        Textures.btnPlay_Autumn.isSelected = false;
-                        Textures.btnMenu_Autumn.isSelected = true;
-                        Textures.btnPlay_Winter.isSelected = false;
-                        Textures.btnMenu_Winter.isSelected = true;
-                    }
-                }
-                if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up))
-                {
-                    if (Textures.btnMenu_Autumn.isSelected || Textures.btnMenu_Winter.isSelected)
-                    {
-                        Textures.btnMenu_Autumn.isSelected = false;
-                        Textures.btnPlay_Autumn.isSelected = true;
-                        Textures.btnMenu_Winter.isSelected = false;
-                        Textures.btnPlay_Winter.isSelected = true;
-                    }
-                    if (Textures.btnQuit_Autumn.isSelected || Textures.btnQuit_Winter.isSelected && !oldkey.IsKeyDown(Keys.Up))
-                    {
-                        Textures.btnQuit_Autumn.isSelected = false;
-                        Textures.btnMenu_Autumn.isSelected = true;
-                        Textures.btnQuit_Winter.isSelected = false;
-                        Textures.btnMenu_Winter.isSelected = true;
-                    }
-                }
-
-                if (Textures.btnPlay_Autumn.isClicked || Textures.btnPlay_Winter.isClicked)
-                    pause = false;
-
-                if (Textures.btnMenu_Autumn.isClicked || Textures.btnMenu_Winter.isClicked)
-                {
-                    pause = false;
-                    this.selected = 0;
-                    instancesound.Stop();
-                    this.curGameMode = instances_type.Menu;
-                    Execute();
-                }
-
-                if (Textures.btnMute.isClicked)
-                {
-                    Textures.btnPlay_Autumn.isSelected = false;
-                    SoundIs = !SoundIs;
-                } 
-                if (Textures.btnQuit_Autumn.isClicked || Textures.btnQuit_Winter.isClicked)
-                    game.Exit();
-
-                Textures.btnPlay_Autumn.Update(mouse, keyboardState);
-                Textures.btnMenu_Autumn.Update(mouse, keyboardState);
-                Textures.btnQuit_Autumn.Update(mouse, keyboardState);
-                Textures.btnPlay_Winter.Update(mouse, keyboardState);
-                Textures.btnMenu_Winter.Update(mouse, keyboardState);
-                Textures.btnQuit_Winter.Update(mouse, keyboardState);
-                Textures.btnMute.Update(mouse, keyboardState);
-            }
-
-            if (help && !Keyboard.GetState().IsKeyDown(Keys.H) && (Keyboard.GetState().GetPressedKeys().Length > 0 || mouse1.LeftButton == ButtonState.Pressed))
-                help = false;
-
-            if (game_over_i)
-            {
-                if (selected == gameState.WinterLevel)
-                {
-                    if (particleComponent.particleEmitterList[0].Active)
-                        particleComponent.particleEmitterList[0].Active = false;
-                }
-                if (keyboardState.IsKeyDown(Keys.Space))
-                {
-                    game_over_i = false;
-                    Init_Game();
-                    this.curGameMode = instances_type.Game;
-                    Execute();
-                }
-            }
-
-            Keys[] getkey = Keyboard.GetState().GetPressedKeys();
-
-            //ACTIVATE DEVELOPER MODE BY PRESSING THE WORD TEAM. SAME TIME
-            if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
-                Developpermode = true;
-
-            if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
-            {
-                Developpermode = false;
-                instancesound.Play();
-                SoundIs = true;
-                if (developpermap)
-                {
-                    developpermap = false;
-                    this.selected = 0;
-                    curGameMode = instances_type.Menu;
-                    Execute();
-                }
-            }
-
-            if (Developpermode)
-            {
-                SoundIs = false;
-                developperXMouse = mouse1.X;
-                developperYMouse = mouse1.Y;
-                instancesound.Stop();
-                if (getkey.Contains(Keys.C) && !developperCoord)
-                    developperCoord = true;
-                if (getkey.Contains(Keys.X) && developperCoord)
-                    developperCoord = false;
-                if (getkey.Contains(Keys.M) && getkey.Contains(Keys.A) && getkey.Contains(Keys.P))
-                {
-                    curGameMode = instances_type.MapDevelopper;
-                    selected = gameState.DeveloperMode;
-                    developpermap = true;
-                    Execute();
-                }
-                if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
-                {
-                    Init_Game();
-                    this.curGameMode = instances_type.Game;
-                    selected = gameState.WinterLevel;
-                    Execute();
-                }
-                if (getkey.Contains(Keys.NumPad1) || getkey.Contains(Keys.D1))
-                {
-                    Init_Game();
-                    try
-                    {
-                        if (particleComponent.particleEmitterList[0].Active == true)
-                            particleComponent.particleEmitterList[0].Active = false;
-                    }
-                    catch { }
-                    this.curGameMode = instances_type.Game;
-                    selected = gameState.AutumnLevel;
-                    Execute();
-                }
-            }
         }
 
         /* END OF THE GAME CODE */
@@ -816,55 +302,53 @@ namespace thegame
                 case 0: /* MAIN MENU */
                     Sound("menu");
                     execute = new Menu(3, "Squickilling");
-                    (execute as Menu).AddElements(Text_Game["_mnuPlay"]);//Play
-                    (execute as Menu).AddElements(Text_Game["_mnuOptions"]);//Options
-                    (execute as Menu).AddElements(Text_Game["_mnuExit"]);//Exit game
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuPlay"]);//Play
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuOptions"]);//Options
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuExit"]);//Exit game
 
                     break;
                 case gameState.OptionMenu: /* OPTION MENU */
                     Sound("menu");
-                    execute = new Menu(4, Text_Game["_mnuOptions"]);//options
+                    execute = new Menu(4, Language.Text_Game["_mnuOptions"]);//options
                     (execute as Menu).activateBackSpace = true;
-                    (execute as Menu).AddElements(Text_Game["_mnuLanguage"]);//language 
-                    //(execute as Menu).AddElements(Text_Game[4]);//fullscreen  
-                    //     Next section modifies text on display mode.
-                    if (Fullscreen)
-                        (execute as Menu).AddElements(Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOn"] + ")"); //fullscreen on
-                    else
-                        (execute as Menu).AddElements(Text_Game["_mnuFullscreen"] + " (" + Text_Game["_mnuOff"] + ")"); //fullscreen off
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuLanguage"]);//language 
 
-                    //(execute as Menu).AddElements(Text_Game[8]);//sound
-                    //      Next section modifies text on sound mode.
-                    if (SoundIs)
-                        (execute as Menu).AddElements(Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOn"] + ")"); //sound on
+                    if (Fullscreen)
+                        (execute as Menu).AddElements(Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOn"] + ")"); //fullscreen on
                     else
-                        (execute as Menu).AddElements((Text_Game["_mnuSound"] + " (" + Text_Game["_mnuOff"] + ")")); // sound off
-                    (execute as Menu).AddElements(Text_Game["_mnuBack"]);//back
+                        (execute as Menu).AddElements(Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOff"] + ")"); //fullscreen off
+
+
+                    if (SoundIs)
+                        (execute as Menu).AddElements(Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOn"] + ")"); //sound on
+                    else
+                        (execute as Menu).AddElements((Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOff"] + ")")); // sound off
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuBack"]);//back
 
                     break;
 
                 case gameState.LanguageMenu: /* Select language */
                     Sound("menu");
-                    execute = new Menu(4, Text_Game["_mnuLanguage"]);
+                    execute = new Menu(4, Language.Text_Game["_mnuLanguage"]);
                     (execute as Menu).activateBackSpace = true;
-                    (execute as Menu).AddElements(Text_Game["_mnuEnglish"]);
-                    (execute as Menu).AddElements(Text_Game["_mnuFrench"]);
-                    (execute as Menu).AddElements(Text_Game["_mnuDutch"]);
-                    (execute as Menu).AddElements(Text_Game["_mnuBack"]);//back
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuEnglish"]);
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuFrench"]);
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuDutch"]);
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuBack"]);//back
                     break;
 
                 case gameState.SoundMenu: /* SOUND MENU */
                     Sound("menu");
-                    execute = new Menu(2, Text_Game["_mnuSound"]);//sound
-                    (execute as Menu).AddElements(Text_Game["_mnuOn"]);//on
-                    (execute as Menu).AddElements(Text_Game["_mnuOff"]);//off
+                    execute = new Menu(2, Language.Text_Game["_mnuSound"]);//sound
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuOn"]);//on
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuOff"]);//off
 
                     break;
                 case gameState.FullscreenMenu: /* FULL SCREEN */
                     Sound("menu");
-                    execute = new Menu(2, Text_Game["_mnuFullscreen"]);//fullscreen
-                    (execute as Menu).AddElements(Text_Game["_mnuOn"]);//on
-                    (execute as Menu).AddElements(Text_Game["_mnuOff"]);//off
+                    execute = new Menu(2, Language.Text_Game["_mnuFullscreen"]);//fullscreen
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuOn"]);//on
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuOff"]);//off
                     break;
 
                 case gameState.SplashScreen: /* INTRODUCTION : SPLASHSCREEN */
@@ -879,112 +363,18 @@ namespace thegame
                     tree = new Drawable(drawable_type.tree);
                     break;
 
-                case gameState.WinterLevel: /*Level 2*/
-                    Sound("menu");
-                    Sound("Game");
-                    score = 0;
-
-                    Init_Game();
-                    tilemap = Map.winterTileMap;
-
-
-
-                    int[] iaMap = Map.winterAiMap;
-
-                    objects = new List<Rectangle>();
-                    iaPerso = new List<Perso>();
-                    bomb = new List<Bomb>();
-
-
-
-                    /* IA CHARACTERS */
-                    for (int x = 0; x < iaMap.Length; x++)
-                        if (iaMap[x] == 1)
-                            iaPerso.Add(new Perso(new Vector2(x * Textures.buche_texture_winter.Width, 0), CharacType.ia));
-
-                    texlis = new List<Texture2D>();
-                    mapSizeX = tilemap.GetLength(1);
-                    mapSizeY = tilemap.GetLength(0);
-                    blocks = new List<Rectangle>();
-                    tile = new List<Rectangle>();
-
-                    for (int x = 0; x < mapSizeX; x++)
-                        for (int y = 0; y < mapSizeY; y++)
-                            if (tilemap[y, x] == 1)
-                                blocks.Add(new Rectangle(x * Textures.buche_texture_winter.Width,
-                                                         y * Textures.buche_texture_winter.Height - 95,
-                                                         Textures.buche_texture_winter.Width, Textures.buche_texture_winter.Height));
-                            else if (tilemap[y, x] == 2)
-                                objects.Add(new Rectangle(x * Textures.buche_texture_winter.Width + 50,
-                                                          y * Textures.buche_texture_winter.Height - 86, 10, 10));
-                            else if (tilemap[y, x] == 3)
-                            {
-                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
-                                bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
-                            }
-                            else if (tilemap[y, x] == 4)
-                            {
-                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
-                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10));
-                            }
-
-                    execute = new Perso(new Vector2(200, 0), CharacType.player);
-                    tree = new Drawable(drawable_type.winterTree);
-                    tree_winter_entrance_inside = new Drawable(drawable_type.tree_winter_entrance_inside);
-                    Ground = new Drawable(drawable_type.WinterGround);
-                    debug = new Drawable(drawable_type.font);
-                    scoreDisplay = new Drawable(drawable_type.font);
-
-                    break;
                 case gameState.AutumnLevel: /* GAME START */
                     Sound("menu");
                     Sound("Game");
-                    score = 0;              // We start the game with the score = 0
+                    thecurrentmap = new Map(selected);
+                    curGameMode = instances_type.Game;
+                    break;
 
-                    Init_Game();
-                    tilemap = Map.autumnTileMap;
-                    iaMap = Map.autumnAiMap;
-
-                    objects = new List<Rectangle>();
-                    iaPerso = new List<Perso>();
-
-                    /* IA CHARACTERS */
-                    for (int x = 0; x < iaMap.Length; x++)
-                        if (iaMap[x] == 1)
-                            iaPerso.Add(new Perso(new Vector2(x * Textures.buche_texture.Width, 0), CharacType.ia));
-
-                    texlis = new List<Texture2D>();
-                    mapSizeX = tilemap.GetLength(1);
-                    mapSizeY = tilemap.GetLength(0);
-                    blocks = new List<Rectangle>();
-                    tile = new List<Rectangle>();
-
-                    for (int x = 0; x < mapSizeX; x++)
-                        for (int y = 0; y < mapSizeY; y++)
-                            if (tilemap[y, x] == 1)
-                                blocks.Add(new Rectangle(x * Textures.buche_texture.Width, y * Textures.buche_texture.Height - 95, Textures.buche_texture.Width, Textures.buche_texture.Height));
-                            else if (tilemap[y, x] == 2)
-                                objects.Add(new Rectangle(x * Textures.buche_texture.Width + 50, y * Textures.buche_texture.Height - 86, 10, 10));
-                            else if (tilemap[y, x] == 3)
-                            {
-                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
-                                bomb.Add(new Bomb(new Rectangle(x * Textures.buche_texture.Width + 50, h, 15, 10)));
-                            }
-                            else if (tilemap[y, x] == 4)
-                            {
-                                int h = (y == tilemap.GetLength(0) - 1) ? 345 : y * Textures.buche_texture.Height - 73;
-                                medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, h-7, Textures.medecine.Width, Textures.medecine.Height));
-                            }
-
-                    execute = new Perso(new Vector2(200, 0), CharacType.player);
-                    tree = new Drawable(drawable_type.tree);
-                    tree_autumn_entrance = new Drawable(drawable_type.tree_autumn_entrance);
-                    tree_autumn_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
-                    tree_autumn_exit = new Drawable(drawable_type.tree_autumn_exit);
-                    tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
-                    Ground = new Drawable(drawable_type.AutumnGround);
-                    debug = new Drawable(drawable_type.font);
-                    scoreDisplay = new Drawable(drawable_type.font);
+                case gameState.WinterLevel: /* GAME START */
+                    Sound("menu");
+                    Sound("Game");
+                    thecurrentmap = new Map(selected);
+                    curGameMode = instances_type.Game;
                     break;
 
                 default:
@@ -1008,43 +398,7 @@ namespace thegame
                 }
         }
 
-        public void GameOverAnimation(SpriteBatch sb, float transparency)
-        {
-            switch (this.selected)
-            {
-                case gameState.AutumnLevel:
-                    sb.Begin();
-                    Rectangle rec = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 50, 530);
-                    sb.Draw(Textures.autumnBackground, new Vector2(-2,-2), Color.White * transparency);
-                    sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White * transparency);
-                    sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White * transparency);
-
-                    if (language == "english")
-                        sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
-                    else if (language == "french")
-                        sb.Draw(Textures.game_overTexture_fr, rec, Color.White * transparency);
-                    else
-                        sb.Draw(Textures.game_overTexture_ne, rec, Color.White * transparency);
-                    sb.End();
-                    break;
-                case gameState.WinterLevel:
-                    sb.Begin();
-                    rec = new Rectangle(-4, -4, Game1.graphics.PreferredBackBufferWidth + 50, 530);
-                    sb.Draw(Textures.winterBackground, new Vector2(-2,-2), Color.White * transparency);
-                    sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White * transparency);
-                    sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White * transparency);
-
-                    if (language == "english")
-                        sb.Draw(Textures.game_overTexture_en, rec, Color.White * transparency);
-                    else if (language == "french")
-                        sb.Draw(Textures.game_overTexture_fr, rec, Color.White * transparency);
-                    else
-                        sb.Draw(Textures.game_overTexture_ne, rec, Color.White * transparency);
-                    sb.End();
-                    break;
-            }
-
-        }
+       
 
         public void Display(SpriteBatch sb, GameTime gameTime)
         {
@@ -1057,8 +411,6 @@ namespace thegame
             //------------------------------------------------------------------
             cameraClass.Position = this.cameraPos;
 
-            if (this.selected != gameState.SplashScreen)
-            {
                 if (curGameMode == instances_type.Menu)
                 {
                     sb.Begin();
@@ -1067,421 +419,68 @@ namespace thegame
                 }
                 else if (curGameMode == instances_type.MapDevelopper)
                 {
-                            sb.Begin();
-                            // Makes the background move slower than the camera to create an effect of depth.
-                            sb.Draw(Textures.autumnBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
-                            sb.End();
+                    sb.Begin();
+                    // Makes the background move slower than the camera to create an effect of depth.
+                    sb.Draw(Textures.autumnBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                    sb.End();
 
-                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            tree.Draw(sb, new Vector2(-100, 0));
-                            (execute as DevelopperMap).Display(sb, gameTime);
-                            sb.End();
-                            sb.Begin();
-                            sb.Draw(Textures.buche_texture, new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
-                            sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
-                            sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
-                            sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
-                            sb.Draw(Textures.hitbox, new Rectangle(280, 452, 15, 10), Color.Green);
-                            Drawable info = new Drawable(drawable_type.font);
-                            Drawable ecri = new Drawable(drawable_type.font);
-                            ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
-                            ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
-                            ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
-                            ecri.Draw(sb, "Thibault", new Vector2(535, 470), Color.Black, "normal");
-                            ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
-                            info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
-                            sb.End();
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                    tree.Draw(sb, new Vector2(-100, 0));
+                    (execute as DevelopperMap).Display(sb, gameTime);
+                    sb.End();
+                    sb.Begin();
+                    sb.Draw(Textures.buche_texture, new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
+                    sb.Draw(Textures.eraser, new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height), Color.White);
+                    sb.Draw(Textures.hitbox, new Rectangle(180, 452, 15, 10), Color.Gray);
+                    sb.Draw(Textures.nut_texture, new Rectangle(250, 452, 10, 10), Color.White);
+                    sb.Draw(Textures.hitbox, new Rectangle(280, 452, 15, 10), Color.Green);
+                    Drawable info = new Drawable(drawable_type.font);
+                    Drawable ecri = new Drawable(drawable_type.font);
+                    ecri.Draw(sb, "Send by email to ", new Vector2(250, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Alpha", new Vector2(409, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Elise", new Vector2(470, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Thibault", new Vector2(535, 470), Color.Black, "normal");
+                    ecri.Draw(sb, "Victor", new Vector2(614, 470), Color.Black, "normal");
+                    info.Draw(sb, "S: show grid.      H: hide grid.    Right button to unselect", new Vector2(25, 494), Color.Black, "normal");
+                    sb.End();
+
 
                 }
-                else if (pause)
+                else if (curGameMode == instances_type.Game)
                 {
-                    switch (this.selected)
-                    {
-                        case gameState.AutumnLevel:
-                            sb.Begin();
-                            sb.Draw(Textures.autumnBackground, new Vector2(-2, -2), Color.White);
-                            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
-                            sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
-                            
-                            Textures.btnPlay_Autumn.Draw(sb);
-                            Textures.btnMenu_Autumn.Draw(sb);
-                            Textures.btnQuit_Autumn.Draw(sb);
-                            Textures.btnMute.Draw(sb);
-                           
-                            //Had to do that because the coordinate changes regarding the language. Do not modify ^^
-                            if (language_pause == "english")
-                            {
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnPlay"], new Vector2(335, 183), new Color(255, 96, 42));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnMenu"], new Vector2(350, 253), new Color(255, 96, 42));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnQuit"], new Vector2(366, 322), new Color(255, 96, 42));
-                            }
-                            else if (language_pause == "french")
-                            {
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnPlay"], new Vector2(314, 183), new Color(255, 96, 42));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnMenu"], new Vector2(350, 253), new Color(255, 96, 42));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnQuit"], new Vector2(341, 322), new Color(255, 96, 42));
-                            }
-                            else
-                            {
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnPlay"], new Vector2(320, 183), new Color(255, 96, 42));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnMenu"], new Vector2(350, 253), new Color(255, 96, 42));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnQuit"], new Vector2(328, 322), new Color(255, 96, 42));
-                            }
-                            sb.End();
-                            break;
-
-                        case gameState.WinterLevel:
-                            sb.Begin();
-                            sb.Draw(Textures.winterBackground, new Vector2(-2, -2), Color.White);
-                            sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
-                            sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
-                            Textures.btnPlay_Winter.Draw(sb);
-                            Textures.btnMenu_Winter.Draw(sb);
-                            Textures.btnQuit_Winter.Draw(sb);
-                            if (language_pause == "english")
-                            {
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnPlay"], new Vector2(335, 183), new Color(42, 42, 210));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnMenu"], new Vector2(350, 253), new Color(42, 42, 210));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnQuit"], new Vector2(366, 322), new Color(42, 42, 210));
-                            }
-                            else if (language_pause == "french")
-                            {
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnPlay"], new Vector2(314, 183), new Color(42, 42, 210));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnMenu"], new Vector2(350, 253), new Color(42, 42, 210));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnQuit"], new Vector2(341, 322), new Color(42, 42, 210));
-                            }
-                            else
-                            {
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnPlay"], new Vector2(324, 183), new Color(42, 42, 210));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnMenu"], new Vector2(354, 253), new Color(42, 42, 210));
-                                sb.DrawString(Textures.font_pause, Text_Game["_btnQuit"], new Vector2(332, 322), new Color(42, 42, 210));
-                            }
-                            sb.End();
-                            break;
-                    }
+                    thecurrentmap.Display(sb, gameTime);
                 }
-                else if (game_over_i && playerActivate)
-                    GameOverAnimation(sb, 1);
-                else if (endLevel)
+                else // draw splashscreen
                 {
-                    switch (this.selected)
-                    {
-                        case gameState.AutumnLevel:
-                            sb.Begin();
-                            Rectangle rec = new Rectangle(0, 0, 800, 530);
-
-                            sb.Draw(Textures.autumnBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                            scoreDisplay.Draw(sb, Text_Game["congrats"], new Vector2(50, 100), Color.White, "42");
-                            scoreDisplay.Draw(sb, Text_Game["finalScore"] + score, new Vector2(50, 150), Color.White, "osef");
-                            scoreDisplay.Draw(sb, Text_Game["finalBonus"] + nb_nuts, new Vector2(50, 200), Color.White, "osef");
-                            scoreDisplay.Draw(sb, Text_Game["total"] + (score + nb_nuts*0.5), new Vector2(50, 250), Color.Red, "42");
-                            scoreDisplay.Draw(sb, Text_Game["space"], new Vector2(70, 300), Color.White, "osef");
-                            sb.End();
-                            break;
-
-                        case gameState.WinterLevel:
-                            sb.Begin();
-                            rec = new Rectangle(0, 0, 800, 530);
-
-                            sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                            scoreDisplay.Draw(sb, Text_Game["congrats"], new Vector2(50, 100), Color.White, "42");
-                            scoreDisplay.Draw(sb, Text_Game["finalScore"] + score, new Vector2(50, 150), Color.White, "osef");
-                            scoreDisplay.Draw(sb, Text_Game["finalBonus"] + nb_nuts, new Vector2(50, 200), Color.White, "osef");
-                            scoreDisplay.Draw(sb, Text_Game["total"] + (score + nb_nuts*1.5), new Vector2(50, 250), Color.Red, "42");
-                            scoreDisplay.Draw(sb, Text_Game["space"], new Vector2(70, 300), Color.White, "osef");
-                            sb.End();
-                            break;
-                    }
-
+                    sb.Begin();
+                    Drawable.vidTexture = vidPlayer.GetTexture();
+                    sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
+                    sb.End();
                 }
-                else if (help)
+
+                if (Developpermode)
                 {
-                    switch (this.selected)
-                    {
-                        case gameState.AutumnLevel:
-                            sb.Begin();
-                            Rectangle rec = new Rectangle(0, 0, 800, 530);
-
-                            sb.Draw(Textures.autumnBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.autumn_ground_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.autumn_ground_texture, new Vector2(790, 405), Color.White);
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
-                            sb.End();
-                            break;
-
-                        case gameState.WinterLevel:
-                            sb.Begin();
-                            rec = new Rectangle(0, 0, 800, 530);
-
-                            sb.Draw(Textures.winterBackground, Vector2.Zero, Color.White);
-                            sb.Draw(Textures.winter_ground_texture, new Vector2(0, 405), Color.White);
-                            sb.Draw(Textures.winter_ground_texture, new Vector2(790, 405), Color.White);
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
-                            sb.End();
-                            break;
-                    }
+                    sb.Begin();
+                    Drawable developper = new Drawable(drawable_type.font);
+                    developper.Draw(sb, "DEVELOPER MODE", new Vector2(50, 20), Color.Black, "normal");
+                    //TODO : reactivate
+                 //   if (developperCoord)
+                 //   {
+                  //      sb.Draw(Textures.hitbox, new Rectangle((int)developperXMouse, 0, 2, 1200), Color.Red * 0.5f);
+                  //      sb.Draw(Textures.hitbox, new Rectangle(0, (int)developperYMouse, 1200, 2), Color.Red * 0.5f);
+                   //     developper.Draw(sb, "Coord. X : " + (int)developperXMouse + " Y : " + (int)developperYMouse, new Vector2(250, 20), Color.Black, "normal");
+                  //  }
+                    sb.End();
                 }
-                else
-                {
-                    switch (this.selected)
-                    {
-                        case gameState.AutumnLevel:
-                            sb.Begin();
-                            // Makes the background move slower than the camera to create an effect of depth.
-                            sb.Draw(Textures.autumnBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
-                            sb.End();
-
-                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            tree_autumn_entrance.Draw(sb, new Vector2(-100, 0));
-                            tree.Draw(sb, new Vector2(500, 0));
-                            tree.Draw(sb, new Vector2(400, 0));
-                            tree.Draw(sb, new Vector2(900, 0));
-                            tree.Draw(sb, new Vector2(1050, 0));
-                            tree.Draw(sb, new Vector2(1400, 0));
-                            tree.Draw(sb, new Vector2(1800, 0));
-                            tree.Draw(sb, new Vector2(2200, 0));
-                            tree.Draw(sb, new Vector2(2400, 0));
-                            tree.Draw(sb, new Vector2(3000, 0));
-                            tree.Draw(sb, new Vector2(3400, 0));
-                            tree.Draw(sb, new Vector2(3900, 0));
-                            tree.Draw(sb, new Vector2(4050, 0));
-                            tree.Draw(sb, new Vector2(4900, 0));
-                            //tree_autumn_exit.Draw(sb, new Vector2(5000, 0));
-
-                            // Draw ground image
-                            for (int truc = 0; truc < 9; truc++)
-                                Ground.Draw(sb, new Vector2(truc * Textures.autumn_ground_texture.Width, 355));
-
-                            // Draw the platforms
-                            foreach (Rectangle top in blocks)
-                                sb.Draw(Textures.buche_texture, top, Color.White);
-
-                            // Draw the objects
-                            foreach (Rectangle dessine in objects)
-                                sb.Draw(Textures.acorn_texture, dessine, Color.White);
-
-                            //draw bomb
-                            foreach (Bomb dessine in bomb)
-                                dessine.Draw(sb, gameTime);
-
-                            foreach (Rectangle dessine in medecines)
-                                sb.Draw(Textures.medecine, dessine, Color.White);
-
-                            if (playerActivate)
-                                (execute as Perso).Draw(sb, gameTime); /* Should be execute in the Drawable class */
-
-                            // Draw IA characters
-                            foreach (Perso iathings in iaPerso)
-                                iathings.Draw(sb, gameTime);
-
-                            //------------------------------------------------------------------
-                            // ES 15APR14
-                            // Draw foreground tree so that squirrel appears to enter the hole
-                            //------------------------------------------------------------------
-                            tree_autumn_entrance_inside.Draw(sb, new Vector2(-100, 0));
-                            //tree_autumn_exit_inside.Draw(sb,new Vector2(5000,0));
-                            
-
-                            sb.End();
-
-                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            Bloodscreen(gameTime, sb, cameraClass.Position);
-                            sb.End();
-                            sb.Begin();
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth+40, 120), Color.DimGray);//draw panel life + bonus + help + pause
-
-                            scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
-
-                            // this display the number of nuts that the perso has. 
-                            scoreDisplay.Draw(sb, Text_Game["_gamebonus"] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
-
-                            //draw text health
-                            scoreDisplay.Draw(sb, Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
-
-                            //help text
-                            scoreDisplay.Draw(sb, Text_Game["_gamePause"], new Vector2(530, 440), Color.Black, "normal");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelp"], new Vector2(530, 468), Color.Black, "normal");
-
-                            //Negative health
-                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
-                                Textures.healthBar_texture.Width, 28), Color.Gray);
-                            //health left
-                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                                450, (int)(Textures.healthBar_texture.Width * (double)Health / 20f),
-                                28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
-                            //healthBar bounds
-                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
-                                Textures.healthBar_texture.Width, 28), Color.White);
-                            
-                            sb.End();
-
-                            if (!playerActivate && timeElaspedGameOver > 1500)
-                                GameOverAnimation(sb, transparencyAnimation);
-                            break;
-
-                        case gameState.WinterLevel:
-                            sb.Begin();
-                            // Makes the background move slower than the camera to create an effect of depth.
-                            sb.Draw(Textures.winterBackground, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
-                            sb.End();
-
-                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            tree.Draw(sb, new Vector2(-100, 10));
-                            tree.Draw(sb, new Vector2(500,  10));
-                            tree.Draw(sb, new Vector2(400,  10));
-                            tree.Draw(sb, new Vector2(900,  10));
-                            tree.Draw(sb, new Vector2(1050, 10));
-                            tree.Draw(sb, new Vector2(1400, 10));
-                            tree.Draw(sb, new Vector2(1800, 10));
-                            tree.Draw(sb, new Vector2(2200, 10));
-                            tree.Draw(sb, new Vector2(2400, 10));
-                            tree.Draw(sb, new Vector2(3000, 10));
-                            tree.Draw(sb, new Vector2(3400, 10));
-                            tree.Draw(sb, new Vector2(3900, 10));
-                            tree.Draw(sb, new Vector2(4050, 10));
-                            tree.Draw(sb, new Vector2(4900, 10));
-
-                            // Draw ground image
-                            for (int truc = 0; truc < 9; truc++)
-                                Ground.Draw(sb, new Vector2(truc * Textures.winter_ground_texture.Width, 345));
-
-                            // Draw the platforms
-                            foreach (Rectangle top in blocks)
-                                sb.Draw(Textures.buche_texture_winter, top, Color.White);
-
-                            // Draw the objects
-                            foreach (Rectangle dessine in objects)
-                                sb.Draw(Textures.acorn_texture, dessine, Color.White);
-
-                            //draw bomb
-                            foreach (Bomb dessine in bomb)
-                                dessine.Draw(sb, gameTime);
-
-                            foreach (Rectangle dessine in medecines)
-                                sb.Draw(Textures.medecine, dessine, Color.White);
-
-                            if (playerActivate)
-                                (execute as Perso).Draw(sb, gameTime);
-
-                            // Draw IA characters
-                            foreach (Perso iathings in iaPerso)
-                                iathings.Draw(sb, gameTime);
-
-                            tree_winter_entrance_inside.Draw(sb, new Vector2(-100, 0));
-
-                            sb.End();
-
-                            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                            Bloodscreen(gameTime, sb, cameraClass.Position);
-                            sb.End();
-                            sb.Begin();
-                            sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth+40, 120), Color.DimGray);//draw panel life + bonus + help + pause
-
-                            scoreDisplay.Draw(sb, Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
-
-                            // this display the number of nuts that the perso has. 
-                            scoreDisplay.Draw(sb, Text_Game["_gamebonus"] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
-
-                            //draw text health
-                            scoreDisplay.Draw(sb, Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
-
-                            //help text
-                            scoreDisplay.Draw(sb, Text_Game["_gamePause"], new Vector2(530, 440), Color.Black, "normal");
-                            scoreDisplay.Draw(sb, Text_Game["_gameHelp"], new Vector2(530, 468), Color.Black, "normal");
-
-                            //Negative health
-                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
-                                Textures.healthBar_texture.Width, 28), Color.Gray);
-                            //health left
-                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                                450, (int)(Textures.healthBar_texture.Width * (double)Health / 20f),
-                                28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
-                            //healthBar bounds
-                            sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                                450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
-                                Textures.healthBar_texture.Width, 28), Color.White);
-
-                            
-
-                            sb.End();
-                            if (!playerActivate && timeElaspedGameOver > 1500)
-                                GameOverAnimation(sb, transparencyAnimation);
-                            break;
-                    }
-                }
-            }
-            else // draw splashscreen
-            {
-                sb.Begin();
-                Drawable.vidTexture = vidPlayer.GetTexture();
-                sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
-                sb.End();
-            }
-
-            if (Developpermode)
-            {
-                sb.Begin();
-                Drawable developper = new Drawable(drawable_type.font);
-                developper.Draw(sb, "DEVELOPER MODE", new Vector2(50, 20), Color.Black, "normal");
-                if (developperCoord)
-                {
-                    sb.Draw(Textures.hitbox, new Rectangle((int)developperXMouse, 0, 2, 1200), Color.Red * 0.5f);
-                    sb.Draw(Textures.hitbox, new Rectangle(0, (int)developperYMouse, 1200, 2), Color.Red * 0.5f);
-                    developper.Draw(sb, "Coord. X : " + (int)developperXMouse + " Y : " + (int)developperYMouse, new Vector2(250, 20), Color.Black, "normal");
-                }
-                sb.End();
-            }
+            
         }
 
-        public void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera)
+        
+
+
+        private void HandleSplashScreen( MouseState mouse1)
         {
-
-            if (drawBloodScreen)
-            {
-                elapsedTimeBloodScreen += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-                cameraClass.shake = true;
-
-                if (elapsedTimeBloodScreen < 50)
-                {
-                    int positionX = (int)(execute as Perso).positionPerso.X - 400;
-                    float correction = 0;
-                    if (positionX + 400 >= 5000)
-                        correction = 600;
-                    sb.Draw(Textures.hitbox, new Rectangle(positionX - 20 - (int)correction, -20, 1800, 650), Color.Red * 0.5f);
-                }
-                else
-                {
-                    elapsedTimeBloodScreen = 0;
-                    drawBloodScreen = cameraClass.shake =  false;
-                }
-            }
-
-        }
-
-
-        private void HandleSplashScreen(KeyboardState keyboardstate, MouseState mouse1)
-        {
-            if (vidPlayer.State == MediaState.Stopped || mouse1.LeftButton == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Enter))
+            if (vidPlayer.State == MediaState.Stopped || Inputs.isLMBClick() || Inputs.isKeyRelease(Keys.Enter))
             {
                 vidPlayer.Stop();
                 this.curGameMode = instances_type.Menu;

@@ -12,6 +12,7 @@ using System.Threading;
 using System.Windows.Forms;
 using X2DPE;
 using X2DPE.Helpers;
+using System.Globalization;
 
 namespace thegame
 {
@@ -23,7 +24,6 @@ namespace thegame
 
         public int width;
         public int height;
-
         
         public Game1()
         {
@@ -49,6 +49,10 @@ namespace thegame
         protected override void Initialize()
         {
             base.Initialize();
+            if (CultureInfo.InstalledUICulture.ToString() == "fr-FR")
+                Language.change("french");
+            else
+                Language.change("english");
         }
 
         protected override void LoadContent()
@@ -65,7 +69,6 @@ namespace thegame
 
         protected override void Update(GameTime gameTime)
         {
-
             instancesobject.UpdateByKey(gameTime);
 
             base.Update(gameTime);

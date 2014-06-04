@@ -95,7 +95,7 @@ namespace thegame
             Gravity = 0.5f;     // Start falling with this speed
         }
 
-        public void Update(GameTime gametime, KeyboardState keyboardState, KeyboardState oldkey, List<Rectangle> blocks,  List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts, bool activateDeveloper)
+        public void Update(GameTime gametime, List<Rectangle> blocks,  List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts, bool activateDeveloper)
         {
             activateDevelopper = activateDeveloper;
             this.objects = objects;
@@ -133,7 +133,7 @@ namespace thegame
 
             Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 200, directionNoix);
 
-            if (keyboardState.IsKeyDown(Keys.Space) && !oldkey.IsKeyDown(Keys.Space))
+            if (Inputs.isKeyRelease(Keys.Space))
                 projs.Add(noix);
 
             /* CHECK OBJECT COLLISION WITH HITBOX PERSO. ADD NUTS THEN */
@@ -189,7 +189,7 @@ namespace thegame
             else
             {
                 /* IF PERSO CAN JUMP THEN JUMP */
-                if (keyboardState.IsKeyDown(Keys.Up) && !oldkey.IsKeyDown(Keys.Up) && (!movedown || positionPerso.Y == sol))
+                if (Inputs.isKeyRelease(Keys.Up) && (!movedown || positionPerso.Y == sol))
                 {
                     jumping = true;
                     Gravity = 5f; /* First jump speed while pressing the button*/
@@ -221,7 +221,7 @@ namespace thegame
             if (!jumping && (positionPerso.Y == sol || !movedown))
                 GravityInit();
 
-            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)) && activateDevelopper)
+            if (Inputs.isKeyDown(Keys.Right) && moveright && !Inputs.isKeyDown(Keys.Left) && (Inputs.isKeyDown(Keys.LeftAlt) || Inputs.isKeyDown(Keys.RightAlt)) && activateDevelopper)
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
@@ -232,7 +232,7 @@ namespace thegame
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
-            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt)) && activateDevelopper)
+            else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && (Inputs.isKeyDown(Keys.LeftAlt) || Inputs.isKeyDown(Keys.RightAlt)) && activateDevelopper)
             {
                 tempCurrentFrame.Y = 1;
 
@@ -245,7 +245,7 @@ namespace thegame
                     cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right) && moveright && !keyboardState.IsKeyDown(Keys.Left) && ((activateDeveloper) ? (keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt)) : true))
+            if (Inputs.isKeyDown(Keys.Right) && moveright && !Inputs.isKeyDown(Keys.Left) && ((activateDeveloper) ? (Inputs.isKeysUP(Keys.LeftAlt)  && Inputs.isKeysUP(Keys.RightAlt)) : true))
             {
                 tempCurrentFrame.Y = 0;
                 float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
@@ -256,7 +256,7 @@ namespace thegame
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
             }
-            else if (keyboardState.IsKeyDown(Keys.Left) && moveleft && !keyboardState.IsKeyDown(Keys.Right) && ((activateDeveloper) ? (keyboardState.IsKeyUp(Keys.LeftAlt) && keyboardState.IsKeyUp(Keys.RightAlt)) : true))
+            else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && ((activateDeveloper) ? (Inputs.isKeysUP(Keys.LeftAlt) && Inputs.isKeysUP(Keys.RightAlt)) : true))
             {
                 tempCurrentFrame.Y = 1;
 
