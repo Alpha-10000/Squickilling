@@ -23,7 +23,8 @@ namespace thegame
         Game,
         Menu,
         SplashScreen,
-        MapDevelopper
+        MapDevelopper,
+        Multiplayer
     }
 
     //------------------------------------------------------------------
@@ -46,7 +47,8 @@ namespace thegame
         DeveloperMode = 7,
         WinterLevel = 8,
         SpringLevel,
-        SummerLevel
+        SummerLevel,
+        MultiplayerLoginRegister
     }
 
     public class Instances
@@ -87,7 +89,7 @@ namespace thegame
 
         public Vector2 cameraPos = Vector2.Zero;
 
-
+        private MultiplayerLogin multiplayerloginform;
 
       
 
@@ -155,10 +157,15 @@ namespace thegame
                             Execute();
                             break;
                         case 1:
-                            this.selected = gameState.OptionMenu;
+                            this.selected = gameState.MultiplayerLoginRegister;
+                            curGameMode = instances_type.Multiplayer;
                             Execute();
                             break;
                         case 2:
+                            this.selected = gameState.OptionMenu;
+                            Execute();
+                            break;
+                        case 3:
                             game.Exit();
                             break;
                         default:
@@ -276,6 +283,12 @@ namespace thegame
                         Execute();
                     }
                 }
+                else if (curGameMode == instances_type.Multiplayer)
+                {
+                    if (selected == gameState.MultiplayerLoginRegister)
+                        multiplayerloginform.Update();
+
+                }
 
                 Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
@@ -333,8 +346,9 @@ namespace thegame
             {
                 case 0: /* MAIN MENU */
                     Sound("menu");
-                    execute = new Menu(3, "Squickilling");
+                    execute = new Menu(4, "Squickilling");
                     (execute as Menu).AddElements(Language.Text_Game["_mnuPlay"]);//Play
+                    (execute as Menu).AddElements(Language.Text_Game["_mnuMultiplayer"]);//Play
                     (execute as Menu).AddElements(Language.Text_Game["_mnuOptions"]);//Options
                     (execute as Menu).AddElements(Language.Text_Game["_mnuExit"]);//Exit game
 
@@ -407,6 +421,10 @@ namespace thegame
                     Sound("Game");
                     thecurrentmap = new Map(selected, ref cameraClass);
                     curGameMode = instances_type.Game;
+                    break;
+                case gameState.MultiplayerLoginRegister:
+                    curGameMode = instances_type.Multiplayer;
+                    multiplayerloginform = new MultiplayerLogin();
                     break;
 
                 default:
@@ -482,12 +500,18 @@ namespace thegame
                 {
                     thecurrentmap.Display(sb, gameTime, cameraClass);
                 }
-                else // draw splashscreen
+                else if(curGameMode == instances_type.SplashScreen) // draw splashscreen
                 {
                     sb.Begin();
                     Drawable.vidTexture = vidPlayer.GetTexture();
                     sb.Draw(Drawable.vidTexture, vidRectangle, Color.White);
                     sb.End();
+                }
+                else if (curGameMode == instances_type.Multiplayer)
+                {
+                    if (selected == gameState.MultiplayerLoginRegister)
+                        multiplayerloginform.Display(sb);
+
                 }
 
                 if (Developpermode)

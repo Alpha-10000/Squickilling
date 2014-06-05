@@ -23,6 +23,7 @@ namespace thegame
                     {
                                                    {"_mnuPlay","Play"},
                                                    {"_mnuOptions","Options"}, 
+                                                   {"_mnuMultiplayer","Multiplayer"}, 
                                                    {"_mnuExit","Exit"},
                                                    {"_mnuLanguage","Language"},
                                                    {"_mnuFullscreen","Full screen"}, 
@@ -59,6 +60,7 @@ namespace thegame
                     {                              
                                                    {"_mnuPlay","Jouer"},
                                                    {"_mnuOptions","Options"},
+                                                   {"_mnuMultiplayer","Multijoueur"}, 
                                                    {"_mnuExit","Quitter"},
                                                    {"_mnuLanguage","Langue"},
                                                    {"_mnuFullscreen","Plein ecran"}, 
@@ -94,6 +96,7 @@ namespace thegame
                     {
                                                    {"_mnuPlay","Spelen"},
                                                    {"_mnuOptions","Opties"}, 
+                                                   {"_mnuMultiplayer","Multijoueur"}, //TODO : translate this
                                                    {"_mnuExit","Afsluiten"}, 
                                                    {"_mnuLanguage","Taal"},
                                                    {"_mnuFullscreen","Volledig scherm"},
