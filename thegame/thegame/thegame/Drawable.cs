@@ -13,17 +13,23 @@ namespace thegame
         Plateform_default,
         autumnBuche,
         winterBuche,
+        springBuche,
         tree,
         tree_autumn_entrance,
         tree_autumn_entrance_inside,
         tree_autumn_exit,
         tree_autumn_exit_inside,
         winterTree,
+        springTree,
+        tree_winter_entrance,
         tree_winter_entrance_inside,
+        tree_spring_entrance,
+        tree_spring_entrance_inside,
         font,
         Background,
         AutumnGround,
         WinterGround,
+        SpringGround,
         vid,
         game_over_vid,
         health,
@@ -68,6 +74,9 @@ namespace thegame
                 case drawable_type.winterBuche:
                     image = Textures.buche_texture_winter;
                     break;
+                case drawable_type.springBuche:
+                    image = Textures.buche_texture_spring;
+                    break;
                 case drawable_type.tree:
                     image = Textures.tree_texture;
                     break;
@@ -86,8 +95,20 @@ namespace thegame
                 case drawable_type.winterTree:
                     image = Textures.tree_winter_texture;
                     break;
+                case drawable_type.springTree:
+                    image = Textures.tree_spring_texture;
+                    break;
                 case drawable_type.tree_winter_entrance_inside:
                     image = Textures.tree_winter_entrance_inside;
+                    break;
+                case drawable_type.tree_spring_entrance_inside:
+                    image = Textures.tree_spring_entrance_inside;
+                    break;
+                case drawable_type.tree_winter_entrance:
+                    image = Textures.tree_winter_entrance;
+                    break;
+                case drawable_type.tree_spring_entrance:
+                    image = Textures.tree_spring_entrance;
                     break;
                 case drawable_type.font:
                     _font = Textures.font_texture;
@@ -100,6 +121,9 @@ namespace thegame
                     break;
                 case drawable_type.WinterGround:
                     image = Textures.winter_ground_texture;
+                    break;
+                case drawable_type.SpringGround:
+                    image = Textures.spring_ground_texture;
                     break;
                 case drawable_type.Background:
                     image = Textures.autumnBackground;
