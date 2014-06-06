@@ -48,6 +48,8 @@ namespace thegame
         private float AnimatedColor_LeftCircle = 0;
         private float AnimatedTransparency = 0;
 
+        private bool FirstTime = true;
+
         int xColorRightCircle = 73;
         int xColorLeftCircle = 73;
 
@@ -99,11 +101,16 @@ namespace thegame
 
         public void Update(GameTime gametime)
         {
+
+            //fix a bug
+            if (FirstTime && transparency >=1)
+                FirstTime = false;
+
             Point themouse = Inputs.getMousePoint();
             if ((displayCreateForm || displayLoginForm) && transparency < 1)
             {
                 AnimatedTransparency +=(float)gametime.ElapsedGameTime.TotalMilliseconds;
-                if (AnimatedTransparency > 20)
+                if (AnimatedTransparency > 10)
                 {
                     transparency += 0.03f;
                     AnimatedTransparency = 0;
@@ -255,18 +262,24 @@ namespace thegame
         public void Display(SpriteBatch sb)
         {
             sb.Begin();
-            sb.DrawString(Textures.font_texture, "Multiplayer : DESIGN COMIGN SOON ", new Vector2(20, 20), Color.Black);
-            sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.Black);
+
+            if (!Game1.graphics.IsFullScreen)
+                sb.Draw(Textures.menu_main_page, new Vector2(0, 0), Color.White);
+            else
+                sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 40, Game1.graphics.PreferredBackBufferHeight + 5), Color.White);
+
+            sb.DrawString(Textures.font_texture, "MULTIPLAYER", new Vector2(20, 20), Color.White);
+            sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.White);
 
             if (displayCreateForm)
             {
                 //create email input
-                sb.DrawString(Textures.font_texture, "Email", new Vector2(XcreateForm + 70, 126), Color.Black * transparency);
+                sb.DrawString(Textures.font_texture, "Email", new Vector2(XcreateForm + 70, 126), Color.White * transparency);
                 sb.Draw(Textures.hitbox, create_email, Color.White * transparency);
                 Tuple<int, int> bound = CalculateBound(create_email_string.Length);
                 sb.DrawString(Textures.font_texture, create_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_email) ? cursor : ""), new Vector2(create_email.X + 10, create_email.Y + 5), Color.Black * transparency);
 
-                sb.DrawString(Textures.font_texture, "Password", new Vector2(XcreateForm + 50, 213), Color.Black * transparency);
+                sb.DrawString(Textures.font_texture, "Password", new Vector2(XcreateForm + 50, 213), Color.White * transparency);
                 sb.Draw(Textures.hitbox, create_password, Color.White * transparency);
 
                 for (int i = 0; i < create_password_string.Length; i++)
@@ -279,21 +292,22 @@ namespace thegame
                 sb.Draw(Textures.hitbox, create_account_button, Color.Red * transparency);
                 sb.DrawString(Textures.font_texture, "Create account", new Vector2(create_account_button.X + 22, create_account_button.Y + 7), Color.White * transparency);
             }
-            if (displayLoginForm)
+            if (displayRightCircle || (!FirstTime && transparency < 1))
             {
+                float newColor = (displayLeftCircle) ? 1 - transparency : transparency;
                 //create email input
-                sb.DrawString(Textures.font_texture, "Email", new Vector2(XloginForm + 70, 126), Color.Black * transparency);
-                sb.Draw(Textures.hitbox, login_email, Color.White * transparency);
+                sb.DrawString(Textures.font_texture, "Email", new Vector2(XloginForm + 70, 126), Color.White * newColor);
+                sb.Draw(Textures.hitbox, login_email, Color.White * newColor);
                 Tuple<int, int> bound = CalculateBound(login_email_string.Length);
-                sb.DrawString(Textures.font_texture, login_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.login_email) ? cursor : ""), new Vector2(login_email.X + 10, login_email.Y + 5), Color.Black * transparency);
+                sb.DrawString(Textures.font_texture, login_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.login_email) ? cursor : ""), new Vector2(login_email.X + 10, login_email.Y + 5), Color.Black * newColor);
 
-                sb.DrawString(Textures.font_texture, "Password", new Vector2(XloginForm + 50, 213), Color.Black * transparency);
-                sb.Draw(Textures.hitbox, login_password, Color.White * transparency);
+                sb.DrawString(Textures.font_texture, "Password", new Vector2(XloginForm + 50, 213), Color.White * newColor);
+                sb.Draw(Textures.hitbox, login_password, Color.White * newColor);
 
                 for (int i = 0; i < login_password_string.Length; i++)
                     login_password_string_hidden += "*";
                 bound = CalculateBound(login_password_string_hidden.Length);
-                sb.DrawString(Textures.font_texture, login_password_string_hidden.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.login_pwd) ? cursor : ""), new Vector2(login_password.X + 10, login_password.Y + 5), Color.Black * transparency);
+                sb.DrawString(Textures.font_texture, login_password_string_hidden.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.login_pwd) ? cursor : ""), new Vector2(login_password.X + 10, login_password.Y + 5), Color.Black * newColor);
                 login_password_string_hidden = "";
 
                 //button
@@ -303,15 +317,25 @@ namespace thegame
             sb.DrawString(Textures.font_texture, infotext, new Vector2(50, 450), Color.Black);
 
             //public static void DrawCircle(this SpriteBatch spriteBatch, float x, float y, float radius, int sides, Color color, float thickness = 1f
-            if (displayRightCircle)
+            if (displayRightCircle || (displayLeftCircle && transparency < 1))
             {
-                Tools.DrawCircle(sb, rightCircleX, rightCircleY, radius, 50, new Color(227, xColorRightCircle, 73), 150);
-                sb.DrawString(Textures.font_texture, "Create an account", new Vector2(484, 228), Color.White);
+                float newColor;
+                if (FirstTime && !displayLeftCircle)
+                    newColor = 1;
+                else
+                    newColor = (displayLeftCircle) ? 1 - transparency : transparency;
+                Tools.DrawCircle(sb, rightCircleX, rightCircleY, radius, 50, new Color(227, xColorRightCircle, 73) * newColor, 140);
+                sb.DrawString(Textures.font_texture, "Create an account", new Vector2(484, 228), Color.White * newColor);
             }
-            if (displayLeftCircle)
+            if (displayLeftCircle || ( displayRightCircle && transparency < 1))
             {
-                Tools.DrawCircle(sb, leftCircleX, leftCircleY, radius, 50, new Color(227, xColorLeftCircle, 73), 150);
-                sb.DrawString(Textures.font_texture, "Login", new Vector2(210, 228), Color.White);
+                float newColor;
+                if (FirstTime && !displayRightCircle)
+                    newColor = 1;
+                else
+                    newColor = (displayRightCircle) ? 1 - transparency : transparency;
+                Tools.DrawCircle(sb, leftCircleX, leftCircleY, radius, 50, new Color(227, xColorLeftCircle, 73) * newColor, 150);
+                sb.DrawString(Textures.font_texture, "Login", new Vector2(210, 228), Color.White * newColor);
             }
             sb.End();
         }
