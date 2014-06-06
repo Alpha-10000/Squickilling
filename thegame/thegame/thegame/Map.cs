@@ -321,6 +321,7 @@ namespace thegame
                 if (snow)
                     particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
 
+
                 particleComponent.particleEmitterList[0].Active = true;
                 Emitter t2 = particleComponent.particleEmitterList[0];
                 t2.Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
@@ -331,7 +332,8 @@ namespace thegame
                 }
             }
 
-
+            if (thegamestate == gameState.SpringLevel)
+                particleComponent.particleEmitterList[0].Active = false;
 
             bool justchange = false;
             if (themapstate == MapState.help && (Inputs.AnyKeyPressed() || Inputs.isLMBClick()))
