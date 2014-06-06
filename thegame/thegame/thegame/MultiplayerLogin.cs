@@ -189,7 +189,7 @@ namespace thegame
                 
                 if (back_main_menu.Contains(themouse))
                     mainmenu = true;
-                else if (create_account_button.Contains(themouse))
+                else if (create_account_button.Contains(themouse) && transparency >= 1)
                 {
                     CreateAccount();
                 }
