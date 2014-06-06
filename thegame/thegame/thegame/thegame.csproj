@@ -103,6 +103,7 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -137,6 +138,7 @@
     <Compile Include="GameComponents\X2DPE\ParticleGameComponent.cs" />
     <Compile Include="Inputs.cs" />
     <Compile Include="Instances.cs" />
+    <Compile Include="JsonTextReader.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Menu.cs" />

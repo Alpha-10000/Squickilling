@@ -15,6 +15,8 @@ namespace thegame
         static private KeyboardState prevKeyBState = new KeyboardState();
         static private bool usemouse;
         static bool keypress;
+        static private Keys[] lastPressedKeys;
+        static private Keys[] pressedKeys;
 
         public Inputs()
         {
@@ -29,8 +31,8 @@ namespace thegame
             curMouseState = Mouse.GetState();
             curKeyBState = Keyboard.GetState();
 
-            Keys[] lastPressedKeys = prevKeyBState.GetPressedKeys();
-            Keys[] pressedKeys = curKeyBState.GetPressedKeys();
+            lastPressedKeys = prevKeyBState.GetPressedKeys();
+            pressedKeys = curKeyBState.GetPressedKeys();
 
             keypress = false;
             //check if the currently pressed keys were already pressed
@@ -54,6 +56,82 @@ namespace thegame
         static public bool UseMouse(){ return usemouse; }
 
         static public bool AnyKeyPressed() { return keypress; }
+
+        static public string getInputKey()
+        {
+            if(pressedKeys.Count() > 0 && AnyKeyPressed())
+            {
+                if ((pressedKeys.Contains(Keys.LeftShift) || pressedKeys.Contains(Keys.RightShift)) && pressedKeys.Contains(Keys.D2))//english qwerty keyboard
+                    return "@";
+
+                    Keys thefirst = pressedKeys[0];
+                    switch (thefirst)
+                    {
+                        case Keys.A:
+                            return "a";
+                        case Keys.B:
+                            return "b";
+                        case Keys.C:
+                            return "c";
+                        case Keys.D:
+                            return "d";
+                        case Keys.E:
+                            return "e";
+                        case Keys.F:
+                            return "f";
+                        case Keys.G:
+                            return "g";
+                        case Keys.H:
+                            return "h";
+                        case Keys.I:
+                            return "i";
+                        case Keys.J:
+                            return "j";
+                        case Keys.K:
+                            return "k";
+                        case Keys.L:
+                            return "l";
+                        case Keys.M:
+                            return "m";
+                        case Keys.N:
+                            return "n";
+                        case Keys.O:
+                            return "o";
+                        case Keys.P:
+                            return "p";
+                        case Keys.Q:
+                            return "q";
+                        case Keys.R:
+                            return "r";
+                        case Keys.S:
+                            return "s";
+                        case Keys.T:
+                            return "t";
+                        case Keys.U:
+                            return "u";
+                        case Keys.V:
+                            return "v";
+                        case Keys.W:
+                            return "w";
+                        case Keys.X:
+                            return "x";
+                        case Keys.Y:
+                            return "y";
+                        case Keys.Z:
+                            return "z";
+                        case Keys.OemPeriod:
+                            return ".";
+                        case Keys.Attn:
+                            return "@";
+                        default:
+                            return "";
+                    
+                }
+        }
+            
+            return "";
+        
+        }
 
         static public bool isKeyDown(Keys k) { return curKeyBState.IsKeyDown(k); }
 

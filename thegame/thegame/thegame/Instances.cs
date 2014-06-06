@@ -286,8 +286,13 @@ namespace thegame
                 else if (curGameMode == instances_type.Multiplayer)
                 {
                     if (selected == gameState.MultiplayerLoginRegister)
-                        multiplayerloginform.Update();
-
+                        multiplayerloginform.Update(gametime);
+                    if (multiplayerloginform.mainmenu)
+                    {
+                        this.selected = gameState.MainMenu;
+                        curGameMode = instances_type.Menu;
+                        Execute();
+                    }
                 }
 
                 Keys[] getkey = Keyboard.GetState().GetPressedKeys();
