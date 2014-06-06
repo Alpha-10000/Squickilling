@@ -129,6 +129,7 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="create_game.cs" />
     <Compile Include="DevelopperMap.cs" />
     <Compile Include="Drawable.cs" />
     <Compile Include="GameComponents\X2DPE\Emitter.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="Textures.cs" />
     <Compile Include="Tools.cs" />
   </ItemGroup>

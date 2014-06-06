@@ -48,7 +48,8 @@ namespace thegame
         WinterLevel = 8,
         SpringLevel,
         SummerLevel,
-        MultiplayerLoginRegister
+        MultiplayerLoginRegister,
+        MutilplayerCreateGame
     }
 
     public class Instances
@@ -90,8 +91,7 @@ namespace thegame
         public Vector2 cameraPos = Vector2.Zero;
 
         private MultiplayerLogin multiplayerloginform;
-
-      
+        private create_game createthegame;      
 
         MouseState mouse = Mouse.GetState();
 
@@ -283,16 +283,40 @@ namespace thegame
                         Execute();
                     }
                 }
-                else if (curGameMode == instances_type.Multiplayer)
+                else if (selected == gameState.MultiplayerLoginRegister)
                 {
-                    if (selected == gameState.MultiplayerLoginRegister)
-                        multiplayerloginform.Update(gametime);
-                    if (multiplayerloginform.mainmenu)
+                    if (Session.session_isset)
+                    {
+                        selected = gameState.MutilplayerCreateGame;
+                        Execute();
+                    }
+                    else
+                    {
+                        if (selected == gameState.MultiplayerLoginRegister)
+                            multiplayerloginform.Update(gametime);
+                        if (multiplayerloginform.mainmenu)
+                        {
+                            this.selected = gameState.MainMenu;
+                            curGameMode = instances_type.Menu;
+                            Execute();
+                        }
+                        if (multiplayerloginform.session_isset)
+                        {
+                            Session.NewSession(multiplayerloginform.session_id, multiplayerloginform.session_email, multiplayerloginform.session_password, multiplayerloginform.session_name);
+                            selected = gameState.MutilplayerCreateGame;
+                            Execute();
+                        }
+                    }
+                }
+                else if (selected == gameState.MutilplayerCreateGame)
+                {
+                    if (createthegame.mainmenu)
                     {
                         this.selected = gameState.MainMenu;
                         curGameMode = instances_type.Menu;
                         Execute();
                     }
+                    createthegame.Update();
                 }
 
                 Keys[] getkey = Keyboard.GetState().GetPressedKeys();
@@ -431,7 +455,9 @@ namespace thegame
                     curGameMode = instances_type.Multiplayer;
                     multiplayerloginform = new MultiplayerLogin();
                     break;
-
+                case gameState.MutilplayerCreateGame:
+                    createthegame = new create_game();
+                    break;
                 default:
                     break;
             }
@@ -516,6 +542,8 @@ namespace thegame
                 {
                     if (selected == gameState.MultiplayerLoginRegister)
                         multiplayerloginform.Display(sb);
+                    else if (selected == gameState.MutilplayerCreateGame)
+                        createthegame.Display(sb);
 
                 }
 

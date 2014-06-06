@@ -20,7 +20,14 @@ namespace thegame
         private string infotext = "" ;
         private string cursor = "";
 
+        public string session_password = "";
+        public string session_email = "";
+        public string session_id = "";
+        public string session_name = "";
+        public bool session_isset = false;
+
         //TEXT BOX
+        private string create_name_string = "";
         private string create_email_string = "";
         private string create_password_string = "";
         private string create_password_string_hidden = "";
@@ -39,7 +46,7 @@ namespace thegame
         private int XcreateForm = 484;
         private int XloginForm = 138;
         /* CREATE ACCOUNT TEXT BOX */
-        Rectangle create_email, create_password, create_account_button, login_email, login_password, login_account_button;
+        Rectangle create_name, create_email, create_password, create_account_button, login_email, login_password, login_account_button;
         Rectangle back_main_menu = new Rectangle(480, 20, 400, 40);
 
         private bool AnimatedCursor;
@@ -56,6 +63,7 @@ namespace thegame
         private enum Cursor
         {
             none,
+            create_name,
             create_email,
             create_pwd,
             login_email,
@@ -75,9 +83,10 @@ namespace thegame
             mouseCursor = Cursor.none;
             AnimatedCursor = mainmenu = false;
 
-            create_email = new Rectangle(XcreateForm, 160, 200, 40);
-            create_password = new Rectangle(XcreateForm, 250, 200, 40);
-            create_account_button = new Rectangle(XcreateForm, 310, 200, 40);
+            create_name = new Rectangle(XcreateForm, 160, 200, 40);
+            create_email = new Rectangle(XcreateForm, 250, 200, 40);
+            create_password = new Rectangle(XcreateForm, 340, 200, 40);
+            create_account_button = new Rectangle(XcreateForm, 400, 200, 40);
             login_email = new Rectangle(XloginForm, 160, 200, 40);
             login_password = new Rectangle(XloginForm, 250, 200, 40);
             login_account_button = new Rectangle(XloginForm, 310, 200, 40);
@@ -86,15 +95,24 @@ namespace thegame
 
         public void CreateAccount()
         {
-            wb = new WebClient();
-            var data = new NameValueCollection();
-            data["email"] = create_email_string;
-            data["password"] = create_password_string;
-            var response = wb.UploadValues("http://squickilling.com/json/login.php", "POST", data);
-            infotext = System.Text.Encoding.UTF8.GetString(response);
-            // List<string> myObj = new List<string>(); DO NOT DELETED THIS!!!
-            //Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(text); DO NOT DELETED THIS!!!
-            create_password_string = create_email_string = "";
+            try
+            {
+
+                wb = new WebClient();
+                var data = new NameValueCollection();
+                data["email"] = create_email_string;
+                data["password"] = create_password_string;
+                data["name"] = create_name_string;
+                var response = wb.UploadValues("http://squickilling.com/json/create_account.php", "POST", data);
+                infotext = System.Text.Encoding.UTF8.GetString(response);
+                // List<string> myObj = new List<string>(); DO NOT DELETED THIS!!!
+                //Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(text); DO NOT DELETED THIS!!!
+                create_password_string = create_email_string = "";
+            }
+            catch
+            {
+                infotext = "Sorry. We are unable to reach the database. Try again later.";
+            }
         }
 
       
@@ -193,6 +211,16 @@ namespace thegame
                 {
                     CreateAccount();
                 }
+                else if (login_account_button.Contains(themouse) && transparency >= 1)
+                {
+                    Login();
+                }
+                else if (create_name.Contains(themouse))
+                {
+                    mouseCursor = Cursor.create_name;
+                    AnimatedCursor = true;
+                    AnimatedCursorTime = 400;
+                }
                 else if (create_email.Contains(themouse))
                 {
                     mouseCursor = Cursor.create_email;
@@ -202,6 +230,18 @@ namespace thegame
                 else if (create_password.Contains(themouse))
                 {
                     mouseCursor = Cursor.create_pwd;
+                    AnimatedCursor = true;
+                    AnimatedCursorTime = 400;
+                }
+                else if (login_password.Contains(themouse))
+                {
+                    mouseCursor = Cursor.login_pwd;
+                    AnimatedCursor = true;
+                    AnimatedCursorTime = 400;
+                }
+                else if (login_email.Contains(themouse))
+                {
+                    mouseCursor = Cursor.login_email;
                     AnimatedCursor = true;
                     AnimatedCursorTime = 400;
                 }
@@ -219,8 +259,17 @@ namespace thegame
                     case Cursor.create_email:
                         WriteText(ref create_email_string);
                         break;
+                    case Cursor.create_name:
+                        WriteText(ref create_name_string);
+                        break;
                     case Cursor.create_pwd:
                         WriteText(ref create_password_string);
+                        break;
+                    case Cursor.login_pwd:
+                        WriteText(ref login_password_string);
+                        break;
+                    case Cursor.login_email:
+                        WriteText(ref login_email_string);
                         break;
                     default:
                         break;
@@ -259,6 +308,34 @@ namespace thegame
 
         }
 
+        private void Login()
+        {
+            try
+            {
+                wb = new WebClient();
+                var data = new NameValueCollection();
+                data["email"] = login_email_string;
+                data["password"] = login_password_string;
+                var response = wb.UploadValues("http://squickilling.com/json/login.php", "POST", data);
+                infotext = System.Text.Encoding.UTF8.GetString(response);
+                List<string> myObj = new List<string>();
+                Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(infotext);
+                
+                session_email = values["email"];
+                session_password = values["password"];
+                session_id = values["id"];
+                session_name = values["name"];
+                infotext = values["error"];
+                if(infotext == "")
+                    session_isset = true;
+                login_password_string = login_email_string = "";
+           }
+           catch
+           {
+                infotext = "Sorry. We are unable to reach the database. Try again later.";
+            }
+        }
+
         public void Display(SpriteBatch sb)
         {
             sb.Begin();
@@ -274,12 +351,16 @@ namespace thegame
             if (displayCreateForm)
             {
                 //create email input
-                sb.DrawString(Textures.font_texture, "Email", new Vector2(XcreateForm + 70, 126), Color.White * transparency);
+                sb.DrawString(Textures.font_texture, "Name", new Vector2(XcreateForm + 70, 126), Color.White * transparency);
+                sb.Draw(Textures.hitbox, create_name, Color.White * transparency);
+                Tuple<int, int> bound = CalculateBound(create_name_string.Length);
+                sb.DrawString(Textures.font_texture, create_name_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_name) ? cursor : ""), new Vector2(create_name.X + 10, create_name.Y + 5), Color.Black * transparency);
+                sb.DrawString(Textures.font_texture, "Email", new Vector2(XcreateForm + 70, 213), Color.White * transparency);
                 sb.Draw(Textures.hitbox, create_email, Color.White * transparency);
-                Tuple<int, int> bound = CalculateBound(create_email_string.Length);
+                 bound = CalculateBound(create_email_string.Length);
                 sb.DrawString(Textures.font_texture, create_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_email) ? cursor : ""), new Vector2(create_email.X + 10, create_email.Y + 5), Color.Black * transparency);
 
-                sb.DrawString(Textures.font_texture, "Password", new Vector2(XcreateForm + 50, 213), Color.White * transparency);
+                sb.DrawString(Textures.font_texture, "Password", new Vector2(XcreateForm + 50, 306), Color.White * transparency);
                 sb.Draw(Textures.hitbox, create_password, Color.White * transparency);
 
                 for (int i = 0; i < create_password_string.Length; i++)
@@ -314,7 +395,7 @@ namespace thegame
                 sb.Draw(Textures.hitbox, login_account_button, Color.Red * transparency);
                 sb.DrawString(Textures.font_texture, "Login", new Vector2(login_account_button.X + 75, login_account_button.Y + 7), Color.White * transparency);
             }
-            sb.DrawString(Textures.font_texture, infotext, new Vector2(50, 450), Color.Black);
+            sb.DrawString(Textures.font_texture, infotext, new Vector2(50, 450), Color.White);
 
             //public static void DrawCircle(this SpriteBatch spriteBatch, float x, float y, float radius, int sides, Color color, float thickness = 1f
             if (displayRightCircle || (displayLeftCircle && transparency < 1))
