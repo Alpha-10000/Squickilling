@@ -24,6 +24,7 @@ namespace thegame
 
         public int width;
         public int height;
+
         
         public Game1()
         {
@@ -45,6 +46,8 @@ namespace thegame
             Application.EnableVisualStyles();
             Form gameForm = (Form)Form.FromHandle(Window.Handle);
             gameForm.FormBorderStyle = FormBorderStyle.None;
+
+            
         }
 
         protected override void Initialize()
@@ -58,6 +61,7 @@ namespace thegame
 
         protected override void LoadContent()
         {
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Textures.load(Content);
             instancesobject = new Instances(this);
