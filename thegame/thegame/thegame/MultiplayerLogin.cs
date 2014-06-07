@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Net;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace thegame
 {
@@ -46,7 +47,7 @@ namespace thegame
         private int XcreateForm = 484;
         private int XloginForm = 138;
         /* CREATE ACCOUNT TEXT BOX */
-        Rectangle create_name, create_email, create_password, create_account_button, login_email, login_password, login_account_button;
+        Rectangle create_name, create_email, create_password, create_account_button, login_email, login_password, login_account_button, login_forgot_password;
         Rectangle back_main_menu = new Rectangle(480, 20, 400, 40);
 
         private bool AnimatedCursor;
@@ -90,7 +91,7 @@ namespace thegame
             login_email = new Rectangle(XloginForm, 160, 200, 40);
             login_password = new Rectangle(XloginForm, 250, 200, 40);
             login_account_button = new Rectangle(XloginForm, 310, 200, 40);
-            
+            login_forgot_password = new Rectangle(XloginForm, 370, 200, 40);
         }
 
         public void CreateAccount()
@@ -239,6 +240,10 @@ namespace thegame
                     AnimatedCursor = true;
                     AnimatedCursorTime = 400;
                 }
+                else if (login_forgot_password.Contains(themouse))
+                {
+                    Process.Start("http://www.squickilling.com/user/forgot-password.php");
+                }
                 else if (login_email.Contains(themouse))
                 {
                     mouseCursor = Cursor.login_email;
@@ -348,34 +353,38 @@ namespace thegame
             sb.DrawString(Textures.font_texture, "MULTIPLAYER", new Vector2(20, 20), Color.White);
             sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.White);
 
-            if (displayCreateForm)
+            if (displayLeftCircle || (transparency < 1))
             {
+                float newColor;
+                newColor = (displayLeftCircle) ? transparency : 1 - transparency;
                 //create email input
-                sb.DrawString(Textures.font_texture, "Name", new Vector2(XcreateForm + 70, 126), Color.White * transparency);
-                sb.Draw(Textures.hitbox, create_name, Color.White * transparency);
+                sb.DrawString(Textures.font_texture, "Name", new Vector2(XcreateForm + 70, 126), Color.White * newColor);
+                sb.Draw(Textures.hitbox, create_name, Color.White * newColor);
                 Tuple<int, int> bound = CalculateBound(create_name_string.Length);
-                sb.DrawString(Textures.font_texture, create_name_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_name) ? cursor : ""), new Vector2(create_name.X + 10, create_name.Y + 5), Color.Black * transparency);
-                sb.DrawString(Textures.font_texture, "Email", new Vector2(XcreateForm + 70, 213), Color.White * transparency);
-                sb.Draw(Textures.hitbox, create_email, Color.White * transparency);
+                sb.DrawString(Textures.font_texture, create_name_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_name) ? cursor : ""), new Vector2(create_name.X + 10, create_name.Y + 5), Color.Black * newColor);
+                sb.DrawString(Textures.font_texture, "Email", new Vector2(XcreateForm + 70, 213), Color.White * newColor);
+                sb.Draw(Textures.hitbox, create_email, Color.White * newColor);
                  bound = CalculateBound(create_email_string.Length);
-                sb.DrawString(Textures.font_texture, create_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_email) ? cursor : ""), new Vector2(create_email.X + 10, create_email.Y + 5), Color.Black * transparency);
+                 sb.DrawString(Textures.font_texture, create_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_email) ? cursor : ""), new Vector2(create_email.X + 10, create_email.Y + 5), Color.Black * newColor);
 
-                sb.DrawString(Textures.font_texture, "Password", new Vector2(XcreateForm + 50, 306), Color.White * transparency);
-                sb.Draw(Textures.hitbox, create_password, Color.White * transparency);
+                 sb.DrawString(Textures.font_texture, "Password", new Vector2(XcreateForm + 50, 306), Color.White * newColor);
+                 sb.Draw(Textures.hitbox, create_password, Color.White * newColor);
 
                 for (int i = 0; i < create_password_string.Length; i++)
                     create_password_string_hidden += "*";
                 bound = CalculateBound(create_password_string_hidden.Length);
-                sb.DrawString(Textures.font_texture, create_password_string_hidden.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_pwd) ? cursor : ""), new Vector2(create_password.X + 10, create_password.Y + 5), Color.Black * transparency);
+                sb.DrawString(Textures.font_texture, create_password_string_hidden.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_pwd) ? cursor : ""), new Vector2(create_password.X + 10, create_password.Y + 5), Color.Black * newColor);
                 create_password_string_hidden = "";
 
                 //button
-                sb.Draw(Textures.hitbox, create_account_button, Color.Red * transparency);
-                sb.DrawString(Textures.font_texture, "Create account", new Vector2(create_account_button.X + 22, create_account_button.Y + 7), Color.White * transparency);
+                sb.Draw(Textures.hitbox, create_account_button, Color.Red * newColor);
+                sb.DrawString(Textures.font_texture, "Create account", new Vector2(create_account_button.X + 22, create_account_button.Y + 7), Color.White * newColor);
+                
             }
-            if (displayRightCircle || (!FirstTime && transparency < 1))
+            if (displayRightCircle || (transparency < 1))
             {
-                float newColor = (displayLeftCircle) ? 1 - transparency : transparency;
+                float newColor;
+                newColor = (displayRightCircle) ? transparency : 1 - transparency;
                 //create email input
                 sb.DrawString(Textures.font_texture, "Email", new Vector2(XloginForm + 70, 126), Color.White * newColor);
                 sb.Draw(Textures.hitbox, login_email, Color.White * newColor);
@@ -393,7 +402,8 @@ namespace thegame
 
                 //button
                 sb.Draw(Textures.hitbox, login_account_button, Color.Red * transparency);
-                sb.DrawString(Textures.font_texture, "Login", new Vector2(login_account_button.X + 75, login_account_button.Y + 7), Color.White * transparency);
+                sb.DrawString(Textures.font_texture, "Login", new Vector2(login_account_button.X + 75, login_account_button.Y + 7), Color.White * newColor);
+                sb.DrawString(Textures.font_texture, "Forgot password ?", new Vector2(login_forgot_password.X + 5, login_forgot_password.Y + 7), Color.White * newColor);
             }
             sb.DrawString(Textures.font_texture, infotext, new Vector2(50, 450), Color.White);
 
