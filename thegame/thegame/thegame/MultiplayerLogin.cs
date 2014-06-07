@@ -356,6 +356,9 @@ namespace thegame
             if (displayLeftCircle || (transparency < 1))
             {
                 float newColor;
+                if (FirstTime && !displayLeftCircle)
+                    newColor = 0;
+                else
                 newColor = (displayLeftCircle) ? transparency : 1 - transparency;
                 //create email input
                 sb.DrawString(Textures.font_texture, "Name", new Vector2(XcreateForm + 70, 126), Color.White * newColor);
@@ -384,7 +387,10 @@ namespace thegame
             if (displayRightCircle || (transparency < 1))
             {
                 float newColor;
-                newColor = (displayRightCircle) ? transparency : 1 - transparency;
+                if (FirstTime && !displayRightCircle)
+                    newColor = 0;
+                else
+                    newColor = (displayRightCircle) ? transparency : 1 - transparency;
                 //create email input
                 sb.DrawString(Textures.font_texture, "Email", new Vector2(XloginForm + 70, 126), Color.White * newColor);
                 sb.Draw(Textures.hitbox, login_email, Color.White * newColor);
