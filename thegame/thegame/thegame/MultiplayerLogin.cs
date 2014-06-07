@@ -232,6 +232,12 @@ namespace thegame
                         AnimatedCursor = true;
                         AnimatedCursorTime = 400;
                     }
+                    else if (mouseCursor == Cursor.none && displayLoginForm)
+                    {
+                        mouseCursor = Cursor.login_email;
+                        AnimatedCursor = true;
+                        AnimatedCursorTime = 400;
+                    }
                     else
                     {
                         bool thekey = Inputs.isKeyRelease(Keys.Tab);
