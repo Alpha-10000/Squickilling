@@ -38,6 +38,15 @@ namespace thegame
             sb.DrawString(spritefont, text, TheNewVector, color);
         }
 
+        public static void DisplayBorder(SpriteBatch sb, Color color, Rectangle therectangle, int dim)
+        {
+            sb.Draw(Textures.hitbox, new Rectangle(therectangle.X, therectangle.Y, therectangle.Width, dim), color);
+            sb.Draw(Textures.hitbox, new Rectangle(therectangle.X, therectangle.Y + therectangle.Height - dim, therectangle.Width, dim), color);
+            sb.Draw(Textures.hitbox, new Rectangle(therectangle.X, therectangle.Y, dim, therectangle.Height), color);
+            sb.Draw(Textures.hitbox, new Rectangle(therectangle.X + therectangle.Width - dim, therectangle.Y, dim, therectangle.Height), color);
+        }
+
+
         #region Private Methods
 
         private static void CreateThePixel(SpriteBatch spriteBatch)

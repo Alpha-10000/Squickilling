@@ -83,6 +83,7 @@ namespace thegame
 
         public MultiplayerLogin()
         {
+            wb = new WebClient();
             mouseCursor = Cursor.none;
             AnimatedCursor = mainmenu = false;
 
@@ -114,8 +115,6 @@ namespace thegame
         {
             try
             {
-
-                wb = new WebClient();
                 var data = new NameValueCollection();
                 data["email"] = create_email_string;
                 data["password"] = create_password_string;
@@ -385,7 +384,6 @@ namespace thegame
         {
             try
             {
-                wb = new WebClient();
                 var data = new NameValueCollection();
                 data["email"] = login_email_string;
                 data["password"] = login_password_string;

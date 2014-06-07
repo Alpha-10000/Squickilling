@@ -49,7 +49,9 @@ namespace thegame
         SpringLevel,
         SummerLevel,
         MultiplayerLoginRegister,
-        MutilplayerCreateGame
+        MutilplayerDashboard,
+        MultiplayerCreateGame,
+        MultiplayerJoinGame
     }
 
     public class Instances
@@ -91,7 +93,7 @@ namespace thegame
         public Vector2 cameraPos = Vector2.Zero;
 
         private MultiplayerLogin multiplayerloginform;
-        private create_game createthegame;      
+        private Dashboard createthegame;      
 
         MouseState mouse = Mouse.GetState();
 
@@ -103,9 +105,11 @@ namespace thegame
         public static ParticleComponent particleComponent;
 
         private Map thecurrentmap;
+        private Create_game create_game;
+        private Join_game join_game;
 
-
-
+        /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
+        private bool bypassLoginForm = false;
 
         public Instances(Game1 game)
         {
@@ -285,9 +289,9 @@ namespace thegame
                 }
                 else if (selected == gameState.MultiplayerLoginRegister)
                 {
-                    if (Session.session_isset)
+                    if (Session.session_isset || bypassLoginForm)
                     {
-                        selected = gameState.MutilplayerCreateGame;
+                        selected = gameState.MutilplayerDashboard;
                         Execute();
                     }
                     else
@@ -303,12 +307,12 @@ namespace thegame
                         if (multiplayerloginform.session_isset)
                         {
                             Session.NewSession(multiplayerloginform.session_id, multiplayerloginform.session_email, multiplayerloginform.session_password, multiplayerloginform.session_name);
-                            selected = gameState.MutilplayerCreateGame;
+                            selected = gameState.MutilplayerDashboard;
                             Execute();
                         }
                     }
                 }
-                else if (selected == gameState.MutilplayerCreateGame)
+                else if (selected == gameState.MutilplayerDashboard)
                 {
                     if (createthegame.mainmenu)
                     {
@@ -316,7 +320,35 @@ namespace thegame
                         curGameMode = instances_type.Menu;
                         Execute();
                     }
-                    createthegame.Update();
+                    createthegame.Update(gametime);
+                    if (createthegame.Create_game)
+                    {
+                        selected = gameState.MultiplayerCreateGame;
+                        Execute();
+                    }
+                    if (createthegame.Join_game)
+                    {
+                        selected = gameState.MultiplayerJoinGame;
+                        Execute();
+                    }
+                }
+                else if (selected == gameState.MultiplayerCreateGame)
+                {
+                    create_game.Update();
+                    if (create_game.goback)
+                    {
+                        this.selected = gameState.MutilplayerDashboard;
+                        Execute();
+                    }
+                }
+                else if (selected == gameState.MultiplayerJoinGame)
+                {
+                    join_game.Update();
+                    if (join_game.goback)
+                    {
+                        this.selected = gameState.MutilplayerDashboard;
+                        Execute();
+                    }
                 }
 
                 Keys[] getkey = Keyboard.GetState().GetPressedKeys();
@@ -455,8 +487,14 @@ namespace thegame
                     curGameMode = instances_type.Multiplayer;
                     multiplayerloginform = new MultiplayerLogin();
                     break;
-                case gameState.MutilplayerCreateGame:
-                    createthegame = new create_game();
+                case gameState.MutilplayerDashboard:
+                    createthegame = new Dashboard();
+                    break;
+                case gameState.MultiplayerCreateGame:
+                    create_game = new Create_game();
+                    break;
+                case gameState.MultiplayerJoinGame:
+                    join_game = new Join_game();
                     break;
                 default:
                     break;
@@ -542,8 +580,12 @@ namespace thegame
                 {
                     if (selected == gameState.MultiplayerLoginRegister)
                         multiplayerloginform.Display(sb);
-                    else if (selected == gameState.MutilplayerCreateGame)
+                    else if (selected == gameState.MutilplayerDashboard)
                         createthegame.Display(sb);
+                    else if (selected == gameState.MultiplayerCreateGame)
+                        create_game.Display(sb);
+                    else if (selected == gameState.MultiplayerJoinGame)
+                        join_game.Display(sb);
 
                 }
 
