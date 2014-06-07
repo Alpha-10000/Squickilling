@@ -7,6 +7,13 @@ using Microsoft.Xna.Framework;
 
 namespace thegame
 {
+    public enum AlignType
+    {
+        MiddleCenter,//only middleCenter at the moment
+        TopRight,
+        TopLeft
+    }
+
     public static class Tools
     {
         #region Private Members
@@ -17,6 +24,19 @@ namespace thegame
 
         #endregion
 
+
+        /* ALIGNED TEXT */
+
+        public static void DisplayAlignedText(SpriteBatch sb,Color color,  SpriteFont spritefont, string text, AlignType aligntype, Rectangle bounds)
+        {
+            Vector2 widthAndHeight = spritefont.MeasureString(text);
+            Vector2 TheNewVector = new Vector2(0, 0);
+            if (aligntype == AlignType.MiddleCenter)
+            {
+                TheNewVector = new Vector2(((bounds.Width - widthAndHeight.X) / 2) + bounds.X, ((bounds.Height - widthAndHeight.Y) / 2) + bounds.Y);
+            }
+            sb.DrawString(spritefont, text, TheNewVector, color);
+        }
 
         #region Private Methods
 
