@@ -37,6 +37,12 @@ namespace thegame
             if (back_main_menu.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
                 mainmenu = true;
             Point themouse = Inputs.getMousePoint();
+
+            if(Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Up))
+                Create_game = true;
+            if(Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Down))
+                Join_game = true;
+
             if (radius >= Math.Sqrt(Math.Pow(themouse.X -xCircle, 2) + Math.Pow(themouse.Y - yTopCircle, 2)))
             {
                 if (Inputs.isLMBClick())

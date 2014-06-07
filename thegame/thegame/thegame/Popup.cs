@@ -33,7 +33,7 @@ namespace thegame
 
         public void Update()
         {
-            if (new Rectangle(contentRectangle.X + 100, contentRectangle.Y + 154, 100, 60).Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
+            if ((new Rectangle(contentRectangle.X + 100, contentRectangle.Y + 154, 100, 60).Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()) || Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
                 action1bool = true;
         }
 

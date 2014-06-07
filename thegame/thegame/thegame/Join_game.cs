@@ -23,7 +23,7 @@ namespace thegame
 
         public void Update()
         {
-            if (go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
+            if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()) || Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Back))
                 goback = true;
 
             for (int i = 0; i <= 2; i++)
