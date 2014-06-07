@@ -161,9 +161,18 @@ namespace thegame
                             Execute();
                             break;
                         case 1:
-                            this.selected = gameState.MultiplayerLoginRegister;
-                            curGameMode = instances_type.Multiplayer;
-                            Execute();
+                            if (Session.session_isset || bypassLoginForm)
+                            {
+                                selected = gameState.MutilplayerDashboard;
+                                curGameMode = instances_type.Multiplayer;
+                                Execute();
+                            }
+                            else
+                            {
+                                this.selected = gameState.MultiplayerLoginRegister;
+                                curGameMode = instances_type.Multiplayer;
+                                Execute();
+                            }
                             break;
                         case 2:
                             this.selected = gameState.OptionMenu;
@@ -289,13 +298,7 @@ namespace thegame
                 }
                 else if (selected == gameState.MultiplayerLoginRegister)
                 {
-                    if (Session.session_isset || bypassLoginForm)
-                    {
-                        selected = gameState.MutilplayerDashboard;
-                        Execute();
-                    }
-                    else
-                    {
+                    
                         if (selected == gameState.MultiplayerLoginRegister)
                             multiplayerloginform.Update(gametime);
                         if (multiplayerloginform.mainmenu)
@@ -310,7 +313,6 @@ namespace thegame
                             selected = gameState.MutilplayerDashboard;
                             Execute();
                         }
-                    }
                 }
                 else if (selected == gameState.MutilplayerDashboard)
                 {
