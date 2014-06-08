@@ -147,6 +147,7 @@
     <Compile Include="Language.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="MultiMap.cs" />
     <Compile Include="MultiplayerLogin.cs" />
     <Compile Include="PauseMenu.cs" />
     <Compile Include="Perso.cs" />

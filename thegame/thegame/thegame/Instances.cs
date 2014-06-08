@@ -51,7 +51,8 @@ namespace thegame
         MultiplayerLoginRegister,
         MutilplayerDashboard,
         MultiplayerCreateGame,
-        MultiplayerJoinGame
+        MultiplayerJoinGame,
+        MultiplayerGame
     }
 
     public class Instances
@@ -108,8 +109,11 @@ namespace thegame
         private Create_game create_game;
         private Join_game join_game;
 
+        private MultiMap multimap;
+
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
         private bool bypassLoginForm = false;
+        private bool GoToTheMultiExperiment = false;
 
         public Instances(Game1 game)
         {
@@ -164,6 +168,12 @@ namespace thegame
                             if (Session.session_isset || bypassLoginForm)
                             {
                                 selected = gameState.MutilplayerDashboard;
+                                curGameMode = instances_type.Multiplayer;
+                                Execute();
+                            }
+                            if (GoToTheMultiExperiment)
+                            {
+                                selected = gameState.MultiplayerGame;
                                 curGameMode = instances_type.Multiplayer;
                                 Execute();
                             }
@@ -352,6 +362,10 @@ namespace thegame
                         Execute();
                     }
                 }
+                else if (selected == gameState.MultiplayerGame)
+                {
+                    multimap.Update(gametime);
+                }
 
                 Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
@@ -498,6 +512,9 @@ namespace thegame
                 case gameState.MultiplayerJoinGame:
                     join_game = new Join_game();
                     break;
+                case gameState.MultiplayerGame:
+                    multimap = new MultiMap();
+                    break;
                 default:
                     break;
             }
@@ -588,6 +605,8 @@ namespace thegame
                         create_game.Display(sb);
                     else if (selected == gameState.MultiplayerJoinGame)
                         join_game.Display(sb);
+                    else if (selected == gameState.MultiplayerGame)
+                        multimap.Display(sb);
 
                 }
 

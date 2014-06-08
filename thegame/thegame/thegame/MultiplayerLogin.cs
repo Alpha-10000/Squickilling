@@ -141,6 +141,10 @@ namespace thegame
                 FirstTime = false;
 
             Point themouse = Inputs.getMousePoint();
+
+            if (back_main_menu.Contains(themouse) && Inputs.isLMBClick())
+                mainmenu = true;
+
             if ((displayCreateForm || displayLoginForm) && transparency < 1)
             {
                 AnimatedTransparency +=(float)gametime.ElapsedGameTime.TotalMilliseconds;
@@ -277,9 +281,8 @@ namespace thegame
                 else
                 {
 
-                    if (back_main_menu.Contains(themouse))
-                        mainmenu = true;
-                    else if (create_account_button.Contains(themouse) && transparency >= 1)
+                    
+                    if (create_account_button.Contains(themouse) && transparency >= 1)
                         CreateAccount();
                     else if (login_account_button.Contains(themouse) && transparency >= 1)
                         Login();

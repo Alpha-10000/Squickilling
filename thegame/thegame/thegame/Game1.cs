@@ -43,10 +43,7 @@ namespace thegame
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
 
-            Application.EnableVisualStyles();
-            Form gameForm = (Form)Form.FromHandle(Window.Handle);
-            gameForm.FormBorderStyle = FormBorderStyle.None;
-
+            
             
         }
 
