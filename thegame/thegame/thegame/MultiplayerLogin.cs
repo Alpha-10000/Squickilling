@@ -19,7 +19,8 @@ namespace thegame
         public bool mainmenu { get; private set; }
 
         private WebClient wb;
-        private string infotext = "" ;
+        private string[] infotext = new string[] { ""};
+        private string infotext2 = "";
         private string cursor = "";
 
         public string session_password = "";
@@ -57,6 +58,7 @@ namespace thegame
         private float AnimatedColor_RightCircle = 0;
         private float AnimatedColor_LeftCircle = 0;
         private float AnimatedTransparency = 0;
+        private Popup popup;
 
         private bool FirstTime = true;
 
@@ -120,14 +122,14 @@ namespace thegame
                 data["password"] = create_password_string;
                 data["name"] = create_name_string;
                 var response = wb.UploadValues("http://squickilling.com/json/create_account.php", "POST", data);
-                infotext = System.Text.Encoding.UTF8.GetString(response);
+                infotext[0] = System.Text.Encoding.UTF8.GetString(response);
                 // List<string> myObj = new List<string>(); DO NOT DELETED THIS!!!
                 //Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(text); DO NOT DELETED THIS!!!
                 create_password_string = create_email_string = "";
             }
             catch
             {
-                infotext = "Sorry. We are unable to reach the database. Try again later.";
+                infotext[0] = "Sorry. We are unable to reach the database. Try again later.";
             }
         }
 
@@ -135,7 +137,8 @@ namespace thegame
 
         public void Update(GameTime gametime)
         {
-
+            if (popup == null && infotext[0] != "")
+                popup = new Popup("ok", "", (infotext[0] == "Your account has been created." ? "Congratulations" : "Something wrong"), infotext, Textures.font_texture, 500);
             //fix a bug
             if (FirstTime && transparency >=1)
                 FirstTime = false;
@@ -160,7 +163,7 @@ namespace thegame
 
             if (radius >= Math.Sqrt(Math.Pow(themouse.X - rightCircleX, 2) + Math.Pow(themouse.Y - rightCircleY, 2)) || keyboardright)
             {
-                if ((Inputs.isLMBClick() || keyboardright) && !displayCreateForm)
+                if ((Inputs.isLMBClick() || keyboardright) && !displayCreateForm && popup == null)
                 {
                     displayCreateForm = true;
                     displayRightCircle = false;
@@ -192,7 +195,7 @@ namespace thegame
 
             if (radius >= Math.Sqrt(Math.Pow(themouse.X - leftCircleX, 2) + Math.Pow(themouse.Y - leftCircleY, 2)) || keyboardleft)
             {
-                if ((Inputs.isLMBClick() || keyboardleft)&& !displayLoginForm)
+                if ((Inputs.isLMBClick() || keyboardleft) && !displayLoginForm && popup == null)
                 {
                     displayLoginForm = true;
                     displayLeftCircle = false;
@@ -224,7 +227,7 @@ namespace thegame
 
 
 
-            if ((Inputs.isLMBClick() || !Inputs.UseMouse()) && (displayCreateForm || displayLoginForm))
+            if ((Inputs.isLMBClick() || !Inputs.UseMouse()) && (displayCreateForm || displayLoginForm) && popup == null)
             {
                 /* Handle Keyboard input */
                 if (!Inputs.UseMouse())
@@ -281,40 +284,40 @@ namespace thegame
                 else
                 {
 
-                    
-                    if (create_account_button.Contains(themouse) && transparency >= 1)
+
+                    if (create_account_button.Contains(themouse) && transparency >= 1 && popup == null)
                         CreateAccount();
-                    else if (login_account_button.Contains(themouse) && transparency >= 1)
+                    else if (login_account_button.Contains(themouse) && transparency >= 1 && popup == null)
                         Login();
-                    else if (create_name.Contains(themouse))
+                    else if (create_name.Contains(themouse) && popup == null)
                     {
                         mouseCursor = Cursor.create_name;
                         AnimatedCursor = true;
                         AnimatedCursorTime = 400;
                     }
-                    else if (create_email.Contains(themouse))
+                    else if (create_email.Contains(themouse) && popup == null)
                     {
                         mouseCursor = Cursor.create_email;
                         AnimatedCursor = true;
                         AnimatedCursorTime = 400;
                     }
-                    else if (create_password.Contains(themouse))
+                    else if (create_password.Contains(themouse) && popup == null)
                     {
                         mouseCursor = Cursor.create_pwd;
                         AnimatedCursor = true;
                         AnimatedCursorTime = 400;
                     }
-                    else if (login_password.Contains(themouse))
+                    else if (login_password.Contains(themouse) && popup == null)
                     {
                         mouseCursor = Cursor.login_pwd;
                         AnimatedCursor = true;
                         AnimatedCursorTime = 400;
                     }
-                    else if (login_forgot_password.Contains(themouse))
+                    else if (login_forgot_password.Contains(themouse) && popup == null)
                     {
                         Process.Start("http://www.squickilling.com/user/forgot-password.php");
                     }
-                    else if (login_email.Contains(themouse))
+                    else if (login_email.Contains(themouse) && popup == null)
                     {
                         mouseCursor = Cursor.login_email;
                         AnimatedCursor = true;
@@ -353,6 +356,16 @@ namespace thegame
             }
             if(displayCreateForm || displayLoginForm)
                 CursorAnimaition(gametime);
+
+            if (popup != null)
+            {
+                popup.Update();
+                if (popup.action1bool)
+                {
+                    infotext = new string[] { "" };
+                    popup = null;
+                }
+            }
         }
 
         private void WriteText(ref string text)
@@ -391,22 +404,23 @@ namespace thegame
                 data["email"] = login_email_string;
                 data["password"] = login_password_string;
                 var response = wb.UploadValues("http://squickilling.com/json/login.php", "POST", data);
-                infotext = System.Text.Encoding.UTF8.GetString(response);
+                infotext2 = System.Text.Encoding.UTF8.GetString(response);
                 List<string> myObj = new List<string>();
-                Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(infotext);
+                Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(infotext2);
                 
                 session_email = values["email"];
                 session_password = values["password"];
                 session_id = values["id"];
                 session_name = values["name"];
-                infotext = values["error"];
-                if(infotext == "")
+                infotext2 = values["error"];
+                infotext[0] = infotext2;
+                if(infotext2 == "")
                     session_isset = true;
                 login_password_string = login_email_string = "";
            }
            catch
            {
-                infotext = "Sorry. We are unable to reach the database. Try again later.";
+                infotext[0] = "Sorry. We are unable to reach the database. Try again later.";
             }
         }
 
@@ -476,7 +490,6 @@ namespace thegame
                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Login", AlignType.MiddleCenter, login_account_button);
                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Forgot password ?", AlignType.MiddleCenter, login_forgot_password);
             
-            sb.DrawString(Textures.font_texture, infotext, new Vector2(50, 450), Color.White);
 
             //public static void DrawCircle(this SpriteBatch spriteBatch, float x, float y, float radius, int sides, Color color, float thickness = 1f
 
@@ -495,6 +508,9 @@ namespace thegame
                     newColor = (displayRightCircle) ? 1 - transparency : transparency;
                 Tools.DrawCircle(sb, leftCircleX, leftCircleY, radius, 50, new Color(227, xColorLeftCircle, 73) * newColor, 150);
                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Login", AlignType.MiddleCenter, new Rectangle(leftCircleX - radius, leftCircleY - radius, radius * 2, radius * 2));
+
+                if (popup != null)
+                    popup.Display(sb);
             
             sb.End();
         }
