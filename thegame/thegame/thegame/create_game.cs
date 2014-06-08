@@ -22,9 +22,9 @@ namespace thegame
         {
             if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()) || Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Back))
                 goback = true;
-            for(int i = 0; i<=2; i++)
-                if (new Rectangle(contentcreate.X + 300, contentcreate.Y + 50 + i * 50, 200, 40).Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
-                    popup = new Popup("", "OK", "", "Information", "We are developping the functionnality");
+          for(int i = 0; i<=2; i++)
+              if (new Rectangle(contentcreate.X + 300, contentcreate.Y + 50 + i * 50, 200, 40).Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
+                    popup = new Popup("OK", "", "Information", new string[] {"We are developping the functionnality"}, Textures.font_texture, 450);
 
             if (popup != null)
             {

@@ -38,6 +38,16 @@ namespace thegame
             sb.DrawString(spritefont, text, TheNewVector, color);
         }
 
+        public static Vector2 GetVectorAlgin(Rectangle bounds, Rectangle theobject, AlignType aligntype)
+        {
+            Vector2 newone = new Vector2(0, 0);
+            if (aligntype == AlignType.MiddleCenter)
+            {
+                newone = new Vector2(((bounds.Width - theobject.Width) / 2) + bounds.X, ((bounds.Height - theobject.Height) / 2) + bounds.Y);
+            }
+            return newone;
+        }
+
         public static void DisplayBorder(SpriteBatch sb, Color color, Rectangle therectangle, int dim)
         {
             sb.Draw(Textures.hitbox, new Rectangle(therectangle.X, therectangle.Y, therectangle.Width, dim), color);

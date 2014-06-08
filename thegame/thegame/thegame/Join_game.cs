@@ -28,7 +28,7 @@ namespace thegame
 
             for (int i = 0; i <= 2; i++)
                 if (new Rectangle(contentjoin.X + 300, contentjoin.Y + 50 + i * 50, 200, 40).Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
-                    popup = new Popup("", "OK", "", "Information", "We are developping the functionnality");
+                    popup = new Popup("OK", "", "Information", new string[] {"We are developping the functionnality"}, Textures.font_texture, 450);
 
             if (popup != null)
             {

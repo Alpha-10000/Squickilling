@@ -171,7 +171,7 @@ namespace thegame
                                 curGameMode = instances_type.Multiplayer;
                                 Execute();
                             }
-                            if (GoToTheMultiExperiment)
+                            else if (GoToTheMultiExperiment)
                             {
                                 selected = gameState.MultiplayerGame;
                                 curGameMode = instances_type.Multiplayer;

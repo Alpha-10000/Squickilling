@@ -24,6 +24,8 @@ namespace thegame
         private int x = 400;
         private int y = 150;
 
+        private Popup popup;
+
         private int YExcavator = 140;
 
         private Color change_Color = Color.OrangeRed;
@@ -92,6 +94,9 @@ namespace thegame
                         y = 80 + y;
                         i++;
                     }
+
+                    if (popup != null)
+                        popup.Display(sb);
                     sb.End();
 
         }
@@ -102,20 +107,23 @@ namespace thegame
             bool MouseOnSOmething = false;
             int index = 0;
 
+           
             if (Inputs.UseMouse())
             {
                 foreach (Rectangle check in AreaListMouse)
-                    if (check.Contains(Inputs.getMousePoint()))
+                    if (check.Contains(Inputs.getMousePoint()) && popup == null)
                     {
                         index = AreaListMouse.FindIndex(x => x == check);
                         YExcavator = 140 + index * 60;
                         MouseOnSOmething = true;
-                        if (Inputs.isLMBClick())
+                        if (Inputs.isLMBClick() && selected != 2)
                             IChooseSomething = true;
+                        else if (Inputs.isLMBClick())
+                            popup = new Popup("Cancel", "Yes", "Exit the game", new string[] { "Are you sure you want to quit ?" }, Textures.font_texture, 450);
                         break;
                     }
 
-                if (MouseOnSOmething)
+                if (MouseOnSOmething && popup == null)
                 {
                     for (int i = 0; i < color_tab.GetLength(0); i++)
                         color_tab[i] = defaultColor;
@@ -151,8 +159,11 @@ namespace thegame
                     }
                 }
 
-                if (Inputs.isKeyRelease(Keys.Enter))
+                if (Inputs.isKeyRelease(Keys.Enter) && selected != 2)
                     IChooseSomething = true;
+                else if (Inputs.isKeyRelease(Keys.Enter))
+                    popup = new Popup("Cancel", "Yes", "Exit the game", new string[] { "Are you sure you want to quit ?" }, Textures.font_texture, 450);
+
 
                 if (Inputs.isKeyRelease(Keys.Back) && activateBackSpace)
                 {
@@ -161,6 +172,16 @@ namespace thegame
                 }
 
             }
+
+            if (popup != null)
+            {
+                popup.Update();
+                if (popup.action1bool)
+                    popup = null;
+                else if (popup.action2bool)
+                    IChooseSomething = true;
+            }
+
         }
 
         private void AddElements(string Text)
