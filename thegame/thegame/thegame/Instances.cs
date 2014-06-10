@@ -67,7 +67,7 @@ namespace thegame
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
         public gameState selected { get; private set; }              // Selected menu page.
         public SoundEffect sound { get; private set; }
-
+        public bool CheckSound;
 
 
         private Camera cameraClass = new Camera();
@@ -131,8 +131,8 @@ namespace thegame
             /* DEFAUT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
 
             this.game = game;
-
-            SoundIs = true;
+            CheckSound = false;
+            SoundIs = false;
             this.selected = gameState.SplashScreen;
             this.Execute();
         }
@@ -146,13 +146,25 @@ namespace thegame
 
             Inputs.upDate();
 
-           
+            if (this.selected != gameState.SplashScreen && this.selected == gameState.MainMenu &&!CheckSound)
+            {
+                SoundIs = true;
+                instancesound.Stop();
+                instancesoundMenu.Play();
+            }
+
+            if (curGameMode == instances_type.Game &&!CheckSound)
+            {
+                instancesoundMenu.Stop();
+                instancesound.Play();
+            }
+            else instancesound.Stop();
 
                 if (curGameMode == instances_type.Menu)// MENU
                 {
                     (execute as Menu).Update(gametime, SoundIs);
                 }
-
+            
                 if (this.selected == gameState.MainMenu && (execute as Menu).IChooseSomething)
                 {
                     switch ((execute as Menu).selected)
@@ -220,7 +232,7 @@ namespace thegame
                         case 2:
                             //this.selected = 4;
                             SoundIs = !SoundIs;
-
+                            CheckSound = !CheckSound;
                             if (SoundIs)
                             {
                                 (execute as Menu).tab[2] = Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOn"] + ")"; //sound on
