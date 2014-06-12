@@ -4,13 +4,25 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Net;
+using System.Collections.Specialized;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace thegame
 {
+
     class Dashboard
     {
         private Rectangle back_main_menu = new Rectangle(600, 20, 600, 40);
         public bool mainmenu = false;
+
+        //for friends lists request
+        private bool finish = true;
+        private float TimeIntervalRequest = 0;
+        private float TimeInterval = 10000;
+        private string friends_error = "";
+        private List<Dictionary<string, string>> myfriendslist;
 
         /* Coordonnates right and left circles */
         private int xCircle = 144;
@@ -31,6 +43,11 @@ namespace thegame
 
         public bool Create_game { get; private set; }
         public bool Join_game { get; private set; }
+
+        public Dashboard()
+        {
+            TimeIntervalRequest = TimeInterval;
+        }
 
         public void Update(GameTime gametime)
         {
@@ -96,6 +113,47 @@ namespace thegame
                     AnimatedColor_BottomCircle = 0;
             }
 
+            GetFriends(gametime);
+
+        }
+
+        private void GetFriends(GameTime gametime)
+        {
+            TimeIntervalRequest += gametime.ElapsedGameTime.Milliseconds;
+
+            if (finish && TimeIntervalRequest >= TimeInterval)
+            {
+                try
+                {
+                    finish = false;
+                    TimeIntervalRequest = 0;
+                    WebClient wb = new WebClient();
+                    var data = new NameValueCollection();
+                    wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted);
+                    data["pwd"] = Session.session_password;
+                    data["id"] = Session.session_id;
+                    wb.UploadValuesAsync(new Uri("http://squickilling.com/json/friends_lists.php"), "POST", data);
+                }
+                catch
+                {
+                    //TODO
+                }
+            }
+        }
+
+        void client_UploadFileCompleted(object sender, UploadValuesCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                finish = true;
+                string text = System.Text.Encoding.UTF8.GetString(e.Result);
+
+
+                Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+                friends_error = values["error"].ToString();
+                List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
+                myfriendslist = ValueList;
+            }
         }
 
         public void Display(SpriteBatch sb)
@@ -120,13 +178,15 @@ namespace thegame
             /* MY FRIENDS */
             sb.Draw(Textures.hitbox, titlefriends, Color.Beige);
             Tools.DisplayBorder(sb, Color.Black, titlefriends, 4);
-            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "My friends", AlignType.MiddleCenter, titlefriends);
+            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Online friends", AlignType.MiddleCenter, titlefriends);
             sb.Draw(Textures.hitbox, contentfriends, Color.Beige);
             Tools.DisplayBorder(sb, Color.Black, contentfriends, 4);
 
-            for(int i = 0; i <= 2; i++)
-                Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Friends " + i, AlignType.MiddleCenter, new Rectangle(contentfriends.X, contentfriends.Y + i * 40, contentfriends.Width, 40));
-
+            if (myfriendslist != null)
+                for (int i = 0; i < myfriendslist.Count; i++)
+                    Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, myfriendslist[i]["name"] + " : " + myfriendslist[i]["status"], AlignType.MiddleCenter, new Rectangle(contentfriends.X, contentfriends.Y + i * 40, contentfriends.Width, 40));
+            else
+                Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "No friends are online", AlignType.MiddleCenter, new Rectangle(contentfriends.X, contentfriends.Y + 40, contentfriends.Width, 40));
             /* INVITATIONS */
             sb.Draw(Textures.hitbox, titleinvitation, Color.Beige);
             Tools.DisplayBorder(sb, Color.Black, titleinvitation, 4);

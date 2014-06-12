@@ -61,7 +61,7 @@ namespace thegame
         {
 
             DrawMouseX = (int)Inputs.getMousePos().X - (int)cameraPos.X;
-            DrawMouseY = (int)Inputs.getMousePos().X + (int)cameraPos.Y;
+            DrawMouseY = (int)Inputs.getMousePos().Y + (int)cameraPos.Y;
 
             if (Inputs.isKeyDown(Keys.S))
                 showGrid = true;
