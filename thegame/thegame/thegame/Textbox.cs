@@ -17,6 +17,8 @@ namespace thegame
         private float AnimatedCursorTime = 0;
         private int width;
         public bool next = false;
+
+        public bool HasJustType = false;
         
 
         public Textbox(int x, int y, int width, int height)
@@ -30,6 +32,9 @@ namespace thegame
 
         public void Update(GameTime gametime)
         {
+
+            HasJustType = false;
+
             if (Inputs.isLMBClick() && theBoxrectangle.Contains(Inputs.getMousePoint()))
             {
                 isSelected = true;
@@ -40,6 +45,11 @@ namespace thegame
                 isSelected = false;
                 next = false;
                 cursor = " ";
+            }
+
+            if (isSelected && Inputs.AnyKeyPressed())
+            {
+                HasJustType = true;
             }
 
             if (next)
