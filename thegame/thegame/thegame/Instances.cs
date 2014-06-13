@@ -383,7 +383,7 @@ namespace thegame
                 }
                 else if (selected == gameState.MultiplayerJoinGame)
                 {
-                    join_game.Update();
+                    join_game.Update(gametime);
                     if (join_game.goback)
                     {
                         this.selected = gameState.MutilplayerDashboard;

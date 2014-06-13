@@ -41,7 +41,7 @@ namespace thegame
 
             if (popup != null)
             {
-                popup.Update();
+                popup.Update(gametime);
                 if (popup.action1bool)
                     popup = null;
             }

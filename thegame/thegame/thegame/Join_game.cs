@@ -21,7 +21,7 @@ namespace thegame
         private Popup popup;
 
 
-        public void Update()
+        public void Update(GameTime gametime)
         {
             if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()) || Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Back))
                 goback = true;
@@ -32,7 +32,7 @@ namespace thegame
 
             if (popup != null)
             {
-                popup.Update();
+                popup.Update(gametime);
                 if (popup.action1bool)
                     popup = null;
             }

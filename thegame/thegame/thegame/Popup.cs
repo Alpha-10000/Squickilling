@@ -22,6 +22,11 @@ namespace thegame
         private int heightPopup;
         private int heightext = 0;
 
+        private float AnimatedAppear = 0;
+        private bool animation = true;
+        private float transparency = 0;
+        private float TimeAnimation = 800;//milliseconds
+
         private Rectangle contentRectangle, actionbutton1, actionbutton2;
 
         public Popup(string action1, string action2, string title, string[] content, SpriteFont spritefont, int WidthPopup)//if one action set action2 to ""
@@ -70,7 +75,7 @@ namespace thegame
 
         }
 
-        public void Update()
+        public void Update(GameTime gametime)
         {
             if (Inputs.isLMBClick() && actionbutton1.Contains(Inputs.getMousePoint()))
                 action1bool = true;
@@ -86,31 +91,45 @@ namespace thegame
             else
                 if (Inputs.isKeyRelease(Keys.Enter))
                     action1bool = true;
+
+            if (animation)
+            {
+                AnimatedAppear += gametime.ElapsedGameTime.Milliseconds;
+                if (AnimatedAppear < TimeAnimation)
+                {
+                    transparency = AnimatedAppear / TimeAnimation;
+                }
+                else
+                {
+                    AnimatedAppear = 0;
+                    animation = false;
+                }
+            }
         }
 
         public void Display(SpriteBatch sb)
         {
-            sb.Draw(Textures.hitbox, contentRectangle, Color.Beige);//content
-            Tools.DisplayBorder(sb, Color.Black, contentRectangle, 4);//title border
-            Tools.DisplayAlignedText(sb, Color.Black, spritefont, title, AlignType.MiddleCenter, new Rectangle(contentRectangle.X, contentRectangle.Y, contentRectangle.Width, 50));//title
-            sb.Draw(Textures.hitbox, new Rectangle(contentRectangle.X, contentRectangle.Y + 50, contentRectangle.Width, 4), Color.Black);//black line after title
+            sb.Draw(Textures.hitbox, contentRectangle, Color.Beige * transparency);//content
+            Tools.DisplayBorder(sb, Color.Black * transparency, contentRectangle, 4);//title border
+            Tools.DisplayAlignedText(sb, Color.Black * transparency, spritefont, title, AlignType.MiddleCenter, new Rectangle(contentRectangle.X, contentRectangle.Y, contentRectangle.Width, 50));//title
+            sb.Draw(Textures.hitbox, new Rectangle(contentRectangle.X, contentRectangle.Y + 50, contentRectangle.Width, 4), Color.Black * transparency);//black line after title
             for (int i = 0; i < content.Length; i++)
-                Tools.DisplayAlignedText(sb, Color.Black, spritefont, content[i], AlignType.MiddleCenter, new Rectangle(contentRectangle.X, contentRectangle.Y + 54 + i * heightext, contentRectangle.Width, 60));//text content
+                Tools.DisplayAlignedText(sb, Color.Black * transparency, spritefont, content[i], AlignType.MiddleCenter, new Rectangle(contentRectangle.X, contentRectangle.Y + 54 + i * heightext, contentRectangle.Width, 60));//text content
 
             if (is1 && is2)
             {
-                sb.Draw(Textures.hitbox, actionbutton1, Color.Red);
-                Tools.DisplayBorder(sb, Color.Black, actionbutton1, 4);
-                Tools.DisplayAlignedText(sb, Color.Black, spritefont, action1, AlignType.MiddleCenter, actionbutton1);
-                sb.Draw(Textures.hitbox, actionbutton2, Color.Red);
-                Tools.DisplayBorder(sb, Color.Black, actionbutton2, 4);
-                Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, action2, AlignType.MiddleCenter, actionbutton2);
+                sb.Draw(Textures.hitbox, actionbutton1, Color.Red * transparency);
+                Tools.DisplayBorder(sb, Color.Black * transparency, actionbutton1, 4);
+                Tools.DisplayAlignedText(sb, Color.Black * transparency, spritefont, action1, AlignType.MiddleCenter, actionbutton1);
+                sb.Draw(Textures.hitbox, actionbutton2, Color.Red * transparency);
+                Tools.DisplayBorder(sb, Color.Black * transparency, actionbutton2, 4);
+                Tools.DisplayAlignedText(sb, Color.Black * transparency, Textures.font_texture, action2, AlignType.MiddleCenter, actionbutton2);
             }
             else
             {
-                sb.Draw(Textures.hitbox, actionbutton1, Color.Red);
-                Tools.DisplayBorder(sb, Color.Black, actionbutton1, 4);
-                Tools.DisplayAlignedText(sb, Color.Black, spritefont, action1, AlignType.MiddleCenter, actionbutton1);
+                sb.Draw(Textures.hitbox, actionbutton1, Color.Red * transparency);
+                Tools.DisplayBorder(sb, Color.Black * transparency, actionbutton1, 4);
+                Tools.DisplayAlignedText(sb, Color.Black * transparency, spritefont, action1, AlignType.MiddleCenter, actionbutton1);
             }
         }
 
