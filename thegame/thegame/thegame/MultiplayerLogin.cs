@@ -60,7 +60,7 @@ namespace thegame
         int xColorRightCircle = 73;
         int xColorLeftCircle = 73;
 
-       
+        private bool justExecute = true;
 
         private bool displayRightCircle = true;
         private bool displayLeftCircle = true;
@@ -163,6 +163,9 @@ namespace thegame
                     displayLoginForm = false;
                     transparency = 0;
                     create_name_string.isSelected = true;
+                    create_password_string.isSelected = create_email_string.isSelected = login_email_string.isSelected = login_password_string.isSelected = false;
+                    create_password_string.cursor = create_email_string.cursor = login_email_string.cursor = login_password_string.cursor = " ";
+                    justExecute = false;
                 }
 
                 AnimatedColor_RightCircle += (float)gametime.ElapsedGameTime.TotalMilliseconds;
@@ -184,6 +187,8 @@ namespace thegame
                 }
                 else
                     AnimatedColor_RightCircle = 0;
+
+                
             }
 
             if (radius >= Math.Sqrt(Math.Pow(themouse.X - leftCircleX, 2) + Math.Pow(themouse.Y - leftCircleY, 2)) || keyboardleft)
@@ -197,6 +202,9 @@ namespace thegame
                     displayCreateForm = false;
                     transparency = 0;
                     login_email_string.isSelected = true;
+                    create_password_string.isSelected = create_email_string.isSelected = create_name_string.isSelected = login_password_string.isSelected = false;
+                    create_password_string.cursor = create_email_string.cursor = create_name_string.cursor = login_password_string.cursor = " ";
+                    justExecute = false;
                 }
                 AnimatedColor_LeftCircle += (float)gametime.ElapsedGameTime.TotalMilliseconds;
                 if (AnimatedColor_LeftCircle > 5)
@@ -232,7 +240,7 @@ namespace thegame
 
 
             }
-            else if (displayCreateForm)
+             if (displayCreateForm)
             {
                 if (Inputs.isLMBClick() && create_account_button.Contains(Inputs.getMousePoint()) || Inputs.isKeyRelease(Keys.Enter))
                     CreateAccount();
@@ -243,11 +251,18 @@ namespace thegame
                     create_password_string.isSelected = true;
             }
 
-            create_name_string.Update(gametime);
-            create_email_string.Update(gametime);
-            create_password_string.Update(gametime);
-            login_email_string.Update(gametime);
-            login_password_string.Update(gametime);
+             if (justExecute)
+             {
+                 login_email_string.Update(gametime);
+                 login_password_string.Update(gametime);
+                 create_name_string.Update(gametime);
+                 create_email_string.Update(gametime);
+                 create_password_string.Update(gametime);
+                 
+             }
+
+             if (Inputs.isLMBClick() && login_forgot_password.Contains(Inputs.getMousePoint()))
+                 Process.Start("http://squickilling.com/user/forgot-password.php");
    
 
             if (popup != null)
@@ -259,6 +274,8 @@ namespace thegame
                     popup = null;
                 }
             }
+
+            justExecute = true;
         }
 
         private void Login()

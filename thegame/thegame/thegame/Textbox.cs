@@ -13,7 +13,7 @@ namespace thegame
         public bool isSelected = false;
         public Rectangle theBoxrectangle;
         public string text;
-        private string cursor = " ";
+        public string cursor = " ";
         private float AnimatedCursorTime = 0;
         private int width;
         public bool next = false;
