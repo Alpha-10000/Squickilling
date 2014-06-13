@@ -129,7 +129,6 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Camera.cs" />
-    <Compile Include="CharacterEventArgs.cs" />
     <Compile Include="Create_game.cs" />
     <Compile Include="Dashboard.cs" />
     <Compile Include="DevelopperMap.cs" />
@@ -159,6 +158,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="Textbox.cs" />
     <Compile Include="Textures.cs" />
     <Compile Include="Tools.cs" />
   </ItemGroup>

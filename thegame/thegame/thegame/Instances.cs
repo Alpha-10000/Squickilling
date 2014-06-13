@@ -374,7 +374,7 @@ namespace thegame
                 }
                 else if (selected == gameState.MultiplayerCreateGame)
                 {
-                    create_game.Update();
+                    create_game.Update(gametime);
                     if (create_game.goback)
                     {
                         this.selected = gameState.MutilplayerDashboard;

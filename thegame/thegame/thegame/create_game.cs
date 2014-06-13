@@ -18,27 +18,18 @@ namespace thegame
 
         private Popup popup;
 
+        private Textbox essai_textbox;
+
         public Create_game()
         {
-            string text = "";
-
-            //Add an event for a character being added
-            InputSystem.CharEntered += delegate(Object o, CharacterEventArgs e)
-            {
-                if (o.Characters.Contains(Inputs.pressedKeys[0]))
-                {
-                    text += e.Character;
-                }
-                else if (e.Character == '\b' /* backspace */)
-                {
-                    if (text.Length > 0) { text = text.Substring(0, text.Length - 1); }
-                }
-            };    
+            essai_textbox = new Textbox(50, 50, 200, 40);
         }
 
-        public void Update()
+        public void Update(GameTime gametime)
         {
-            if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()) || Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Back))
+            essai_textbox.Update(gametime);
+
+            if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()))
                 goback = true;
           for(int i = 0; i<=2; i++)
               if (new Rectangle(contentcreate.X + 300, contentcreate.Y + 50 + i * 50, 200, 40).Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
@@ -57,6 +48,8 @@ namespace thegame
         public void Display(SpriteBatch sb)
         {
             sb.Begin();
+
+
             if (!Game1.graphics.IsFullScreen)
                 sb.Draw(Textures.menu_main_page, new Vector2(0, 0), Color.White);
             else
@@ -84,6 +77,8 @@ namespace thegame
 
             if (popup != null)
                 popup.Display(sb);
+
+            essai_textbox.Display(sb);
             sb.End();
         }
     }
