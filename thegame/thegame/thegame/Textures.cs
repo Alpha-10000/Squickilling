@@ -12,6 +12,7 @@ namespace thegame
 {
     class Textures
     {
+        #region Texture
         public static Texture2D plateform_texture;  // Useless
         public static Texture2D hitbox;
         public static Texture2D mario_texture;
@@ -20,20 +21,35 @@ namespace thegame
         public static Texture2D autumn_ground_texture;
         public static Texture2D winter_ground_texture;
         public static Texture2D spring_ground_texture;
+        public static Texture2D summer_ground_texture;
+
         public static Texture2D buche_texture;
         public static Texture2D buche_texture_winter;
         public static Texture2D buche_texture_spring;
+        public static Texture2D buche_texture_summer;
+
         public static Texture2D tree_texture;
         public static Texture2D tree_winter_texture;
         public static Texture2D tree_spring_texture;
+        public static Texture2D tree_summer_texture;
+        public static Texture2D tree_summer_harmed_texture;
+        public static Texture2D tree_summer_cut_texture;
+        public static Texture2D tree_summer_harmed2_texture;
         public static Texture2D tree_autumn_entrance;
         public static Texture2D tree_autumn_entrance_inside;
         public static Texture2D tree_winter_entrance;
-        public static Texture2D tree_spring_entrance;
         public static Texture2D tree_winter_entrance_inside;
+        public static Texture2D tree_spring_entrance;
         public static Texture2D tree_spring_entrance_inside;
+        public static Texture2D tree_summer_entrance_inside;
+        public static Texture2D tree_summer_entrance;
         public static Texture2D tree_autumn_exit;
         public static Texture2D tree_autumn_exit_inside;
+        public static Texture2D tree_winter_exit;
+        public static Texture2D tree_winter_exit_inside;
+        public static Texture2D tree_spring_exit;
+        public static Texture2D tree_spring_exit_inside;
+
         public static Texture2D white_tree;
         public static Texture2D excavatorArm;
         public static Texture2D SquirrelMenu;
@@ -42,6 +58,7 @@ namespace thegame
         public static Texture2D autumnBackground;
         public static Texture2D winterBackground;
         public static Texture2D springBackground;
+        public static Texture2D summerBackground;
 
         public static Texture2D explosion;
         public static Texture2D mine_grey;
@@ -58,7 +75,6 @@ namespace thegame
         public static SpriteFont fonthelp_texture;
         public static SpriteFont fontnormal_texture;
         public static SpriteFont font_pause;
-
 
         public static SoundEffect buttonSound_Effect;
         public static SoundEffect gameSound_Effect;
@@ -77,7 +93,7 @@ namespace thegame
         public static Button btnPlay_Autumn, btnQuit_Autumn, btnMenu_Autumn, btnPlay_Winter, btnQuit_Winter, btnMenu_Winter, btnMute;
 
         public static Texture2D snowdrop;
-
+        #endregion
 
         public static void load(ContentManager cm)
         {
@@ -112,30 +128,46 @@ namespace thegame
             animation_mine = cm.Load<Texture2D>(@"mine-animation");
 
             // Autumn
-            autumn_ground_texture = cm.Load<Texture2D>(@"Autumn_Ground");
-            tree_texture = cm.Load<Texture2D>(@"Tree_autumn3");
-            tree_autumn_entrance = cm.Load<Texture2D>(@"tree");
-            tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Tree_autumn_entrance_inside");
-            tree_autumn_exit = cm.Load<Texture2D>(@"tree_autumn_exit");
-            tree_autumn_exit_inside = cm.Load<Texture2D>(@"Tree_autumn_exit_inside");
-            autumnBackground = cm.Load<Texture2D>(@"Autumn_Background");
-            buche_texture = cm.Load<Texture2D>(@"Buche_test");
+            autumn_ground_texture = cm.Load<Texture2D>(@"Autumn/Autumn_Ground");
+            tree_texture = cm.Load<Texture2D>(@"Autumn/Tree_autumn3");
+            tree_autumn_entrance = cm.Load<Texture2D>(@"Autumn/tree");
+            tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Autumn/Tree_autumn_entrance_inside");
+            tree_autumn_exit = cm.Load<Texture2D>(@"Autumn/tree_autumn_exit");
+            tree_autumn_exit_inside = cm.Load<Texture2D>(@"Autumn/Tree_autumn_exit_inside");
+            autumnBackground = cm.Load<Texture2D>(@"Autumn/Autumn_Background");
+            buche_texture = cm.Load<Texture2D>(@"Autumn/Buche_test");
 
             // Winter
-            winter_ground_texture = cm.Load<Texture2D>(@"Winter_ground2");
-            tree_winter_texture = cm.Load<Texture2D>(@"Tree_winter");
-            tree_winter_entrance = cm.Load<Texture2D>(@"tree_winter_entrance");
-            tree_winter_entrance_inside = cm.Load<Texture2D>(@"Tree_test_winter_entrance_inside");
-            winterBackground = cm.Load<Texture2D>(@"Winter_Background");
-            buche_texture_winter = cm.Load<Texture2D>(@"Buche_winter_test");
+            winter_ground_texture = cm.Load<Texture2D>(@"Winter/Winter_ground2");
+            tree_winter_texture = cm.Load<Texture2D>(@"Winter/Tree_winter");
+            tree_winter_entrance = cm.Load<Texture2D>(@"Winter/tree_winter_entrance");
+            tree_winter_entrance_inside = cm.Load<Texture2D>(@"Winter/Tree_test_winter_entrance_inside");
+            tree_winter_exit = cm.Load<Texture2D>(@"Winter/Winter_Tree_exit");
+            tree_winter_exit_inside = cm.Load<Texture2D>(@"Winter/Winter_tree_exit_inside");
+            winterBackground = cm.Load<Texture2D>(@"Winter/Winter_Background");
+            buche_texture_winter = cm.Load<Texture2D>(@"Winter/Buche_winter_test");
 
             // Spring
-            spring_ground_texture = cm.Load<Texture2D>(@"Spring_Ground");
-            tree_spring_texture = cm.Load<Texture2D>(@"Spring_Tree2");
-            springBackground = cm.Load<Texture2D>(@"Spring_Background");
-            buche_texture_spring = cm.Load<Texture2D>(@"Buche_spring");
-            tree_spring_entrance = cm.Load<Texture2D>(@"Spring_Tree2");
-            tree_spring_entrance_inside = cm.Load<Texture2D>(@"Spring_Tree2");
+            spring_ground_texture = cm.Load<Texture2D>(@"Spring/Spring_ground3");
+            tree_spring_texture = cm.Load<Texture2D>(@"Spring/Spring_Tree2");
+            springBackground = cm.Load<Texture2D>(@"Spring/Spring_Background");
+            buche_texture_spring = cm.Load<Texture2D>(@"Spring/Buche_spring");
+            tree_spring_entrance = cm.Load<Texture2D>(@"Spring/Spring_tree_entrance");
+            tree_spring_entrance_inside = cm.Load<Texture2D>(@"Spring/Spring_tree_entrance_inside");
+            tree_spring_exit = cm.Load<Texture2D>(@"Spring/Spring_tree_exit");
+            tree_spring_exit_inside = cm.Load<Texture2D>(@"Spring/Spring_tree_exit_inside");
+
+
+            // Summer
+            summer_ground_texture = cm.Load<Texture2D>(@"Summer/Summer_Ground2");
+            tree_summer_texture = cm.Load<Texture2D>(@"Summer/Summer_Tree");
+            tree_summer_harmed_texture = cm.Load<Texture2D>(@"Summer/Summer_tree_harmed");
+            tree_summer_harmed2_texture = cm.Load<Texture2D>(@"Summer/Summer_tree_harmed2");
+            summerBackground = cm.Load<Texture2D>(@"Summer/Summer_Background2");
+            buche_texture_summer = cm.Load<Texture2D>(@"Summer/Summer_Buche");
+            tree_summer_entrance = cm.Load<Texture2D>(@"Summer/Summer_tree_entrance");
+            tree_summer_entrance_inside = cm.Load<Texture2D>(@"Summer/Summer_tree_entrance_inside");
+            tree_summer_cut_texture = cm.Load<Texture2D>(@"Summer/Summer_Cut_tree");
 
             //Intro
             vid = cm.Load<Video>(@"video\\vid");
