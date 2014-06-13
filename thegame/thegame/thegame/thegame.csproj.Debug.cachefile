@@ -59,8 +59,6 @@ Content\Winter\tree_winter_entrance.xnb
 Content\Winter\Winter_Background.xnb
 Content\Winter\Tree_test_winter_entrance_inside.xnb
 Content\Winter\tree_winter.xnb
-Content\Autumn\Tree_autumn_exit.xnb
-Content\Autumn\Tree_autumn_exit_inside.xnb
 Content\Winter\White_Tree.xnb
 Content\Autumn\Tree_autumn3.xnb
 Content\Spring\Spring_Background.xnb
@@ -85,7 +83,10 @@ Content\Spring\Spring_tree_harmed.xnb
 Content\Summer\Summer_Buche.xnb
 Content\Winter\Winter_Tree_exit.xnb
 Content\Winter\Winter_tree_exit_inside.xnb
-Content\Autumn\Ground.xnb
+Content\Autumn\Autumn_Tree_exit_inside.xnb
+Content\Autumn\Autumn_Tree_exit.xnb
+Content\Winter\Winter_tree_entrance.xnb
+Content\Winter\Winter_Tree_entrance_inside.xnb
 Content\video\vid.wmv
 Content\mario.png
 Content\plateforme.png

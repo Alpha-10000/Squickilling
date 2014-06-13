@@ -31,6 +31,7 @@ namespace thegame
         public static Texture2D tree_texture;
         public static Texture2D tree_winter_texture;
         public static Texture2D tree_spring_texture;
+        public static Texture2D tree_spring_harmed_texture;
         public static Texture2D tree_summer_texture;
         public static Texture2D tree_summer_harmed_texture;
         public static Texture2D tree_summer_cut_texture;
@@ -132,16 +133,16 @@ namespace thegame
             tree_texture = cm.Load<Texture2D>(@"Autumn/Tree_autumn3");
             tree_autumn_entrance = cm.Load<Texture2D>(@"Autumn/tree");
             tree_autumn_entrance_inside = cm.Load<Texture2D>(@"Autumn/Tree_autumn_entrance_inside");
-            tree_autumn_exit = cm.Load<Texture2D>(@"Autumn/tree_autumn_exit");
-            tree_autumn_exit_inside = cm.Load<Texture2D>(@"Autumn/Tree_autumn_exit_inside");
+            tree_autumn_exit = cm.Load<Texture2D>(@"Autumn/Autumn_Tree_exit");
+            tree_autumn_exit_inside = cm.Load<Texture2D>(@"Autumn/Autumn_Tree_exit_inside");
             autumnBackground = cm.Load<Texture2D>(@"Autumn/Autumn_Background");
             buche_texture = cm.Load<Texture2D>(@"Autumn/Buche_test");
 
             // Winter
             winter_ground_texture = cm.Load<Texture2D>(@"Winter/Winter_ground2");
             tree_winter_texture = cm.Load<Texture2D>(@"Winter/Tree_winter");
-            tree_winter_entrance = cm.Load<Texture2D>(@"Winter/tree_winter_entrance");
-            tree_winter_entrance_inside = cm.Load<Texture2D>(@"Winter/Tree_test_winter_entrance_inside");
+            tree_winter_entrance = cm.Load<Texture2D>(@"Winter/Winter_tree_entrance");
+            tree_winter_entrance_inside = cm.Load<Texture2D>(@"Winter/Winter_tree_entrance_inside");
             tree_winter_exit = cm.Load<Texture2D>(@"Winter/Winter_Tree_exit");
             tree_winter_exit_inside = cm.Load<Texture2D>(@"Winter/Winter_tree_exit_inside");
             winterBackground = cm.Load<Texture2D>(@"Winter/Winter_Background");
@@ -150,6 +151,7 @@ namespace thegame
             // Spring
             spring_ground_texture = cm.Load<Texture2D>(@"Spring/Spring_ground3");
             tree_spring_texture = cm.Load<Texture2D>(@"Spring/Spring_Tree2");
+            tree_spring_harmed_texture = cm.Load<Texture2D>(@"Spring/Spring_tree_harmed");
             springBackground = cm.Load<Texture2D>(@"Spring/Spring_Background");
             buche_texture_spring = cm.Load<Texture2D>(@"Spring/Buche_spring");
             tree_spring_entrance = cm.Load<Texture2D>(@"Spring/Spring_tree_entrance");

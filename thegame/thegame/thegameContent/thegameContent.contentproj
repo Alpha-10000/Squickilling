@@ -279,13 +279,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Winter\tree_winter_entrance.png">
-      <Name>tree_winter_entrance</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Winter\Winter_Background.png">
       <Name>Winter_Background</Name>
       <Importer>TextureImporter</Importer>
@@ -293,27 +286,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Winter\Tree_test_winter_entrance_inside.png">
-      <Name>Tree_test_winter_entrance_inside</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Winter\tree_winter.png">
       <Name>tree_winter</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Autumn\Tree_autumn_exit.png">
-      <Name>Tree_autumn_exit</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Autumn\Tree_autumn_exit_inside.png">
-      <Name>Tree_autumn_exit_inside</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -610,6 +584,34 @@
     </Compile>
     <Compile Include="Winter\Winter_tree_exit_inside.png">
       <Name>Winter_tree_exit_inside</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Autumn\Autumn_Tree_exit_inside.png">
+      <Name>Autumn_Tree_exit_inside</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Autumn\Autumn_Tree_exit.png">
+      <Name>Autumn_Tree_exit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Winter\Winter_tree_entrance.png">
+      <Name>Winter_tree_entrance</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Winter\Winter_Tree_entrance_inside.png">
+      <Name>Winter_Tree_entrance_inside</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
