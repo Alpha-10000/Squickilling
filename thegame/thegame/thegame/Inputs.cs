@@ -16,7 +16,7 @@ namespace thegame
         static private bool usemouse;
         static bool keypress;
         static private Keys[] lastPressedKeys;
-        static private Keys[] pressedKeys;
+        public static private Keys[] pressedKeys;
 
         public Inputs()
         {

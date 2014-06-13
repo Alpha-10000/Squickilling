@@ -143,16 +143,24 @@ namespace thegame
 
         void client_UploadFileCompleted(object sender, UploadValuesCompletedEventArgs e)
         {
-            if (e.Result != null)
+            try
             {
-                finish = true;
-                string text = System.Text.Encoding.UTF8.GetString(e.Result);
+
+                if (e.Result != null)
+                {
+                    finish = true;
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
 
 
-                Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
-                friends_error = values["error"].ToString();
-                List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
-                myfriendslist = ValueList;
+                    Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+                    friends_error = values["error"].ToString();
+                    List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
+                    myfriendslist = ValueList;
+                }
+            }
+            catch
+            {
+
             }
         }
 
