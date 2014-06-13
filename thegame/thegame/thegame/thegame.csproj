@@ -129,6 +129,7 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="CharacterEventArgs.cs" />
     <Compile Include="Create_game.cs" />
     <Compile Include="Dashboard.cs" />
     <Compile Include="DevelopperMap.cs" />

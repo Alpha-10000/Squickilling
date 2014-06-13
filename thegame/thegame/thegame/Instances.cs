@@ -112,11 +112,24 @@ namespace thegame
         private MultiMap multimap;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
-        private bool bypassLoginForm = false;
+        private bool bypassLoginForm = true;
+        
+
         private bool GoToTheMultiExperiment = false;
 
         public Instances(Game1 game)
         {
+
+
+            //
+            if (bypassLoginForm)//If by pass enter login credentials.
+            {
+                Session.session_id = "9";
+                Session.session_isset = true;
+                Session.session_name = "Victor";
+                Session.session_password = "hellohello";
+
+            }
             /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
             this.curGameMode = instances_type.Menu;
             this.selected = 0;
