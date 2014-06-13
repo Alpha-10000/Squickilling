@@ -408,7 +408,7 @@ namespace thegame
 
                 bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
-                if (playerActivate)
+                if (playerActivate)//player can move
                 {
                     cameraPos = theperso.cameraPos;
 

@@ -146,6 +146,9 @@ namespace thegame
 
             Inputs.upDate();
 
+            if (Session.session_isset)
+                Session.update(gametime);
+
             if (this.selected != gameState.SplashScreen && this.selected == gameState.MainMenu &&!CheckSound)
             {
                 SoundIs = true;
