@@ -152,7 +152,7 @@ namespace thegame
             spring_ground_texture = cm.Load<Texture2D>(@"Spring/Spring_ground3");
             tree_spring_texture = cm.Load<Texture2D>(@"Spring/Spring_Tree2");
             tree_spring_harmed_texture = cm.Load<Texture2D>(@"Spring/Spring_tree_harmed");
-            springBackground = cm.Load<Texture2D>(@"Spring/Spring_Background");
+            springBackground = cm.Load<Texture2D>(@"Spring/Spring_Background4");
             buche_texture_spring = cm.Load<Texture2D>(@"Spring/Buche_spring");
             tree_spring_entrance = cm.Load<Texture2D>(@"Spring/Spring_tree_entrance");
             tree_spring_entrance_inside = cm.Load<Texture2D>(@"Spring/Spring_tree_entrance_inside");

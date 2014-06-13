@@ -11,8 +11,6 @@ using X2DPE.Helpers;
 
 namespace thegame
 {
-
-
     class Map
     {
         public enum MapState
@@ -45,7 +43,7 @@ namespace thegame
                             {0,0,1,4,2,2,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,2,2,3,2,3,3,2},
                         };
 
-        private static int[] autumnAiMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+        private static int[] autumnAiMap = new int[] { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
         private static int[,] winterTileMap = new int[,]
                      {
@@ -54,9 +52,9 @@ namespace thegame
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,4,0,0,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,0,0,0,2,0,0,0,0,2,1,1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
@@ -66,7 +64,7 @@ namespace thegame
                     {0,0,2,1,0,0,1,1,2,3,2,0,0,0,0,2,0,0,3,2,0,3,2,2,2,3,0,1,3,0,0,0,3,0,2,0,0,3,2,0,0,0,3,2,2},
                     };
 
-        private static int[] winterAiMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+        private static int[] winterAiMap = new int[] { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
         private static int[,] springTileMap = new int[,]
                      {
@@ -87,7 +85,7 @@ namespace thegame
                     {0,0,2,1,0,0,1,1,2,3,2,0,0,0,0,2,0,0,3,2,0,3,2,2,2,3,0,1,3,0,0,0,3,0,2,0,0,3,2,0,0,0,3,2,2},
                     };
 
-        private static int[] springAiMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+        private static int[] springAiMap = new int[] { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
         private static int[,] summerTileMap = new int[,]
                      {
@@ -101,14 +99,14 @@ namespace thegame
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,0,0,0,2,0,0,0,0,2,1,1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
-                    {0,0,0,0,0,2,0,0,0,3,1,0,3,0,2,3,1,0,0,0,1,0,0,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,0,0,2,1,0,0,0},
-                    {0,0,0,0,3,1,0,2,0,1,0,0,1,1,1,1,1,0,2,1,1,0,3,0,0,0,0,1,0,0,3,2,2,1,0,1,0,0,0,3,1,0,2,3,3},
-                    {0,0,0,0,1,1,3,1,1,2,0,1,0,0,0,0,1,0,1,0,0,0,1,1,1,0,0,1,0,0,1,1,2,0,1,1,0,0,2,1,0,0,1,1,1},
-                    {0,0,2,1,0,0,1,1,2,3,2,0,0,0,0,2,0,0,3,2,0,3,2,2,2,3,0,1,3,0,0,0,3,0,2,0,0,3,2,0,0,0,3,2,2},
+                    {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,0,0,0,2,0,0,0,0,2,1,1,2,0,0,0,0,0,0,1,0,0,0,0,4,1,0,0,0},
+                    {0,0,0,0,1,2,0,0,0,3,1,0,3,0,2,3,1,0,0,0,1,0,0,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,0,0,2,1,0,0,0},
+                    {0,0,0,0,3,1,0,4,0,1,0,0,1,1,1,1,1,0,2,1,1,0,3,0,0,0,0,1,0,0,3,2,2,1,0,1,0,0,0,3,1,0,2,3,3},
+                    {0,0,0,1,0,1,3,1,1,2,0,1,0,0,0,0,1,0,1,0,0,0,1,1,1,0,0,1,0,0,1,1,2,0,1,1,0,0,2,1,0,0,1,1,1},
+                    {0,0,2,1,0,2,1,1,2,3,2,0,0,0,0,2,0,0,3,2,0,3,2,2,2,3,0,1,3,0,0,0,3,0,2,0,0,3,2,0,0,0,3,2,2},
                     };
 
-        private static int[] summerAiMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+        private static int[] summerAiMap = new int[] { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
 
         public instances_type curGameMode { get; set; }        // Current game mode.
@@ -503,7 +501,6 @@ namespace thegame
                             break;
                     }
                 }
-
             }
             else if (themapstate == MapState.gameover)
             {
@@ -523,9 +520,10 @@ namespace thegame
 
             if (Developpermode)
             {
-                // Lorsque l'on appyue sur les touches 1, 2, 3, ou 4 on change de niveau
+                // Lorsque l'on appuie sur les touches 1, 2, 3, ou 4 on change de niveau
                 if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
                 {
+                    // gerer les problemes de particules entre chgmts de niveaux
                     try
                     {
                         if (particleComponent.particleEmitterList[0].Active == true)
@@ -616,21 +614,28 @@ namespace thegame
                 sb.End();
 
                 sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                tree_entrance.Draw(sb, new Vector2(-100, 10),treeScale);
-                thetree.Draw(sb, new Vector2(500, 0));
-                thetree.Draw(sb, new Vector2(400, 0));
-                thetree.Draw(sb, new Vector2(900, 0));
-                thetree.Draw(sb, new Vector2(1050, 0));
-                thetree.Draw(sb, new Vector2(1400, 0));
-                thetree.Draw(sb, new Vector2(1800, 0));
-                thetree.Draw(sb, new Vector2(2200, 0));
-                thetree.Draw(sb, new Vector2(2400, 0));
-                thetree.Draw(sb, new Vector2(3000, 0));
-                thetree.Draw(sb, new Vector2(3400, 0));
-                thetree.Draw(sb, new Vector2(3900, 0));
-                thetree.Draw(sb, new Vector2(4050, 0));
-                thetree.Draw(sb, new Vector2(4900, 0));
-                tree_exit.Draw(sb, new Vector2(5200, 10),0.55f);
+
+                float scale = 1;
+                if (thegamestate == gameState.SummerLevel)
+                {
+                    scale = 0.55f;
+                }
+                    tree_entrance.Draw(sb, new Vector2(-100, 10), treeScale);
+                    thetree.Draw(sb, new Vector2(500, 0),scale);
+                    thetree.Draw(sb, new Vector2(400, 0), scale);
+                    thetree.Draw(sb, new Vector2(900, 0), scale);
+                    thetree.Draw(sb, new Vector2(1050, 0), scale);
+                    thetree.Draw(sb, new Vector2(1400, 0), scale);
+                    thetree.Draw(sb, new Vector2(1800, 0), scale);
+                    thetree.Draw(sb, new Vector2(2200, 0), scale);
+                    thetree.Draw(sb, new Vector2(2400, 0), scale);
+                    thetree.Draw(sb, new Vector2(3000, 0), scale);
+                    thetree.Draw(sb, new Vector2(3400, 0), scale);
+                    thetree.Draw(sb, new Vector2(3900, 0), scale);
+                    thetree.Draw(sb, new Vector2(4050, 0), scale);
+                    thetree.Draw(sb, new Vector2(4900, 0), scale);
+                    tree_exit.Draw(sb, new Vector2(5200, 10), 0.55f);
+                
 
                 // Draw ground image
                 for (int truc = 0; truc < 9; truc++)

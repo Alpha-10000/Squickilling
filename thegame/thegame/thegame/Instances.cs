@@ -433,13 +433,8 @@ namespace thegame
                         developpermap = true;
                         Execute();
                     }
-                    
-
                 }
-
-                if (!Developpermode && SoundIs)
-                    instancesound.Play();
-            
+                if (!Developpermode && SoundIs) instancesound.Play();
         }
 
         /* END OF THE GAME CODE */
@@ -558,13 +553,8 @@ namespace thegame
                     if (instancesoundMenu.State != SoundState.Playing && !Developpermode)
                         instancesoundMenu.Play();
                 }
-                else
-                {
-                    instancesound.Play();
-                }
+                else instancesound.Play();
         }
-
-       
 
         public void Display(SpriteBatch sb, GameTime gameTime)
         {
