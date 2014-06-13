@@ -89,6 +89,27 @@ namespace thegame
 
         private static int[] springAiMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
 
+        private static int[,] summerTileMap = new int[,]
+                     {
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,0,0,0,2,0,0,0,0,2,1,1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,2,0,0,0,3,1,0,3,0,2,3,1,0,0,0,1,0,0,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,0,0,2,1,0,0,0},
+                    {0,0,0,0,3,1,0,2,0,1,0,0,1,1,1,1,1,0,2,1,1,0,3,0,0,0,0,1,0,0,3,2,2,1,0,1,0,0,0,3,1,0,2,3,3},
+                    {0,0,0,0,1,1,3,1,1,2,0,1,0,0,0,0,1,0,1,0,0,0,1,1,1,0,0,1,0,0,1,1,2,0,1,1,0,0,2,1,0,0,1,1,1},
+                    {0,0,2,1,0,0,1,1,2,3,2,0,0,0,0,2,0,0,3,2,0,3,2,2,2,3,0,1,3,0,0,0,3,0,2,0,0,3,2,0,0,0,3,2,2},
+                    };
+
+        private static int[] summerAiMap = new int[] { 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
@@ -115,7 +136,6 @@ namespace thegame
         private List<Perso> iaPerso = new List<Perso>();
 
         private int nb_nuts;
-        // TODO: Should score stay here or should it be elsewhere?
 
         private bool SoundIs;       // Set to true to switch the sound (on / off)
         private Drawable tree_autumn_exit;
@@ -128,9 +148,6 @@ namespace thegame
         private int mapSizeX;
         private int mapSizeY;
 
-
-
-
         private float timeElaspedGameOver = 0;
         private bool playerActivate = true;
         private float transparencyAnimation = 0;
@@ -141,8 +158,6 @@ namespace thegame
         private float treeScale = 1;
 
         MouseState mouse = Mouse.GetState();
-
-
 
         private Language Language = new Language();
         public static ParticleComponent particleComponent;
@@ -155,7 +170,7 @@ namespace thegame
 
         private Perso theperso;
 
-        private Texture2D Background, buche_texture, ground_texture;
+        Texture2D Background, buche_texture, ground_texture;
         Drawable thetree, tree_entrance_inside, tree_entrance, tree_exit_inside, tree_exit, Ground;
 
         public MapState themapstate = MapState.game;
@@ -175,6 +190,7 @@ namespace thegame
             int[] IAtile;
             themapstate = MapState.game;
 
+            // All the images and objects related to season levels are loaded here
             switch (thegamestate)
             {
                 case gameState.AutumnLevel:
@@ -223,10 +239,10 @@ namespace thegame
                     treeScale = 0.55f;
                     ground_texture = Textures.summer_ground_texture;
                     Background = Textures.summerBackground;
-                    thetile = springTileMap;
-                    IAtile = springAiMap;
+                    thetile = summerTileMap;
+                    IAtile = summerAiMap;
                     buche_texture = Textures.buche_texture_summer;
-                    thetree = new Drawable(drawable_type.springTree);
+                    thetree = new Drawable(drawable_type.summerTree);
                     tree_entrance = new Drawable(drawable_type.tree_summer_entrance);
                     tree_entrance_inside = new Drawable(drawable_type.tree_summer_entrance_inside);
                     Ground = new Drawable(drawable_type.SummerGround);
@@ -275,7 +291,7 @@ namespace thegame
 
         }
 
-        /* EVERYTHING THAT HAS TO BE INIT AT EACH LEVEL*/
+        /* EVERYTHING THAT HAS TO BE INITIALIZED AT EACH LEVEL*/
         private void Init_Game(ref Camera cameraClass)
         {
             score = 0;
@@ -324,26 +340,24 @@ namespace thegame
                 //instancesound.IsLooped = true;
                 //snow = true;
             }
-
-
+            else if (selected == gameState.SummerLevel)
+            {
+                //instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+                //instancesound.IsLooped = true;
+                //snow = true;
+            }
         }
-
 
         public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode)
         {
-
-
-            if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P)) /* Exit the game */
-                themapstate = MapState.pause;
+            // Exit the game
+            if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P)) themapstate = MapState.pause;
 
             if (thegamestate == gameState.WinterLevel)
             {
-                if (Inputs.isKeyRelease(Keys.S) && Developpermode)
-                    snow = !snow;
-                if (snow)
-                    particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
-
-
+                if (Inputs.isKeyRelease(Keys.S) && Developpermode) snow = !snow;
+                if (snow) particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
+                    
                 particleComponent.particleEmitterList[0].Active = true;
                 Emitter t2 = particleComponent.particleEmitterList[0];
                 t2.Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
@@ -354,9 +368,8 @@ namespace thegame
                 }
             }
 
-            if (thegamestate == gameState.SpringLevel)
-                particleComponent.particleEmitterList[0].Active = false;
-
+            if (thegamestate == gameState.SpringLevel) particleComponent.particleEmitterList[0].Active = false;
+                
             bool justchange = false;
             if (themapstate == MapState.help && (Inputs.AnyKeyPressed() || Inputs.isLMBClick()))
             {
@@ -365,19 +378,20 @@ namespace thegame
             }
 
 
-
+            // CHECK IF WE ARE AT THE END OF A LEVEL
             if (theperso.positionPerso.X > 5350)
             {
                 themapstate = MapState.endlevel;
                 if (Inputs.isKeyRelease(Keys.Space))
                 {
-                    endLevel = false;
-                    if (thegamestate == gameState.AutumnLevel)
-                        thegamestate = gameState.WinterLevel;
-                    else if (thegamestate == gameState.WinterLevel)
-                        thegamestate = gameState.SpringLevel;
-                    else
-                        thegamestate = gameState.AutumnLevel;
+                    endLevel = false;    // We begin a new level
+
+                    // We switch to the next level
+                    if (thegamestate == gameState.AutumnLevel) thegamestate = gameState.WinterLevel;
+                    else if (thegamestate == gameState.WinterLevel)thegamestate = gameState.SpringLevel; 
+                    else if(thegamestate == gameState.SpringLevel)thegamestate = gameState.SummerLevel;
+                    else thegamestate = gameState.AutumnLevel;
+                        
                     NewGame(ref cameraClass);
                 }
             }
@@ -509,8 +523,15 @@ namespace thegame
 
             if (Developpermode)
             {
+                // Lorsque l'on appyue sur les touches 1, 2, 3, ou 4 on change de niveau
                 if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
                 {
+                    try
+                    {
+                        if (particleComponent.particleEmitterList[0].Active == true)
+                            particleComponent.particleEmitterList[0].Active = false;
+                    }
+                    catch { }
                     thegamestate = gameState.WinterLevel;
                     NewGame(ref cameraClass);
                 }
@@ -536,12 +557,19 @@ namespace thegame
                     thegamestate = gameState.SpringLevel;
                     NewGame(ref cameraClass);
                 }
+                if (getkey.Contains(Keys.NumPad4) || getkey.Contains(Keys.D4))
+                {
+                    try
+                    {
+                        if (particleComponent.particleEmitterList[0].Active == true)
+                            particleComponent.particleEmitterList[0].Active = false;
+                    }
+                    catch { }
+                    thegamestate = gameState.SummerLevel;
+                    NewGame(ref cameraClass);
+                }
             }
-
-
-
         }
-
 
         public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)
         {
@@ -606,7 +634,7 @@ namespace thegame
 
                 // Draw ground image
                 for (int truc = 0; truc < 9; truc++)
-                    Ground.Draw(sb, new Vector2(truc * Textures.autumn_ground_texture.Width, 355));
+                    Ground.Draw(sb, new Vector2(truc * ground_texture.Width, 355));
 
                 // Draw the platforms
                 foreach (Rectangle top in blocks)
@@ -675,8 +703,6 @@ namespace thegame
 
                 if (!playerActivate && timeElaspedGameOver > 1500)
                     GameOverAnimation(sb, transparencyAnimation);
-
-
             }
         }
 
@@ -695,7 +721,6 @@ namespace thegame
 
         private void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera, Camera cameraClass)
         {
-
             if (drawBloodScreen)
             {
                 elapsedTimeBloodScreen += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -715,9 +740,6 @@ namespace thegame
                     drawBloodScreen = cameraClass.shake = false;
                 }
             }
-
         }
-
-
     }
 }
