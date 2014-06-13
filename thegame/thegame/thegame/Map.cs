@@ -219,6 +219,18 @@ namespace thegame
                     tree_exit_inside = new Drawable(drawable_type.tree_spring_exit_inside);
                     Ground = new Drawable(drawable_type.SpringGround);
                     break;
+                case gameState.SummerLevel:
+                    treeScale = 0.55f;
+                    ground_texture = Textures.summer_ground_texture;
+                    Background = Textures.summerBackground;
+                    thetile = springTileMap;
+                    IAtile = springAiMap;
+                    buche_texture = Textures.buche_texture_summer;
+                    thetree = new Drawable(drawable_type.springTree);
+                    tree_entrance = new Drawable(drawable_type.tree_summer_entrance);
+                    tree_entrance_inside = new Drawable(drawable_type.tree_summer_entrance_inside);
+                    Ground = new Drawable(drawable_type.SummerGround);
+                    break;
                 default: //Osef
                     ground_texture = Textures.winter_ground_texture;
                     Background = Textures.winterBackground;
