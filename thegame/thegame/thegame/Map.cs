@@ -79,7 +79,7 @@ namespace thegame
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,0,0,0,2,0,0,0,0,2,1,1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
                     {0,0,0,0,0,2,0,0,0,3,1,0,3,0,2,3,1,0,0,0,1,0,0,0,0,1,0,1,0,1,1,1,1,0,0,1,0,0,0,0,2,1,0,0,0},
                     {0,0,0,0,3,1,0,2,0,1,0,0,1,1,1,1,1,0,2,1,1,0,3,0,0,0,0,1,0,0,3,2,2,1,0,1,0,0,0,3,1,0,2,3,3},
@@ -138,6 +138,7 @@ namespace thegame
         public bool pause = false;
         public bool help = false;
         public bool endLevel = false;
+        private float treeScale = 1;
 
         MouseState mouse = Mouse.GetState();
 
@@ -155,7 +156,7 @@ namespace thegame
         private Perso theperso;
 
         private Texture2D Background, buche_texture, ground_texture;
-        Drawable thetree, tree_entrance_inside, tree_entrance, Ground;
+        Drawable thetree, tree_entrance_inside, tree_entrance, tree_exit_inside, tree_exit, Ground;
 
         public MapState themapstate = MapState.game;
 
@@ -177,6 +178,7 @@ namespace thegame
             switch (thegamestate)
             {
                 case gameState.AutumnLevel:
+                    treeScale = 1;
                     ground_texture = Textures.autumn_ground_texture;
                     Background = Textures.autumnBackground;
                     thetile = autumnTileMap;
@@ -185,9 +187,12 @@ namespace thegame
                     thetree = new Drawable(drawable_type.tree);
                     tree_entrance = new Drawable(drawable_type.tree_autumn_entrance);
                     tree_entrance_inside = new Drawable(drawable_type.tree_autumn_entrance_inside);
+                    tree_exit = new Drawable(drawable_type.tree_autumn_exit);
+                    tree_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
                     Ground = new Drawable(drawable_type.AutumnGround);
                     break;
                 case gameState.WinterLevel:
+                    treeScale = 0.55f;
                     ground_texture = Textures.winter_ground_texture;
                     Background = Textures.winterBackground;
                     thetile = winterTileMap;
@@ -196,9 +201,12 @@ namespace thegame
                     thetree = new Drawable(drawable_type.winterTree);
                     tree_entrance = new Drawable(drawable_type.tree_winter_entrance);
                     tree_entrance_inside = new Drawable(drawable_type.tree_winter_entrance_inside);
+                    tree_exit = new Drawable(drawable_type.tree_winter_exit);
+                    tree_exit_inside = new Drawable(drawable_type.tree_winter_exit_inside);
                     Ground = new Drawable(drawable_type.WinterGround);
                     break;
                 case gameState.SpringLevel:
+                    treeScale = 0.55f;
                     ground_texture = Textures.spring_ground_texture;
                     Background = Textures.springBackground;
                     thetile = springTileMap;
@@ -207,6 +215,8 @@ namespace thegame
                     thetree = new Drawable(drawable_type.springTree);
                     tree_entrance = new Drawable(drawable_type.tree_spring_entrance);
                     tree_entrance_inside = new Drawable(drawable_type.tree_spring_entrance_inside);
+                    tree_exit = new Drawable(drawable_type.tree_spring_exit);
+                    tree_exit_inside = new Drawable(drawable_type.tree_spring_exit_inside);
                     Ground = new Drawable(drawable_type.SpringGround);
                     break;
                 default: //Osef
@@ -535,6 +545,7 @@ namespace thegame
                 sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
                 sb.End();
             }
+            // Displays the end level page
             if (themapstate == MapState.endlevel)
             {
                 sb.Begin();
@@ -545,6 +556,7 @@ namespace thegame
                 scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 300), Color.White, "osef");
                 sb.End();
             }
+            // Displays the Help page
             else if (themapstate == MapState.help)
             {
                 sb.Begin();
@@ -564,7 +576,7 @@ namespace thegame
                 sb.End();
 
                 sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                tree_entrance.Draw(sb, new Vector2(-100, 0));
+                tree_entrance.Draw(sb, new Vector2(-100, 10),treeScale);
                 thetree.Draw(sb, new Vector2(500, 0));
                 thetree.Draw(sb, new Vector2(400, 0));
                 thetree.Draw(sb, new Vector2(900, 0));
@@ -578,6 +590,7 @@ namespace thegame
                 thetree.Draw(sb, new Vector2(3900, 0));
                 thetree.Draw(sb, new Vector2(4050, 0));
                 thetree.Draw(sb, new Vector2(4900, 0));
+                tree_exit.Draw(sb, new Vector2(5200, 10),0.55f);
 
                 // Draw ground image
                 for (int truc = 0; truc < 9; truc++)
@@ -609,8 +622,8 @@ namespace thegame
                 // ES 15APR14
                 // Draw foreground tree so that squirrel appears to enter the hole
                 //------------------------------------------------------------------
-                //tree_entrance_inside.Draw(sb, new Vector2(-100, 0));
-                //tree_autumn_exit_inside.Draw(sb,new Vector2(5000,0));
+                tree_entrance_inside.Draw(sb, new Vector2(-100, 10),treeScale);
+                tree_exit_inside.Draw(sb,new Vector2(5200,10),0.55f);         
 
 
                 sb.End();

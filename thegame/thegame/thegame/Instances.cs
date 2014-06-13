@@ -65,7 +65,7 @@ namespace thegame
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
-        public gameState selected { get; private set; }              // Selected menu page.
+        public gameState selected { get; private set; }        // Selected menu page.
         public SoundEffect sound { get; private set; }
         public bool CheckSound;
 
@@ -84,7 +84,7 @@ namespace thegame
 
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
-        private bool SoundIs;       // Set to true to switch the sound (on / off)
+        private bool SoundIs;           // Set to true to switch the sound (on / off)
         private Drawable tree;
       
         private int developperXMouse;
@@ -654,9 +654,6 @@ namespace thegame
                 }
             
         }
-
-        
-
 
         private void HandleSplashScreen( MouseState mouse1)
         {

@@ -22,7 +22,14 @@ namespace thegame
 
         public Create_game()
         {
+<<<<<<< HEAD
             essai_textbox = new Textbox(50, 50, 200, 40);
+=======
+            string text = "";
+
+            //Add an event for a character being added
+            
+>>>>>>> origin/master
         }
 
         public void Update(GameTime gametime)
