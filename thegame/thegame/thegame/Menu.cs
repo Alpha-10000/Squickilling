@@ -90,7 +90,7 @@ namespace thegame
             else 
                 sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40,Game1.graphics.PreferredBackBufferHeight+5), Color.White);
 
-            sb.Draw(Textures.white_tree, new Vector2(195, 100),null, Color.Black * 0.6f,0f,Vector2.Zero,0.55f,SpriteEffects.None,0f);
+            sb.Draw(Textures.white_tree, new Vector2(195, 100),null, Color.Black * 0.6f,0f,Vector2.Zero,0.70f,SpriteEffects.None,0f);
 
             Drawable squirrel = new Drawable(drawable_type.Squirrel);
             squirrel.Draw(sb, new Vector2(630, 120));
