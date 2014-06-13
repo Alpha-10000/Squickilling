@@ -19,7 +19,6 @@ namespace thegame
       EXIT_GAME,
     };
 
-
     public class Menu : Drawable
     {
         public bool MenuBool = true;
@@ -79,10 +78,8 @@ namespace thegame
         public void Display(SpriteBatch sb, bool developperMode)
         {
             int i = 0;
-            int x = 400;//correspond to the center
+            int x = 400;    //correspond to the center
             int y = 150;
-
-            
 
             // Draw Menu Background Here
             if(!Game1.graphics.IsFullScreen)
@@ -98,16 +95,12 @@ namespace thegame
             Drawable excator = new Drawable(drawable_type.excavatorArm);
             excator.Draw(sb, new Vector2(0, YExcavator));
 
-            
-
             while (i < this.pos_tab && tab[i] != null)
             {
                 this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2, y), color_tab[i], "menu");
                 y = 60 + y;
                 i++;
             }
-
-
 
             this.Draw(sb, Text, new Vector2(400 - ((int)Textures.fontTitle_texture.MeasureString(Text).X + 25) / 2, 20), Color.Black, "titre");
 
@@ -116,7 +109,7 @@ namespace thegame
                     sb.Draw(Textures.hitbox, dessine, Color.White * 0.5f);
         }
 
-        public void Update(GameTime gametime, bool SoundIsTrue)
+        public void Update(GameTime gametime, bool SoundIs)
         {
             
             bool MouseOnSOmething = false;
@@ -153,11 +146,9 @@ namespace thegame
                         this.color_tab[this.selected] = change_Color;
                         YExcavator = 140 + selected * 60;
                         this.color_tab[this.selected - 1] = this.defaultColor;
-                        if (SoundIsTrue)
-                            Textures.buttonSound_Effect.Play();
+                        if (SoundIs) Textures.buttonSound_Effect.Play();
                     }
                 }
-
                 if (Inputs.isKeyRelease(Keys.Up))
                 {
                     if (this.selected >= 1)
@@ -166,20 +157,18 @@ namespace thegame
                         this.selected--;
                         this.color_tab[this.selected] = change_Color;
                         YExcavator = 140 + selected * 60;
-                        if (SoundIsTrue)
+                        if (SoundIs)
                             Textures.buttonSound_Effect.Play();
                     }
                 }
 
-                if (Inputs.isKeyRelease(Keys.Enter))
-                    IChooseSomething = true;
+                if (Inputs.isKeyRelease(Keys.Enter)) IChooseSomething = true;
 
                 if (Inputs.isKeyRelease(Keys.Back) && activateBackSpace)
                 {
                     IChooseSomething = true;
                     selected = this.color_tab.Length - 1;
                 }
-
             }   
         }
     }

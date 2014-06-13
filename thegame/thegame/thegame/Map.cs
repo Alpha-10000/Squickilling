@@ -226,7 +226,7 @@ namespace thegame
                     thetile = springTileMap;
                     IAtile = springAiMap;
                     buche_texture = Textures.buche_texture_spring;
-                    thetree = new Drawable(drawable_type.springTree);
+                    thetree = new Drawable(drawable_type.springTreeHarmed);
                     tree_entrance = new Drawable(drawable_type.tree_spring_entrance);
                     tree_entrance_inside = new Drawable(drawable_type.tree_spring_entrance_inside);
                     tree_exit = new Drawable(drawable_type.tree_spring_exit);
@@ -240,7 +240,7 @@ namespace thegame
                     thetile = summerTileMap;
                     IAtile = summerAiMap;
                     buche_texture = Textures.buche_texture_summer;
-                    thetree = new Drawable(drawable_type.summerTree);
+                    thetree = new Drawable(drawable_type.summerTreeHarmed);
                     tree_entrance = new Drawable(drawable_type.tree_summer_entrance);
                     tree_entrance_inside = new Drawable(drawable_type.tree_summer_entrance_inside);
                     Ground = new Drawable(drawable_type.SummerGround);
@@ -616,7 +616,9 @@ namespace thegame
                 sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
 
                 float scale = 1;
-                if (thegamestate == gameState.SummerLevel)
+                // Apply what is below only if thetree = summerTree with gameState.SummerLevel
+                //                             thetree = springTreeHarmed with gameState.SpringLevel 
+                if (thegamestate == gameState.SpringLevel)
                 {
                     scale = 0.55f;
                 }
@@ -634,11 +636,11 @@ namespace thegame
                     thetree.Draw(sb, new Vector2(3900, 0), scale);
                     thetree.Draw(sb, new Vector2(4050, 0), scale);
                     thetree.Draw(sb, new Vector2(4900, 0), scale);
-                    tree_exit.Draw(sb, new Vector2(5200, 10), 0.55f);
+                    if (thegamestate != gameState.SummerLevel) tree_exit.Draw(sb, new Vector2(5200, 10), 0.55f);
                 
 
                 // Draw ground image
-                for (int truc = 0; truc < 9; truc++)
+                for (int truc = 0; truc < 10; truc++)
                     Ground.Draw(sb, new Vector2(truc * ground_texture.Width, 355));
 
                 // Draw the platforms
@@ -668,7 +670,8 @@ namespace thegame
                 // Draw foreground tree so that squirrel appears to enter the hole
                 //------------------------------------------------------------------
                 tree_entrance_inside.Draw(sb, new Vector2(-100, 10),treeScale);
-                tree_exit_inside.Draw(sb,new Vector2(5200,10),0.55f);         
+                if (thegamestate != gameState.SummerLevel) tree_exit_inside.Draw(sb,new Vector2(5200,10),0.55f);
+                         
 
 
                 sb.End();
