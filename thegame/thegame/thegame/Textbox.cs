@@ -16,6 +16,7 @@ namespace thegame
         private string cursor = " ";
         private float AnimatedCursorTime = 0;
         private int width;
+        public bool next = false;
         
 
         public Textbox(int x, int y, int width, int height)
@@ -30,9 +31,23 @@ namespace thegame
         public void Update(GameTime gametime)
         {
             if (Inputs.isLMBClick() && theBoxrectangle.Contains(Inputs.getMousePoint()))
+            {
                 isSelected = true;
+                next = false;
+            }
             else if (Inputs.isLMBClick())//the mouse is elsewhere
+            {
                 isSelected = false;
+                next = false;
+                cursor = " ";
+            }
+
+            if (next)
+            {
+                isSelected = false;
+                next = false;
+                cursor = " ";
+            }
 
             if (isSelected)
             {
@@ -43,8 +58,13 @@ namespace thegame
                     text = text.Substring(0, text.Length - 1);
                 if (!Inputs.AnyKeyPressed())
                     AnimateCursor(gametime);
+                if (Inputs.isKeyRelease(Keys.Tab))
+                {
+                    next = true;
+                    isSelected = false;
+                    cursor = " ";
+                }
             }
-            
             
         }
 
@@ -70,8 +90,8 @@ namespace thegame
             {
                 int textLegnth = text.Length;
                 int compteur = 0;
-                for (int i = 0; i <= textLegnth; i++)
-                    if (Textures.font_texture.MeasureString(text.Substring(0, i)).X > width)
+                for (int i = textLegnth; i >= 0; i--)
+                    if (Textures.font_texture.MeasureString(text.Substring(0, i)).X > width - 10)
                         compteur++;//nb char that are outside the textbox
                 return new Tuple<int, int>(compteur, textLegnth - compteur);
             }
@@ -84,13 +104,38 @@ namespace thegame
         }
 
 
-        public void Display(SpriteBatch sb)
+        public void Display(SpriteBatch sb, bool hidden)
         {
             sb.Draw(Textures.hitbox, theBoxrectangle, Color.White);
             Tuple<int, int> bounds = CalculateBound(Textures.font_texture.MeasureString(text));
-            sb.DrawString(Textures.font_texture, text.Substring(bounds.Item1, bounds.Item2) + cursor, new Vector2(theBoxrectangle.X, theBoxrectangle.Y + 6 ), Color.Black);
+            string textD;
+            if (hidden)
+            {
+                textD = "";
+                for (int i = bounds.Item1; i < bounds.Item2; i++)
+                    textD += "*";
+            }
+            else
+                textD = text.Substring(bounds.Item1, bounds.Item2);
+            sb.DrawString(Textures.font_texture, textD + cursor, new Vector2(theBoxrectangle.X, theBoxrectangle.Y + 6 ), Color.Black);
         }
 
+        public void Display(SpriteBatch sb, bool hidden, float transparency)
+        {
+            sb.Draw(Textures.hitbox, theBoxrectangle, Color.White * transparency);
+            Tuple<int, int> bounds = CalculateBound(Textures.font_texture.MeasureString(text));
+            string textD;
+            if (hidden)
+            {
+                textD = "";
+                for (int i = 0; i < text.Length; i++)
+                    textD += "*";
+                textD = textD.Substring(bounds.Item1, bounds.Item2);
+            }
+            else
+                textD = text.Substring(bounds.Item1, bounds.Item2);
+            sb.DrawString(Textures.font_texture, textD + cursor, new Vector2(theBoxrectangle.X, theBoxrectangle.Y + 6), Color.Black  * transparency);
+        }
 
 
 

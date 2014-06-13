@@ -112,7 +112,7 @@ namespace thegame
         private MultiMap multimap;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
-        private bool bypassLoginForm = true;
+        private bool bypassLoginForm = false;
         
 
         private bool GoToTheMultiExperiment = false;

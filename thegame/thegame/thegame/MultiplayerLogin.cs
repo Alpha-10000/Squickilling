@@ -27,34 +27,29 @@ namespace thegame
         public string session_email = "";
         public string session_id = "";
         public string session_name = "";
+
         public bool session_isset = false;
 
         //TEXT BOX
-        private string create_name_string = "";
-        private string create_email_string = "";
-        private string create_password_string = "";
-        private string create_password_string_hidden = "";
-        private string login_email_string = "";
-        private string login_password_string = "";
-        private string login_password_string_hidden = "";
+        private Textbox create_name_string;
+        private Textbox create_email_string;
+        private Textbox create_password_string;
+        private Textbox login_email_string;
+        private Textbox login_password_string;
         private int rightCircleX = 580;
         private int rightCircleY = 244;
         private int leftCircleX = 240;
         private int leftCircleY = 244;
         private int radius = 140;
         
-
-        private Cursor mouseCursor;
-
         private int XcreateForm = 484;
         private int XloginForm = 138;
         /* CREATE ACCOUNT TEXT BOX */
-        Rectangle create_name, create_email, create_password, create_account_button, login_email, login_password, login_account_button, login_forgot_password,
-            login_text_email, login_text_password, create_text_name, create_text_email, create_text_password;
+        Rectangle create_account_button, login_account_button, login_forgot_password, create_text_name, create_text_email
+            , create_text_password, login_text_email, login_text_password;
         Rectangle back_main_menu = new Rectangle(480, 20, 400, 40);
 
-        private bool AnimatedCursor;
-        private float AnimatedCursorTime = 0;
+    
         private float AnimatedColor_RightCircle = 0;
         private float AnimatedColor_LeftCircle = 0;
         private float AnimatedTransparency = 0;
@@ -65,15 +60,7 @@ namespace thegame
         int xColorRightCircle = 73;
         int xColorLeftCircle = 73;
 
-        private enum Cursor
-        {
-            none,
-            create_name,
-            create_email,
-            create_pwd,
-            login_email,
-            login_pwd
-        }
+       
 
         private bool displayRightCircle = true;
         private bool displayLeftCircle = true;
@@ -86,27 +73,25 @@ namespace thegame
         public MultiplayerLogin()
         {
             wb = new WebClient();
-            mouseCursor = Cursor.none;
-            AnimatedCursor = mainmenu = false;
 
             /* All rectangle for alignements and display to check collision with mouse */
             //Create form
             create_text_name = new Rectangle(XcreateForm, 110, 200, 50);//+50 for text, +40 otherwise
-            create_name = new Rectangle(XcreateForm, 160, 200, 40);
+            create_name_string = new Textbox(XcreateForm, 160, 200, 40);
 
             create_text_email = new Rectangle(XcreateForm, 200, 200, 50);
-            create_email = new Rectangle(XcreateForm, 250, 200, 40);
+            create_email_string = new Textbox(XcreateForm, 250, 200, 40);
 
             create_text_password = new Rectangle(XcreateForm, 290, 200, 50);
-            create_password = new Rectangle(XcreateForm, 340, 200, 40);
+            create_password_string = new Textbox(XcreateForm, 340, 200, 40);
             create_account_button = new Rectangle(XcreateForm, 400, 200, 40);
 
             //Login form
             login_text_email = new Rectangle(XloginForm, 110, 200, 50);
-            login_email = new Rectangle(XloginForm, 160, 200, 40);
+            login_email_string = new Textbox(XloginForm, 160, 200, 40);
 
             login_text_password = new Rectangle(XloginForm, 200, 200, 50);
-            login_password = new Rectangle(XloginForm, 250, 200, 40);
+            login_password_string = new Textbox(XloginForm, 250, 200, 40);
             
 
             login_account_button = new Rectangle(XloginForm, 310, 200, 40);
@@ -118,14 +103,14 @@ namespace thegame
             try
             {
                 var data = new NameValueCollection();
-                data["email"] = create_email_string;
-                data["password"] = create_password_string;
-                data["name"] = create_name_string;
+                data["email"] = create_email_string.text;
+                data["password"] = create_password_string.text;
+                data["name"] = create_name_string.text;
                 var response = wb.UploadValues("http://squickilling.com/json/create_account.php", "POST", data);
                 infotext[0] = System.Text.Encoding.UTF8.GetString(response);
                 // List<string> myObj = new List<string>(); DO NOT DELETED THIS!!!
                 //Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(text); DO NOT DELETED THIS!!!
-                create_password_string = create_email_string = "";
+                create_password_string.text = create_email_string.text = create_name_string.text = "";
             }
             catch
             {
@@ -148,6 +133,12 @@ namespace thegame
             if (back_main_menu.Contains(themouse) && Inputs.isLMBClick())
                 mainmenu = true;
 
+
+
+
+
+            
+
             if ((displayCreateForm || displayLoginForm) && transparency < 1)
             {
                 AnimatedTransparency +=(float)gametime.ElapsedGameTime.TotalMilliseconds;
@@ -163,6 +154,7 @@ namespace thegame
 
             if (radius >= Math.Sqrt(Math.Pow(themouse.X - rightCircleX, 2) + Math.Pow(themouse.Y - rightCircleY, 2)) || keyboardright)
             {
+                
                 if ((Inputs.isLMBClick() || keyboardright) && !displayCreateForm && popup == null)
                 {
                     displayCreateForm = true;
@@ -170,6 +162,7 @@ namespace thegame
                     displayLeftCircle = true;
                     displayLoginForm = false;
                     transparency = 0;
+                    create_name_string.isSelected = true;
                 }
 
                 AnimatedColor_RightCircle += (float)gametime.ElapsedGameTime.TotalMilliseconds;
@@ -195,6 +188,7 @@ namespace thegame
 
             if (radius >= Math.Sqrt(Math.Pow(themouse.X - leftCircleX, 2) + Math.Pow(themouse.Y - leftCircleY, 2)) || keyboardleft)
             {
+                
                 if ((Inputs.isLMBClick() || keyboardleft) && !displayLoginForm && popup == null)
                 {
                     displayLoginForm = true;
@@ -202,6 +196,7 @@ namespace thegame
                     displayRightCircle = true;
                     displayCreateForm = false;
                     transparency = 0;
+                    login_email_string.isSelected = true;
                 }
                 AnimatedColor_LeftCircle += (float)gametime.ElapsedGameTime.TotalMilliseconds;
                 if (AnimatedColor_LeftCircle > 5)
@@ -225,137 +220,35 @@ namespace thegame
             }
 
 
+            
 
-
-            if ((Inputs.isLMBClick() || !Inputs.UseMouse()) && (displayCreateForm || displayLoginForm) && popup == null)
+            if (displayLoginForm)
             {
-                /* Handle Keyboard input */
-                if (!Inputs.UseMouse())
-                {
-                    if (mouseCursor == Cursor.none && displayCreateForm)
-                    {
-                        mouseCursor = Cursor.create_name;
-                        AnimatedCursor = true;
-                        AnimatedCursorTime = 400;
-                    }
-                    else if (mouseCursor == Cursor.none && displayLoginForm)
-                    {
-                        mouseCursor = Cursor.login_email;
-                        AnimatedCursor = true;
-                        AnimatedCursorTime = 400;
-                    }
-                    else
-                    {
-                        bool thekey = Inputs.isKeyRelease(Keys.Tab);
-                        if (displayCreateForm)
-                        {
-                            if (mouseCursor == Cursor.create_name && thekey)
-                            {
-                                mouseCursor = Cursor.create_email;
-                                AnimatedCursor = true;
-                                AnimatedCursorTime = 400;
-                            }
-                            else if (mouseCursor == Cursor.create_email && thekey)
-                            {
-                                mouseCursor = Cursor.create_pwd;
-                                AnimatedCursor = true;
-                                AnimatedCursorTime = 400;
-                            }
-                            if (Inputs.isKeyRelease(Keys.Enter))
-                                CreateAccount();
-                        }
-                        else
-                        {
-                            if (displayLoginForm)
-                            {
-                                if (mouseCursor == Cursor.login_email && thekey)
-                                {
-                                    mouseCursor = Cursor.login_pwd;
-                                    AnimatedCursor = true;
-                                    AnimatedCursorTime = 400;
-                                }
-                                if (Inputs.isKeyRelease(Keys.Enter))
-                                    Login();
-                            }
+                if (Inputs.isLMBClick() && login_account_button.Contains(Inputs.getMousePoint()) || Inputs.isKeyRelease(Keys.Enter))
+                    Login();
 
-                        }
-                    }
-                }
-                else
-                {
+                if (login_email_string.next)
+                    login_password_string.isSelected = true;
 
 
-                    if (create_account_button.Contains(themouse) && transparency >= 1 && popup == null)
-                        CreateAccount();
-                    else if (login_account_button.Contains(themouse) && transparency >= 1 && popup == null)
-                        Login();
-                    else if (create_name.Contains(themouse) && popup == null)
-                    {
-                        mouseCursor = Cursor.create_name;
-                        AnimatedCursor = true;
-                        AnimatedCursorTime = 400;
-                    }
-                    else if (create_email.Contains(themouse) && popup == null)
-                    {
-                        mouseCursor = Cursor.create_email;
-                        AnimatedCursor = true;
-                        AnimatedCursorTime = 400;
-                    }
-                    else if (create_password.Contains(themouse) && popup == null)
-                    {
-                        mouseCursor = Cursor.create_pwd;
-                        AnimatedCursor = true;
-                        AnimatedCursorTime = 400;
-                    }
-                    else if (login_password.Contains(themouse) && popup == null)
-                    {
-                        mouseCursor = Cursor.login_pwd;
-                        AnimatedCursor = true;
-                        AnimatedCursorTime = 400;
-                    }
-                    else if (login_forgot_password.Contains(themouse) && popup == null)
-                    {
-                        Process.Start("http://www.squickilling.com/user/forgot-password.php");
-                    }
-                    else if (login_email.Contains(themouse) && popup == null)
-                    {
-                        mouseCursor = Cursor.login_email;
-                        AnimatedCursor = true;
-                        AnimatedCursorTime = 400;
-                    }
-                    else
-                    {
-                        mouseCursor = Cursor.none;
-                        AnimatedCursor = false;
-                        cursor = "";
-                    }
-                }
             }
-            if (mouseCursor != Cursor.none)
+            else if (displayCreateForm)
             {
-                switch (mouseCursor)
-                {
-                    case Cursor.create_email:
-                        WriteText(ref create_email_string);
-                        break;
-                    case Cursor.create_name:
-                        WriteText(ref create_name_string);
-                        break;
-                    case Cursor.create_pwd:
-                        WriteText(ref create_password_string);
-                        break;
-                    case Cursor.login_pwd:
-                        WriteText(ref login_password_string);
-                        break;
-                    case Cursor.login_email:
-                        WriteText(ref login_email_string);
-                        break;
-                    default:
-                        break;
-                }
+                if (Inputs.isLMBClick() && create_account_button.Contains(Inputs.getMousePoint()) || Inputs.isKeyRelease(Keys.Enter))
+                    CreateAccount();
+
+                if (create_name_string.next)
+                    create_email_string.isSelected = true;
+                else if (create_email_string.next)
+                    create_password_string.isSelected = true;
             }
-            if(displayCreateForm || displayLoginForm)
-                CursorAnimaition(gametime);
+
+            create_name_string.Update(gametime);
+            create_email_string.Update(gametime);
+            create_password_string.Update(gametime);
+            login_email_string.Update(gametime);
+            login_password_string.Update(gametime);
+   
 
             if (popup != null)
             {
@@ -368,41 +261,13 @@ namespace thegame
             }
         }
 
-        private void WriteText(ref string text)
-        {
-            if (text.Length < 35)
-            {
-                string ajout = Inputs.getInputKey();
-                text += ajout;
-                if(ajout != "")
-                    AnimatedCursorTime = 0;
-            }
-            if (Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Back) && text.Length >= 1)
-                text = text.Substring(0, text.Length - 1);
-        }
-
-        private void CursorAnimaition(GameTime gametime)
-        {
-            if (AnimatedCursor)
-            {
-                AnimatedCursorTime += (float)gametime.ElapsedGameTime.TotalMilliseconds;
-                if (AnimatedCursorTime < 400)
-                     cursor = "";
-                else if ( AnimatedCursorTime < 800)
-                    cursor = "|" ;
-                else
-                    AnimatedCursorTime = 0;
-            }
-
-        }
-
         private void Login()
         {
             try
             {
                 var data = new NameValueCollection();
-                data["email"] = login_email_string;
-                data["password"] = login_password_string;
+                data["email"] = login_email_string.text;
+                data["password"] = login_password_string.text;
                 var response = wb.UploadValues("http://squickilling.com/json/login.php", "POST", data);
                 infotext2 = System.Text.Encoding.UTF8.GetString(response);
                 List<string> myObj = new List<string>();
@@ -416,7 +281,7 @@ namespace thegame
                 infotext[0] = infotext2;
                 if(infotext2 == "")
                     session_isset = true;
-                login_password_string = login_email_string = "";
+                login_password_string.text = login_email_string.text = "";
            }
            catch
            {
@@ -444,22 +309,12 @@ namespace thegame
                 newColor = (displayLeftCircle) ? transparency : 1 - transparency;
                 //create email input
                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Name", AlignType.MiddleCenter, create_text_name);
-                sb.Draw(Textures.hitbox, create_name, Color.White * newColor);
-                Tuple<int, int> bound = CalculateBound(create_name_string.Length);
-                sb.DrawString(Textures.font_texture, create_name_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_name) ? cursor : ""), new Vector2(create_name.X + 10, create_name.Y + 5), Color.Black * newColor);
+                create_name_string.Display(sb, false, newColor);
                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Email", AlignType.MiddleCenter, create_text_email);
-                sb.Draw(Textures.hitbox, create_email, Color.White * newColor);
-                 bound = CalculateBound(create_email_string.Length);
-                 sb.DrawString(Textures.font_texture, create_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_email) ? cursor : ""), new Vector2(create_email.X + 10, create_email.Y + 5), Color.Black * newColor);
+                create_email_string.Display(sb, false, newColor);
 
                  Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Password", AlignType.MiddleCenter, create_text_password);
-                 sb.Draw(Textures.hitbox, create_password, Color.White * newColor);
-
-                for (int i = 0; i < create_password_string.Length; i++)
-                    create_password_string_hidden += "*";
-                bound = CalculateBound(create_password_string_hidden.Length);
-                sb.DrawString(Textures.font_texture, create_password_string_hidden.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.create_pwd) ? cursor : ""), new Vector2(create_password.X + 10, create_password.Y + 5), Color.Black * newColor);
-                create_password_string_hidden = "";
+                 create_password_string.Display(sb, true, newColor);
 
                 //button
                 sb.Draw(Textures.hitbox, create_account_button, Color.Red * newColor);
@@ -472,18 +327,11 @@ namespace thegame
                     newColor = (displayRightCircle) ? transparency : 1 - transparency;
                 //create email input
                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Email", AlignType.MiddleCenter, login_text_email);
-                sb.Draw(Textures.hitbox, login_email, Color.White * newColor);
-                bound = CalculateBound(login_email_string.Length);
-                sb.DrawString(Textures.font_texture, login_email_string.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.login_email) ? cursor : ""), new Vector2(login_email.X + 10, login_email.Y + 5), Color.Black * newColor);
+                login_email_string.Display(sb, false, newColor);
 
                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Password", AlignType.MiddleCenter, login_text_password);
-                sb.Draw(Textures.hitbox, login_password, Color.White * newColor);
 
-                for (int i = 0; i < login_password_string.Length; i++)
-                    login_password_string_hidden += "*";
-                bound = CalculateBound(login_password_string_hidden.Length);
-                sb.DrawString(Textures.font_texture, login_password_string_hidden.Substring(bound.Item1, bound.Item2) + ((mouseCursor == Cursor.login_pwd) ? cursor : ""), new Vector2(login_password.X + 10, login_password.Y + 5), Color.Black * newColor);
-                login_password_string_hidden = "";
+                login_password_string.Display(sb, true, newColor);
 
                 //button
                 sb.Draw(Textures.hitbox, login_account_button, Color.Red * newColor);
@@ -515,15 +363,7 @@ namespace thegame
             sb.End();
         }
 
-        private Tuple<int, int> CalculateBound(int lenght)
-        {
-            if (lenght > 16)
-                return new Tuple<int, int>(lenght - 16, 16);
-            else
-                return new Tuple<int, int>(0, lenght);
-
-
-        }
+     
 
     }
 }

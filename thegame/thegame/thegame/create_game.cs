@@ -82,7 +82,7 @@ namespace thegame
             if (popup != null)
                 popup.Display(sb);
 
-            essai_textbox.Display(sb);
+            essai_textbox.Display(sb, false);
             sb.End();
         }
     }
