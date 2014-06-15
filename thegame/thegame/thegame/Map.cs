@@ -302,7 +302,7 @@ namespace thegame
             medecines = new List<Rectangle>();
 
 
-            if (thegamestate == gameState.WinterLevel)
+            if (thegamestate == gameState.WinterLevel || thegamestate == gameState.AutumnLevel)
             {
                 testEmitter2 = new Emitter();
                 testEmitter2.Active = false;
@@ -318,6 +318,30 @@ namespace thegame
                 testEmitter2.Opacity = 255;
                 particleComponent.particleEmitterList.Add(testEmitter2);
             }
+
+            
+                particleComponent.particleEmitterList.Add(
+                    new Emitter()
+                    {
+                        Active = false,
+                        TextureList = new List<Texture2D>() {
+			      Textures.leaf_brown,
+                  Textures.leaf_orange,
+                  Textures.leaf_red,
+                  Textures.leaf_yellow
+			    },
+                        RandomEmissionInterval = new RandomMinMax(128.0d),
+                        ParticleLifeTime = 3500,
+                        ParticleDirection = new RandomMinMax(170),
+                        ParticleSpeed = new RandomMinMax(2.5f),
+                        ParticleRotation = new RandomMinMax(0, 10),
+                        RotationSpeed = new RandomMinMax(0.01f),
+                        ParticleFader = new ParticleFader(false, true, 800),
+                        ParticleScaler = new ParticleScaler(true, 0.2f)
+                    }
+            );
+            
+
 
             if (selected == gameState.AutumnLevel)
             {
@@ -355,7 +379,7 @@ namespace thegame
             {
                 if (Inputs.isKeyRelease(Keys.S) && Developpermode) snow = !snow;
                 if (snow) particleComponent.particleEmitterList[0].Active = !particleComponent.particleEmitterList[0].Active;
-                    
+                particleComponent.particleEmitterList[1].Active = false;
                 particleComponent.particleEmitterList[0].Active = true;
                 Emitter t2 = particleComponent.particleEmitterList[0];
                 t2.Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
@@ -366,8 +390,25 @@ namespace thegame
                 }
             }
 
-            if (thegamestate == gameState.SpringLevel) particleComponent.particleEmitterList[0].Active = false;
-                
+            else if (thegamestate == gameState.AutumnLevel)
+            {
+                particleComponent.particleEmitterList[0].Active = false;
+                particleComponent.particleEmitterList[1].Active = true;
+                particleComponent.particleEmitterList[1].Position = new Vector2((float)random.NextDouble() * (Game1.graphics.GraphicsDevice.Viewport.Width), 0);
+                if (particleComponent.particleEmitterList[1].EmittedNewParticle)
+                {
+                    float f = MathHelper.ToRadians(particleComponent.particleEmitterList[1].LastEmittedParticle.Direction + 180);
+                    particleComponent.particleEmitterList[1].LastEmittedParticle.Rotation = f;
+                }
+            }
+
+            else particleComponent.particleEmitterList[0].Active = particleComponent.particleEmitterList[1].Active = false;
+            if (selected == gameState.MainMenu && thegamestate == gameState.MainMenu)
+                particleComponent.particleEmitterList[0].Active = particleComponent.particleEmitterList[1].Active = false;
+
+            if (thegamestate != gameState.AutumnLevel && thegamestate != gameState.WinterLevel)
+                particleComponent.particleEmitterList[0].Active = particleComponent.particleEmitterList[1].Active = false;
+
             bool justchange = false;
             if (themapstate == MapState.help && (Inputs.AnyKeyPressed() || Inputs.isLMBClick()))
             {
@@ -483,6 +524,9 @@ namespace thegame
                 if (thegamestate == gameState.WinterLevel)
                     if (particleComponent.particleEmitterList[0].Active)
                         particleComponent.particleEmitterList[0].Active = false;
+                if (thegamestate == gameState.AutumnLevel)
+                    if (particleComponent.particleEmitterList[1].Active)
+                        particleComponent.particleEmitterList[1].Active = false;
 
                 pauseMenu.Update(gametime, SoundIs);
                 if (pauseMenu.IChooseSomething) // OPTION PANNEL
@@ -508,6 +552,8 @@ namespace thegame
                 {
                     if (particleComponent.particleEmitterList[0].Active)
                         particleComponent.particleEmitterList[0].Active = false;
+                    if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
+                        particleComponent.particleEmitterList[1].Active = false;
                 }
                 if (Inputs.isKeyRelease(Keys.Space))
                 {
