@@ -21,8 +21,19 @@ namespace thegame
         private bool finish = true;
         private float TimeIntervalRequest = 0;
         private float TimeInterval = 10000;
-        private string friends_error = "";
         private List<Dictionary<string, string>> myfriendslist;
+        private string friends_error = "";
+
+        private bool finish2 = true;
+        private float TimeIntervalRequest2 = 0;
+        private float TimeInterval2 = 10000;
+        private List<Dictionary<string, string>> myrequest;
+
+        private List<string> Invitationsid = new List<string>();
+        private List<Button> InvitationsButtonAccept = new List<Button>();
+        private List<Button> InvitationsButtonIgnore = new List<Button>();
+
+        public Button searchFriendButton;
 
         /* Coordonnates right and left circles */
         private int xCircle = 144;
@@ -47,6 +58,8 @@ namespace thegame
         public Dashboard()
         {
             TimeIntervalRequest = TimeInterval;
+            TimeIntervalRequest2 = TimeInterval2;
+            searchFriendButton = new Button("Search Friend", 252, 76, Textures.font_texture);
         }
 
         public void Update(GameTime gametime)
@@ -113,7 +126,24 @@ namespace thegame
                     AnimatedColor_BottomCircle = 0;
             }
 
+            if (myrequest != null)
+            {
+                for (int i = 0; i < myrequest.Count; i++)
+                {
+                    InvitationsButtonAccept[i].Update();
+                    
+                    InvitationsButtonIgnore[i].Update();
+                    if (InvitationsButtonAccept[i].Clicked)
+                        ButtonClickAcceptOrIgnore("1", Invitationsid[i]);
+                    else if (InvitationsButtonIgnore[i].Clicked)
+                        ButtonClickAcceptOrIgnore("0", Invitationsid[i]);
+
+                }
+            }
+
             GetFriends(gametime);
+            GetInvitations(gametime);
+            searchFriendButton.Update();
 
         }
 
@@ -164,6 +194,95 @@ namespace thegame
             }
         }
 
+        private void GetInvitations(GameTime gametime)
+        {
+            TimeIntervalRequest2 += gametime.ElapsedGameTime.Milliseconds;
+
+            if (finish2 && TimeIntervalRequest2 >= TimeInterval2)
+            {
+                try
+                {
+                    finish = false;
+                    TimeIntervalRequest2 = 0;
+                    WebClient wb = new WebClient();
+                    var data = new NameValueCollection();
+                    wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted2);
+                    data["pwd"] = Session.session_password;
+                    data["id"] = Session.session_id;
+                    wb.UploadValuesAsync(new Uri("http://squickilling.com/json/friends_request.php"), "POST", data);
+                }
+                catch
+                {
+                    //TODO
+                }
+            }
+        }
+
+        void client_UploadFileCompleted2(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null)
+                {
+                    Invitationsid = new List<string>();
+                    InvitationsButtonAccept = new List<Button>();
+                    InvitationsButtonIgnore = new List<Button>();
+                    finish2 = true;
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
+                    Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+                    myrequest = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
+
+                    for (int i = 0; i < myrequest.Count; i++)
+                    {
+                        InvitationsButtonAccept.Add(new Button("Accept", contentinvitation.X + 150, contentinvitation.Y + i * 40, Textures.font_texture));
+                        InvitationsButtonIgnore.Add(new Button("Ignore", contentinvitation.X + 300, contentinvitation.Y + i * 40, Textures.font_texture));
+                        Invitationsid.Add(myrequest[i]["id"]);
+
+                    }
+
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void ButtonClickAcceptOrIgnore(string accepted, string id)
+        {
+                try
+                {
+                    WebClient wb = new WebClient();
+                    var data = new NameValueCollection();
+                    wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted3);
+                    data["pwd"] = Session.session_password;
+                    data["id"] = Session.session_id;
+                    data["otherid"] = id;
+                    data["accept"] = accepted;
+                    wb.UploadValuesAsync(new Uri("http://squickilling.com/json/accept.php"), "POST", data);
+                }
+                catch
+                {
+                    //TODO
+                }
+        }
+
+        void client_UploadFileCompleted3(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null)
+                {
+                    finish2 = true;
+                    TimeIntervalRequest2 = TimeInterval2;
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         public void Display(SpriteBatch sb)
         {
             sb.Begin();
@@ -201,10 +320,25 @@ namespace thegame
             Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Invitations", AlignType.MiddleCenter, titleinvitation);
             sb.Draw(Textures.hitbox, contentinvitation, Color.Beige);
             Tools.DisplayBorder(sb, Color.Black, contentinvitation, 4);
-            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "No friends request yet", AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y, contentinvitation.Width, 50));
+           
+                
 
+            if (myrequest != null && myrequest.Count > 0)
+            {
+                for (int i = 0; i < myrequest.Count; i++)
+                {
+                    Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, myrequest[i]["name"], AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y + i * 40, contentinvitation.Width / 2, 40));
+                    InvitationsButtonAccept[i].Display(sb);
+                    InvitationsButtonIgnore[i].Display(sb);
+                }
+            }
+            else
+                Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "No friends request", AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y + 40, contentinvitation.Width, 40));
 
+            searchFriendButton.Display(sb);
             sb.End();
+
+            
         }
     }
 }

@@ -32,12 +32,6 @@ Content\Sprites\smoke.xnb
 Content\audio\menu.xnb
 Content\audio\autumn.xnb
 Content\audio\winter.xnb
-Content\MenuPause_language\Menu_en.xnb
-Content\MenuPause_language\Menu_fr.xnb
-Content\MenuPause_language\Play_en.xnb
-Content\MenuPause_language\Play_fr.xnb
-Content\MenuPause_language\Quit_en.xnb
-Content\MenuPause_language\Quit_fr.xnb
 Content\Medecine2.xnb
 Content\Medecine3.xnb
 Content\White_Tree.xnb
@@ -45,9 +39,6 @@ Content\Squirrel_menu.xnb
 Content\Excavator_arm2.xnb
 Content\mine-animation.xnb
 Content\normal.xnb
-Content\MenuPause_language\btnPause_Autumn.xnb
-Content\MenuPause_language\btnPause_Winter.xnb
-Content\MenuPause_language\mute.xnb
 Content\PauseMenuFont.xnb
 Content\Autumn\tree.xnb
 Content\Autumn\Buche_test.xnb
@@ -86,6 +77,9 @@ Content\Autumn\Autumn_Tree_exit.xnb
 Content\Winter\Winter_tree_entrance.xnb
 Content\Winter\Winter_Tree_entrance_inside.xnb
 Content\Spring\Spring_Background4.xnb
+Content\Button\Bouton_left.xnb
+Content\Button\Bouton_middle.xnb
+Content\Button\Bouton_right.xnb
 Content\video\vid.wmv
 Content\mario.png
 Content\plateforme.png

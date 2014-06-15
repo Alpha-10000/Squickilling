@@ -52,7 +52,8 @@ namespace thegame
         MutilplayerDashboard,
         MultiplayerCreateGame,
         MultiplayerJoinGame,
-        MultiplayerGame
+        MultiplayerGame,
+        MultiplayerSearchFriends
     }
 
     public class Instances
@@ -110,6 +111,7 @@ namespace thegame
         private Join_game join_game;
 
         private MultiMap multimap;
+        private Search_friends search_friends;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
         private bool bypassLoginForm = false;
@@ -371,6 +373,11 @@ namespace thegame
                         selected = gameState.MultiplayerJoinGame;
                         Execute();
                     }
+                    if (createthegame.searchFriendButton.Clicked)
+                    {
+                        selected = gameState.MultiplayerSearchFriends;
+                        Execute();
+                    }
                 }
                 else if (selected == gameState.MultiplayerCreateGame)
                 {
@@ -393,6 +400,15 @@ namespace thegame
                 else if (selected == gameState.MultiplayerGame)
                 {
                     multimap.Update(gametime);
+                }
+                else if (selected == gameState.MultiplayerSearchFriends)
+                {
+                    search_friends.Update(gametime);
+                    if (search_friends.goback)
+                    {
+                        this.selected = gameState.MutilplayerDashboard;
+                        Execute();
+                    }
                 }
 
                 Keys[] getkey = Keyboard.GetState().GetPressedKeys();
@@ -538,6 +554,9 @@ namespace thegame
                 case gameState.MultiplayerGame:
                     multimap = new MultiMap();
                     break;
+                case gameState.MultiplayerSearchFriends:
+                    search_friends = new Search_friends();;
+                    break;
                 default:
                     break;
             }
@@ -625,6 +644,8 @@ namespace thegame
                         join_game.Display(sb);
                     else if (selected == gameState.MultiplayerGame)
                         multimap.Display(sb);
+                    else if (selected == gameState.MultiplayerSearchFriends)
+                        search_friends.Display(sb);
 
                 }
 

@@ -61,6 +61,10 @@ namespace thegame
         public static Texture2D springBackground;
         public static Texture2D summerBackground;
 
+        public static Texture2D ButtonLeft;
+        public static Texture2D ButtonMiddle;
+        public static Texture2D ButtonRight;
+
         public static Texture2D explosion;
         public static Texture2D mine_grey;
         public static Texture2D mine_red;
@@ -174,26 +178,14 @@ namespace thegame
             //Intro
             vid = cm.Load<Video>(@"video\\vid");
 
-            //Menu Pause
-            btnPlay_Autumn = new Button();
-            btnMenu_Autumn = new Button();
-            btnQuit_Autumn = new Button();
+            //button
+            ButtonLeft = cm.Load<Texture2D>(@"Button/Bouton_left");
+            ButtonMiddle = cm.Load<Texture2D>(@"Button/Bouton_middle");
+            ButtonRight = cm.Load<Texture2D>(@"Button/Bouton_right");
+
+          
+            
            
-            btnPlay_Winter = new Button();
-            btnMenu_Winter = new Button();
-            btnQuit_Winter = new Button();
-
-            btnMute = new Button();
-            
-            btnPlay_Autumn.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Autumn"), new Vector2(313, 183));
-            btnMenu_Autumn.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Autumn"), new Vector2(313, 253));
-            btnQuit_Autumn.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Autumn"), new Vector2(313, 323));
-            
-            btnPlay_Winter.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Winter"), new Vector2(313, 183));
-            btnMenu_Winter.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Winter"), new Vector2(313, 253));
-            btnQuit_Winter.Load(cm.Load<Texture2D>(@"MenuPause_language\\btnPause_Winter"), new Vector2(313, 323));
-
-            btnMute.Load(cm.Load<Texture2D>(@"MenuPause_language\\mute"), new Vector2(50,50));
             
             // Game Over
             game_overTexture_en = cm.Load<Texture2D>(@"game_over_en");

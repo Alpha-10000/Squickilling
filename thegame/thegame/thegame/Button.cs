@@ -10,62 +10,49 @@ namespace thegame
 {
     class Button
     {
-        Texture2D texture;
-        Vector2 position;
-        Rectangle rectangle;
+        private int x, y, ButtonWidth, nbMiddleButton;
+        private string text;
+        private Rectangle buttonHitBox;
+        private SpriteFont spritefont;
+        public bool Clicked = false;
 
-        Color colour = new Color(255, 255, 255, 255);
-
-        bool down;
-        public bool isClicked;
-        public bool isSelected;
-        private bool useKeyboard = false;
-
-        public Button()
+        public Button(string text, int x, int y, SpriteFont spritefont)
         {
-            isSelected = false;
+            this.text = text;
+            this.x = x;
+            this.y = y;
+            this.spritefont = spritefont;
+            int Textwidth = (int)spritefont.MeasureString(text).X;
+
+            //calcule nb buttonmiddle we will need
+            nbMiddleButton = 0;
+            ButtonWidth = Textures.ButtonMiddle.Width;
+            while (nbMiddleButton * ButtonWidth <= Textwidth)
+                nbMiddleButton++;
+
+            buttonHitBox = new Rectangle(x, y, Textures.ButtonLeft.Width + Textures.ButtonRight.Width + ButtonWidth * (nbMiddleButton + 1), Textures.ButtonMiddle.Height);
         }
 
-        public void Load(Texture2D newTexture, Vector2 newPosition)
-        { 
-            texture = newTexture;
-            position = newPosition;
+        public void Update()
+        {
+            Clicked = false;//very important. Do not delete
+            if (Inputs.isLMBClick() &&  buttonHitBox.Contains(Inputs.getMousePoint()))
+                Clicked = true;
         }
 
-        public void Update(MouseState mouse, KeyboardState keyboard)
+        public void Display(SpriteBatch sb)
         {
-            mouse = Mouse.GetState();
-            keyboard = Keyboard.GetState();
+            sb.Draw(Textures.ButtonLeft, new Rectangle(x, y, Textures.ButtonRight.Width, Textures.ButtonLeft.Height), Color.White);
 
-            rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            //right button
+            sb.Draw(Textures.ButtonRight, new Rectangle(x + (nbMiddleButton + 1) * ButtonWidth + Textures.ButtonLeft.Width - 1, y, Textures.ButtonRight.Width, Textures.ButtonRight.Height), Color.White);
 
-            Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);
-            
-            if (!useKeyboard)
-            {
-                if (mouseRectangle.Intersects(rectangle) || isSelected)
-                {
-                    if (colour.A == 255) down = false;
-                    if (colour.A == 0) down = true;
-                    if (down) colour.A += 3; else colour.A -= 3;
-                    if (mouse.LeftButton == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Enter))
-                    {
-                        isClicked = true;
-                        colour.A = 255;
-                    }
-                }
-                else if (colour.A < 255) colour.A += 3;
-            }
-        }
+            //draw middle buttons
+            for(int i = 0; i <= nbMiddleButton; i++)
+                sb.Draw(Textures.ButtonMiddle, new Rectangle((x + Textures.ButtonLeft.Width ) + i * ButtonWidth, y, Textures.ButtonMiddle.Width, Textures.ButtonMiddle.Height), Color.White);
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, rectangle, colour);
-        }
-
-        public void Draw(SpriteBatch spritBatch, Rectangle rectangle1)
-        {
-            spritBatch.Draw(texture, rectangle1, colour);
+           
+            Tools.DisplayAlignedText(sb, Color.Black, spritefont, text, AlignType.MiddleCenter, buttonHitBox);
         }
     }
 }
