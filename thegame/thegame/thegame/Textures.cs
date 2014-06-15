@@ -64,6 +64,7 @@ namespace thegame
         public static Texture2D explosion;
         public static Texture2D mine_grey;
         public static Texture2D mine_red;
+        public static Texture2D bloodEmitter;
         public static Texture2D medecine;
 
         public static Texture2D pausedTexture;
@@ -94,6 +95,7 @@ namespace thegame
         public static Button btnPlay_Autumn, btnQuit_Autumn, btnMenu_Autumn, btnPlay_Winter, btnQuit_Winter, btnMenu_Winter, btnMute;
 
         public static Texture2D snowdrop;
+        public static Texture2D leaf_brown, leaf_orange, leaf_red, leaf_yellow;
         #endregion
 
         public static void load(ContentManager cm)
@@ -127,6 +129,7 @@ namespace thegame
             excavatorArm = cm.Load<Texture2D>(@"Excavator_arm2");
             SquirrelMenu = cm.Load<Texture2D>(@"Squirrel_menu");
             animation_mine = cm.Load<Texture2D>(@"mine-animation");
+            bloodEmitter = cm.Load<Texture2D>(@"blood_spritesheet");
 
             // Autumn
             autumn_ground_texture = cm.Load<Texture2D>(@"Autumn/Autumn_Ground");
@@ -137,6 +140,10 @@ namespace thegame
             tree_autumn_exit_inside = cm.Load<Texture2D>(@"Autumn/Autumn_Tree_exit_inside");
             autumnBackground = cm.Load<Texture2D>(@"Autumn/Autumn_Background");
             buche_texture = cm.Load<Texture2D>(@"Autumn/Buche_test");
+            leaf_brown = cm.Load<Texture2D>(@"Autumn/Autumn_leaf_brown");
+            leaf_orange = cm.Load<Texture2D>(@"Autumn/Autumn_leaf_orange");
+            leaf_red = cm.Load<Texture2D>(@"Autumn/Autumn_leaf_red");
+            leaf_yellow = cm.Load<Texture2D>(@"Autumn/Autumn_leaf_yellow");
 
             // Winter
             winter_ground_texture = cm.Load<Texture2D>(@"Winter/Winter_ground2");

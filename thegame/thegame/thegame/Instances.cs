@@ -113,8 +113,8 @@ namespace thegame
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
         private bool bypassLoginForm = false;
-        
 
+        Animation blood;
         private bool GoToTheMultiExperiment = false;
 
         public Instances(Game1 game)
@@ -140,8 +140,10 @@ namespace thegame
             instancesoundMenu = Textures.gameSound_EffectMenu.CreateInstance();
             instancesoundMenu.IsLooped = true;
 
-
-            /* DEFAUT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
+            blood = new Animation(new Vector2(100, 100), new Vector2(2, 3));
+            blood.AnimationSprite = Textures.bloodEmitter;
+            
+            /* DEFAULT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
 
             this.game = game;
             CheckSound = false;
@@ -168,6 +170,9 @@ namespace thegame
                 instancesound.Stop();
                 instancesoundMenu.Play();
             }
+
+
+           
 
             if (curGameMode == instances_type.Game &&!CheckSound)
             {
@@ -566,8 +571,18 @@ namespace thegame
             // for shifting screen
             //------------------------------------------------------------------
             cameraClass.Position = this.cameraPos;
-
-                if (curGameMode == instances_type.Menu)
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                blood.Update(gameTime);
+                sb.Begin();
+                blood.Draw(sb);
+                sb.End();
+            }
+    
+            
+            
+            if (curGameMode == instances_type.Menu)
                 {
                     sb.Begin();
                     (execute as Menu).Display(sb, Developpermode);
