@@ -451,12 +451,11 @@ namespace thegame
                         Execute();
                     }
                 }
-<<<<<<< HEAD
+
                 if (!Developpermode && SoundIs) instancesound.Play();
 
                 
-=======
->>>>>>> origin/master
+
         }
 
         /* END OF THE GAME CODE */

@@ -190,8 +190,8 @@ namespace thegame
             int[,] thetile;
             int[] IAtile;
             themapstate = MapState.game;
-<<<<<<< HEAD
-=======
+
+
             if(instancesound != null)
                 instancesound.Stop();
 
@@ -224,7 +224,7 @@ namespace thegame
             if (SoundIs) instancesound.Play();
                 
 
->>>>>>> origin/master
+
             // All the images and objects related to season levels are loaded here
             switch (thegamestate)
             {
