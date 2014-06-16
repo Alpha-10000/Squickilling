@@ -10,49 +10,66 @@ namespace thegame
 {
     class Button
     {
-        private int x, y, ButtonWidth, nbMiddleButton;
+        private int x, y, Textwidth, Textheight, radius, CircleX1, CircleX2, CircleY1, CircleY2;
+        private int Topspacing = 10;//TODO : in the constructor
         private string text;
-        private Rectangle buttonHitBox;
         private SpriteFont spritefont;
         public bool Clicked = false;
+        private Color border, main, borderOnClick, Defautborder;
 
-        public Button(string text, int x, int y, SpriteFont spritefont)
+        public Button(string text, int x, int y, SpriteFont spritefont, Color Defautborder, Color borderOnClick, Color main)
         {
             this.text = text;
             this.x = x;
             this.y = y;
             this.spritefont = spritefont;
-            int Textwidth = (int)spritefont.MeasureString(text).X;
+            Textwidth = (int)spritefont.MeasureString(text).X;
+            Textheight = (int)spritefont.MeasureString(text).Y;
 
-            //calcule nb buttonmiddle we will need
-            nbMiddleButton = 0;
-            ButtonWidth = Textures.ButtonMiddle.Width;
-            while (nbMiddleButton * ButtonWidth <= Textwidth)
-                nbMiddleButton++;
-
-            buttonHitBox = new Rectangle(x, y, Textures.ButtonLeft.Width + Textures.ButtonRight.Width + ButtonWidth * (nbMiddleButton + 1), Textures.ButtonMiddle.Height);
+            radius = (Textheight + Topspacing) / 2 + 1;
+            CircleX1 = x;
+            CircleX2 = x + Textwidth;
+            CircleY2 = y + (Textheight + Topspacing) / 2 + 1;
+            CircleY1 = y + (Textheight + Topspacing) / 2 + 1;
+            this.main = main;
+            this.borderOnClick = borderOnClick;
+            this.Defautborder = Defautborder;
         }
 
         public void Update()
         {
+            Point themouse = Inputs.getMousePoint();
+            bool MouseIn =
+                radius >= Math.Sqrt(Math.Pow(themouse.X - CircleX1, 2) + Math.Pow(themouse.Y - CircleY1, 2))
+                || radius >= Math.Sqrt(Math.Pow(themouse.X - CircleX2, 2) + Math.Pow(themouse.Y - CircleY2, 2))
+                || new Rectangle(x, y, Textwidth, Textheight + Topspacing).Contains(themouse);
+
+
             Clicked = false;//very important. Do not delete
-            if (Inputs.isLMBClick() &&  buttonHitBox.Contains(Inputs.getMousePoint()))
+            if (Inputs.isLMBClick() &&  MouseIn)
                 Clicked = true;
+
+            border = Defautborder;
+            if(MouseIn)
+                border = borderOnClick;
         }
 
         public void Display(SpriteBatch sb)
         {
-            sb.Draw(Textures.ButtonLeft, new Rectangle(x, y, Textures.ButtonRight.Width, Textures.ButtonLeft.Height), Color.White);
+            //left side
+            Tools.DrawCircle(sb, new Vector2(CircleX1, CircleY1), radius, 20, main, Textheight);
+            Tools.DrawCircle(sb, new Vector2(CircleX1, CircleY1), radius, 100, border);
+            //right side
+            Tools.DrawCircle(sb, new Vector2(CircleX2, CircleY2), radius, 20, main, Textheight);
+            Tools.DrawCircle(sb, new Vector2(CircleX2, CircleY2), radius, 100, border);
+            //rectangle
+            sb.Draw(Textures.hitbox, new Rectangle(x, y, Textwidth, Textheight + Topspacing), main);
+            //horizontal lines
+            Tools.DrawLine(sb, new Vector2(x, y), new Vector2(x + Textwidth, y), border);
+            Tools.DrawLine(sb, new Vector2(x, y + Textheight + Topspacing), new Vector2(x + Textwidth, y + Textheight + Topspacing), border);
 
-            //right button
-            sb.Draw(Textures.ButtonRight, new Rectangle(x + (nbMiddleButton + 1) * ButtonWidth + Textures.ButtonLeft.Width - 1, y, Textures.ButtonRight.Width, Textures.ButtonRight.Height), Color.White);
-
-            //draw middle buttons
-            for(int i = 0; i <= nbMiddleButton; i++)
-                sb.Draw(Textures.ButtonMiddle, new Rectangle((x + Textures.ButtonLeft.Width ) + i * ButtonWidth, y, Textures.ButtonMiddle.Width, Textures.ButtonMiddle.Height), Color.White);
-
-           
-            Tools.DisplayAlignedText(sb, Color.Black, spritefont, text, AlignType.MiddleCenter, buttonHitBox);
+            //text
+            Tools.DisplayAlignedText(sb, Color.White, spritefont, text, AlignType.MiddleCenter, new Rectangle(x, y, Textwidth, Textheight + Topspacing)); 
         }
     }
 }

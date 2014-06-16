@@ -100,7 +100,7 @@ namespace thegame
                     getFriends = ValueList;
 
                     for (int i = 0; i < ValueList.Count; i++)
-                        inviteButtonList.Add(new Button("Invite", contentcreate.X + 300, contentcreate.Y + 50 + i * 50, Textures.fonthelp_texture));
+                        inviteButtonList.Add(new Button("Invite", contentcreate.X + 300, contentcreate.Y + 50 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                 }
             }
             catch
