@@ -10,6 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Lidgren.Network;
+using Microsoft.Xna.Framework.Net;
+using System.Net;
+using System.Net.Sockets;
 
 namespace thegame
 {
@@ -44,6 +47,26 @@ namespace thegame
         TimeSpan timetopass;
         public Server()
         {
+            IPHostEntry host;
+            string localIP = "?";
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localIP = ip.ToString();
+                }
+            }
+            Console.WriteLine(localIP);
+
+            //TODO
+            // Envoyer au serveur l'adresse locale de l'hôte de la partie.
+            // Partie créée.
+            // Le serveur la redistribue à tous ceux qui rejoignent la partie.
+            // Ensuite c'est utilisé par les clients pour se connecter au serveur.
+            // La partie est ensuite lancée.
+            // Fonctionne uniquement sur le même réseau
+
             // Create new instance of configs. Parameter is "application Id". It has to be same on client and server.
             Config = new NetPeerConfiguration("game");
 
@@ -51,7 +74,7 @@ namespace thegame
             Config.Port = 14242;
 
             // Max client amount
-            Config.MaximumConnections = 200;
+            Config.MaximumConnections = 4;
 
             // Enable New messagetype. Explained later
             Config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);

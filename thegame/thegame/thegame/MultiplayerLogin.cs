@@ -74,6 +74,7 @@ namespace thegame
         private Rectangle join_game = new Rectangle(450, 425, 150, 40);
         Server server;
         Client client;
+        public  static bool created;
 
         public MultiplayerLogin()
         {
@@ -101,6 +102,8 @@ namespace thegame
 
             login_account_button = new Rectangle(XloginForm, 310, 200, 40);
             login_forgot_password = new Rectangle(XloginForm, 350, 200, 50);
+
+            created = false;
         }
 
         public void CreateAccount()
@@ -284,11 +287,21 @@ namespace thegame
 
             //temp
             if (create_game.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
+            {
                 server = new Server();
+                created = true;
+            }
             if (server != null)
                 server.Update();
             if (join_game.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
-                client = new Client();
+            {
+                try
+                {
+                    client = new Client();
+                    
+                }
+                catch { }
+            }
             if (client != null)
                 client.Update();
         }

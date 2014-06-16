@@ -363,14 +363,14 @@ namespace thegame
                   Textures.leaf_red,
                   Textures.leaf_yellow
 			    },
-                    RandomEmissionInterval = new RandomMinMax(128.0d),
+                    RandomEmissionInterval = new RandomMinMax(150.0d),
                     ParticleLifeTime = 3500,
                     ParticleDirection = new RandomMinMax(170),
                     ParticleSpeed = new RandomMinMax(2.5f),
                     ParticleRotation = new RandomMinMax(0, 10),
                     RotationSpeed = new RandomMinMax(0.01f),
                     ParticleFader = new ParticleFader(false, true, 800),
-                    ParticleScaler = new ParticleScaler(true, 0.2f)
+                    ParticleScaler = new ParticleScaler(true, 0.1f)
                 }
              );
        
