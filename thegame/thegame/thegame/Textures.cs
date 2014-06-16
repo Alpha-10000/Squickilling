@@ -86,6 +86,8 @@ namespace thegame
         public static SoundEffect gameSound_Effect;
         public static SoundEffect gameSound_EffectMenu;
         public static SoundEffect gameSound_EffectWinter;
+        public static SoundEffect gameSound_EffectSpring;
+        public static SoundEffect gameSound_EffectSummer;
         public static SoundEffect gameExplosion_Effect;
         public static SoundEffect gamePunch_Effect;
 
@@ -104,24 +106,31 @@ namespace thegame
 
         public static void load(ContentManager cm)
         {
-            plateform_texture = cm.Load<Texture2D>(@"plateforme");  // Useless
-            mario_texture = cm.Load<Texture2D>(@"mario");
-            eraser = cm.Load<Texture2D>(@"erase");
-            hitbox = cm.Load<Texture2D>(@"blank");
-            menu_main_page = cm.Load<Texture2D>(@"Menu_Main_Page");
+            // Sprite Fonts
             font_texture = cm.Load<SpriteFont>(@"FPS");
             fontnormal_texture = cm.Load<SpriteFont>(@"normal");
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             fonthelp_texture = cm.Load<SpriteFont>(@"fontHelp");
             font_pause = cm.Load<SpriteFont>(@"PauseMenuFont");
+
+            // Sounds
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
             gameSound_Effect = cm.Load<SoundEffect>("audio\\autumn");
             gameSound_EffectWinter = cm.Load<SoundEffect>("audio\\winter");
+            gameSound_EffectSpring = cm.Load<SoundEffect>("audio\\Crimson_Fly");
+            gameSound_EffectSummer = cm.Load<SoundEffect>("audio\\Echinoderm_Regeneration");
             gameSound_EffectMenu = cm.Load<SoundEffect>("audio\\menu");
             gameExplosion_Effect = cm.Load<SoundEffect>("audio\\explosion");
             gamePunch_Effect = cm.Load<SoundEffect>("audio\\punch");
+
+            // Texture 2D
+            menu_main_page = cm.Load<Texture2D>(@"Menu_Main_Page");
+            plateform_texture = cm.Load<Texture2D>(@"plateforme");  // Useless
+            mario_texture = cm.Load<Texture2D>(@"mario");
+            eraser = cm.Load<Texture2D>(@"erase");
+            hitbox = cm.Load<Texture2D>(@"blank");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
-            pausedRectangle = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth+40, Game1.graphics.PreferredBackBufferHeight+20);
+            pausedRectangle = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 40, Game1.graphics.PreferredBackBufferHeight + 20);
             nut_texture = cm.Load<Texture2D>(@"Nut");
             acorn_texture = cm.Load<Texture2D>(@"Acorn_test2");
             healthBar_texture = cm.Load<Texture2D>(@"HealthBar");
@@ -190,10 +199,10 @@ namespace thegame
             ButtonMiddle = cm.Load<Texture2D>(@"Button/Bouton_middle");
             ButtonRight = cm.Load<Texture2D>(@"Button/Bouton_right");
 
-          
-            
-           
-            
+
+
+
+
             // Game Over
             game_overTexture_en = cm.Load<Texture2D>(@"game_over_en");
             game_overTexture_fr = cm.Load<Texture2D>(@"game_over_fr");

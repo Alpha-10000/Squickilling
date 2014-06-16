@@ -111,7 +111,6 @@ namespace thegame
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
-        public gameState selected { get; private set; }              // Selected menu page.
         public SoundEffect sound { get; private set; }
 
         private bool drawBloodScreen = false;//variable for the bloodscreen
@@ -175,10 +174,13 @@ namespace thegame
 
         private PauseMenu pauseMenu = new PauseMenu();
 
-        public Map(gameState thegamestate, ref Camera cameraClass)
+        public Map(gameState thegamestate, ref Camera cameraClass, bool SoundIs)
         {
             this.thegamestate = thegamestate;
             this.NewGame(ref cameraClass);
+            this.SoundIs = SoundIs;
+
+           
         }
 
         private void NewGame(ref Camera cameraClass)
@@ -187,6 +189,37 @@ namespace thegame
             int[,] thetile;
             int[] IAtile;
             themapstate = MapState.game;
+            if(instancesound != null)
+                instancesound.Stop();
+
+            if (thegamestate == gameState.AutumnLevel)
+            {
+                instancesound = Textures.gameSound_Effect.CreateInstance();
+                instancesound.IsLooped = true;
+                snow = false;
+
+            }
+            else if (thegamestate == gameState.WinterLevel)
+            {
+                instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+                instancesound.IsLooped = true;
+                snow = true;
+            }
+            else if (thegamestate == gameState.SpringLevel)
+            {
+                instancesound = Textures.gameSound_EffectSpring.CreateInstance();
+                instancesound.IsLooped = true;
+                snow = false;
+            }
+            else if (thegamestate == gameState.SummerLevel)
+            {
+                instancesound = Textures.gameSound_EffectSummer.CreateInstance();
+                instancesound.IsLooped = true;
+                snow = false;
+            }
+
+            if (SoundIs) instancesound.Play();
+                
 
             // All the images and objects related to season levels are loaded here
             switch (thegamestate)
@@ -339,39 +372,20 @@ namespace thegame
                     ParticleFader = new ParticleFader(false, true, 800),
                     ParticleScaler = new ParticleScaler(true, 0.2f)
                 }
-        );
+             );
+       
 
 
 
-            if (selected == gameState.AutumnLevel)
-            {
-                instancesound = Textures.gameSound_Effect.CreateInstance();
-                instancesound.IsLooped = true;
-                snow = false;
-
-            }
-            else if (selected == gameState.WinterLevel)
-            {
-                instancesound = Textures.gameSound_EffectWinter.CreateInstance();
-                instancesound.IsLooped = true;
-                snow = true;
-            }
-            else if (selected == gameState.SpringLevel)
-            {
-                //instancesound = Textures.gameSound_EffectWinter.CreateInstance();
-                //instancesound.IsLooped = true;
-                //snow = true;
-            }
-            else if (selected == gameState.SummerLevel)
-            {
-                //instancesound = Textures.gameSound_EffectWinter.CreateInstance();
-                //instancesound.IsLooped = true;
-                //snow = true;
-            }
+          
         }
 
         public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode)
         {
+
+
+
+
             // Exit the game
             if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P)) themapstate = MapState.pause;
 
@@ -403,7 +417,7 @@ namespace thegame
             }
 
             else particleComponent.particleEmitterList[0].Active = particleComponent.particleEmitterList[1].Active = false;
-            if (selected == gameState.MainMenu && thegamestate == gameState.MainMenu)
+            if (thegamestate == gameState.MainMenu && thegamestate == gameState.MainMenu)
                 particleComponent.particleEmitterList[0].Active = particleComponent.particleEmitterList[1].Active = false;
 
             if (thegamestate != gameState.AutumnLevel && thegamestate != gameState.WinterLevel)

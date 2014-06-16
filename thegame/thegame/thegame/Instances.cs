@@ -66,7 +66,7 @@ namespace thegame
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
-        public gameState selected { get; private set; }        // Selected menu page.
+        public gameState selected { get; private set; }       // Selected menu page.
         public SoundEffect sound { get; private set; }
         public bool CheckSound;
 
@@ -132,7 +132,7 @@ namespace thegame
                 Session.session_password = "hellohello";
 
             }
-            /* LANGUAGE PAR DÉFAUT AU CHARGEMENT */
+            /* LANGAGE PAR DÉFAUT AU CHARGEMENT */
             this.curGameMode = instances_type.Menu;
             this.selected = 0;
 
@@ -166,7 +166,7 @@ namespace thegame
             if (Session.session_isset)
                 Session.update(gametime);
 
-            if (this.selected != gameState.SplashScreen && this.selected == gameState.MainMenu &&!CheckSound)
+            if (this.selected == gameState.MainMenu &&!CheckSound)
             {
                 SoundIs = true;
                 instancesound.Stop();
@@ -177,10 +177,7 @@ namespace thegame
            
 
             if (curGameMode == instances_type.Game &&!CheckSound)
-            {
                 instancesoundMenu.Stop();
-                instancesound.Play();
-            }
             else instancesound.Stop();
 
                 if (curGameMode == instances_type.Menu)// MENU
@@ -330,7 +327,7 @@ namespace thegame
                     (execute as DevelopperMap).UpdateMap(gametime);
                 }
 
-                else if (selected == gameState.AutumnLevel || selected == gameState.WinterLevel || selected == gameState.SummerLevel || selected == gameState.SpringLevel)// THIS IS THE GAME 
+                else if (curGameMode == instances_type.Game)// THIS IS THE GAME 
                 {
 
                     thecurrentmap.Update(gametime, game,ref cameraClass, ref cameraPos, Developpermode);
@@ -425,7 +422,6 @@ namespace thegame
                 if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
                 {
                     Developpermode = false;
-                    instancesound.Play();
                     SoundIs = true;
                     if (developpermap)
                     {
@@ -455,7 +451,6 @@ namespace thegame
                         Execute();
                     }
                 }
-                if (!Developpermode && SoundIs) instancesound.Play();
         }
 
         /* END OF THE GAME CODE */
@@ -532,7 +527,7 @@ namespace thegame
                 case gameState.AutumnLevel: /* GAME START */
                     Sound("menu");
                     Sound("Game");
-                    thecurrentmap = new Map(selected, ref cameraClass);
+                    thecurrentmap = new Map(selected, ref cameraClass, SoundIs);
                     
                     curGameMode = instances_type.Game;
                     break;
@@ -540,7 +535,7 @@ namespace thegame
                 case gameState.WinterLevel: /* GAME START */
                     Sound("menu");
                     Sound("Game");
-                    thecurrentmap = new Map(selected, ref cameraClass);
+                    thecurrentmap = new Map(selected, ref cameraClass, SoundIs);
                     curGameMode = instances_type.Game;
                     break;
                 case gameState.MultiplayerLoginRegister:
@@ -577,7 +572,6 @@ namespace thegame
                     if (instancesoundMenu.State != SoundState.Playing && !Developpermode)
                         instancesoundMenu.Play();
                 }
-                else instancesound.Play();
         }
 
         public void Display(SpriteBatch sb, GameTime gameTime)
