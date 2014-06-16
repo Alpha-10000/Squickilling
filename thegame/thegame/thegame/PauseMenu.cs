@@ -41,7 +41,8 @@ namespace thegame
         private Texture2D background;
         private Texture2D ground_texture;
 
-        public PauseMenu(): base(drawable_type.font)
+        public PauseMenu()
+            : base(drawable_type.font)
         {
             tab = new string[3];
             this.pos_tab = 0;
@@ -49,7 +50,7 @@ namespace thegame
             color_tab = new Color[3];
             this.defaultColor = Color.Black;
             this.Text = Text;
-        
+
             AddElements(Language.Text_Game["_btnPlay"]);
             AddElements(Language.Text_Game["_btnMenu"]);
             AddElements(Language.Text_Game["_btnQuit"]);
@@ -63,51 +64,57 @@ namespace thegame
                     background = Textures.autumnBackground;
                     ground_texture = Textures.autumn_ground_texture;
                     break;
+                case gameState.SpringLevel:
+                    background = Textures.springBackground;
+                    ground_texture = Textures.spring_ground_texture;
+                    break;
+                case gameState.SummerLevel:
+                    background = Textures.summerBackground;
+                    ground_texture = Textures.summer_ground_texture;
+                    break;
                 default:
                     background = Textures.winterBackground;
                     ground_texture = Textures.winter_ground_texture;
                     break;
 
             }
-                    sb.Begin();
-                    sb.Draw(background, new Vector2(-2, -2), Color.White);
-                    sb.Draw(ground_texture, new Vector2(0, 405), Color.White);
-                    sb.Draw(ground_texture, new Vector2(790, 405), Color.White);
-                    sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
 
-                    foreach (Rectangle dessine in CenterText)
-                    {
-                        sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 14, dessine.Y + 4, currentWidth * 2 - 8, currentHeight - 8), Color.Beige);
-                        sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y, 4, currentHeight), Color.Black);//left
-                        sb.Draw(Textures.hitbox, new Rectangle(dessine.X + currentWidth + 6, dessine.Y, 4, currentHeight), Color.Black);//right
-                        sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10 , dessine.Y + currentHeight - 4, currentWidth*2, 4), Color.Black);//bottom
-                        sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y, currentWidth*2, 4), Color.Black);//bottom
-                    }
+            sb.Begin();
+            sb.Draw(background, new Vector2(-2, -2), Color.White);                              // Draws background texture
+            sb.Draw(ground_texture, new Vector2(0, 400), Color.White);                          // Draws first ground texture
+            sb.Draw(ground_texture, new Vector2(ground_texture.Width, 405), Color.White);       // Draws second  ground texture
+            sb.Draw(Textures.pausedTexture, Textures.pausedRectangle, Color.White);
 
-                    int i = 0;
-                    int x = 400;//correspond to the center
-                    int y = 150;
+            // Draws the buttons of the Pause page
+            foreach (Rectangle dessine in CenterText)
+            {
+                sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 14, dessine.Y + 4, currentWidth * 2 - 8, currentHeight - 8), Color.Beige);
+                sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y, 4, currentHeight), Color.Black);                               //left
+                sb.Draw(Textures.hitbox, new Rectangle(dessine.X + currentWidth + 6, dessine.Y, 4, currentHeight), Color.Black);                                //right
+                sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y + currentHeight - 4, currentWidth * 2, 4), Color.Black);        //top
+                sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y, currentWidth * 2, 4), Color.Black);                            //bottom
+            }
 
-                    while (i < this.pos_tab && tab[i] != null)
-                    {
-                        this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2 + 10, y + 2), color_tab[i], "menu");
-                        y = 80 + y;
-                        i++;
-                    }
+            int i = 0;
+            int x = 400;    //correspond to the center
+            int y = 150;
 
-                    if (popup != null)
-                        popup.Display(sb);
-                    sb.End();
+            while (i < this.pos_tab && tab[i] != null)
+            {
+                this.Draw(sb, tab[i], new Vector2(x - CenterText[i].Width / 2 + 10, y + 2), color_tab[i], "menu");
+                y = 80 + y;
+                i++;
+            }
 
+            if (popup != null) popup.Display(sb);
+            sb.End();
         }
 
         public void Update(GameTime gametime, bool SoundIs)
         {
-
             bool MouseOnSOmething = false;
             int index = 0;
 
-           
             if (Inputs.UseMouse())
             {
                 foreach (Rectangle check in AreaListMouse)
@@ -116,10 +123,11 @@ namespace thegame
                         index = AreaListMouse.FindIndex(x => x == check);
                         YExcavator = 140 + index * 60;
                         MouseOnSOmething = true;
-                        if (Inputs.isLMBClick() && selected != 2)
-                            IChooseSomething = true;
+                        if (Inputs.isLMBClick() && selected != 2) IChooseSomething = true;
                         else if (Inputs.isLMBClick())
+                        {
                             popup = new Popup("Cancel", "Yes", "Exit the game", new string[] { "Are you sure you want to quit ?" }, Textures.font_texture, 450);
+                        }
                         break;
                     }
 
@@ -141,8 +149,7 @@ namespace thegame
                         this.color_tab[this.selected] = change_Color;
                         YExcavator = 140 + selected * 60;
                         this.color_tab[this.selected - 1] = this.defaultColor;
-                        if (SoundIs)
-                            Textures.buttonSound_Effect.Play();
+                        if (SoundIs) Textures.buttonSound_Effect.Play();
                     }
                 }
 
@@ -154,43 +161,36 @@ namespace thegame
                         this.selected--;
                         this.color_tab[this.selected] = change_Color;
                         YExcavator = 140 + selected * 60;
-                        if (SoundIs)
-                            Textures.buttonSound_Effect.Play();
+                        if (SoundIs) Textures.buttonSound_Effect.Play();
                     }
                 }
 
-                if (Inputs.isKeyRelease(Keys.Enter) && selected != 2)
-                    IChooseSomething = true;
+                if (Inputs.isKeyRelease(Keys.Enter) && selected != 2) IChooseSomething = true;              // "2" is the Quit button
                 else if (Inputs.isKeyRelease(Keys.Enter))
+                {
                     popup = new Popup("Cancel", "Yes", "Exit the game", new string[] { "Are you sure you want to quit ?" }, Textures.font_texture, 450);
-
+                }
 
                 if (Inputs.isKeyRelease(Keys.Back) && activateBackSpace)
                 {
                     IChooseSomething = true;
                     selected = this.color_tab.Length - 1;
                 }
-
             }
 
             if (popup != null)
             {
                 popup.Update(gametime);
-                if (popup.action1bool)
-                    popup = null;
-                else if (popup.action2bool)
-                    IChooseSomething = true;
+                if (popup.action1bool) popup = null;
+                else if (popup.action2bool) IChooseSomething = true;
             }
-
         }
 
         private void AddElements(string Text)
         {
             this.tab[pos_tab] = Text;
-            if(pos_tab == 0)
-                this.color_tab[pos_tab] = change_Color;
-            else
-                this.color_tab[pos_tab] = defaultColor;
+            if (pos_tab == 0) this.color_tab[pos_tab] = change_Color;
+            else this.color_tab[pos_tab] = defaultColor;
             this.pos_tab++;
 
             int width = (int)Textures.font_texture.MeasureString(Text).X + 25;
@@ -209,6 +209,5 @@ namespace thegame
             y = 80 + y;
 
         }
-    
     }
 }

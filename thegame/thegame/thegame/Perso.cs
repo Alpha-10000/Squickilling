@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Threading;
+using Lidgren.Network;
 
 namespace thegame
 {
@@ -66,6 +67,8 @@ namespace thegame
 
         private bool jumping;
 
+        public NetConnection Connection { get; set; }
+
         public Perso(Vector2 pos, CharacType typePerso)
         {
             animationPerso = new Animation(positionPerso, new Vector2(8, 2));
@@ -86,6 +89,32 @@ namespace thegame
 
             moveleft = true;
             moveright = true;
+        }
+
+        public Perso(Vector2 pos, CharacType typePerso, NetConnection conn)
+        {
+            animationPerso = new Animation(positionPerso, new Vector2(8, 2));
+            tempCurrentFrame = Vector2.Zero;
+            positionPerso = pos;
+            speed = 120f;
+
+            movedown = true;
+            jumping = false;
+            this.typePerso = typePerso;
+            this.initPos = pos;
+            GravityInit();
+            imagePerso = Textures.mario_texture;
+            animationPerso.AnimationSprite = Textures.mario_texture;
+            animationPerso.Position = positionPerso;
+            hitBoxPerso = new Rectangle((int)(positionPerso.X - imagePerso.Width / 2), (int)(positionPerso.Y - imagePerso.Height / 2), imagePerso.Width, imagePerso.Height);
+            ThrowProjectiles = new Rectangle((int)positionPerso.X, (int)positionPerso.Y, 150, 40);
+
+            moveleft = true;
+            moveright = true;
+            Connection = conn;
+        }
+        public Perso()
+        {
         }
 
         private void GravityInit()
