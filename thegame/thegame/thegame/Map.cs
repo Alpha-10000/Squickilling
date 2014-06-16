@@ -177,8 +177,9 @@ namespace thegame
         public Map(gameState thegamestate, ref Camera cameraClass, bool SoundIs)
         {
             this.thegamestate = thegamestate;
-            this.NewGame(ref cameraClass);
+            
             this.SoundIs = SoundIs;
+            this.NewGame(ref cameraClass);
             PauseButton = new Button("P / Pause", 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
             HelpButton = new Button("H / Help", 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
            
@@ -191,9 +192,6 @@ namespace thegame
             int[] IAtile;
             themapstate = MapState.game;
 
-
-            if(instancesound != null)
-                instancesound.Stop();
 
             if (thegamestate == gameState.AutumnLevel)
             {
@@ -584,6 +582,8 @@ namespace thegame
 
             if (Developpermode)
             {
+                if (SoundIs && instancesound != null)
+                    instancesound.Stop();
                 // Lorsque l'on appuie sur les touches 1, 2, 3, ou 4 on change de niveau
                 if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
                 {
@@ -631,6 +631,9 @@ namespace thegame
                     NewGame(ref cameraClass);
                 }
             }
+
+            if (SoundIs) instancesound.Play();
+            
         }
 
         public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)

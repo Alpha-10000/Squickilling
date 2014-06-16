@@ -176,9 +176,7 @@ namespace thegame
 
            
 
-            if (curGameMode == instances_type.Game &&!CheckSound)
-                instancesoundMenu.Stop();
-            else instancesound.Stop();
+          
 
                 if (curGameMode == instances_type.Menu)// MENU
                 {
@@ -452,7 +450,7 @@ namespace thegame
                     }
                 }
 
-                if (!Developpermode && SoundIs) instancesound.Play();
+                
 
                 
 
