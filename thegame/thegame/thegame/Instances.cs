@@ -456,6 +456,14 @@ namespace thegame
                     }
                 }
                 if (!Developpermode && SoundIs) instancesound.Play();
+
+                if (MultiplayerLogin.created)
+                {
+                    //this.selected = gameState.AutumnLevel;
+                    //curGameMode = instances_type.Game;
+                    //thecurrentmap = new Map(selected, ref cameraClass);
+                    
+                }
         }
 
         /* END OF THE GAME CODE */

@@ -71,15 +71,14 @@ namespace thegame
 
             // Start the timer
             update.Start();
-
         }
-
-
         public void Update()
         {
             // Just loop this like madman
             GetInputAndSendItToServer();
         }
+
+
 
         /// <summary>
         /// Every 50ms this is fired
