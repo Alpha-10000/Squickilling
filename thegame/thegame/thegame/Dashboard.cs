@@ -304,23 +304,23 @@ namespace thegame
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Join a game", AlignType.MiddleCenter, new Rectangle(xCircle - radius, yBottomCircle - radius, radius * 2, radius * 2));
 
             /* MY FRIENDS */
-            sb.Draw(Textures.hitbox, titlefriends, Color.Beige);
-            Tools.DisplayBorder(sb, Color.Black, titlefriends, 4);
-            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Online friends", AlignType.MiddleCenter, new Rectangle(titlefriends.X, titlefriends.Y, titlefriends.Width / 2, titlefriends.Height));
-            sb.Draw(Textures.hitbox, contentfriends, Color.Beige);
-            Tools.DisplayBorder(sb, Color.Black, contentfriends, 4);
+            sb.Draw(Textures.hitbox, titlefriends, Color.Black * 0.4f);
+            Tools.DisplayBorder(sb, Color.White, titlefriends, 2);
+            Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Online friends", AlignType.MiddleCenter, new Rectangle(titlefriends.X, titlefriends.Y, titlefriends.Width / 2, titlefriends.Height));
+            sb.Draw(Textures.hitbox, contentfriends, Color.Black * 0.4f);
+            Tools.DisplayBorder(sb, Color.White, contentfriends, 2);
 
-            if (myfriendslist != null)
+            if (myfriendslist != null && myfriendslist.Count > 0)
                 for (int i = 0; i < myfriendslist.Count; i++)
-                    Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, myfriendslist[i]["name"] + " : " + myfriendslist[i]["status"], AlignType.MiddleCenter, new Rectangle(contentfriends.X, contentfriends.Y + i * 40, contentfriends.Width, 40));
+                    Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, myfriendslist[i]["name"] + " : " + myfriendslist[i]["status"], AlignType.MiddleCenter, new Rectangle(contentfriends.X, contentfriends.Y + i * 40, contentfriends.Width, 40));
             else
-                Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "No friends are online", AlignType.MiddleCenter, new Rectangle(contentfriends.X, contentfriends.Y + 40, contentfriends.Width, 40));
+                Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "No friends are online", AlignType.MiddleCenter, new Rectangle(contentfriends.X, contentfriends.Y + 40, contentfriends.Width, 40));
             /* INVITATIONS */
-            sb.Draw(Textures.hitbox, titleinvitation, Color.Beige);
-            Tools.DisplayBorder(sb, Color.Black, titleinvitation, 4);
-            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Invitations", AlignType.MiddleCenter, titleinvitation);
-            sb.Draw(Textures.hitbox, contentinvitation, Color.Beige);
-            Tools.DisplayBorder(sb, Color.Black, contentinvitation, 4);
+            sb.Draw(Textures.hitbox, titleinvitation, Color.Black * 0.4f);
+            Tools.DisplayBorder(sb, Color.White, titleinvitation, 2);
+            Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Invitations", AlignType.MiddleCenter, new Rectangle(titleinvitation.X, titleinvitation.Y, titleinvitation.Width / 2, titleinvitation.Height));
+            sb.Draw(Textures.hitbox, contentinvitation, Color.Black * 0.4f);
+            Tools.DisplayBorder(sb, Color.White, contentinvitation, 2);
            
                 
 
@@ -328,13 +328,13 @@ namespace thegame
             {
                 for (int i = 0; i < myrequest.Count; i++)
                 {
-                    Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, myrequest[i]["name"], AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y + i * 40, contentinvitation.Width / 2, 40));
+                    Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, myrequest[i]["name"], AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y + i * 40, contentinvitation.Width / 2, 40));
                     InvitationsButtonAccept[i].Display(sb);
                     InvitationsButtonIgnore[i].Display(sb);
                 }
             }
             else
-                Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "No friends request", AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y + 40, contentinvitation.Width, 40));
+                Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "No friends request", AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y + 40, contentinvitation.Width, 40));
 
             searchFriendButton.Display(sb);
             back_main_menu.Display(sb);

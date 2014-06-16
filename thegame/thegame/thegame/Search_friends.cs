@@ -12,7 +12,7 @@ namespace thegame
 {
     class Search_friends
     {
-        private Rectangle go_back = new Rectangle(600, 20, 600, 40);
+        private Button go_back;
         public bool goback = false;
 
         /* Content create */
@@ -31,8 +31,8 @@ namespace thegame
 
         public Search_friends()
         {
-            essai_textbox = new Textbox(50, 50, 200, 40);
-
+            essai_textbox = new Textbox(400, 130, 200, 40);
+            go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
         }
 
         public void Update(GameTime gametime)
@@ -40,8 +40,8 @@ namespace thegame
             essai_textbox.Update(gametime);
             if (essai_textbox.text != "" && essai_textbox.HasJustType)
                 finish = true;
-
-            if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()))
+            go_back.Update();
+            if (go_back.Clicked)
                 goback = true;
 
             for (int i = 0; i < ResultButton.Count; i++)
@@ -110,7 +110,7 @@ namespace thegame
                     {
                         if (ValueList[i]["relation"] == "Add friend")
                         {
-                            ResultButton.Add(new Button("Add friend", contentcreate.X + 300, contentcreate.Y + 50 + i * 50, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                            ResultButton.Add(new Button("Add friend", contentcreate.X + 345, contentcreate.Y + 80 + i * 50, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                             ResultIdAddFriend.Add(ValueList[i]["id"]);
                         }
                         else
@@ -176,31 +176,27 @@ namespace thegame
             else
                 sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 40, Game1.graphics.PreferredBackBufferHeight + 5), Color.White);
 
-            sb.DrawString(Textures.font_texture, "Go back", new Vector2(go_back.X, go_back.Y), Color.White);
 
-            sb.Draw(Textures.hitbox, titlecreate, Color.Beige);
-            Tools.DisplayBorder(sb, Color.Black, titlecreate, 4);
-            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Search people", AlignType.MiddleCenter, titlecreate);
-            sb.Draw(Textures.hitbox, contentcreate, Color.Beige);
-            Tools.DisplayBorder(sb, Color.Black, contentcreate, 4);
-            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Results", AlignType.MiddleCenter, new Rectangle(contentcreate.X, contentcreate.Y, contentcreate.Width, 50));
+            sb.Draw(Textures.hitbox, contentcreate, Color.Black * 0.4f);
+            Tools.DisplayBorder(sb, Color.White, contentcreate, 2);
+            Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Search people : ", AlignType.MiddleCenter, new Rectangle(contentcreate.X, contentcreate.Y, contentcreate.Width / 2, 50));
 
 
             if (getFriends != null)
                 for (int i = 0; i < getFriends.Count; i++)
                 {
-                    Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, getFriends[i]["name"], AlignType.MiddleCenter, new Rectangle(contentcreate.X + 100, contentcreate.Y + 50 + i * 50, 100, 50));
+                    Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, getFriends[i]["name"], AlignType.MiddleCenter, new Rectangle(contentcreate.X + 100, contentcreate.Y + 80 + i * 50, 100, 50));
                         if (ResultButton[i] != null)
                             ResultButton[i].Display(sb);
                         else
-                            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, getFriends[i]["relation"], AlignType.MiddleCenter, new Rectangle(contentcreate.X + 300, contentcreate.Y + 50 + i * 50, 200, 40));
+                            Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, getFriends[i]["relation"], AlignType.MiddleCenter, new Rectangle(contentcreate.X + 300, contentcreate.Y + 80 + i * 50, 200, 40));
                 }
 
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Create game", AlignType.MiddleCenter, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, 50));
 
             if (popup != null)
                 popup.Display(sb);
-
+            go_back.Display(sb);
             essai_textbox.Display(sb, false);
             sb.End();
         }
