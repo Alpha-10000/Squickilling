@@ -12,7 +12,7 @@ namespace thegame
 {
     class Create_game
     {
-        private Rectangle go_back = new Rectangle(600, 20, 600, 40);
+        private Button go_back;
         public bool goback = false;
 
         /* Content create */
@@ -30,7 +30,7 @@ namespace thegame
         public Create_game()
         {
             essai_textbox = new Textbox(400, 75, 200, 40);
-
+            go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
         }
 
         public void Update(GameTime gametime)
@@ -39,7 +39,8 @@ namespace thegame
             if (essai_textbox.text != "" && essai_textbox.HasJustType)
                 finish = true;
 
-            if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()))
+            go_back.Update();
+            if (go_back.Clicked)
                 goback = true;
         
             if (popup != null)
@@ -100,7 +101,7 @@ namespace thegame
                     getFriends = ValueList;
 
                     for (int i = 0; i < ValueList.Count; i++)
-                        inviteButtonList.Add(new Button("Invite", contentcreate.X + 300, contentcreate.Y + 50 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                        inviteButtonList.Add(new Button("Invite", contentcreate.X + 300, contentcreate.Y + 56 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                 }
             }
             catch
@@ -120,7 +121,7 @@ namespace thegame
             else
                 sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 40, Game1.graphics.PreferredBackBufferHeight + 5), Color.White);
 
-            sb.DrawString(Textures.font_texture, "Go back", new Vector2(go_back.X, go_back.Y), Color.White);
+            go_back.Display(sb);
 
             sb.Draw(Textures.hitbox, contentcreate, Color.Black * 0.4f);
             Tools.DisplayBorder(sb, Color.White, contentcreate, 2);

@@ -9,7 +9,7 @@ namespace thegame
 {
     class Join_game
     {
-        private Rectangle go_back = new Rectangle(600, 20, 600, 40);
+        private Button go_back;
         public bool goback = false;
 
 
@@ -20,10 +20,15 @@ namespace thegame
 
         private Popup popup;
 
+        public Join_game()
+        {
+            go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+        }
 
         public void Update(GameTime gametime)
         {
-            if ((go_back.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick()) || Inputs.isKeyRelease(Microsoft.Xna.Framework.Input.Keys.Back))
+            go_back.Update();
+            if (go_back.Clicked)
                 goback = true;
 
             for (int i = 0; i <= 2; i++)
@@ -48,7 +53,7 @@ namespace thegame
             else
                 sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 40, Game1.graphics.PreferredBackBufferHeight + 5), Color.White);
 
-            sb.DrawString(Textures.font_texture, "Go back", new Vector2(go_back.X, go_back.Y), Color.White);
+            go_back.Display(sb);
 
             sb.Draw(Textures.hitbox, titlejoin, Color.Beige);
             Tools.DisplayBorder(sb, Color.Black, titlejoin, 4);
