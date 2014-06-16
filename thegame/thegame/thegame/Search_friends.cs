@@ -110,7 +110,7 @@ namespace thegame
                     {
                         if (ValueList[i]["relation"] == "Add friend")
                         {
-                            ResultButton.Add(new Button("Add friend", contentcreate.X + 300, contentcreate.Y + 50 + i * 50, Textures.font_texture));
+                            ResultButton.Add(new Button("Add friend", contentcreate.X + 300, contentcreate.Y + 50 + i * 50, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                             ResultIdAddFriend.Add(ValueList[i]["id"]);
                         }
                         else

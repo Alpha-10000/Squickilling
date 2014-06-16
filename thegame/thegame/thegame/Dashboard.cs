@@ -14,7 +14,7 @@ namespace thegame
 
     class Dashboard
     {
-        private Rectangle back_main_menu = new Rectangle(600, 20, 600, 40);
+        private Button back_main_menu;
         public bool mainmenu = false;
 
         //for friends lists request
@@ -59,12 +59,14 @@ namespace thegame
         {
             TimeIntervalRequest = TimeInterval;
             TimeIntervalRequest2 = TimeInterval2;
-            searchFriendButton = new Button("Search Friend", 600, 76, Textures.font_texture);
+            searchFriendButton = new Button("Search Friend", 551, 83, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15));
+            back_main_menu = new Button("Back to the menu", 580, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
         }
 
         public void Update(GameTime gametime)
         {
-            if (back_main_menu.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
+            back_main_menu.Update();
+            if (back_main_menu.Clicked)
                 mainmenu = true;
             Point themouse = Inputs.getMousePoint();
 
@@ -234,8 +236,8 @@ namespace thegame
 
                     for (int i = 0; i < myrequest.Count; i++)
                     {
-                        InvitationsButtonAccept.Add(new Button("Accept", contentinvitation.X + 150, contentinvitation.Y + i * 40, Textures.font_texture));
-                        InvitationsButtonIgnore.Add(new Button("Ignore", contentinvitation.X + 300, contentinvitation.Y + i * 40, Textures.font_texture));
+                        InvitationsButtonAccept.Add(new Button("Accept", contentinvitation.X + 150, contentinvitation.Y + i * 40, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                        InvitationsButtonIgnore.Add(new Button("Ignore", contentinvitation.X + 300, contentinvitation.Y + i * 40, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                         Invitationsid.Add(myrequest[i]["id"]);
 
                     }
@@ -292,7 +294,6 @@ namespace thegame
             else
                 sb.Draw(Textures.menu_main_page, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth + 40, Game1.graphics.PreferredBackBufferHeight + 5), Color.White);
 
-            sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.White);
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "WELCOME " + Session.session_name, AlignType.MiddleCenter, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, 50));
 
             /* Circles */
@@ -305,7 +306,7 @@ namespace thegame
             /* MY FRIENDS */
             sb.Draw(Textures.hitbox, titlefriends, Color.Beige);
             Tools.DisplayBorder(sb, Color.Black, titlefriends, 4);
-            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Online friends", AlignType.MiddleCenter, titlefriends);
+            Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "Online friends", AlignType.MiddleCenter, new Rectangle(titlefriends.X, titlefriends.Y, titlefriends.Width / 2, titlefriends.Height));
             sb.Draw(Textures.hitbox, contentfriends, Color.Beige);
             Tools.DisplayBorder(sb, Color.Black, contentfriends, 4);
 
@@ -336,6 +337,7 @@ namespace thegame
                 Tools.DisplayAlignedText(sb, Color.Black, Textures.font_texture, "No friends request", AlignType.MiddleCenter, new Rectangle(contentinvitation.X, contentinvitation.Y + 40, contentinvitation.Width, 40));
 
             searchFriendButton.Display(sb);
+            back_main_menu.Display(sb);
             sb.End();
 
             
