@@ -47,10 +47,10 @@ namespace thegame
         private float AnimatedColor_BottomCircle = 0;
 
         /* Coordonates friends */
-        private Rectangle titlefriends = new Rectangle(400, 77, 380, 50);
-        private Rectangle contentfriends = new Rectangle(400, 123, 380, 150);
-        private Rectangle titleinvitation = new Rectangle(400, 300, 380, 50);
-        private Rectangle contentinvitation = new Rectangle(400, 346, 380, 150);
+        private Rectangle titlefriends = new Rectangle(285, 77, 465, 50);
+        private Rectangle contentfriends = new Rectangle(285, 123, 465, 150);
+        private Rectangle titleinvitation = new Rectangle(285, 300, 465, 50);
+        private Rectangle contentinvitation = new Rectangle(285, 346, 465, 150);
 
         public bool Create_game { get; private set; }
         public bool Join_game { get; private set; }
@@ -59,7 +59,7 @@ namespace thegame
         {
             TimeIntervalRequest = TimeInterval;
             TimeIntervalRequest2 = TimeInterval2;
-            searchFriendButton = new Button("Search Friend", 252, 76, Textures.font_texture);
+            searchFriendButton = new Button("Search Friend", 600, 76, Textures.font_texture);
         }
 
         public void Update(GameTime gametime)
