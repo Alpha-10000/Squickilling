@@ -91,7 +91,7 @@ namespace thegame
                 sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 14, dessine.Y + 4, currentWidth * 2 - 8, currentHeight - 8), Color.Beige);
                 sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y, 4, currentHeight), Color.Black);                               //left
                 sb.Draw(Textures.hitbox, new Rectangle(dessine.X + currentWidth + 6, dessine.Y, 4, currentHeight), Color.Black);                                //right
-                sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y + currentHeight - 4, currentWidth * 2, 4), Color.Black);        //top
+                sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y + currentHeight - 4, currentWidth * 2, 4), Color.Black);        //bottom
                 sb.Draw(Textures.hitbox, new Rectangle(dessine.X - currentWidth + 10, dessine.Y, currentWidth * 2, 4), Color.Black);                            //bottom
             }
 
@@ -205,9 +205,7 @@ namespace thegame
                 if (dessine.Height > currentHeight)
                     currentHeight = dessine.Height;
             }
-
             y = 80 + y;
-
         }
     }
 }

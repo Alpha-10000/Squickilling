@@ -116,7 +116,7 @@ namespace thegame
         private bool drawBloodScreen = false;//variable for the bloodscreen
         private float elapsedTimeBloodScreen = 0;
 
-
+        private Button PauseButton, HelpButton;
 
         private Drawable scoreDisplay;
 
@@ -179,7 +179,8 @@ namespace thegame
             this.thegamestate = thegamestate;
             this.NewGame(ref cameraClass);
             this.SoundIs = SoundIs;
-
+            PauseButton = new Button("P / Pause", 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            HelpButton = new Button("H / Help", 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
            
         }
 
@@ -373,21 +374,16 @@ namespace thegame
                     ParticleScaler = new ParticleScaler(true, 0.1f)
                 }
              );
-       
-
-
-
-          
         }
 
         public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode)
         {
+            // Pause and Help Buttons are created
+            PauseButton.Update();
+            HelpButton.Update();
 
-
-
-
-            // Exit the game
-            if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P)) themapstate = MapState.pause;
+            // Conditions to access the Pause Page
+            if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) themapstate = MapState.pause;
 
             if (thegamestate == gameState.WinterLevel)
             {
@@ -430,7 +426,6 @@ namespace thegame
                 justchange = true;
             }
 
-
             // CHECK IF WE ARE AT THE END OF A LEVEL
             if (theperso.positionPerso.X > 5350)
             {
@@ -450,7 +445,8 @@ namespace thegame
             }
             else if (themapstate == MapState.game)
             {
-                if (Inputs.isKeyRelease(Keys.H) && !justchange)
+                // Displays the Help page according to several conditions
+                if ((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange)
                     themapstate = MapState.help;
 
                 if (Developpermode)
@@ -530,8 +526,6 @@ namespace thegame
                     if (timeElaspedGameOver > 1500)
                         transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
                 }
-
-
             }
             else if (themapstate == MapState.pause)
             {
@@ -750,9 +744,12 @@ namespace thegame
                 //draw text health
                 scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
 
-                //help text
-                scoreDisplay.Draw(sb, Language.Text_Game["_gamePause"], new Vector2(530, 440), Color.Black, "normal");
-                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelp"], new Vector2(530, 468), Color.Black, "normal");
+                //------------------------------------------------------------------
+                // ES 16JUI14
+                // Draws the Pause and Help Buttons on the Underbar
+                //------------------------------------------------------------------
+                PauseButton.Display(sb);
+                HelpButton.Display(sb);
 
                 //Negative health
                 sb.Draw(Textures.healthBar_texture, new Rectangle(0,
