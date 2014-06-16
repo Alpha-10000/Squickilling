@@ -141,6 +141,8 @@ namespace thegame
 
         static public bool isLMBClick() { return curMouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed;}
 
+        static public bool isClickPressed() { return curMouseState.LeftButton == ButtonState.Pressed; }
+
         static public bool isRightClick(){ return curMouseState.RightButton == ButtonState.Released && prevMouseState.RightButton == ButtonState.Pressed; }
     }
 }

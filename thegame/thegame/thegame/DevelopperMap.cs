@@ -139,7 +139,7 @@ namespace thegame
 
             if (bucheSelected && Inputs.isLMBClick())
                 UpdateArray(DrawMouseX, DrawMouseY, 1);
-            if (eraseSelected && Inputs.isLMBClick())
+            if (eraseSelected && Inputs.isClickPressed())
                 UpdateArray(DrawMouseX, DrawMouseY, 0);
             if (bombSelected && Inputs.isLMBClick())
                 UpdateArray(DrawMouseX, DrawMouseY, 3);
