@@ -166,7 +166,7 @@ namespace thegame
 
         private gameState thegamestate;
 
-        private Perso theperso;
+        public Perso theperso;
 
         Texture2D Background, buche_texture, ground_texture;
         Drawable thetree, tree_entrance_inside, tree_entrance, tree_exit_inside, tree_exit, Ground;
@@ -181,13 +181,12 @@ namespace thegame
             this.NewGame(ref cameraClass);
         }
 
-        private void NewGame(ref Camera cameraClass)
+        public void NewGame(ref Camera cameraClass)
         {
             Init_Game(ref cameraClass);
             int[,] thetile;
             int[] IAtile;
             themapstate = MapState.game;
-
             // All the images and objects related to season levels are loaded here
             switch (thegamestate)
             {

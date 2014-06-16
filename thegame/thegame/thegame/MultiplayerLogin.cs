@@ -70,8 +70,8 @@ namespace thegame
         private float transparency = 0;
 
         //temporaire
-        private Rectangle create_game = new Rectangle(200, 425, 150, 40);
-        private Rectangle join_game = new Rectangle(450, 425, 150, 40);
+        private Button create_game = new Button("Create Game", 200, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
+        private Button join_game = new Button("Join Game", 450, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
         Server server;
         Client client;
         public  static bool created;
@@ -286,24 +286,26 @@ namespace thegame
             justExecute = true;
 
             //temp
-            if (create_game.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
+            if(create_game.Clicked)
             {
                 server = new Server();
                 created = true;
             }
             if (server != null)
                 server.Update();
-            if (join_game.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
+            if (join_game.Clicked)
             {
                 try
                 {
-                    client = new Client();
-                    
+                    client = new Client();              
                 }
                 catch { }
             }
             if (client != null)
                 client.Update();
+
+            create_game.Update();
+            join_game.Update();
         }
 
         private void Login()
@@ -345,8 +347,8 @@ namespace thegame
 
             sb.DrawString(Textures.font_texture, "MULTIPLAYER", new Vector2(20, 20), Color.White);
             sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.White);
-            sb.DrawString(Textures.font_texture, "Create Game", new Vector2(create_game.X, create_game.Y), Color.White);
-            sb.DrawString(Textures.font_texture, "Join Game", new Vector2(join_game.X, join_game.Y), Color.White);
+            create_game.Display(sb);
+            join_game.Display(sb);
 
             /* CREATE ACCOUNT FORM */
                 float newColor;

@@ -114,7 +114,7 @@ namespace thegame
         private Search_friends search_friends;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
-        private bool bypassLoginForm = true;
+        private bool bypassLoginForm = false;
 
         Animation blood;
         private bool GoToTheMultiExperiment = false;
@@ -457,13 +457,7 @@ namespace thegame
                 }
                 if (!Developpermode && SoundIs) instancesound.Play();
 
-                if (MultiplayerLogin.created)
-                {
-                    //this.selected = gameState.AutumnLevel;
-                    //curGameMode = instances_type.Game;
-                    //thecurrentmap = new Map(selected, ref cameraClass);
-                    
-                }
+                
         }
 
         /* END OF THE GAME CODE */
@@ -670,6 +664,13 @@ namespace thegame
                     else if (selected == gameState.MultiplayerSearchFriends)
                         search_friends.Display(sb);
 
+                    if (MultiplayerLogin.created)
+                    {
+                        this.curGameMode = instances_type.Game;
+                        this.selected = gameState.AutumnLevel;
+                        MultiplayerLogin.created = false;
+                        Execute();
+                    }
                 }
 
                 if (Developpermode)
