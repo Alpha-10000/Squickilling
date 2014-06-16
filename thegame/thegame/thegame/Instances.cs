@@ -114,7 +114,7 @@ namespace thegame
         private Search_friends search_friends;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
-        private bool bypassLoginForm = true;
+        private bool bypassLoginForm = false;
 
         Animation blood;
         private bool GoToTheMultiExperiment = false;
