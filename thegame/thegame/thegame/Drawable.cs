@@ -54,7 +54,7 @@ namespace thegame
         health,
         Nut,
         Acorn,
-        mine_grey,
+        mine_gray,
         mine_red,
         medecine,
         excavatorArm,
@@ -194,8 +194,8 @@ namespace thegame
                 case drawable_type.health:
                     image = Textures.healthBar_texture;
                     break;
-                case drawable_type.mine_grey:
-                    image = Textures.mine_grey;
+                case drawable_type.mine_gray:
+                    image = Textures.mine_gray;
                     break;
                 case drawable_type.mine_red:
                     image = Textures.mine_red;

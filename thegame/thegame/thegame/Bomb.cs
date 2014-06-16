@@ -14,7 +14,7 @@ namespace thegame
 {
     class Bomb
     {
-        private Drawable mine_grey = new Drawable(drawable_type.mine_grey);
+        private Drawable mine_gray = new Drawable(drawable_type.mine_gray);
         private Drawable mine_red = new Drawable(drawable_type.mine_red);
         Animation animationMine;
 

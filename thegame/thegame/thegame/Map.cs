@@ -381,9 +381,12 @@ namespace thegame
 
         public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode)
         {
-            // Pause and Help Buttons are created
+            //------------------------------------------------------------------
+            // Pause and Help Buttons are created on the Underbar
+            //------------------------------------------------------------------
             PauseButton.Update();
             HelpButton.Update();
+
 
             // Conditions to access the Pause Page
             if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) themapstate = MapState.pause;
@@ -429,7 +432,9 @@ namespace thegame
                 justchange = true;
             }
 
+            //------------------------------------------------------------------
             // CHECK IF WE ARE AT THE END OF A LEVEL
+            //------------------------------------------------------------------
             if (theperso.positionPerso.X > 5350)
             {
                 themapstate = MapState.endlevel;
@@ -471,7 +476,9 @@ namespace thegame
 
                 bool touchedByBomb = false;
 
-                /* CHECK IF CHARACTER CROSS A MINE */
+                //------------------------------------------------------------------
+                // CHECK IF CHARACTER CROSS A MINE
+                //------------------------------------------------------------------
                 foreach (Bomb checkCrossed in bomb)
                 {
                     if (theperso.hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)

@@ -24,9 +24,9 @@ namespace thegame
 
         Rectangle buche = new Rectangle(22, 452, Textures.buche_texture.Width, Textures.buche_texture.Height);
         Rectangle eraser = new Rectangle(722, 452, Textures.eraser.Width, Textures.eraser.Height);
-        Rectangle bomb = new Rectangle(180, 452, 15, 10);
+        Rectangle bomb = new Rectangle(180, 452, Textures.mine_gray.Width, Textures.mine_gray.Height);
         Rectangle objectMap = new Rectangle(250, 452, 10, 10);
-        Rectangle medecine = new Rectangle(280, 452, 15, 10);
+        Rectangle medecine = new Rectangle(280, 452, Textures.medecine.Width, Textures.medecine.Height);
 
         Rectangle Alpha = new Rectangle(409, 470, 59, 25);
         Rectangle Elise = new Rectangle(470, 470, 55, 25);
@@ -51,7 +51,7 @@ namespace thegame
 
         public DevelopperMap(int width, int height)
         {
-            array =  new int[width, height];
+            array = new int[width, height];
             for (int x = 0; x < array.GetLength(1); x++)
                 for (int y = 0; y < array.GetLength(0); y++)
                     array[y, x] = 0;
@@ -84,30 +84,30 @@ namespace thegame
             if (buche.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
                 bucheSelected = true;
-                eraseSelected = bombSelected = objectSelect = medecineSelect= false;
+                eraseSelected = bombSelected = objectSelect = medecineSelect = false;
             }
 
             if (medecine.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
-                bucheSelected = eraseSelected = bombSelected = objectSelect =  false;
+                bucheSelected = eraseSelected = bombSelected = objectSelect = false;
                 medecineSelect = true;
             }
 
             if (eraser.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
-                bucheSelected = bombSelected = objectSelect = medecineSelect=  false;
+                bucheSelected = bombSelected = objectSelect = medecineSelect = false;
                 eraseSelected = true;
             }
 
             if (bomb.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
-                bucheSelected = eraseSelected = objectSelect = medecineSelect=  false;
+                bucheSelected = eraseSelected = objectSelect = medecineSelect = false;
                 bombSelected = true;
             }
 
-            if (objectMap.Contains(Inputs.getMousePoint())  && Inputs.isLMBClick())
+            if (objectMap.Contains(Inputs.getMousePoint()) && Inputs.isLMBClick())
             {
-                bucheSelected = eraseSelected = bombSelected = medecineSelect =  false;
+                bucheSelected = eraseSelected = bombSelected = medecineSelect = false;
                 objectSelect = true;
             }
 
@@ -132,11 +132,9 @@ namespace thegame
                 SendMail();
             }
 
-
-
             if (Inputs.isRightClick())
             {
-                bucheSelected = eraseSelected = bombSelected = objectSelect = medecineSelect =  false;
+                bucheSelected = eraseSelected = bombSelected = objectSelect = medecineSelect = false;
             }
 
             if (bucheSelected && Inputs.isLMBClick())
@@ -208,41 +206,35 @@ namespace thegame
             {
                 showError = true;
             }
-                
-        
-
             showinfoMail = true;
-       
-
         }
 
 
         public void ShowSuccessSendMail(SpriteBatch sb, GameTime gametime)
         {
 
-                if (showinfoMail)
+            if (showinfoMail)
+            {
+                timeElaspedShow += (float)gametime.ElapsedGameTime.TotalSeconds;
+                if (timeElaspedShow < 2)
                 {
-                    timeElaspedShow += (float)gametime.ElapsedGameTime.TotalSeconds;
-                    if (timeElaspedShow < 2)
-                    {
-                        Drawable ecri = new Drawable(drawable_type.font);
-                        if(showError)
-                            ecri.Draw(sb, "Error. Not sent", new Vector2(50, 250), Color.Black, "osef");
-                        else
-                        ecri.Draw(sb, "Successfully sent", new Vector2(50, 250), Color.Black, "osef");
-                    }
+                    Drawable ecri = new Drawable(drawable_type.font);
+                    if (showError)
+                        ecri.Draw(sb, "Error. Not sent", new Vector2(50, 250), Color.Black, "osef");
                     else
-                    {
-                        showinfoMail = showError =  false;
-                        timeElaspedShow = 0;
-                    }
+                        ecri.Draw(sb, "Successfully sent", new Vector2(50, 250), Color.Black, "osef");
                 }
-
+                else
+                {
+                    showinfoMail = showError = false;
+                    timeElaspedShow = 0;
+                }
+            }
         }
 
         public void Display(SpriteBatch sb, GameTime gametime)
         {
-            for(int i = 0; i < array.GetLength(0); i++)
+            for (int i = 0; i < array.GetLength(0); i++)
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
                     if (showGrid)
@@ -253,33 +245,34 @@ namespace thegame
                         sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width, j * Textures.buche_texture.Height - 95 + Textures.buche_texture.Height, Textures.buche_texture.Width, 1), Color.White * 0.5f);
                     }
                     if (array[i, j] == 1)
+                    {
                         sb.Draw(Textures.buche_texture, new Rectangle(i * Textures.buche_texture.Width, j * Textures.buche_texture.Height - 95, Textures.buche_texture.Width, Textures.buche_texture.Height), Color.Wheat);
+                    }
                     else if (array[i, j] == 2)
-                        sb.Draw(Textures.nut_texture, new Rectangle(i * Textures.buche_texture.Width + 50, j * Textures.buche_texture.Height - 86, 10, 10), Color.White);
+                    {
+                        sb.Draw(Textures.acorn_texture, new Rectangle(i * Textures.buche_texture.Width + 50, j * Textures.buche_texture.Height - 86, 10, 10), Color.White);
+                    }
                     else if (array[i, j] == 3)
                     {
-                        int h = (j == array.GetLength(0) - 1) ? 345 : j * Textures.buche_texture.Height - 73;
-                        sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width + 50, h, 15, 10), Color.Gray);
+                        sb.Draw(Textures.mine_gray, new Rectangle(i * Textures.buche_texture.Width + 50, j * Textures.buche_texture.Height - 72, Textures.mine_gray.Width, Textures.mine_gray.Height), Color.White);
                     }
-                    else if (array[i , j] == 4)
+                    else if (array[i, j] == 4)
                     {
-                        int h = (j == array.GetLength(0) - 1) ? 345 : j * Textures.buche_texture.Height - 73;
-                        sb.Draw(Textures.hitbox, new Rectangle(i * Textures.buche_texture.Width + 50, h, 15, 10), Color.Green);
+                        sb.Draw(Textures.medecine, new Rectangle(i * Textures.buche_texture.Width + 50, j * Textures.buche_texture.Height - 81, Textures.medecine.Width, Textures.medecine.Height), Color.White);
                     }
                 }
 
-            if(bucheSelected)
-                sb.Draw(Textures.buche_texture, new Rectangle(DrawMouseX - (Textures.buche_texture.Width / 2), DrawMouseY - (Textures.buche_texture.Height / 2), Textures.buche_texture.Width, Textures.buche_texture.Height) , Color.White);
-            if(eraseSelected)
+            if (bucheSelected)
+                sb.Draw(Textures.buche_texture, new Rectangle(DrawMouseX - (Textures.buche_texture.Width / 2), DrawMouseY - (Textures.buche_texture.Height / 2), Textures.buche_texture.Width, Textures.buche_texture.Height), Color.White);
+            if (eraseSelected)
                 sb.Draw(Textures.eraser, new Rectangle(DrawMouseX - (Textures.eraser.Width / 2), DrawMouseY - (Textures.eraser.Height / 2), Textures.eraser.Width, Textures.eraser.Height), Color.White);
             if (bombSelected)
-                sb.Draw(Textures.hitbox, new Rectangle(DrawMouseX - (15 / 2), DrawMouseY - 5, 15, 10), Color.Gray);
+                sb.Draw(Textures.mine_gray, new Rectangle(DrawMouseX - (Textures.mine_gray.Width / 2), DrawMouseY - (Textures.mine_gray.Height / 2), Textures.mine_gray.Width, Textures.mine_gray.Height), Color.White);
             if (objectSelect)
-                sb.Draw(Textures.nut_texture, new Rectangle(DrawMouseX - (Textures.nut_texture.Width / 2), DrawMouseY - (Textures.nut_texture.Height / 2), Textures.nut_texture.Width, Textures.nut_texture.Height), Color.Gray);
+                sb.Draw(Textures.acorn_texture, new Rectangle(DrawMouseX - (Textures.nut_texture.Width / 2), DrawMouseY - (Textures.nut_texture.Height / 2), Textures.nut_texture.Width, Textures.nut_texture.Height), Color.White);
             if (medecineSelect)
-                sb.Draw(Textures.hitbox, new Rectangle(DrawMouseX - (15 / 2), DrawMouseY - 5, 15, 10), Color.Green);
+                sb.Draw(Textures.medecine, new Rectangle(DrawMouseX - (Textures.medecine.Width / 2), DrawMouseY - (Textures.medecine.Height), Textures.medecine.Width, Textures.medecine.Height), Color.White);
 
-            
 
             ShowSuccessSendMail(sb, gametime);
         }

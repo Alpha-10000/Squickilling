@@ -66,7 +66,7 @@ namespace thegame
         public static Texture2D ButtonRight;
 
         public static Texture2D explosion;
-        public static Texture2D mine_grey;
+        public static Texture2D mine_gray;
         public static Texture2D mine_red;
         public static Texture2D bloodEmitter;
         public static Texture2D medecine;
@@ -135,7 +135,7 @@ namespace thegame
             acorn_texture = cm.Load<Texture2D>(@"Acorn_test2");
             healthBar_texture = cm.Load<Texture2D>(@"HealthBar");
             explosion = cm.Load<Texture2D>(@"explosion-sprite-sheet-i0");
-            mine_grey = cm.Load<Texture2D>(@"Mine_grey");
+            mine_gray = cm.Load<Texture2D>(@"Mine_grey");
             mine_red = cm.Load<Texture2D>(@"Mine_red");
             medecine = cm.Load<Texture2D>(@"Medecine3");
             white_tree = cm.Load<Texture2D>(@"White_Tree");
