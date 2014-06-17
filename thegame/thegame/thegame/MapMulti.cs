@@ -628,23 +628,24 @@ namespace thegame
 
         public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)
         {
-            foreach (Perso p in persos)
-            {
-                if (themapstate == MapState.gameover && playerActivate)
-                    GameOverAnimation(sb, 1);
-                if (themapstate == MapState.endlevel || themapstate == MapState.help)
-                {
-                    sb.Begin();
-                    sb.Draw(Background, Vector2.Zero, Color.White);
-                    sb.Draw(ground_texture, new Vector2(0, 405), Color.White);
-                    sb.Draw(ground_texture, new Vector2(790, 405), Color.White);
-                    sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                    sb.End();
-                }
-                // Displays the end level page
-                if (themapstate == MapState.endlevel)
-                {
 
+            if (themapstate == MapState.gameover && playerActivate)
+                GameOverAnimation(sb, 1);
+            if (themapstate == MapState.endlevel || themapstate == MapState.help)
+            {
+                sb.Begin();
+                sb.Draw(Background, Vector2.Zero, Color.White);
+                sb.Draw(ground_texture, new Vector2(0, 405), Color.White);
+                sb.Draw(ground_texture, new Vector2(790, 405), Color.White);
+                sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                sb.End();
+            }
+
+            // Displays the end level page
+            if (themapstate == MapState.endlevel)
+            {
+                foreach (Perso p in persos)
+                {
                     sb.Begin();
                     scoreDisplay.Draw(sb, Language.Text_Game["congrats"], new Vector2(50, 100), Color.White, "42");
                     scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + p.health, new Vector2(50, 150), Color.White, "osef");
@@ -652,107 +653,112 @@ namespace thegame
                     scoreDisplay.Draw(sb, Language.Text_Game["total"] + (p.score + p.nbNuts * 0.5), new Vector2(50, 250), Color.Red, "42");
                     scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 300), Color.White, "osef");
                     sb.End();
-
                 }
-                // Displays the Help page
-                else if (themapstate == MapState.help)
+
+            }
+            // Displays the Help page
+            else if (themapstate == MapState.help)
+            {
+                sb.Begin();
+                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
+                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
+                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
+                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
+                sb.End();
+            }
+            else if (themapstate == MapState.pause)
+                pauseMenu.Display(sb, thegamestate);
+            else if (themapstate == MapState.game)
+            {
+                sb.Begin();
+                // Makes the background move slower than the camera to create an effect of depth.
+                sb.Draw(Background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                sb.End();
+
+                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+
+                float scale = 1;
+                // Apply what is below only if thetree = summerTree with gameState.SummerLevel
+                //                             thetree = springTreeHarmed with gameState.SpringLevel 
+                if (thegamestate == gameState.SpringLevel)
                 {
-                    sb.Begin();
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
-                    sb.End();
+                    scale = 0.55f;
                 }
-                else if (themapstate == MapState.pause)
-                    pauseMenu.Display(sb, thegamestate);
-                else if (themapstate == MapState.game)
+                tree_entrance.Draw(sb, new Vector2(-100, 10), treeScale);
+                thetree.Draw(sb, new Vector2(500, 0), scale);
+                thetree.Draw(sb, new Vector2(400, 0), scale);
+                thetree.Draw(sb, new Vector2(900, 0), scale);
+                thetree.Draw(sb, new Vector2(1050, 0), scale);
+                thetree.Draw(sb, new Vector2(1400, 0), scale);
+                thetree.Draw(sb, new Vector2(1800, 0), scale);
+                thetree.Draw(sb, new Vector2(2200, 0), scale);
+                thetree.Draw(sb, new Vector2(2400, 0), scale);
+                thetree.Draw(sb, new Vector2(3000, 0), scale);
+                thetree.Draw(sb, new Vector2(3400, 0), scale);
+                thetree.Draw(sb, new Vector2(3900, 0), scale);
+                thetree.Draw(sb, new Vector2(4050, 0), scale);
+                thetree.Draw(sb, new Vector2(4900, 0), scale);
+                if (thegamestate != gameState.SummerLevel) tree_exit.Draw(sb, new Vector2(5200, 10), 0.55f);
+
+
+                // Draw ground image
+                for (int truc = 0; truc < 10; truc++)
+                    Ground.Draw(sb, new Vector2(truc * ground_texture.Width, 355));
+
+                // Draw the platforms
+                foreach (Rectangle top in blocks)
+                    sb.Draw(buche_texture, top, Color.White);
+
+                // Draw the objects
+                foreach (Rectangle dessine in objects)
+                    sb.Draw(Textures.acorn_texture, dessine, Color.White);
+
+                //draw bomb
+                foreach (Bomb dessine in bomb)
+                    dessine.Draw(sb, gameTime);
+
+                foreach (Rectangle dessine in medecines)
+                    sb.Draw(Textures.medecine, dessine, Color.White);
+
+                if (playerActivate)
                 {
-                    sb.Begin();
-                    // Makes the background move slower than the camera to create an effect of depth.
-                    sb.Draw(Background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
-                    sb.End();
-
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-
-                    float scale = 1;
-                    // Apply what is below only if thetree = summerTree with gameState.SummerLevel
-                    //                             thetree = springTreeHarmed with gameState.SpringLevel 
-                    if (thegamestate == gameState.SpringLevel)
-                    {
-                        scale = 0.55f;
-                    }
-                    tree_entrance.Draw(sb, new Vector2(-100, 10), treeScale);
-                    thetree.Draw(sb, new Vector2(500, 0), scale);
-                    thetree.Draw(sb, new Vector2(400, 0), scale);
-                    thetree.Draw(sb, new Vector2(900, 0), scale);
-                    thetree.Draw(sb, new Vector2(1050, 0), scale);
-                    thetree.Draw(sb, new Vector2(1400, 0), scale);
-                    thetree.Draw(sb, new Vector2(1800, 0), scale);
-                    thetree.Draw(sb, new Vector2(2200, 0), scale);
-                    thetree.Draw(sb, new Vector2(2400, 0), scale);
-                    thetree.Draw(sb, new Vector2(3000, 0), scale);
-                    thetree.Draw(sb, new Vector2(3400, 0), scale);
-                    thetree.Draw(sb, new Vector2(3900, 0), scale);
-                    thetree.Draw(sb, new Vector2(4050, 0), scale);
-                    thetree.Draw(sb, new Vector2(4900, 0), scale);
-                    if (thegamestate != gameState.SummerLevel) tree_exit.Draw(sb, new Vector2(5200, 10), 0.55f);
+                    //Draw all players
+                    foreach (Perso p in persos)
+                        p.Draw(sb, gameTime);
+                }
 
 
-                    // Draw ground image
-                    for (int truc = 0; truc < 10; truc++)
-                        Ground.Draw(sb, new Vector2(truc * ground_texture.Width, 355));
+                // Draw IA characters
+                foreach (Perso iathings in iaPerso)
+                    iathings.Draw(sb, gameTime);
 
-                    // Draw the platforms
-                    foreach (Rectangle top in blocks)
-                        sb.Draw(buche_texture, top, Color.White);
-
-                    // Draw the objects
-                    foreach (Rectangle dessine in objects)
-                        sb.Draw(Textures.acorn_texture, dessine, Color.White);
-
-                    //draw bomb
-                    foreach (Bomb dessine in bomb)
-                        dessine.Draw(sb, gameTime);
-
-                    foreach (Rectangle dessine in medecines)
-                        sb.Draw(Textures.medecine, dessine, Color.White);
-
-                    if (playerActivate)
-                    {
-                        //Draw all players
-                            p.Draw(sb, gameTime);
-                    }
-
-
-                    // Draw IA characters
-                    foreach (Perso iathings in iaPerso)
-                        iathings.Draw(sb, gameTime);
-
-                    //------------------------------------------------------------------
-                    // ES 15APR14
-                    // Draw foreground tree so that squirrel appears to enter the hole
-                    //------------------------------------------------------------------
-                    tree_entrance_inside.Draw(sb, new Vector2(-100, 10), treeScale);
-                    if (thegamestate != gameState.SummerLevel) tree_exit_inside.Draw(sb, new Vector2(5200, 10), 0.55f);
+                //------------------------------------------------------------------
+                // ES 15APR14
+                // Draw foreground tree so that squirrel appears to enter the hole
+                //------------------------------------------------------------------
+                tree_entrance_inside.Draw(sb, new Vector2(-100, 10), treeScale);
+                if (thegamestate != gameState.SummerLevel) tree_exit_inside.Draw(sb, new Vector2(5200, 10), 0.55f);
 
 
 
-                    sb.End();
+                sb.End();
 
-                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                    Bloodscreen(gameTime, sb, cameraClass.Position, cameraClass);
-                    sb.End();
-                    sb.Begin();
-                    sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);//draw panel life + bonus + help + pause
+                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                Bloodscreen(gameTime, sb, cameraClass.Position, cameraClass);
+                sb.End();
+                sb.Begin();
+                sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);//draw panel life + bonus + help + pause
 
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + p.score, new Vector2(137, 487), Color.Black, "normal");
+                for (int i = 0; i < persos.Count; i++)
+                {
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + persos[i].score, new Vector2(137 + Pow(i + 1, 5) + (50 * i), 487), Color.Black, "normal");
 
                     // this display the number of nuts that the perso has. 
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + p.nbNuts, new Vector2(17, 487), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + persos[i].nbNuts, new Vector2(17 + Pow(i + 1, 5) + (50 * i), 487), Color.Black, "normal");
 
                     //draw text health
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + p.health + "/20", new Vector2(63, 425), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + persos[i].health + "/20", new Vector2(63 + Pow(i + 1, 5) + (50 * i), 425), Color.Black, "normal");
+
 
                     //------------------------------------------------------------------
                     // ES 16JUI14
@@ -762,24 +768,35 @@ namespace thegame
                     HelpButton.Display(sb);
 
                     //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (50 * i),
+                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0 + Pow(i + 1, 5) + (50 * i), 31,
                         Textures.healthBar_texture.Width, 28), Color.Gray);
                     //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                        450, (int)(Textures.healthBar_texture.Width * (double)p.health / 20f),
-                        28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (50 * i),
+                        450, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 20f),
+                        28), new Rectangle(0 + Pow(i + 1, 5) + (50 * i), 31, Textures.healthBar_texture.Width, 44), Color.Red);
                     //healthBar bounds
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (50 * i),
                         450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
                         Textures.healthBar_texture.Width, 28), Color.White);
-
-                    sb.End();
-
-                    if (!playerActivate && timeElaspedGameOver > 1500)
-                        GameOverAnimation(sb, transparencyAnimation);
                 }
+
+                sb.End();
+
+                if (!playerActivate && timeElaspedGameOver > 1500)
+                    GameOverAnimation(sb, transparencyAnimation);
             }
+
+        }
+
+        private int Pow(int i, int n)
+        {
+            int pow = 1;
+            for (int j = 0; j < n; j++)
+            {
+                pow += pow * i;
+            }
+            return pow;
         }
 
         private void GameOverAnimation(SpriteBatch sb, float transparency)
