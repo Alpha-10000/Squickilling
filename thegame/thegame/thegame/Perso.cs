@@ -71,7 +71,7 @@ namespace thegame
 
         public Perso(Vector2 pos, CharacType typePerso)
         {
-            animationPerso = new Animation(positionPerso, new Vector2(8, 2));
+            animationPerso = new Animation(positionPerso, new Vector2(4, 2));
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
             speed = 120f;
@@ -156,7 +156,7 @@ namespace thegame
             }
             else
             {
-                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y + 5);
+                positionNoix = new Vector2(positionPerso.X + 50, positionPerso.Y + 7);
                 directionNoix = new Vector2(1, 0);
             }
 
