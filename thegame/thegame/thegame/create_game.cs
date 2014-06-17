@@ -23,14 +23,19 @@ namespace thegame
         private string error;
         private List<Dictionary<string, string>> getFriends;
         private List<Button> inviteButtonList = new List<Button>();
+        private List<string> ListOfId = new List<string>();
         private Popup popup;
+        private List<bool> alreadysent = new List<bool>();
 
+        private List<Button> TheInvitedCancelButton = new List<Button>();
+        private List<Dictionary<string, string>> getInvitations;
         private Textbox essai_textbox;
 
         public Create_game()
         {
             essai_textbox = new Textbox(400, 75, 200, 40);
             go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            InvitedBox();
         }
 
         public void Update(GameTime gametime)
@@ -50,17 +55,31 @@ namespace thegame
                     popup = null;
             }
 
-            GetFriends(gametime);
+            GetFriends();
             if (getFriends != null)
                 for (int i = 0; i < getFriends.Count; i++)
                 {
                     inviteButtonList[i].Update();
-                    if(inviteButtonList[i].Clicked)
-                        popup = new Popup("OK", "", "Information", new string[] { "We are developping the functionnality" }, Textures.font_texture, 450);
+                    if (inviteButtonList[i].Clicked)
+                        if (!alreadysent[i])
+                            GetInvitations(ListOfId[i]);
+                        else
+                            CancelInvitation(getFriends[i]["id"]);
                 }
+
+            if (getInvitations != null)
+            {
+                for (int i = 0; i < getInvitations.Count; i++)
+                {
+                    TheInvitedCancelButton[i].Update();
+                    if (TheInvitedCancelButton[i].Clicked)
+                        CancelInvitation(getInvitations[i]["id"]);
+
+                }
+            }
         }
 
-        private void GetFriends(GameTime gametime)
+        private void GetFriends()
         {
 
             if (finish)
@@ -100,8 +119,144 @@ namespace thegame
                     List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
                     getFriends = ValueList;
 
+                    alreadysent = new List<bool>();
+                    inviteButtonList = new List<Button>();
+                    ListOfId = new List<string>();
                     for (int i = 0; i < ValueList.Count; i++)
-                        inviteButtonList.Add(new Button("Invite", contentcreate.X + 300, contentcreate.Y + 56 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                    {
+                        if (ValueList[i]["invitation"] == "sent")
+                        {
+                            inviteButtonList.Add(new Button("Cancel invitation", contentcreate.X + 290, contentcreate.Y + 56 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                            alreadysent.Add(true);
+                        }
+                        else
+                        {
+                            inviteButtonList.Add(new Button("Invite", contentcreate.X + 290, contentcreate.Y + 56 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                            alreadysent.Add(false);
+                        }
+                        ListOfId.Add(ValueList[i]["id"]);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void GetInvitations(string otherid)
+        {
+                try
+                {
+                    WebClient wb = new WebClient();
+                    var data = new NameValueCollection();
+                    wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted2);
+                    data["pwd"] = Session.session_password;
+                    data["id"] = Session.session_id;
+                    data["otherid"] = otherid;
+                    wb.UploadValuesAsync(new Uri("http://squickilling.com/json/push_invitation.php"), "POST", data);
+                }
+                catch
+                {
+                    //TODO
+                }
+        }
+
+        void client_UploadFileCompleted2(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+
+                if (e.Result != null)
+                {
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
+                    popup = new Popup("OK", "", "Information", new string[] { text }, Textures.font_texture, 450);
+                    InvitedBox();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void InvitedBox()
+        {
+
+                try
+                {
+                    WebClient wb = new WebClient();
+                    var data = new NameValueCollection();
+                    wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted3);
+                    data["pwd"] = Session.session_password;
+                    data["id"] = Session.session_id;
+                    wb.UploadValuesAsync(new Uri("http://squickilling.com/json/invitations_box.php"), "POST", data);
+                }
+                catch
+                {
+                    //TODO
+                }
+            
+        }
+
+        void client_UploadFileCompleted3(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+
+                if (e.Result != null)
+                {
+                    TheInvitedCancelButton = new List<Button>();
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
+                    Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+                    error = values["error"].ToString();
+                    List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
+                    getInvitations = ValueList;
+
+                    for (int i = 0; i < ValueList.Count; i++)
+                        TheInvitedCancelButton.Add(new Button("Cancel invitation", BottomBox.X + 290, BottomBox.Y + 45 * i + 37, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void CancelInvitation(string otherid)
+        {
+
+            try
+            {
+                WebClient wb = new WebClient();
+                var data = new NameValueCollection();
+                wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted4);
+                data["pwd"] = Session.session_password;
+                data["id"] = Session.session_id;
+                data["otherid"] = otherid;
+                wb.UploadValuesAsync(new Uri("http://squickilling.com/json/cancel_invitation.php"), "POST", data);
+            }
+            catch
+            {
+                //TODO
+            }
+
+        }
+
+        void client_UploadFileCompleted4(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+
+                if (e.Result != null)
+                {
+
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
+                    popup = new Popup("OK", "", "Information", new string[] { text }, Textures.font_texture, 450);
+
+                    InvitedBox();
+                    finish = true;
+                    GetFriends();
                 }
             }
             catch
@@ -131,14 +286,21 @@ namespace thegame
             Tools.DisplayBorder(sb, Color.White,  BottomBox, 2);
 
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Invited friends", AlignType.MiddleCenter, new Rectangle(BottomBox.X, BottomBox.Y, BottomBox.Width / 4, 50));
-            Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, "Nobody has been invited yet", AlignType.MiddleCenter, new Rectangle(BottomBox.X + 25, BottomBox.Y, BottomBox.Width / 3, BottomBox.Height));
+
+            if (getInvitations != null && getInvitations.Count > 0)
+                for (int i = 0; i < getInvitations.Count; i++)
+                {
+                    Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, getInvitations[i]["name"] + " : " + getInvitations[i]["status"], AlignType.MiddleCenter, new Rectangle(BottomBox.X + 25, BottomBox.Y + i * 45 - 35, BottomBox.Width / 3, BottomBox.Height));
+                    TheInvitedCancelButton[i].Display(sb);
+                }
+            else
+                Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, "Nobody has been invited yet", AlignType.MiddleCenter, new Rectangle(BottomBox.X + 25, BottomBox.Y, BottomBox.Width / 3, BottomBox.Height));
 
             if (getFriends != null)
                 for (int i = 0; i < getFriends.Count; i++)
                 {
-                    Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, getFriends[i]["name"] + " : " + getFriends[i]["status"], AlignType.MiddleCenter, new Rectangle(contentcreate.X + 100, contentcreate.Y + 50 + i * 50, 100, 50));
+                    Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, getFriends[i]["name"] + " : " + getFriends[i]["status"], AlignType.MiddleCenter, new Rectangle(contentcreate.X + 100, contentcreate.Y + 50 + i * 50, 80, 50));
                     inviteButtonList[i].Display(sb);
-                    
                 }
 
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Create game", AlignType.MiddleCenter, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, 50));
@@ -146,8 +308,8 @@ namespace thegame
             Tools.DrawCircle(sb, 653, 405, 50, 600, Color.White, 120);
             Tools.DisplayAlignedText(sb, Color.Black, Textures.fonthelp_texture, "Launch Game", AlignType.MiddleCenter, new Rectangle(653 - 50, 405 - 50, 100, 100));
 
-            sb.DrawString(Textures.fonthelp_texture, "Make it public", new Vector2(450, 390), Color.White);
-            sb.Draw(Textures.hitbox, new Rectangle(420, 392, 20, 20), Color.White);
+            //sb.DrawString(Textures.fonthelp_texture, "Make it public", new Vector2(450, 390), Color.White);
+            //sb.Draw(Textures.hitbox, new Rectangle(420, 392, 20, 20), Color.White);
 
             if (popup != null)
                 popup.Display(sb);

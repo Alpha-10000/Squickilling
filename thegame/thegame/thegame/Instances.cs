@@ -116,7 +116,7 @@ namespace thegame
         private Search_friends search_friends;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
-        private bool bypassLoginForm = false;
+        private bool bypassLoginForm = true;
 
         Animation blood;
         private bool GoToTheMultiExperiment = false;
@@ -128,11 +128,7 @@ namespace thegame
             //
             if (bypassLoginForm)//If by pass enter login credentials.
             {
-                Session.session_id = "9";
-                Session.session_isset = true;
-                Session.session_name = "Victor";
-                Session.session_password = "hellohello";
-
+                Session.NewSession("9", "victor.boissiere@gmail.com", "hellohello", "Victor");
             }
             /* LANGAGE PAR DÉFAUT AU CHARGEMENT */
             this.curGameMode = instances_type.Menu;
