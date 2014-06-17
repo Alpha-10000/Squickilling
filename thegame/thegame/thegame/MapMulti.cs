@@ -430,7 +430,7 @@ namespace thegame
             // CHECK IF WE ARE AT THE END OF A LEVEL
             foreach (Perso p in persos)
             {
-                if (p.positionPerso.X < 5350)
+                if (p.positionPerso.X > 5350)
                 {
                     themapstate = MapState.endlevel;
                     if (Inputs.isKeyRelease(Keys.Space))
