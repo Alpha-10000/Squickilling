@@ -144,7 +144,7 @@ namespace thegame
         private int mapSizeY;
 
         private float timeElaspedGameOver = 0;
-        private bool playerActivate = true;
+        //private bool playerActivate = true;
         private float transparencyAnimation = 0;
         public bool pause = false;
         public bool help = false;
@@ -430,7 +430,7 @@ namespace thegame
             // CHECK IF WE ARE AT THE END OF A LEVEL
             foreach (Perso p in persos)
             {
-                if (p.positionPerso.X > 5350)
+                if (p.positionPerso.X < 5350)
                 {
                     themapstate = MapState.endlevel;
                     if (Inputs.isKeyRelease(Keys.Space))
@@ -464,7 +464,7 @@ namespace thegame
                     int checkBlood = 0;
                     foreach (Perso iathings in iaPerso)
                     {
-                        if (playerActivate)
+                        if (!p.gameover)
                             checkBlood += iathings.TryToKill(ref p.health, p.hitBoxPerso, SoundIs);
                         iathings.UpdateIA(gametime, blocks, p.hitBoxPerso);
                     }
@@ -496,7 +496,8 @@ namespace thegame
 
                     bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
-                    if (playerActivate)//player can move
+
+                    if (!p.gameover)//player can move
                     {
                         cameraPos = p.cameraPos;
 
@@ -514,20 +515,31 @@ namespace thegame
                         if (p.health <= 0)
                         {
                             p.health = 0;
-                            playerActivate = drawBloodScreen = false;
+                            p.gameover = true;
+                            drawBloodScreen = false;
                         }
                     }
                     else
                     {
-                        timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
-                        if (timeElaspedGameOver > 2500)
+                        int i = 0;
+                        foreach (Perso p2 in persos)
                         {
-                            timeElaspedGameOver = 0;
-                            playerActivate = true;
-                            themapstate = MapState.gameover;
+                            if (!p2.gameover)
+                                i++;
                         }
-                        if (timeElaspedGameOver > 1500)
-                            transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
+                        if (i == 0)
+                        {
+                            timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
+                            if (timeElaspedGameOver > 2500)
+                            {
+                                timeElaspedGameOver = 0;
+                                foreach (Perso p3 in persos)
+                                    p3.gameover = false;
+                                themapstate = MapState.gameover;
+                            }
+                            if (timeElaspedGameOver > 1500)
+                                transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
+                        }
                     }
                 }
                 else if (themapstate == MapState.pause)
@@ -628,9 +640,9 @@ namespace thegame
 
         public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)
         {
-
-            if (themapstate == MapState.gameover && playerActivate)
-                GameOverAnimation(sb, 1);
+            foreach (Perso p in persos)
+                if (themapstate == MapState.gameover && !p.gameover)
+                    GameOverAnimation(sb, 1);
             if (themapstate == MapState.endlevel || themapstate == MapState.help)
             {
                 sb.Begin();
@@ -649,10 +661,10 @@ namespace thegame
                 scoreDisplay.Draw(sb, Language.Text_Game["congrats"], new Vector2(85, 35), Color.White, "42");
                 for (int i = 0; i < persos.Count; i++)
                 {
-                    scoreDisplay.Draw(sb, Language.Text_Game["player"] + (i + 1), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 120), Color.White, "multi");
-                    scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + persos[i].health, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 150), Color.White, "multi");
-                    scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + persos[i].nbNuts, new Vector2(30 +Pow(i + 1, 5) + (150 * i), 200), Color.White, "multi");
-                    scoreDisplay.Draw(sb, Language.Text_Game["total"] + (persos[i].score + persos[i].nbNuts * 0.5), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 250), Color.Red, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["player"] + "  " + (i + 1), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 120), Color.White, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + persos[i].score, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 190), Color.White, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + persos[i].nbNuts, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 220), Color.White, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["total"] + (persos[i].score + persos[i].nbNuts * 0.5), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 280), Color.OrangeRed, "multi");
                     scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
                 }
                 sb.End();
@@ -722,13 +734,10 @@ namespace thegame
 
                 foreach (Rectangle dessine in medecines)
                     sb.Draw(Textures.medecine, dessine, Color.White);
-
-                if (playerActivate)
-                {
-                    //Draw all players
-                    foreach (Perso p in persos)
+                foreach (Perso p in persos)
+                    if (!p.gameover)
                         p.Draw(sb, gameTime);
-                }
+                //Draw all players
 
 
                 // Draw IA characters
@@ -785,9 +794,9 @@ namespace thegame
                 }
 
                 sb.End();
-
-                if (!playerActivate && timeElaspedGameOver > 1500)
-                    GameOverAnimation(sb, transparencyAnimation);
+                foreach (Perso p in persos)
+                    if (p.gameover && timeElaspedGameOver > 1500)
+                        GameOverAnimation(sb, transparencyAnimation);
             }
 
         }

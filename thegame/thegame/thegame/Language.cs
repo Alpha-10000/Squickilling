@@ -82,7 +82,7 @@ namespace thegame
                                                    {"_gameHelpLine3","Utilisez la barre espace pour tirer"},
                                                    {"_gameHelpLine4","Appuyez sur une touche pour quitter"},
                                                    {"congrats","Fin du niveau, trop badass..."},
-                                                   {"finalScore","Nombre d'ennemis morts : "},
+                                                   {"finalScore","Ennemis morts : "},
                                                    {"finalBonus","Score bonus : "},
                                                    {"total","Total : "},
                                                    {"space","Appuyer sur la touche Espace"},
