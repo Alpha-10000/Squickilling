@@ -70,6 +70,7 @@ namespace thegame
         public SpriteFont _fontTitle;
         public SpriteFont _fonthelp;
         public SpriteFont _normalfont;
+        public SpriteFont _multifont;
 
         public Drawable(drawable_type drawable_t)
         {
@@ -166,6 +167,7 @@ namespace thegame
                     _fontTitle = Textures.fontTitle_texture;
                     _fonthelp = Textures.fonthelp_texture;
                     _normalfont = Textures.fontnormal_texture;
+                    _multifont = Textures.multi;
                     break;
 
                 // Background
@@ -230,6 +232,8 @@ namespace thegame
                 sb.DrawString(_normalfont, text, pos, color);
             else if (Type == "help")
                 sb.DrawString(_fonthelp, text, pos, color);
+            else if (Type == "multi")
+                sb.DrawString(_multifont, text, pos, color);
             else if (Type == "menu")
             {
                 text = text.ToUpper();

@@ -295,11 +295,7 @@ namespace thegame
                 server.Update();
             if (join_game.Clicked)
             {
-                try
-                {
                     client = new Client();              
-                }
-                catch { }
             }
             if (client != null)
                 client.Update();

@@ -81,6 +81,7 @@ namespace thegame
         public static SpriteFont fonthelp_texture;
         public static SpriteFont fontnormal_texture;
         public static SpriteFont font_pause;
+        public static SpriteFont multi;
 
         public static SoundEffect buttonSound_Effect;
         public static SoundEffect gameSound_Effect;
@@ -112,6 +113,7 @@ namespace thegame
             fontTitle_texture = cm.Load<SpriteFont>(@"Title");
             fonthelp_texture = cm.Load<SpriteFont>(@"fontHelp");
             font_pause = cm.Load<SpriteFont>(@"PauseMenuFont");
+            multi = cm.Load<SpriteFont>(@"multi");
 
             // Sounds
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");

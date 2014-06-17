@@ -28,7 +28,7 @@ namespace thegame
             Console.WriteLine("Enter IP To Connect");
 
             // Read Ip to string
-            string hostip = Console.ReadLine();
+            string hostip = "127.0.0.1";
 
             // Create new instance of configs. Parameter is "application Id". It has to be same on client and server.
             NetPeerConfiguration Config = new NetPeerConfiguration("game");
@@ -63,8 +63,6 @@ namespace thegame
             // Set timer to tick every 50ms
             update = new System.Timers.Timer(50);
 
-            // When time has elapsed ( 50ms in this case ), call "update_Elapsed" function
-            update.Elapsed += new System.Timers.ElapsedEventHandler(update_Elapsed);
 
             // Funtion that waits for connection approval info from server
             WaitForStartingInfo();
@@ -76,6 +74,9 @@ namespace thegame
         {
             // Just loop this like madman
             GetInputAndSendItToServer();
+
+            // When time has elapsed ( 50ms in this case ), call "update_Elapsed" function
+            update.Elapsed += new System.Timers.ElapsedEventHandler(update_Elapsed);
         }
 
 

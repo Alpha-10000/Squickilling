@@ -51,6 +51,7 @@ namespace thegame
                                                    {"_btnPlay","Resume"},
                                                    {"_btnMenu","Menu"},
                                                    {"_btnQuit","Exit"},
+                                                   {"player","Player"},
                     
                     };
                     break;
@@ -88,6 +89,7 @@ namespace thegame
                                                    {"_btnPlay", "Reprendre"},
                                                    {"_btnMenu","Menu"},
                                                    {"_btnQuit","Quitter"},
+                                                   {"player","Joueur"},
                     };
                     break;
 
@@ -124,6 +126,7 @@ namespace thegame
                                                    {"_btnPlay","Hervatten"},
                                                    {"_btnMenu","Menu"},
                                                    {"_btnQuit","Afsluiten"},
+                                                   {"player","Player"},
                     };
                     break;
             }

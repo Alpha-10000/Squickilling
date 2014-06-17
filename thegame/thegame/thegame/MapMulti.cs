@@ -644,16 +644,19 @@ namespace thegame
             // Displays the end level page
             if (themapstate == MapState.endlevel)
             {
-                foreach (Perso p in persos)
+
+                sb.Begin();
+                scoreDisplay.Draw(sb, Language.Text_Game["congrats"], new Vector2(85, 35), Color.White, "42");
+                for (int i = 0; i < persos.Count; i++)
                 {
-                    sb.Begin();
-                    scoreDisplay.Draw(sb, Language.Text_Game["congrats"], new Vector2(50, 100), Color.White, "42");
-                    scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + p.health, new Vector2(50, 150), Color.White, "osef");
-                    scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + p.nbNuts, new Vector2(50, 200), Color.White, "osef");
-                    scoreDisplay.Draw(sb, Language.Text_Game["total"] + (p.score + p.nbNuts * 0.5), new Vector2(50, 250), Color.Red, "42");
-                    scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 300), Color.White, "osef");
-                    sb.End();
+                    scoreDisplay.Draw(sb, Language.Text_Game["player"] + (i + 1), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 120), Color.White, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + persos[i].health, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 150), Color.White, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + persos[i].nbNuts, new Vector2(30 +Pow(i + 1, 5) + (150 * i), 200), Color.White, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["total"] + (persos[i].score + persos[i].nbNuts * 0.5), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 250), Color.Red, "multi");
+                    scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
                 }
+                sb.End();
+
 
             }
             // Displays the Help page
@@ -751,13 +754,13 @@ namespace thegame
 
                 for (int i = 0; i < persos.Count; i++)
                 {
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + persos[i].score, new Vector2(137 + Pow(i + 1, 5) + (50 * i), 487), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + persos[i].score, new Vector2(100 + Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
 
                     // this display the number of nuts that the perso has. 
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + persos[i].nbNuts, new Vector2(17 + Pow(i + 1, 5) + (50 * i), 487), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + persos[i].nbNuts, new Vector2(Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
 
                     //draw text health
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + persos[i].health + "/20", new Vector2(63 + Pow(i + 1, 5) + (50 * i), 425), Color.Black, "normal");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + persos[i].health + "/20", new Vector2(25 + Pow(i + 1, 5) + (20 * i), 425), Color.Black, "normal");
 
 
                     //------------------------------------------------------------------
@@ -768,16 +771,16 @@ namespace thegame
                     HelpButton.Display(sb);
 
                     //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (50 * i),
-                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0 + Pow(i + 1, 5) + (50 * i), 31,
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
+                        457, Textures.healthBar_texture.Width / 2, Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 31,
                         Textures.healthBar_texture.Width, 28), Color.Gray);
                     //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (50 * i),
-                        450, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 20f),
-                        28), new Rectangle(0 + Pow(i + 1, 5) + (50 * i), 31, Textures.healthBar_texture.Width, 44), Color.Red);
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
+                        457, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 20f) / 2,
+                        Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 450 + Textures.healthBar_texture.Height / 2, Textures.healthBar_texture.Width, Textures.healthBar_texture.Height / 2), Color.Red);
                     //healthBar bounds
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (50 * i),
-                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
+                        457, Textures.healthBar_texture.Width / 2, Textures.healthBar_texture.Height / 3), new Rectangle(0, 0,
                         Textures.healthBar_texture.Width, 28), Color.White);
                 }
 
