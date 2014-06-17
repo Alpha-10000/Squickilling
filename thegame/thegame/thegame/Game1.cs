@@ -38,7 +38,9 @@ namespace thegame
             height = graphics.PreferredBackBufferHeight;
 
             Map.particleComponent = new ParticleComponent(this);
+            MapMulti.particleComponent = new ParticleComponent(this);
             this.Components.Add(Map.particleComponent);
+            this.Components.Add(MapMulti.particleComponent);
 
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";

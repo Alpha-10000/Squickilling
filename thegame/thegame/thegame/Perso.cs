@@ -18,7 +18,9 @@ namespace thegame
    
     class Perso
     {
-
+        public int score;
+        public int nbNuts;
+        public int health;
         public Vector2 positionPerso, tempCurrentFrame;
         //  Vector2 velocity;
         //  float gravity = 0.1f;
@@ -89,6 +91,9 @@ namespace thegame
 
             moveleft = true;
             moveright = true;
+            health = 20;
+            score = 0;
+            nbNuts = 0;
         }
 
         public Perso(Vector2 pos, CharacType typePerso, NetConnection conn)
@@ -112,6 +117,9 @@ namespace thegame
             moveleft = true;
             moveright = true;
             Connection = conn;
+            health = 20;
+            score = 0;
+            nbNuts = 0;
         }
         public Perso()
         {
@@ -124,7 +132,7 @@ namespace thegame
             Gravity = 0.5f;     // Start falling with this speed
         }
 
-        public void Update(GameTime gametime, List<Rectangle> blocks,  List<Projectile> proj, List<Rectangle> objects, ref int nb_nuts, bool activateDeveloper)
+        public void Update(GameTime gametime, List<Rectangle> blocks,  List<Projectile> proj, List<Rectangle> objects, ref int nbNuts, bool activateDeveloper)
         {
             activateDevelopper = activateDeveloper;
             this.objects = objects;
@@ -170,7 +178,7 @@ namespace thegame
                     if (hitBoxPerso.Intersects(objects[j]))
                     {
                         objects.Remove(objects[j]);
-                        nb_nuts++;
+                        nbNuts++;
                         break;
                     }
 
@@ -380,7 +388,7 @@ namespace thegame
             return checkIA;
         }
 
-        public int TryToKill(ref int Health, Rectangle hitboxPlayer, bool soundIs)
+        public int TryToKill(ref int health, Rectangle hitboxPlayer, bool soundIs)
         {
             /* CHECK PERSO COLLISION WITH PROJECTILES */
             int check = 0;
@@ -388,18 +396,17 @@ namespace thegame
             {
                 if (projIA[i].hitbox.Intersects(hitboxPlayer))
                 {
-                    Health -= 3;
+                    health -= 3;
                     if(soundIs)
                         Textures.gamePunch_Effect.Play();
                     projIA.Remove(projIA[i]);
-                    if (Health == 0)
+                    if (health == 0)
                     {
                         gameover = true;
                         game_over = true;
                     }
                     check++;
                 }
-
             }
 
             return check; // execute blood screen

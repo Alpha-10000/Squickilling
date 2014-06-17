@@ -132,8 +132,6 @@ namespace thegame
 
         private List<Perso> iaPerso = new List<Perso>();
 
-        private int nb_nuts;
-
         private bool SoundIs;       // Set to true to switch the sound (on / off)
         private Drawable tree_autumn_exit;
         private Drawable tree_autumn_exit_inside;
@@ -148,7 +146,6 @@ namespace thegame
         private float timeElaspedGameOver = 0;
         private bool playerActivate = true;
         private float transparencyAnimation = 0;
-        private int Health; //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool help = false;
         public bool endLevel = false;
@@ -161,11 +158,10 @@ namespace thegame
         Random random;
         Emitter testEmitter2;
         bool snow = false;
-        private int score = 0;
 
         private gameState thegamestate;
 
-        public Perso theperso;
+        public List<Perso> persos;
 
         Texture2D Background, buche_texture, ground_texture;
         Drawable thetree, tree_entrance_inside, tree_entrance, tree_exit_inside, tree_exit, Ground;
@@ -294,6 +290,8 @@ namespace thegame
                     break;
             }
 
+
+
             objects = new List<Rectangle>();
             iaPerso = new List<Perso>();
             /* IA CHARACTERS */
@@ -318,7 +316,10 @@ namespace thegame
                     else if (thetile[y, x] == 4)
                         medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, ((y == mapSizeY - 1) ? 345 : y * Textures.buche_texture.Height - 73) - 7, Textures.medecine.Width, Textures.medecine.Height));
 
-            theperso = new Perso(new Vector2(200, 0), CharacType.player);
+            persos = new List<Perso>();
+            persos.Add(new Perso(new Vector2(150, 0), CharacType.player));
+            persos.Add(new Perso(new Vector2(250, 0), CharacType.player));
+
             tree_autumn_exit = new Drawable(drawable_type.tree_autumn_exit);
             tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
             debug = new Drawable(drawable_type.font);
@@ -329,9 +330,6 @@ namespace thegame
         /* EVERYTHING THAT HAS TO BE INITIALIZED AT EACH LEVEL*/
         private void Init_Game(ref Camera cameraClass)
         {
-            score = 0;
-            this.nb_nuts = 0;
-            this.Health = 20;
             drawBloodScreen = false;
             cameraClass.shake = false;
             bomb = new List<Bomb>();
@@ -430,149 +428,151 @@ namespace thegame
             }
 
             // CHECK IF WE ARE AT THE END OF A LEVEL
-            if (theperso.positionPerso.X > 5350)
+            foreach (Perso p in persos)
             {
-                themapstate = MapState.endlevel;
-                if (Inputs.isKeyRelease(Keys.Space))
+                if (p.positionPerso.X > 5350)
                 {
-                    endLevel = false;    // We begin a new level
-
-                    // We switch to the next level
-                    if (thegamestate == gameState.AutumnLevel) thegamestate = gameState.WinterLevel;
-                    else if (thegamestate == gameState.WinterLevel) thegamestate = gameState.SpringLevel;
-                    else if (thegamestate == gameState.SpringLevel) thegamestate = gameState.SummerLevel;
-                    else thegamestate = gameState.AutumnLevel;
-
-                    NewGame(ref cameraClass);
-                }
-            }
-            else if (themapstate == MapState.game)
-            {
-                // Displays the Help page according to several conditions
-                if ((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange)
-                    themapstate = MapState.help;
-
-                if (Developpermode)
-                    Health = 20;
-
-                for (int j = medecines.Count - 1; j >= 0; j--)
-                    if (theperso.hitBoxPerso.Intersects(medecines[j]))
+                    themapstate = MapState.endlevel;
+                    if (Inputs.isKeyRelease(Keys.Space))
                     {
-                        medecines.Remove(medecines[j]);
-                        Health += (Health <= 15) ? 5 : (20 - Health);
-                    }
-                int checkBlood = 0;
-                foreach (Perso iathings in iaPerso)
-                {
-                    if (playerActivate)
-                        checkBlood += iathings.TryToKill(ref Health, theperso.hitBoxPerso, SoundIs);
-                    iathings.UpdateIA(gametime, blocks, theperso.hitBoxPerso);
-                }
+                        endLevel = false;    // We begin a new level
 
-                bool touchedByBomb = false;
+                        // We switch to the next level
+                        if (thegamestate == gameState.AutumnLevel) thegamestate = gameState.WinterLevel;
+                        else if (thegamestate == gameState.WinterLevel) thegamestate = gameState.SpringLevel;
+                        else if (thegamestate == gameState.SpringLevel) thegamestate = gameState.SummerLevel;
+                        else thegamestate = gameState.AutumnLevel;
 
-                /* CHECK IF CHARACTER CROSS A MINE */
-                foreach (Bomb checkCrossed in bomb)
-                {
-                    if (theperso.hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)
-                    {
-                        touchedByBomb = true;
-                        checkCrossed.activateExplosion = true;
-                        drawBloodScreen = true;
-                        if (checkCrossed.checkBlood && SoundIs)
-                            Textures.gameExplosion_Effect.Play();
-                        checkCrossed.BloodOnce(ref Health);
-                        break;
-                    }
-                    if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
-                        drawBloodScreen = true;
-                }
-
-                if (touchedByBomb)//fait clignoter le perso
-                {
-                    theperso.PersoHitted = true;
-                    theperso.compteurHitted = 0;
-                }
-
-                bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
-
-                if (playerActivate)//player can move
-                {
-                    cameraPos = theperso.cameraPos;
-
-                    projectiles = new List<Projectile>();
-                    theperso.Update(gametime, blocks, projectiles, objects, ref nb_nuts, Developpermode);//TODO : remove keyboardState and oldkey because class now
-                    this.objects = theperso.objects;
-                    iaPerso = theperso.CollisionIAProjec(iaPerso, ref score);
-
-                    if (checkBlood > 0)
-                    {
-                        theperso.PersoHitted = drawBloodScreen = true;
-                        theperso.compteurHitted = 0;
-                    }
-
-                    if (Health <= 0)
-                    {
-                        Health = 0;
-                        playerActivate = drawBloodScreen = false;
+                        NewGame(ref cameraClass);
                     }
                 }
-                else
+                else if (themapstate == MapState.game)
                 {
-                    timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
-                    if (timeElaspedGameOver > 2500)
-                    {
-                        timeElaspedGameOver = 0;
-                        playerActivate = true;
-                        themapstate = MapState.gameover;
-                    }
-                    if (timeElaspedGameOver > 1500)
-                        transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
-                }
-            }
-            else if (themapstate == MapState.pause)
-            {
-                if (thegamestate == gameState.WinterLevel)
-                    if (particleComponent.particleEmitterList[0].Active)
-                        particleComponent.particleEmitterList[0].Active = false;
-                if (thegamestate == gameState.AutumnLevel)
-                    if (particleComponent.particleEmitterList[1].Active)
-                        particleComponent.particleEmitterList[1].Active = false;
+                    // Displays the Help page according to several conditions
+                    if ((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange)
+                        themapstate = MapState.help;
 
-                pauseMenu.Update(gametime, SoundIs);
-                if (pauseMenu.IChooseSomething) // OPTION PANNEL
-                {
-                    switch (pauseMenu.selected)
+                    if (Developpermode)
+                        p.health = 20;
+
+                    for (int j = medecines.Count - 1; j >= 0; j--)
+                        if (p.hitBoxPerso.Intersects(medecines[j]))
+                        {
+                            medecines.Remove(medecines[j]);
+                            p.health += (p.health <= 15) ? 5 : (20 - p.health);
+                        }
+                    int checkBlood = 0;
+                    foreach (Perso iathings in iaPerso)
                     {
-                        case 0:
-                            themapstate = MapState.game;
-                            pauseMenu = new PauseMenu();
+                        if (playerActivate)
+                            checkBlood += iathings.TryToKill(ref p.health, p.hitBoxPerso, SoundIs);
+                        iathings.UpdateIA(gametime, blocks, p.hitBoxPerso);
+                    }
+
+                    bool touchedByBomb = false;
+
+                    /* CHECK IF CHARACTER CROSS A MINE */
+                    foreach (Bomb checkCrossed in bomb)
+                    {
+                        if (p.hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)
+                        {
+                            touchedByBomb = true;
+                            checkCrossed.activateExplosion = true;
+                            drawBloodScreen = true;
+                            if (checkCrossed.checkBlood && SoundIs)
+                                Textures.gameExplosion_Effect.Play();
+                            checkCrossed.BloodOnce(ref p.health);
                             break;
-                        case 1:
-                            themapstate = MapState.gobackmenu;
-                            break;
-                        default:
-                            game.Exit();
-                            break;
+                        }
+                        if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
+                            drawBloodScreen = true;
+                    }
+
+                    if (touchedByBomb)//fait clignoter le perso
+                    {
+                        p.PersoHitted = true;
+                        p.compteurHitted = 0;
+                    }
+
+                    bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
+
+                    if (playerActivate)//player can move
+                    {
+                        cameraPos = p.cameraPos;
+
+                        projectiles = new List<Projectile>();
+                        p.Update(gametime, blocks, projectiles, objects, ref p.nbNuts, Developpermode);//TODO : remove keyboardState and oldkey because class now
+                        this.objects = p.objects;
+                        iaPerso = p.CollisionIAProjec(iaPerso, ref p.score);
+
+                        if (checkBlood > 0)
+                        {
+                            p.PersoHitted = drawBloodScreen = true;
+                            p.compteurHitted = 0;
+                        }
+
+                        if (p.health <= 0)
+                        {
+                            p.health = 0;
+                            playerActivate = drawBloodScreen = false;
+                        }
+                    }
+                    else
+                    {
+                        timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
+                        if (timeElaspedGameOver > 2500)
+                        {
+                            timeElaspedGameOver = 0;
+                            playerActivate = true;
+                            themapstate = MapState.gameover;
+                        }
+                        if (timeElaspedGameOver > 1500)
+                            transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
+                    }
+                }
+                else if (themapstate == MapState.pause)
+                {
+                    if (thegamestate == gameState.WinterLevel)
+                        if (particleComponent.particleEmitterList[0].Active)
+                            particleComponent.particleEmitterList[0].Active = false;
+                    if (thegamestate == gameState.AutumnLevel)
+                        if (particleComponent.particleEmitterList[1].Active)
+                            particleComponent.particleEmitterList[1].Active = false;
+
+                    pauseMenu.Update(gametime, SoundIs);
+                    if (pauseMenu.IChooseSomething) // OPTION PANNEL
+                    {
+                        switch (pauseMenu.selected)
+                        {
+                            case 0:
+                                themapstate = MapState.game;
+                                pauseMenu = new PauseMenu();
+                                break;
+                            case 1:
+                                themapstate = MapState.gobackmenu;
+                                break;
+                            default:
+                                game.Exit();
+                                break;
+                        }
+                    }
+                }
+                else if (themapstate == MapState.gameover)
+                {
+                    if (thegamestate == gameState.WinterLevel)
+                    {
+                        if (particleComponent.particleEmitterList[0].Active)
+                            particleComponent.particleEmitterList[0].Active = false;
+                        if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
+                            particleComponent.particleEmitterList[1].Active = false;
+                    }
+                    if (Inputs.isKeyRelease(Keys.Space))
+                    {
+                        themapstate = MapState.game;
+                        NewGame(ref cameraClass);
                     }
                 }
             }
-            else if (themapstate == MapState.gameover)
-            {
-                if (thegamestate == gameState.WinterLevel)
-                {
-                    if (particleComponent.particleEmitterList[0].Active)
-                        particleComponent.particleEmitterList[0].Active = false;
-                    if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
-                        particleComponent.particleEmitterList[1].Active = false;
-                }
-                if (Inputs.isKeyRelease(Keys.Space))
-                {
-                    themapstate = MapState.game;
-                    NewGame(ref cameraClass);
-                }
-            }
-
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
             if (Developpermode)
@@ -628,149 +628,157 @@ namespace thegame
 
         public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)
         {
-
-            if (themapstate == MapState.gameover && playerActivate)
-                GameOverAnimation(sb, 1);
-            if (themapstate == MapState.endlevel || themapstate == MapState.help)
+            foreach (Perso p in persos)
             {
-                sb.Begin();
-                sb.Draw(Background, Vector2.Zero, Color.White);
-                sb.Draw(ground_texture, new Vector2(0, 405), Color.White);
-                sb.Draw(ground_texture, new Vector2(790, 405), Color.White);
-                sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
-                sb.End();
-            }
-            // Displays the end level page
-            if (themapstate == MapState.endlevel)
-            {
-                sb.Begin();
-                scoreDisplay.Draw(sb, Language.Text_Game["congrats"], new Vector2(50, 100), Color.White, "42");
-                scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + score, new Vector2(50, 150), Color.White, "osef");
-                scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + nb_nuts, new Vector2(50, 200), Color.White, "osef");
-                scoreDisplay.Draw(sb, Language.Text_Game["total"] + (score + nb_nuts * 0.5), new Vector2(50, 250), Color.Red, "42");
-                scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 300), Color.White, "osef");
-                sb.End();
-            }
-            // Displays the Help page
-            else if (themapstate == MapState.help)
-            {
-                sb.Begin();
-                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
-                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
-                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
-                scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
-                sb.End();
-            }
-            else if (themapstate == MapState.pause)
-                pauseMenu.Display(sb, thegamestate);
-            else if (themapstate == MapState.game)
-            {
-                sb.Begin();
-                // Makes the background move slower than the camera to create an effect of depth.
-                sb.Draw(Background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
-                sb.End();
-
-                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-
-                float scale = 1;
-                // Apply what is below only if thetree = summerTree with gameState.SummerLevel
-                //                             thetree = springTreeHarmed with gameState.SpringLevel 
-                if (thegamestate == gameState.SpringLevel)
+                if (themapstate == MapState.gameover && playerActivate)
+                    GameOverAnimation(sb, 1);
+                if (themapstate == MapState.endlevel || themapstate == MapState.help)
                 {
-                    scale = 0.55f;
+                    sb.Begin();
+                    sb.Draw(Background, Vector2.Zero, Color.White);
+                    sb.Draw(ground_texture, new Vector2(0, 405), Color.White);
+                    sb.Draw(ground_texture, new Vector2(790, 405), Color.White);
+                    sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
+                    sb.End();
                 }
-                tree_entrance.Draw(sb, new Vector2(-100, 10), treeScale);
-                thetree.Draw(sb, new Vector2(500, 0), scale);
-                thetree.Draw(sb, new Vector2(400, 0), scale);
-                thetree.Draw(sb, new Vector2(900, 0), scale);
-                thetree.Draw(sb, new Vector2(1050, 0), scale);
-                thetree.Draw(sb, new Vector2(1400, 0), scale);
-                thetree.Draw(sb, new Vector2(1800, 0), scale);
-                thetree.Draw(sb, new Vector2(2200, 0), scale);
-                thetree.Draw(sb, new Vector2(2400, 0), scale);
-                thetree.Draw(sb, new Vector2(3000, 0), scale);
-                thetree.Draw(sb, new Vector2(3400, 0), scale);
-                thetree.Draw(sb, new Vector2(3900, 0), scale);
-                thetree.Draw(sb, new Vector2(4050, 0), scale);
-                thetree.Draw(sb, new Vector2(4900, 0), scale);
-                if (thegamestate != gameState.SummerLevel) tree_exit.Draw(sb, new Vector2(5200, 10), 0.55f);
+                // Displays the end level page
+                if (themapstate == MapState.endlevel)
+                {
+
+                    sb.Begin();
+                    scoreDisplay.Draw(sb, Language.Text_Game["congrats"], new Vector2(50, 100), Color.White, "42");
+                    scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + p.health, new Vector2(50, 150), Color.White, "osef");
+                    scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + p.nbNuts, new Vector2(50, 200), Color.White, "osef");
+                    scoreDisplay.Draw(sb, Language.Text_Game["total"] + (p.score + p.nbNuts * 0.5), new Vector2(50, 250), Color.Red, "42");
+                    scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 300), Color.White, "osef");
+                    sb.End();
+
+                }
+                // Displays the Help page
+                else if (themapstate == MapState.help)
+                {
+                    sb.Begin();
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine1"], new Vector2(190, 100), Color.White, "help");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine2"], new Vector2(190, 130), Color.White, "help");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine3"], new Vector2(190, 160), Color.White, "help");
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHelpLine4"], new Vector2(190, 200), Color.White, "help");
+                    sb.End();
+                }
+                else if (themapstate == MapState.pause)
+                    pauseMenu.Display(sb, thegamestate);
+                else if (themapstate == MapState.game)
+                {
+                    sb.Begin();
+                    // Makes the background move slower than the camera to create an effect of depth.
+                    sb.Draw(Background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                    sb.End();
+
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+
+                    float scale = 1;
+                    // Apply what is below only if thetree = summerTree with gameState.SummerLevel
+                    //                             thetree = springTreeHarmed with gameState.SpringLevel 
+                    if (thegamestate == gameState.SpringLevel)
+                    {
+                        scale = 0.55f;
+                    }
+                    tree_entrance.Draw(sb, new Vector2(-100, 10), treeScale);
+                    thetree.Draw(sb, new Vector2(500, 0), scale);
+                    thetree.Draw(sb, new Vector2(400, 0), scale);
+                    thetree.Draw(sb, new Vector2(900, 0), scale);
+                    thetree.Draw(sb, new Vector2(1050, 0), scale);
+                    thetree.Draw(sb, new Vector2(1400, 0), scale);
+                    thetree.Draw(sb, new Vector2(1800, 0), scale);
+                    thetree.Draw(sb, new Vector2(2200, 0), scale);
+                    thetree.Draw(sb, new Vector2(2400, 0), scale);
+                    thetree.Draw(sb, new Vector2(3000, 0), scale);
+                    thetree.Draw(sb, new Vector2(3400, 0), scale);
+                    thetree.Draw(sb, new Vector2(3900, 0), scale);
+                    thetree.Draw(sb, new Vector2(4050, 0), scale);
+                    thetree.Draw(sb, new Vector2(4900, 0), scale);
+                    if (thegamestate != gameState.SummerLevel) tree_exit.Draw(sb, new Vector2(5200, 10), 0.55f);
 
 
-                // Draw ground image
-                for (int truc = 0; truc < 10; truc++)
-                    Ground.Draw(sb, new Vector2(truc * ground_texture.Width, 355));
+                    // Draw ground image
+                    for (int truc = 0; truc < 10; truc++)
+                        Ground.Draw(sb, new Vector2(truc * ground_texture.Width, 355));
 
-                // Draw the platforms
-                foreach (Rectangle top in blocks)
-                    sb.Draw(buche_texture, top, Color.White);
+                    // Draw the platforms
+                    foreach (Rectangle top in blocks)
+                        sb.Draw(buche_texture, top, Color.White);
 
-                // Draw the objects
-                foreach (Rectangle dessine in objects)
-                    sb.Draw(Textures.acorn_texture, dessine, Color.White);
+                    // Draw the objects
+                    foreach (Rectangle dessine in objects)
+                        sb.Draw(Textures.acorn_texture, dessine, Color.White);
 
-                //draw bomb
-                foreach (Bomb dessine in bomb)
-                    dessine.Draw(sb, gameTime);
+                    //draw bomb
+                    foreach (Bomb dessine in bomb)
+                        dessine.Draw(sb, gameTime);
 
-                foreach (Rectangle dessine in medecines)
-                    sb.Draw(Textures.medecine, dessine, Color.White);
+                    foreach (Rectangle dessine in medecines)
+                        sb.Draw(Textures.medecine, dessine, Color.White);
 
-                if (playerActivate)
-                    theperso.Draw(sb, gameTime); /* Should be execute in the Drawable class */
-
-                // Draw IA characters
-                foreach (Perso iathings in iaPerso)
-                    iathings.Draw(sb, gameTime);
-
-                //------------------------------------------------------------------
-                // ES 15APR14
-                // Draw foreground tree so that squirrel appears to enter the hole
-                //------------------------------------------------------------------
-                tree_entrance_inside.Draw(sb, new Vector2(-100, 10), treeScale);
-                if (thegamestate != gameState.SummerLevel) tree_exit_inside.Draw(sb, new Vector2(5200, 10), 0.55f);
+                    if (playerActivate)
+                    {
+                        //Draw all players
+                            p.Draw(sb, gameTime);
+                    }
 
 
+                    // Draw IA characters
+                    foreach (Perso iathings in iaPerso)
+                        iathings.Draw(sb, gameTime);
 
-                sb.End();
+                    //------------------------------------------------------------------
+                    // ES 15APR14
+                    // Draw foreground tree so that squirrel appears to enter the hole
+                    //------------------------------------------------------------------
+                    tree_entrance_inside.Draw(sb, new Vector2(-100, 10), treeScale);
+                    if (thegamestate != gameState.SummerLevel) tree_exit_inside.Draw(sb, new Vector2(5200, 10), 0.55f);
 
-                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
-                Bloodscreen(gameTime, sb, cameraClass.Position, cameraClass);
-                sb.End();
-                sb.Begin();
-                sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);//draw panel life + bonus + help + pause
 
-                scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
 
-                // this display the number of nuts that the perso has. 
-                scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + nb_nuts, new Vector2(17, 487), Color.Black, "normal");
+                    sb.End();
 
-                //draw text health
-                scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + Health + "/20", new Vector2(63, 425), Color.Black, "normal");
+                    sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
+                    Bloodscreen(gameTime, sb, cameraClass.Position, cameraClass);
+                    sb.End();
+                    sb.Begin();
+                    sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);//draw panel life + bonus + help + pause
 
-                //------------------------------------------------------------------
-                // ES 16JUI14
-                // Draws the Pause and Help Buttons on the Underbar
-                //------------------------------------------------------------------
-                PauseButton.Display(sb);
-                HelpButton.Display(sb);
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + p.score, new Vector2(137, 487), Color.Black, "normal");
 
-                //Negative health
-                sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                    450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
-                    Textures.healthBar_texture.Width, 28), Color.Gray);
-                //health left
-                sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                    450, (int)(Textures.healthBar_texture.Width * (double)Health / 20f),
-                    28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
-                //healthBar bounds
-                sb.Draw(Textures.healthBar_texture, new Rectangle(0,
-                    450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
-                    Textures.healthBar_texture.Width, 28), Color.White);
+                    // this display the number of nuts that the perso has. 
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + p.nbNuts, new Vector2(17, 487), Color.Black, "normal");
 
-                sb.End();
+                    //draw text health
+                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + p.health + "/20", new Vector2(63, 425), Color.Black, "normal");
 
-                if (!playerActivate && timeElaspedGameOver > 1500)
-                    GameOverAnimation(sb, transparencyAnimation);
+                    //------------------------------------------------------------------
+                    // ES 16JUI14
+                    // Draws the Pause and Help Buttons on the Underbar
+                    //------------------------------------------------------------------
+                    PauseButton.Display(sb);
+                    HelpButton.Display(sb);
+
+                    //Negative health
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 31,
+                        Textures.healthBar_texture.Width, 28), Color.Gray);
+                    //health left
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                        450, (int)(Textures.healthBar_texture.Width * (double)p.health / 20f),
+                        28), new Rectangle(0, 31, Textures.healthBar_texture.Width, 44), Color.Red);
+                    //healthBar bounds
+                    sb.Draw(Textures.healthBar_texture, new Rectangle(0,
+                        450, Textures.healthBar_texture.Width, 28), new Rectangle(0, 0,
+                        Textures.healthBar_texture.Width, 28), Color.White);
+
+                    sb.End();
+
+                    if (!playerActivate && timeElaspedGameOver > 1500)
+                        GameOverAnimation(sb, transparencyAnimation);
+                }
             }
         }
 
@@ -793,19 +801,21 @@ namespace thegame
             {
                 elapsedTimeBloodScreen += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 cameraClass.shake = true;
-
-                if (elapsedTimeBloodScreen < 50)
+                foreach (Perso p in persos)
                 {
-                    int positionX = (int)theperso.positionPerso.X - 400;
-                    float correction = 0;
-                    if (positionX + 400 >= 5000)
-                        correction = 600;
-                    sb.Draw(Textures.hitbox, new Rectangle(positionX - 20 - (int)correction, -20, 1800, 650), Color.Red * 0.5f);
-                }
-                else
-                {
-                    elapsedTimeBloodScreen = 0;
-                    drawBloodScreen = cameraClass.shake = false;
+                    if (elapsedTimeBloodScreen < 50)
+                    {
+                        int positionX = (int)p.positionPerso.X - 400;
+                        float correction = 0;
+                        if (positionX + 400 >= 5000)
+                            correction = 600;
+                        sb.Draw(Textures.hitbox, new Rectangle(positionX - 20 - (int)correction, -20, 1800, 650), Color.Red * 0.5f);
+                    }
+                    else
+                    {
+                        elapsedTimeBloodScreen = 0;
+                        drawBloodScreen = cameraClass.shake = false;
+                    }
                 }
             }
         }

@@ -158,6 +158,7 @@
     <Compile Include="JsonTextReader.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="MapMulti.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MultiMap.cs" />
     <Compile Include="MultiplayerLogin.cs" />
