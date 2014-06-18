@@ -76,6 +76,7 @@ namespace thegame
         public static Texture2D game_overTexture_en;
         public static Texture2D game_overTexture_fr;
         public static Texture2D game_overTexture_ne;
+
         public static SpriteFont font_texture;
         public static SpriteFont fontTitle_texture;
         public static SpriteFont fonthelp_texture;
@@ -84,7 +85,7 @@ namespace thegame
         public static SpriteFont multi;
 
         public static SoundEffect buttonSound_Effect;
-        public static SoundEffect gameSound_Effect;
+        public static SoundEffect gameSound_EffectAutumn;
         public static SoundEffect gameSound_EffectMenu;
         public static SoundEffect gameSound_EffectWinter;
         public static SoundEffect gameSound_EffectSpring;
@@ -97,7 +98,6 @@ namespace thegame
         public static Texture2D acorn_texture;
         public static Texture2D healthBar_texture;
         public static Texture2D eraser;
-
 
         public static Button btnPlay_Autumn, btnQuit_Autumn, btnMenu_Autumn, btnPlay_Winter, btnQuit_Winter, btnMenu_Winter, btnMute;
 
@@ -117,7 +117,7 @@ namespace thegame
 
             // Sounds
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
-            gameSound_Effect = cm.Load<SoundEffect>("audio\\autumn");
+            gameSound_EffectAutumn = cm.Load<SoundEffect>("audio\\autumn");
             gameSound_EffectWinter = cm.Load<SoundEffect>("audio\\winter");
             gameSound_EffectSpring = cm.Load<SoundEffect>("audio\\Crimson_Fly");
             gameSound_EffectSummer = cm.Load<SoundEffect>("audio\\Echinoderm_Regeneration");

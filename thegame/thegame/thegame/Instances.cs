@@ -67,16 +67,15 @@ namespace thegame
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
-        public gameState selected { get; private set; }       // Selected menu page.
-        public SoundEffect sound { get; private set; }
+        public gameState selected { get; private set; }        // Selected menu page.
+        //public SoundEffect sound { get; private set; }       // USELESS!! 
         public bool CheckSound;
-
 
         private Camera cameraClass = new Camera();
 
 
-        private SoundEffectInstance instancesound;
-        private SoundEffectInstance instancesoundMenu;//sound for the menu
+        //OLDSOUND: private SoundEffectInstance instancesound;
+        //OLDSOUND: private SoundEffectInstance instancesoundMenu;//sound for the menu
         public static Rectangle vidRectangle;
         public static VideoPlayer vidPlayer, vidPlayer2;
 
@@ -121,6 +120,8 @@ namespace thegame
         Animation blood;
         private bool GoToTheMultiExperiment = false;
 
+        private SoundEffectInstance CurrentBKSound;               // The currentBKSound;
+
         public Instances(Game1 game)
         {
 
@@ -134,11 +135,11 @@ namespace thegame
             this.curGameMode = instances_type.Menu;
             this.selected = 0;
 
-            instancesound = Textures.gameSound_Effect.CreateInstance();
-            instancesound.IsLooped = true;
+            //OLDSOUND: instancesound = Textures.gameSound_EffectAutumn.CreateInstance();
+            //OLDSOUND: instancesound.IsLooped = true;
 
-            instancesoundMenu = Textures.gameSound_EffectMenu.CreateInstance();
-            instancesoundMenu.IsLooped = true;
+            //OLDSOUND: instancesoundMenu = Textures.gameSound_EffectMenu.CreateInstance();
+            //OLDSOUND: instancesoundMenu.IsLooped = true;
 
             blood = new Animation(new Vector2(100, 100), new Vector2(2, 3));
             blood.AnimationSprite = Textures.bloodEmitter;
@@ -167,14 +168,9 @@ namespace thegame
             if (this.selected == gameState.MainMenu && !CheckSound)
             {
                 SoundIs = true;
-                instancesound.Stop();
-                instancesoundMenu.Play();
+                //OLDSOUND: instancesound.Stop();
+                //OLDSOUND: instancesoundMenu.Play();
             }
-
-
-
-
-
 
             if (curGameMode == instances_type.Menu)// MENU
             {
@@ -185,14 +181,15 @@ namespace thegame
             {
                 switch ((execute as Menu).selected)
                 {
-                    case 0:
+                    case 0:             // Jouer
                         (execute as Menu).MenuBool = false;
                         this.curGameMode = instances_type.Game;
-                        instancesoundMenu.Stop();
+                        //OLDSOUND: instancesoundMenu.Stop();
                         this.selected = gameState.AutumnLevel;
+                        //PlayBackGroundSound("Autumn");
                         Execute();
                         break;
-                    case 1:
+                    case 1:             // Multi
                         if (Session.session_isset || bypassLoginForm)
                         {
                             selected = gameState.MutilplayerDashboard;
@@ -212,56 +209,62 @@ namespace thegame
                             Execute();
                         }
                         break;
-                    case 2:
+                    case 2:             // Options
                         this.selected = gameState.OptionMenu;
                         Execute();
                         break;
-                    case 3:
+                    case 3:             // Quitter
                         game.Exit();
                         break;
                     default:
                         break;
                 }
             }
-            else if (selected == gameState.OptionMenu && (execute as Menu).IChooseSomething) // OPTION PANNEL
+
+            //-------------------------------------------
+            // OPTION PANEL
+            //-------------------------------------------
+            else if (selected == gameState.OptionMenu && (execute as Menu).IChooseSomething)
             {
                 switch ((execute as Menu).selected)
                 {
-                    case 0:
+                    case 0:     // Language
                         this.selected = gameState.LanguageMenu;
                         Execute();
                         break;
-                    case 1:
-                        //this.selected = 5;
+                    case 1:     // Fullscreen
                         Fullscreen = !Fullscreen;       // Toggle between fullscreen and window
 
                         Game1.graphics.ToggleFullScreen();
                         //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
                         //Game1.graphics.ApplyChanges();
                         if (Fullscreen)
+                        {
                             (execute as Menu).tab[1] = Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOn"] + ")"; //fullscreen on
+                        }
                         else
+                        {
                             (execute as Menu).tab[1] = Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOff"] + ")"; //fullscreen off
+                        }
                         (execute as Menu).IChooseSomething = false;
                         break;
 
-                    case 2:
-                        //this.selected = 4;
+                    case 2:     // Sound
                         SoundIs = !SoundIs;
                         CheckSound = !CheckSound;
                         if (SoundIs)
                         {
                             (execute as Menu).tab[2] = Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOn"] + ")"; //sound on
-                            instancesoundMenu.Play();
+                            //OLDSOUND: instancesoundMenu.Play();
                         }
                         else
                         {
                             (execute as Menu).tab[2] = Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOff"] + ")"; // sound off
-                            instancesoundMenu.Stop();
+                            //OLDSOUND: instancesoundMenu.Stop();
                         }
                         (execute as Menu).IChooseSomething = false;
                         break;
-                    case 3:
+                    case 3:     // Back to MainMenu Panel
                         this.selected = gameState.MainMenu;
                         Execute();
                         break;
@@ -269,27 +272,31 @@ namespace thegame
                         break;
                 }
             }
-            else if (selected == gameState.LanguageMenu && (execute as Menu).IChooseSomething) // LANGUAGE SETTINGS
+
+            //-------------------------------------------
+            // LANGUAGE SETTINGS
+            //-------------------------------------------
+            else if (selected == gameState.LanguageMenu && (execute as Menu).IChooseSomething)
             {
 
                 switch ((execute as Menu).selected)
                 {
                     case 0:
                         Language.change("english");
-                        this.selected = 0;
+                        this.selected = gameState.MainMenu;      // => Shortcut to MenuMain Page
                         Execute();
                         break;
                     case 1:
                         Language.change("french");
-                        this.selected = 0;
+                        this.selected = gameState.MainMenu;
                         Execute();
                         break;
                     case 2:
                         Language.change("nederlands");
-                        this.selected = 0;      // This takes it to the first menu page
+                        this.selected = gameState.MainMenu;      
                         Execute();
                         break;
-                    case 3:
+                    case 3:                                      // Back to OPTION PANEL
                         this.selected = gameState.OptionMenu;
                         Execute();
                         break;
@@ -297,26 +304,11 @@ namespace thegame
                         break;
                 }
             }
-            else if (selected == gameState.SoundMenu && (execute as Menu).IChooseSomething) // SOUND SETTINGS
-            {
 
-                switch ((execute as Menu).selected)
-                {
-                    case 0:
-                        SoundIs = true;
-                        this.selected = gameState.MainMenu;
-                        Execute();
-                        break;
-                    case 1:
-                        SoundIs = false;
-                        this.selected = gameState.MainMenu;
-                        Execute();
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (selected == gameState.SplashScreen) HandleSplashScreen(mouse1);
+            // SOUND SETTING
+            else if (selected == gameState.SoundMenu && (execute as Menu).IChooseSomething) HandleSoundSetting();
+            // START SCREEN HANDLER    
+            else if (selected == gameState.SplashScreen) HandleSplashScreen();
             else if (selected == gameState.DeveloperMode)
             {
                 cameraPos = (execute as DevelopperMap).cameraPos;
@@ -331,6 +323,7 @@ namespace thegame
                 {
                     curGameMode = instances_type.Menu;
                     this.selected = gameState.MainMenu;
+                    PlayBackGroundSound("Menu");
                     Execute();
                 }
             }
@@ -422,7 +415,9 @@ namespace thegame
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
-            //ACTIVATE DEVELOPER MODE BY PRESSING THE WORD TEAM. SAME TIME
+            //-------------------------------------------
+            // ACTIVATE DEVELOPER MODE BY PRESSING THE WORD TEAM. SAME TIME
+            //-------------------------------------------
             if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
                 Developpermode = true;
 
@@ -444,7 +439,7 @@ namespace thegame
                 SoundIs = false;
                 developperXMouse = mouse1.X - (int)cameraPos.X;
                 developperYMouse = mouse1.Y;
-                instancesound.Stop();
+                //OLDSOUND: instancesound.Stop();
                 if (getkey.Contains(Keys.C) && !developperCoord)
                     developperCoord = true;
                 if (getkey.Contains(Keys.X) && developperCoord)
@@ -458,11 +453,6 @@ namespace thegame
                     Execute();
                 }
             }
-
-
-
-
-
         }
 
         /* END OF THE GAME CODE */
@@ -585,13 +575,13 @@ namespace thegame
 
         public void Sound(string type)
         {
-            instancesound.Stop();
+            //OLDSOUND: instancesound.Stop();
             if (SoundIs)
                 if (type == "menu")
                 {
                     Textures.buttonSound_Effect.Play();
-                    if (instancesoundMenu.State != SoundState.Playing && !Developpermode)
-                        instancesoundMenu.Play();
+                    //OLDSOUND: if (instancesoundMenu.State != SoundState.Playing && !Developpermode)
+                    //OLDSOUND: instancesoundMenu.Play();
                 }
         }
 
@@ -706,8 +696,8 @@ namespace thegame
             }
 
         }
-
-        private void HandleSplashScreen(MouseState mouse1)
+        // SPLASH SCREEN HANDLER
+        private void HandleSplashScreen()
         {
             if (vidPlayer.State == MediaState.Stopped || Inputs.isLMBClick() || Inputs.isKeyRelease(Keys.Enter))
             {
@@ -716,6 +706,61 @@ namespace thegame
                 this.selected = 0;
                 Execute();
             }
+        }
+        //-------------------------------------------
+        // SOUND SETTINGS
+        //-------------------------------------------
+        private void HandleSoundSetting()
+        {
+            switch ((execute as Menu).selected)
+            {
+                case 0:
+                    SoundIs = true;
+                    this.selected = gameState.MainMenu;
+                    Execute();
+                    break;
+                case 1:
+                    SoundIs = false;
+                    this.selected = gameState.MainMenu;
+                    Execute();
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+
+        public void PlayBackGroundSound(string screen)
+        {
+            // First switch off current background sound
+            if (CurrentBKSound != null)
+            {
+                CurrentBKSound.Stop();
+                CurrentBKSound.Dispose();
+            }
+
+            // Now select the sound
+            if (screen == "Menu") CurrentBKSound = Textures.gameSound_EffectMenu.CreateInstance();
+            else
+            {
+                switch (thecurrentmap.thegamestate)
+                {
+                    case gameState.MainMenu: CurrentBKSound = Textures.gameSound_EffectMenu.CreateInstance();
+                        break;
+                    case gameState.AutumnLevel: CurrentBKSound = Textures.gameSound_EffectAutumn.CreateInstance();
+                        break;
+                    case gameState.WinterLevel: CurrentBKSound = Textures.gameSound_EffectWinter.CreateInstance();
+                        break;
+                    case gameState.SpringLevel: CurrentBKSound = Textures.gameSound_EffectSpring.CreateInstance();
+                        break;
+                    case gameState.SummerLevel: CurrentBKSound = Textures.gameSound_EffectSummer.CreateInstance();
+                        break;
+                }
+            }
+
+            // Now Play the sound
+            if (CurrentBKSound != null) CurrentBKSound.Play();
         }
     }
 }

@@ -23,7 +23,6 @@ namespace thegame
             gobackmenu
         }
 
-
         private static int[,] autumnTileMap = new int[,]
                         {
                             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -111,16 +110,16 @@ namespace thegame
 
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
-        public SoundEffect sound { get; private set; }
+        public SoundEffect sound { get; private set; }         // USELESS!!
 
-        private bool drawBloodScreen = false;//variable for the bloodscreen
+        private bool drawBloodScreen = false;                  //variable for the bloodscreen
         private float elapsedTimeBloodScreen = 0;
 
-        private Button PauseButton, HelpButton;
+        private Button PauseButton, HelpButton;                // Buttons for the Underbar
 
         private Drawable scoreDisplay;
 
-        private SoundEffectInstance instancesound;
+        //OLDSOUND: private SoundEffectInstance instancesound;            // Music of the game (background music)
 
         public List<Rectangle> blocks;
 
@@ -134,12 +133,11 @@ namespace thegame
 
         private int nb_nuts;
 
-        private bool SoundIs;       // Set to true to switch the sound (on / off)
+        private bool SoundIs;                           // Set to true to switch the sound OF OBJECTS (on / off)
         private Drawable tree_autumn_exit;
         private Drawable tree_autumn_exit_inside;
 
         private Drawable debug;
-        //private Drawable scoreDisplay;
 
         private List<Texture2D> texlis;
         private int mapSizeX;
@@ -148,7 +146,7 @@ namespace thegame
         private float timeElaspedGameOver = 0;
         private bool playerActivate = true;
         private float transparencyAnimation = 0;
-        private int Health; //BASIC LEVEL OF PERSO
+        private int Health;         //BASIC LEVEL OF PERSO
         public bool pause = false;
         public bool help = false;
         public bool endLevel = false;
@@ -163,7 +161,7 @@ namespace thegame
         bool snow = false;
         private int score = 0;
 
-        private gameState thegamestate;
+        public gameState thegamestate;
 
         public Perso theperso;
 
@@ -182,7 +180,6 @@ namespace thegame
             this.NewGame(ref cameraClass);
             PauseButton = new Button("P / Pause", 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
             HelpButton = new Button("H / Help", 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
-           
         }
 
         public void NewGame(ref Camera cameraClass)
@@ -192,38 +189,36 @@ namespace thegame
             int[] IAtile;
             themapstate = MapState.game;
 
-
             if (thegamestate == gameState.AutumnLevel)
             {
-                instancesound = Textures.gameSound_Effect.CreateInstance();
-                instancesound.IsLooped = true;
+                //OLDSOUND: instancesound = Textures.gameSound_EffectAutumn.CreateInstance();
+                //OLDSOUND: instancesound.IsLooped = true;
                 snow = false;
-
             }
             else if (thegamestate == gameState.WinterLevel)
             {
-                instancesound = Textures.gameSound_EffectWinter.CreateInstance();
-                instancesound.IsLooped = true;
+                //OLDSOUND: instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+                //OLDSOUND: instancesound.IsLooped = true;
                 snow = true;
             }
             else if (thegamestate == gameState.SpringLevel)
             {
-                instancesound = Textures.gameSound_EffectSpring.CreateInstance();
-                instancesound.IsLooped = true;
+                //OLDSOUND: instancesound = Textures.gameSound_EffectSpring.CreateInstance();
+                //OLDSOUND: instancesound.IsLooped = true;
                 snow = false;
             }
             else if (thegamestate == gameState.SummerLevel)
             {
-                instancesound = Textures.gameSound_EffectSummer.CreateInstance();
-                instancesound.IsLooped = true;
+                //OLDSOUND: instancesound = Textures.gameSound_EffectSummer.CreateInstance();
+                //OLDSOUND: instancesound.IsLooped = true;
                 snow = false;
             }
 
-            if (SoundIs) instancesound.Play();
-                
+            //OLDSOUND: if (SoundIs) instancesound.Play();
 
-
-            // All the images and objects related to season levels are loaded here
+            //--------------------------------------------
+            // IMAGES OF LEVELS ARE LOADED HERE
+            //--------------------------------------------
             switch (thegamestate)
             {
                 case gameState.AutumnLevel:
@@ -294,7 +289,8 @@ namespace thegame
 
             objects = new List<Rectangle>();
             iaPerso = new List<Perso>();
-            /* IA CHARACTERS */
+
+            // IA CHARACTERS
             for (int x = 0; x < IAtile.Length; x++)
                 if (IAtile[x] == 1)
                     iaPerso.Add(new Perso(new Vector2(x * Textures.buche_texture.Width, 0), CharacType.ia));
@@ -305,6 +301,7 @@ namespace thegame
             blocks = new List<Rectangle>();
             tile = new List<Rectangle>();
 
+            // Draws the objects on the map
             for (int x = 0; x < mapSizeX; x++)
                 for (int y = 0; y < mapSizeY; y++)
                     if (thetile[y, x] == 1)
@@ -321,7 +318,6 @@ namespace thegame
             tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
             debug = new Drawable(drawable_type.font);
             scoreDisplay = new Drawable(drawable_type.font);
-
         }
 
         /* EVERYTHING THAT HAS TO BE INITIALIZED AT EACH LEVEL*/
@@ -335,7 +331,6 @@ namespace thegame
             bomb = new List<Bomb>();
             random = new Random();
             medecines = new List<Rectangle>();
-
 
             if (thegamestate == gameState.WinterLevel || thegamestate == gameState.AutumnLevel)
             {
@@ -389,6 +384,7 @@ namespace thegame
             // Conditions to access the Pause Page
             if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) themapstate = MapState.pause;
 
+            // Deal with particules in the winter level
             if (thegamestate == gameState.WinterLevel)
             {
                 if (Inputs.isKeyRelease(Keys.S) && Developpermode) snow = !snow;
@@ -404,6 +400,7 @@ namespace thegame
                 }
             }
 
+            // Deals with the particules on the autumn level
             else if (thegamestate == gameState.AutumnLevel)
             {
                 particleComponent.particleEmitterList[0].Active = false;
@@ -452,18 +449,19 @@ namespace thegame
             else if (themapstate == MapState.game)
             {
                 // Displays the Help page according to several conditions
-                if ((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange)
-                    themapstate = MapState.help;
+                if ((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange) themapstate = MapState.help;
 
-                if (Developpermode)
-                    Health = 20;
+                if (Developpermode) Health = 20;
 
+                // Interaction between perso and medecine object
                 for (int j = medecines.Count - 1; j >= 0; j--)
+                {
                     if (theperso.hitBoxPerso.Intersects(medecines[j]))
                     {
                         medecines.Remove(medecines[j]);
                         Health += (Health <= 15) ? 5 : (20 - Health);
                     }
+                }
                 int checkBlood = 0;
                 foreach (Perso iathings in iaPerso)
                 {
@@ -499,7 +497,7 @@ namespace thegame
                     theperso.compteurHitted = 0;
                 }
 
-                bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
+                bomb.RemoveAll(x => x.checkIfFinish);   // remove bomb when explosion animation is complete
 
                 if (playerActivate)//player can move
                 {
@@ -582,8 +580,11 @@ namespace thegame
 
             if (Developpermode)
             {
-                if (SoundIs && instancesound != null)
-                    instancesound.Stop();
+                //OLDSOUND: if (SoundIs && instancesound != null)
+                //OLDSOUND: {
+                    //OLDSOUND: instancesound.Stop();
+                //OLDSOUND: }
+                   
                 // Lorsque l'on appuie sur les touches 1, 2, 3, ou 4 on change de niveau
                 if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
                 {
@@ -632,7 +633,9 @@ namespace thegame
                 }
             }
 
-            if (SoundIs) instancesound.Play();
+            //OLDSOUND: if (Developpermode) instancesound.Stop();
+            //OLDSOUND: else instancesound.Play();
+            //OLDSOUND: if (SoundIs && !Developpermode) instancesound.Play();
             
         }
 

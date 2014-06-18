@@ -157,7 +157,6 @@
     <Compile Include="Inputs.cs" />
     <Compile Include="Instances.cs" />
     <Compile Include="Join_game.cs" />
-    <Compile Include="JsonTextReader.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapMulti.cs" />

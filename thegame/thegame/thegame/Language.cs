@@ -29,7 +29,7 @@ namespace thegame
                                                    {"_mnuFullscreen","Full screen"}, 
                                                    {"_mnuBack","Back"},
                                                    {"_mnuEnglish","English"},
-                                                   {"_mnuFrench","Francais"}, //has to be français
+                                                   {"_mnuFrench","Français"}, //has to be français
                                                    {"_mnuSound","Sound"}, 
                                                    {"_mnuOn","On"},
                                                    {"_mnuOff","Off"},
