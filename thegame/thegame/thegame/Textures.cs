@@ -17,6 +17,7 @@ namespace thegame
         public static Texture2D hitbox;
         public static Texture2D mario_texture;
         public static Texture2D menu_main_page;
+        public static Texture2D underBar_texture;
 
         public static Texture2D autumn_ground_texture;
         public static Texture2D winter_ground_texture;
@@ -127,8 +128,9 @@ namespace thegame
 
             // Texture 2D
             menu_main_page = cm.Load<Texture2D>(@"Menu_Main_Page");
-            plateform_texture = cm.Load<Texture2D>(@"plateforme");  // Useless
+            //plateform_texture = cm.Load<Texture2D>(@"plateforme");  // Useless
             mario_texture = cm.Load<Texture2D>(@"mario");
+            underBar_texture = cm.Load<Texture2D>(@"Under_bar4");
             eraser = cm.Load<Texture2D>(@"erase");
             hitbox = cm.Load<Texture2D>(@"blank");
             pausedTexture = cm.Load<Texture2D>(@"Paused");

@@ -750,7 +750,9 @@ namespace thegame
                 Bloodscreen(gameTime, sb, cameraClass.Position, cameraClass);
                 sb.End();
                 sb.Begin();
-                sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);//draw panel life + bonus + help + pause
+                // Draws the Underbar
+                //sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);
+                sb.Draw(Textures.underBar_texture, new Vector2(0, 420), Color.White);
 
                 scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + score, new Vector2(137, 487), Color.Black, "normal");
 
