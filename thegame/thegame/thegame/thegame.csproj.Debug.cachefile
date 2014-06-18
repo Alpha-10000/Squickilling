@@ -90,6 +90,7 @@ Content\audio\Echinoderm_Regeneration.xnb
 Content\audio\Morning_Walk.xnb
 Content\multi.xnb
 <<<<<<< HEAD
+<<<<<<< HEAD
 Content\ennemy.xnb
 =======
 Content\Under_bar2(2).xnb
@@ -97,6 +98,8 @@ Content\Under_bar1(2).xnb
 Content\Under_bar3.xnb
 Content\Under_bar4.xnb
 >>>>>>> origin/master
+=======
+>>>>>>> parent of 02047c6... Ennemy sprite + bug collision perso fix
 Content\video\vid.wmv
 Content\mario.png
 Content\plateforme.png
