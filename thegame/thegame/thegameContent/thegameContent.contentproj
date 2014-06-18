@@ -648,6 +648,27 @@
   <ItemGroup>
     <Compile Include="ennemy.png">
       <Name>ennemy</Name>
+    <Compile Include="Under_bar2%282%29.png">
+      <Name>Under_bar2%282%29</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Under_bar1%282%29.png">
+      <Name>Under_bar1%282%29</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Under_bar3.png">
+      <Name>Under_bar3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Under_bar4.png">
+      <Name>Under_bar4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

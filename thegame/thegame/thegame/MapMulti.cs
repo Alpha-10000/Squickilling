@@ -193,7 +193,7 @@ namespace thegame
 
             if (thegamestate == gameState.AutumnLevel)
             {
-                instancesound = Textures.gameSound_Effect.CreateInstance();
+                instancesound = Textures.gameSound_EffectAutumn.CreateInstance();
                 instancesound.IsLooped = true;
                 snow = false;
 
