@@ -272,7 +272,7 @@ namespace thegame
                 positionPerso.Y += Gravity;
             }
 
-            //hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 4, imagePerso.Height / 2)
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 4, imagePerso.Height / 2);//DO NOT DELETE THAT IS SUPER SUPER IMPORTANT!! YES TWICE BUT IT IS NEEDED !!!!!!!!!
 
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
             if (!jumping && (positionPerso.Y == sol || !movedown))
@@ -503,7 +503,7 @@ namespace thegame
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 26);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 26);//DO NOT DELETE THAT IS SUPER SUPER IMPORTANT!! YES TWICE BUT IT IS NEEDED !!!!!!!!!
 
             if (moveright)
             {
