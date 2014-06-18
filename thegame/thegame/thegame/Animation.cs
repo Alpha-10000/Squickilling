@@ -80,6 +80,11 @@ namespace thegame
             }
         }
 
+        public void Draw(SpriteBatch spriteBatch, bool LastMovewasRight)//to place the sprite at the right position when using right/left
+        {
+            spriteBatch.Draw(Sprite, (LastMovewasRight) ? new Vector2(Position.X - Textures.mario_texture.Width / 8, Position.Y) : Position, SpriteSheet, Color.White);
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Sprite, Position, SpriteSheet, Color.White);

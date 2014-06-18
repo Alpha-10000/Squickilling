@@ -69,6 +69,8 @@ namespace thegame
 
         private bool jumping;
 
+        private bool LastMovewasRight = true;
+
         public NetConnection Connection { get; set; }
 
         public Perso(Vector2 pos, CharacType typePerso)
@@ -272,7 +274,7 @@ namespace thegame
                 positionPerso.Y += Gravity;
             }
 
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 4, imagePerso.Height / 2);//DO NOT DELETE THAT IS SUPER SUPER IMPORTANT!! YES TWICE BUT IT IS NEEDED !!!!!!!!!
+            //hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2);
 
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
             if (!jumping && (positionPerso.Y == sol || !movedown))
@@ -288,6 +290,7 @@ namespace thegame
                 positionPerso.X += changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
+                LastMovewasRight = true;
             }
             else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && (Inputs.isKeyDown(Keys.LeftAlt) || Inputs.isKeyDown(Keys.RightAlt)) && activateDevelopper)
             {
@@ -300,6 +303,7 @@ namespace thegame
                 positionPerso.X -= changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
+                LastMovewasRight = false;
             }
 
             if (Inputs.isKeyDown(Keys.Right) && moveright && !Inputs.isKeyDown(Keys.Left) && ((activateDeveloper) ? (Inputs.isKeysUP(Keys.LeftAlt) && Inputs.isKeysUP(Keys.RightAlt)) : true))
@@ -312,6 +316,7 @@ namespace thegame
                 positionPerso.X += changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
+                LastMovewasRight = true;
             }
             else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && ((activateDeveloper) ? (Inputs.isKeysUP(Keys.LeftAlt) && Inputs.isKeysUP(Keys.RightAlt)) : true))
             {
@@ -324,6 +329,7 @@ namespace thegame
                 positionPerso.X -= changement;
                 if (positionPerso.X > 400 && positionPerso.X < 5000)
                     cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
+                LastMovewasRight = false;
             }
 
 
@@ -336,7 +342,7 @@ namespace thegame
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
             if (typePerso == CharacType.player)
-                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 4, imagePerso.Height / 2 - 4);
+                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 4);
             else if (typePerso == CharacType.ia)
                 hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height - 2);
 
@@ -578,7 +584,7 @@ namespace thegame
             }
             else
             {
-                animationPerso.Draw(spriteBatch);
+                animationPerso.Draw(spriteBatch, LastMovewasRight);
             }
 
             if (typePerso == CharacType.player)
