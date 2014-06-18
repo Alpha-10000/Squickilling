@@ -31,6 +31,9 @@ namespace thegame
         private List<Dictionary<string, string>> getInvitations;
         private Textbox essai_textbox;
 
+        private float RefreshInvitedBox = 0;
+        private float RefreshBoxIntervall = 9000;
+
         public Create_game()
         {
             essai_textbox = new Textbox(400, 75, 200, 40);
@@ -38,8 +41,21 @@ namespace thegame
             InvitedBox();
         }
 
+        private void RefreshBox(GameTime gametime)//refresh the invitations to know if accepted or not
+        {
+            RefreshInvitedBox += gametime.ElapsedGameTime.Milliseconds;
+            if (RefreshInvitedBox >= RefreshBoxIntervall)
+            {
+                InvitedBox();
+                RefreshInvitedBox = 0;
+            }
+        }
+
         public void Update(GameTime gametime)
         {
+
+            RefreshBox(gametime);
+
             essai_textbox.Update(gametime);
             if (essai_textbox.text != "" && essai_textbox.HasJustType)
                 finish = true;
@@ -68,15 +84,13 @@ namespace thegame
                 }
 
             if (getInvitations != null)
-            {
                 for (int i = 0; i < getInvitations.Count; i++)
-                {
-                    TheInvitedCancelButton[i].Update();
-                    if (TheInvitedCancelButton[i].Clicked)
-                        CancelInvitation(getInvitations[i]["id"]);
-
-                }
-            }
+                    if (TheInvitedCancelButton[i] != null)
+                    {
+                        TheInvitedCancelButton[i].Update();
+                        if (TheInvitedCancelButton[i].Clicked)
+                            CancelInvitation(getInvitations[i]["id"]);
+                    }
         }
 
         private void GetFriends()
@@ -214,7 +228,12 @@ namespace thegame
                     getInvitations = ValueList;
 
                     for (int i = 0; i < ValueList.Count; i++)
-                        TheInvitedCancelButton.Add(new Button("Cancel invitation", BottomBox.X + 290, BottomBox.Y + 45 * i + 37, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                    {
+                        if (ValueList[i]["joined"] == "0")
+                            TheInvitedCancelButton.Add(new Button("Cancel invitation", BottomBox.X + 290, BottomBox.Y + 45 * i + 37, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                        else
+                            TheInvitedCancelButton.Add(null);
+                    }
                 }
             }
             catch
@@ -291,7 +310,10 @@ namespace thegame
                 for (int i = 0; i < getInvitations.Count; i++)
                 {
                     Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, getInvitations[i]["name"] + " : " + getInvitations[i]["status"], AlignType.MiddleCenter, new Rectangle(BottomBox.X + 25, BottomBox.Y + i * 45 - 35, BottomBox.Width / 3, BottomBox.Height));
-                    TheInvitedCancelButton[i].Display(sb);
+                    if(TheInvitedCancelButton[i] != null)
+                        TheInvitedCancelButton[i].Display(sb);
+                    else
+                        Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, "Has joined", AlignType.MiddleCenter, new Rectangle(BottomBox.X + 290, BottomBox.Y + i * 45 - 35, BottomBox.Width / 3, BottomBox.Height));
                 }
             else
                 Tools.DisplayAlignedText(sb, Color.White, Textures.fonthelp_texture, "Nobody has been invited yet", AlignType.MiddleCenter, new Rectangle(BottomBox.X + 25, BottomBox.Y, BottomBox.Width / 3, BottomBox.Height));
