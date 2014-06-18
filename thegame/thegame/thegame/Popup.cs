@@ -10,8 +10,6 @@ namespace thegame
 {
     class Popup
     {
-
-        private Rectangle popuptitle;
         private SpriteFont spritefont;
         public bool action1bool, action2bool;
         private bool is1, is2;

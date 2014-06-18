@@ -79,10 +79,6 @@ namespace thegame
                 case drawable_type.menu_main_page:
                     image = Textures.menu_main_page;
                     break;
-                case drawable_type.Plateform_default:
-                    image = Textures.plateform_texture;
-                    break;
-
                 // Buches
                 case drawable_type.autumnBuche:
                     image = Textures.buche_texture;

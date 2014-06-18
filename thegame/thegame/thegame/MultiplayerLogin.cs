@@ -21,7 +21,6 @@ namespace thegame
         private WebClient wb;
         private string[] infotext = new string[] { ""};
         private string infotext2 = "";
-        private string cursor = "";
 
         public string session_password = "";
         public string session_email = "";

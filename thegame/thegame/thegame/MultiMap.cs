@@ -19,10 +19,6 @@ namespace thegame
         public bool isPlayer1 = true;
         private Rectangle mybox, otherplayerbox;
         private WebClient wb;
-        int X, Y;
-        string url;
-        float buffer = 0;
-        float bufferWaitingTime = 50;
         private bool finish = true;
 
         private bool moveright, moveleft, movedown, moveup;

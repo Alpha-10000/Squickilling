@@ -13,7 +13,6 @@ namespace thegame
     class Textures
     {
         #region Texture
-        public static Texture2D plateform_texture;  // Useless
         public static Texture2D hitbox;
         public static Texture2D mario_texture;
         public static Texture2D menu_main_page;
@@ -100,7 +99,6 @@ namespace thegame
         public static Texture2D healthBar_texture;
         public static Texture2D eraser;
 
-        public static Button btnPlay_Autumn, btnQuit_Autumn, btnMenu_Autumn, btnPlay_Winter, btnQuit_Winter, btnMenu_Winter, btnMute;
 
         public static Texture2D snowdrop;
         public static Texture2D leaf_brown, leaf_orange, leaf_red, leaf_yellow;
