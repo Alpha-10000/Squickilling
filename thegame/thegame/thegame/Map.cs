@@ -646,7 +646,7 @@ namespace thegame
                 sb.Begin();
                 sb.Draw(Background, Vector2.Zero, Color.White);
                 sb.Draw(ground_texture, new Vector2(0, 405), Color.White);
-                sb.Draw(ground_texture, new Vector2(790, 405), Color.White);
+                sb.Draw(ground_texture, new Vector2(ground_texture.Width, 405), Color.White);
                 sb.Draw(Textures.hitbox, new Rectangle(0, 0, 1100, 550), Color.Black * 0.5f);
                 sb.End();
             }
