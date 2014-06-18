@@ -19,7 +19,7 @@ namespace thegame
         public bool mainmenu { get; private set; }
 
         private WebClient wb;
-        private string[] infotext = new string[] { ""};
+        private string[] infotext = new string[] { "" };
         private string infotext2 = "";
         private string cursor = "";
 
@@ -41,7 +41,7 @@ namespace thegame
         private int leftCircleX = 240;
         private int leftCircleY = 244;
         private int radius = 140;
-        
+
         private int XcreateForm = 484;
         private int XloginForm = 138;
         /* CREATE ACCOUNT TEXT BOX */
@@ -49,7 +49,7 @@ namespace thegame
             , create_text_password, login_text_email, login_text_password;
         Rectangle back_main_menu = new Rectangle(480, 20, 400, 40);
 
-    
+
         private float AnimatedColor_RightCircle = 0;
         private float AnimatedColor_LeftCircle = 0;
         private float AnimatedTransparency = 0;
@@ -74,7 +74,7 @@ namespace thegame
         private Button join_game = new Button("Join Game", 450, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
         Server server;
         Client client;
-        public  static bool created;
+        public static bool created;
 
         public MultiplayerLogin()
         {
@@ -98,7 +98,7 @@ namespace thegame
 
             login_text_password = new Rectangle(XloginForm, 200, 200, 50);
             login_password_string = new Textbox(XloginForm, 250, 200, 40);
-            
+
 
             login_account_button = new Rectangle(XloginForm, 310, 200, 40);
             login_forgot_password = new Rectangle(XloginForm, 350, 200, 50);
@@ -126,14 +126,14 @@ namespace thegame
             }
         }
 
-      
+
 
         public void Update(GameTime gametime)
         {
             if (popup == null && infotext[0] != "")
                 popup = new Popup("ok", "", (infotext[0] == "Your account has been created." ? "Congratulations" : "Something wrong"), infotext, Textures.font_texture, 500);
             //fix a bug
-            if (FirstTime && transparency >=1)
+            if (FirstTime && transparency >= 1)
                 FirstTime = false;
 
             Point themouse = Inputs.getMousePoint();
@@ -145,11 +145,11 @@ namespace thegame
 
 
 
-            
+
 
             if ((displayCreateForm || displayLoginForm) && transparency < 1)
             {
-                AnimatedTransparency +=(float)gametime.ElapsedGameTime.TotalMilliseconds;
+                AnimatedTransparency += (float)gametime.ElapsedGameTime.TotalMilliseconds;
                 if (AnimatedTransparency > 5)
                 {
                     transparency += 0.02f;//un multiple de 100 pour pas que ça dépasse 1.
@@ -162,7 +162,7 @@ namespace thegame
 
             if (radius >= Math.Sqrt(Math.Pow(themouse.X - rightCircleX, 2) + Math.Pow(themouse.Y - rightCircleY, 2)) || keyboardright)
             {
-                
+
                 if ((Inputs.isLMBClick() || keyboardright) && !displayCreateForm && popup == null)
                 {
                     displayCreateForm = true;
@@ -196,12 +196,12 @@ namespace thegame
                 else
                     AnimatedColor_RightCircle = 0;
 
-                
+
             }
 
             if (radius >= Math.Sqrt(Math.Pow(themouse.X - leftCircleX, 2) + Math.Pow(themouse.Y - leftCircleY, 2)) || keyboardleft)
             {
-                
+
                 if ((Inputs.isLMBClick() || keyboardleft) && !displayLoginForm && popup == null)
                 {
                     displayLoginForm = true;
@@ -236,7 +236,7 @@ namespace thegame
             }
 
 
-            
+
 
             if (displayLoginForm)
             {
@@ -248,7 +248,7 @@ namespace thegame
 
 
             }
-             if (displayCreateForm)
+            if (displayCreateForm)
             {
                 if (Inputs.isLMBClick() && create_account_button.Contains(Inputs.getMousePoint()) || Inputs.isKeyRelease(Keys.Enter))
                     CreateAccount();
@@ -259,19 +259,19 @@ namespace thegame
                     create_password_string.isSelected = true;
             }
 
-             if (justExecute)
-             {
-                 login_email_string.Update(gametime);
-                 login_password_string.Update(gametime);
-                 create_name_string.Update(gametime);
-                 create_email_string.Update(gametime);
-                 create_password_string.Update(gametime);
-                 
-             }
+            if (justExecute)
+            {
+                login_email_string.Update(gametime);
+                login_password_string.Update(gametime);
+                create_name_string.Update(gametime);
+                create_email_string.Update(gametime);
+                create_password_string.Update(gametime);
 
-             if (Inputs.isLMBClick() && login_forgot_password.Contains(Inputs.getMousePoint()))
-                 Process.Start("http://squickilling.com/user/forgot-password.php");
-   
+            }
+
+            if (Inputs.isLMBClick() && login_forgot_password.Contains(Inputs.getMousePoint()))
+                Process.Start("http://squickilling.com/user/forgot-password.php");
+
 
             if (popup != null)
             {
@@ -286,7 +286,7 @@ namespace thegame
             justExecute = true;
 
             //temp
-            if(create_game.Clicked)
+            if (create_game.Clicked)
             {
                 server = new Server();
                 created = true;
@@ -294,9 +294,7 @@ namespace thegame
             if (server != null)
                 server.Update();
             if (join_game.Clicked)
-            {
-                    client = new Client();              
-            }
+                client = new Client();
             if (client != null)
                 client.Update();
 
@@ -315,19 +313,19 @@ namespace thegame
                 infotext2 = System.Text.Encoding.UTF8.GetString(response);
                 List<string> myObj = new List<string>();
                 Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(infotext2);
-                
+
                 session_email = values["email"];
                 session_password = values["password"];
                 session_id = values["id"];
                 session_name = values["name"];
                 infotext2 = values["error"];
                 infotext[0] = infotext2;
-                if(infotext2 == "")
+                if (infotext2 == "")
                     session_isset = true;
                 login_password_string.text = login_email_string.text = "";
-           }
-           catch
-           {
+            }
+            catch
+            {
                 infotext[0] = "Sorry. We are unable to reach the database. Try again later.";
             }
         }
@@ -347,68 +345,68 @@ namespace thegame
             join_game.Display(sb);
 
             /* CREATE ACCOUNT FORM */
-                float newColor;
-                if (FirstTime && displayRightCircle)
-                    newColor = 0;
-                else
+            float newColor;
+            if (FirstTime && displayRightCircle)
+                newColor = 0;
+            else
                 newColor = (displayLeftCircle) ? transparency : 1 - transparency;
-                //create email input
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Name", AlignType.MiddleCenter, create_text_name);
-                create_name_string.Display(sb, false, newColor);
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Email", AlignType.MiddleCenter, create_text_email);
-                create_email_string.Display(sb, false, newColor);
+            //create email input
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Name", AlignType.MiddleCenter, create_text_name);
+            create_name_string.Display(sb, false, newColor);
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Email", AlignType.MiddleCenter, create_text_email);
+            create_email_string.Display(sb, false, newColor);
 
-                 Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Password", AlignType.MiddleCenter, create_text_password);
-                 create_password_string.Display(sb, true, newColor);
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Password", AlignType.MiddleCenter, create_text_password);
+            create_password_string.Display(sb, true, newColor);
 
-                //button
-                sb.Draw(Textures.hitbox, create_account_button, Color.Red * newColor);
-                sb.DrawString(Textures.font_texture, "Create account", new Vector2(create_account_button.X + 22, create_account_button.Y + 7), Color.White * newColor);
-                
-          /* LOGIN FORM */
-                if (FirstTime && displayLeftCircle)
-                    newColor = 0;
-                else
-                    newColor = (displayRightCircle) ? transparency : 1 - transparency;
-                //create email input
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Email", AlignType.MiddleCenter, login_text_email);
-                login_email_string.Display(sb, false, newColor);
+            //button
+            sb.Draw(Textures.hitbox, create_account_button, Color.Red * newColor);
+            sb.DrawString(Textures.font_texture, "Create account", new Vector2(create_account_button.X + 22, create_account_button.Y + 7), Color.White * newColor);
 
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Password", AlignType.MiddleCenter, login_text_password);
+            /* LOGIN FORM */
+            if (FirstTime && displayLeftCircle)
+                newColor = 0;
+            else
+                newColor = (displayRightCircle) ? transparency : 1 - transparency;
+            //create email input
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Email", AlignType.MiddleCenter, login_text_email);
+            login_email_string.Display(sb, false, newColor);
 
-                login_password_string.Display(sb, true, newColor);
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Password", AlignType.MiddleCenter, login_text_password);
 
-                //button
-                sb.Draw(Textures.hitbox, login_account_button, Color.Red * newColor);
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Login", AlignType.MiddleCenter, login_account_button);
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Forgot password ?", AlignType.MiddleCenter, login_forgot_password);
-            
+            login_password_string.Display(sb, true, newColor);
+
+            //button
+            sb.Draw(Textures.hitbox, login_account_button, Color.Red * newColor);
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Login", AlignType.MiddleCenter, login_account_button);
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Forgot password ?", AlignType.MiddleCenter, login_forgot_password);
+
 
             //public static void DrawCircle(this SpriteBatch spriteBatch, float x, float y, float radius, int sides, Color color, float thickness = 1f
 
             /* RIGHT CIRCLE */
-                if (FirstTime && displayRightCircle)
-                    newColor = 1;
-                else
-                    newColor = (displayLeftCircle) ? 1 - transparency : transparency;
-                Tools.DrawCircle(sb, rightCircleX, rightCircleY, radius, 50, new Color(227, xColorRightCircle, 73) * newColor, 140);
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Create an account", AlignType.MiddleCenter, new Rectangle(rightCircleX - radius, rightCircleY - radius, radius*2, radius * 2));
-            
-            /* LEFT CIRCLE */
-                if (FirstTime && displayLeftCircle)
-                    newColor = 1;
-                else
-                    newColor = (displayRightCircle) ? 1 - transparency : transparency;
-                Tools.DrawCircle(sb, leftCircleX, leftCircleY, radius, 50, new Color(227, xColorLeftCircle, 73) * newColor, 150);
-                Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Login", AlignType.MiddleCenter, new Rectangle(leftCircleX - radius, leftCircleY - radius, radius * 2, radius * 2));
+            if (FirstTime && displayRightCircle)
+                newColor = 1;
+            else
+                newColor = (displayLeftCircle) ? 1 - transparency : transparency;
+            Tools.DrawCircle(sb, rightCircleX, rightCircleY, radius, 50, new Color(227, xColorRightCircle, 73) * newColor, 140);
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Create an account", AlignType.MiddleCenter, new Rectangle(rightCircleX - radius, rightCircleY - radius, radius * 2, radius * 2));
 
-                if (popup != null)
-                    popup.Display(sb);
-            
+            /* LEFT CIRCLE */
+            if (FirstTime && displayLeftCircle)
+                newColor = 1;
+            else
+                newColor = (displayRightCircle) ? 1 - transparency : transparency;
+            Tools.DrawCircle(sb, leftCircleX, leftCircleY, radius, 50, new Color(227, xColorLeftCircle, 73) * newColor, 150);
+            Tools.DisplayAlignedText(sb, Color.White * newColor, Textures.font_texture, "Login", AlignType.MiddleCenter, new Rectangle(leftCircleX - radius, leftCircleY - radius, radius * 2, radius * 2));
+
+            if (popup != null)
+                popup.Display(sb);
+
             sb.End();
         }
 
-     
+
 
     }
 }
