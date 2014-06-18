@@ -17,12 +17,8 @@ namespace thegame
         public static Texture2D hitbox;
         public static Texture2D mario_texture;
         public static Texture2D menu_main_page;
-<<<<<<< HEAD
         public static Texture2D ennemy_texture;
         public static Texture2D underBar_texture;
-=======
->>>>>>> parent of 02047c6... Ennemy sprite + bug collision perso fix
-
         public static Texture2D autumn_ground_texture;
         public static Texture2D winter_ground_texture;
         public static Texture2D spring_ground_texture;
@@ -134,11 +130,8 @@ namespace thegame
             menu_main_page = cm.Load<Texture2D>(@"Menu_Main_Page");
             //plateform_texture = cm.Load<Texture2D>(@"plateforme");  // Useless
             mario_texture = cm.Load<Texture2D>(@"mario");
-<<<<<<< HEAD
             ennemy_texture = cm.Load<Texture2D>(@"ennemy");
             underBar_texture = cm.Load<Texture2D>(@"Under_bar4");
-=======
->>>>>>> parent of 02047c6... Ennemy sprite + bug collision perso fix
             eraser = cm.Load<Texture2D>(@"erase");
             hitbox = cm.Load<Texture2D>(@"blank");
             pausedTexture = cm.Load<Texture2D>(@"Paused");
