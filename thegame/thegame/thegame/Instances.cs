@@ -54,7 +54,8 @@ namespace thegame
         MultiplayerCreateGame,
         MultiplayerJoinGame,
         MultiplayerGame,
-        MultiplayerSearchFriends
+        MultiplayerSearchFriends,
+        MultiplayerHasJoined
     }
 
     public class Instances
@@ -113,9 +114,10 @@ namespace thegame
 
         private MultiMap multimap;
         private Search_friends search_friends;
+        private HasJoined hasjoined;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
-        private bool bypassLoginForm = false;
+        private bool bypassLoginForm = true;
 
         Animation blood;
         private bool GoToTheMultiExperiment = false;
@@ -125,11 +127,9 @@ namespace thegame
         public Instances(Game1 game)
         {
 
-
-            //
             if (bypassLoginForm)//If by pass enter login credentials.
             {
-                Session.NewSession("9", "victor.boissiere@gmail.com", "hellohello", "Victor");
+                Session.NewSession("9", "victor.boissiere@gmail.com", "hellohello", "Victor");//if you want to login with your account ask me your id
             }
             /* LANGAGE PAR DÉFAUT AU CHARGEMENT */
             this.curGameMode = instances_type.Menu;
@@ -398,6 +398,11 @@ namespace thegame
                     this.selected = gameState.MutilplayerDashboard;
                     Execute();
                 }
+                if (join_game.HasJoined)
+                {
+                    this.selected = gameState.MultiplayerHasJoined;
+                    Execute();
+                }
             }
             else if (selected == gameState.MultiplayerGame)
             {
@@ -409,6 +414,15 @@ namespace thegame
                 if (search_friends.goback)
                 {
                     this.selected = gameState.MutilplayerDashboard;
+                    Execute();
+                }
+            }
+            else if (selected == gameState.MultiplayerHasJoined)
+            {
+                hasjoined.Update(gametime);
+                if (hasjoined.goback)
+                {
+                    this.selected = gameState.MultiplayerJoinGame;
                     Execute();
                 }
             }
@@ -566,7 +580,10 @@ namespace thegame
                     multimap = new MultiMap();
                     break;
                 case gameState.MultiplayerSearchFriends:
-                    search_friends = new Search_friends(); ;
+                    search_friends = new Search_friends();
+                    break;
+                case gameState.MultiplayerHasJoined:
+                    hasjoined = new HasJoined();
                     break;
                 default:
                     break;
@@ -670,6 +687,8 @@ namespace thegame
                     multimap.Display(sb);
                 else if (selected == gameState.MultiplayerSearchFriends)
                     search_friends.Display(sb);
+                else if (selected == gameState.MultiplayerHasJoined)
+                    hasjoined.Display(sb);
 
                 if (MultiplayerLogin.created)
                 {
