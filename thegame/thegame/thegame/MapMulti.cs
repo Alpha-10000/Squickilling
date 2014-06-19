@@ -169,9 +169,11 @@ namespace thegame
         public MapState themapstate = MapState.game;
 
         private PauseMenu pauseMenu = new PauseMenu();
+        Chat chat;
 
         public MapMulti(gameState thegamestate, ref Camera cameraClass, bool SoundIs)
         {
+            chat = new Chat();
             this.thegamestate = thegamestate;
             this.NewGame(ref cameraClass);
             this.SoundIs = SoundIs;
@@ -382,9 +384,9 @@ namespace thegame
             // Pause and Help Buttons are created
             PauseButton.Update();
             HelpButton.Update();
-
+            chat.Update(gametime);
             // Conditions to access the Pause Page
-            if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) themapstate = MapState.pause;
+            if ((Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) && !Chat.text.isSelected) themapstate = MapState.pause;
 
             if (thegamestate == gameState.WinterLevel)
             {
@@ -449,7 +451,7 @@ namespace thegame
                 else if (themapstate == MapState.game)
                 {
                     // Displays the Help page according to several conditions
-                    if ((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange)
+                    if (((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange) && !Chat.text.isSelected)
                         themapstate = MapState.help;
 
                     if (Developpermode)
@@ -640,6 +642,9 @@ namespace thegame
 
         public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)
         {
+            /*sb.Begin();
+            chat.Draw(sb);
+            sb.End();*/
             foreach (Perso p in persos)
                 if (themapstate == MapState.gameover && !p.gameover)
                     GameOverAnimation(sb, 1);
@@ -751,7 +756,7 @@ namespace thegame
                 tree_entrance_inside.Draw(sb, new Vector2(-100, 10), treeScale);
                 if (thegamestate != gameState.SummerLevel) tree_exit_inside.Draw(sb, new Vector2(5200, 10), 0.55f);
 
-
+                chat.Draw(sb);
 
                 sb.End();
 
