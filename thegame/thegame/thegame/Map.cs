@@ -121,6 +121,9 @@ namespace thegame
 
         //OLDSOUND: private SoundEffectInstance instancesound;            // Music of the game (background music)
 
+        public SoundEffectInstance BackgroundSound;     // Background sound to play for the current map
+        public string BackgroundSoundName;              // Name of the Background Sound
+
         public List<Rectangle> blocks;
 
         public List<Rectangle> tile;
@@ -189,30 +192,30 @@ namespace thegame
             int[] IAtile;
             themapstate = MapState.game;
 
-            if (thegamestate == gameState.AutumnLevel)
-            {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectAutumn.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
-                snow = false;
-            }
-            else if (thegamestate == gameState.WinterLevel)
-            {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectWinter.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
-                snow = true;
-            }
-            else if (thegamestate == gameState.SpringLevel)
-            {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectSpring.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
-                snow = false;
-            }
-            else if (thegamestate == gameState.SummerLevel)
-            {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectSummer.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
-                snow = false;
-            }
+            //if (thegamestate == gameState.AutumnLevel)
+            //{
+            //    //OLDSOUND: instancesound = Textures.gameSound_EffectAutumn.CreateInstance();
+            //    //OLDSOUND: instancesound.IsLooped = true;
+            //    snow = false;
+            //}
+            //else if (thegamestate == gameState.WinterLevel)
+            //{
+            //    //OLDSOUND: instancesound = Textures.gameSound_EffectWinter.CreateInstance();
+            //    //OLDSOUND: instancesound.IsLooped = true;
+            //    snow = true;
+            //}
+            //else if (thegamestate == gameState.SpringLevel)
+            //{
+            //    //OLDSOUND: instancesound = Textures.gameSound_EffectSpring.CreateInstance();
+            //    //OLDSOUND: instancesound.IsLooped = true;
+            //    snow = false;
+            //}
+            //else if (thegamestate == gameState.SummerLevel)
+            //{
+            //    //OLDSOUND: instancesound = Textures.gameSound_EffectSummer.CreateInstance();
+            //    //OLDSOUND: instancesound.IsLooped = true;
+            //    snow = false;
+            //}
 
             //OLDSOUND: if (SoundIs) instancesound.Play();
 
@@ -222,6 +225,12 @@ namespace thegame
             switch (thegamestate)
             {
                 case gameState.AutumnLevel:
+                    // Set Sound
+                    BackgroundSound = Textures.gameSound_EffectAutumn.CreateInstance();
+                    BackgroundSoundName = "Autumn";
+
+                    // Set Snow and Map
+                    snow = false;
                     treeScale = 1;
                     ground_texture = Textures.autumn_ground_texture;
                     Background = Textures.autumnBackground;
@@ -236,6 +245,12 @@ namespace thegame
                     Ground = new Drawable(drawable_type.AutumnGround);
                     break;
                 case gameState.WinterLevel:
+                    // Set Sound
+                    BackgroundSound = Textures.gameSound_EffectWinter.CreateInstance();
+                    BackgroundSoundName = "Winter";
+
+                    // Set Snow and Map
+                    snow = true;
                     treeScale = 0.55f;
                     ground_texture = Textures.winter_ground_texture;
                     Background = Textures.winterBackground;
@@ -250,6 +265,12 @@ namespace thegame
                     Ground = new Drawable(drawable_type.WinterGround);
                     break;
                 case gameState.SpringLevel:
+                    // Set Sound
+                    BackgroundSound = Textures.gameSound_EffectSpring.CreateInstance();
+                    BackgroundSoundName = "Spring";
+
+                    // Set Snow and Map
+                    snow = false;
                     treeScale = 0.55f;
                     ground_texture = Textures.spring_ground_texture;
                     Background = Textures.springBackground;
@@ -264,6 +285,12 @@ namespace thegame
                     Ground = new Drawable(drawable_type.SpringGround);
                     break;
                 case gameState.SummerLevel:
+                    // Set Sound
+                    BackgroundSound = Textures.gameSound_EffectSummer.CreateInstance();
+                    BackgroundSoundName = "Summer";
+
+                    // Set Snow and Map
+                    snow = false;
                     treeScale = 0.55f;
                     ground_texture = Textures.summer_ground_texture;
                     Background = Textures.summerBackground;
@@ -275,14 +302,24 @@ namespace thegame
                     tree_entrance_inside = new Drawable(drawable_type.tree_summer_entrance_inside);
                     Ground = new Drawable(drawable_type.SummerGround);
                     break;
-                default: //Osef
+                default:     // Osef
+                    // Set Sound
+                    BackgroundSound = Textures.gameSound_EffectWinter.CreateInstance();
+                    BackgroundSoundName = "Winter";
+
+                    // Set Snow and Map
+                    snow = true;
+                    treeScale = 0.55f;
                     ground_texture = Textures.winter_ground_texture;
                     Background = Textures.winterBackground;
                     thetile = winterTileMap;
                     IAtile = winterAiMap;
                     buche_texture = Textures.buche_texture_winter;
                     thetree = new Drawable(drawable_type.winterTree);
+                    tree_entrance = new Drawable(drawable_type.tree_winter_entrance);
                     tree_entrance_inside = new Drawable(drawable_type.tree_winter_entrance_inside);
+                    tree_exit = new Drawable(drawable_type.tree_winter_exit);
+                    tree_exit_inside = new Drawable(drawable_type.tree_winter_exit_inside);
                     Ground = new Drawable(drawable_type.WinterGround);
                     break;
             }
