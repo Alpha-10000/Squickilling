@@ -275,7 +275,7 @@ namespace thegame
                 positionPerso.Y += Gravity;
             }
 
-            //hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 2);
 
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
             if (!jumping && (positionPerso.Y == sol || !movedown))
