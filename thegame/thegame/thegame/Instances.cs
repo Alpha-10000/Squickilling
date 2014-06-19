@@ -747,16 +747,16 @@ namespace thegame
                 default:
                     break;
             }
-
-
         }
 
         public void PlayBackGroundSound(string SoundToPlay)
         {
-            if (SoundIs) CurrentBKSound.Volume = 0;
-            else CurrentBKSound.Volume = 1;
-
-            if (SoundToPlay == CurrentBKSoundName) return;      // DO not change anything, keep playing current sound
+            if (SoundToPlay == CurrentBKSoundName)
+            {
+                if (!SoundIs) CurrentBKSound.Volume = 0;
+                else CurrentBKSound.Volume = 1;
+                return;             // DO not change anything, keep playing current sound
+            }
 
             // First switch off current background sound
             if (CurrentBKSound != null)
@@ -779,8 +779,11 @@ namespace thegame
             }
 
 
+            if (!SoundIs) CurrentBKSound.Volume = 0;
+            else CurrentBKSound.Volume = 1;
+
             // Now Play the sound
-            if (SoundIs) CurrentBKSound.Play();
+            CurrentBKSound.Play();
             
             
         }
