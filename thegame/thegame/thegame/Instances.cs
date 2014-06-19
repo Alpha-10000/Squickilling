@@ -69,14 +69,10 @@ namespace thegame
         public instances_type curGameMode { get; set; }        // Current game mode.
         public object execute { get; private set; }            // Current activ object (Menu / Perso) 
         public gameState selected { get; private set; }        // Selected menu page.
-        //public SoundEffect sound { get; private set; }       // USELESS!! 
-        public bool CheckSound;
 
         private Camera cameraClass = new Camera();
 
 
-        //OLDSOUND: private SoundEffectInstance instancesound;
-        //OLDSOUND: private SoundEffectInstance instancesoundMenu;//sound for the menu
         public static Rectangle vidRectangle;
         public static VideoPlayer vidPlayer, vidPlayer2;
 
@@ -86,7 +82,6 @@ namespace thegame
 
 
         private bool Fullscreen;        // Set to true to switch to fullscreen
-        private bool SoundIs;           // Set to true to switch the sound (on / off)
         private Drawable tree;
 
         private int developperXMouse;
@@ -105,6 +100,12 @@ namespace thegame
 
         private bool developperCoord = false;
 
+        /* 
+         NEW SOUND SYSTEM
+         */
+        private bool SoundIsActive = true;
+        private SoundEffectInstance MenuSound;
+
         public static ParticleComponent particleComponent;
 
         private Map thecurrentmap;
@@ -122,33 +123,29 @@ namespace thegame
         Animation blood;
         private bool GoToTheMultiExperiment = false;
 
-        private SoundEffectInstance CurrentBKSound;               // The currentBKSound;
-
         public Instances(Game1 game)
         {
 
             if (bypassLoginForm)//If by pass enter login credentials.
-            {
                 Session.NewSession("9", "victor.boissiere@gmail.com", "hellohello", "Victor");//if you want to login with your account ask me your id
-            }
+
+
             /* LANGAGE PAR DÉFAUT AU CHARGEMENT */
             this.curGameMode = instances_type.Menu;
             this.selected = 0;
 
-            //OLDSOUND: instancesound = Textures.gameSound_EffectAutumn.CreateInstance();
-            //OLDSOUND: instancesound.IsLooped = true;
-
-            //OLDSOUND: instancesoundMenu = Textures.gameSound_EffectMenu.CreateInstance();
-            //OLDSOUND: instancesoundMenu.IsLooped = true;
-
+            
+            //load sound settings
+            MenuSound = Textures.gameSound_EffectMenu.CreateInstance();
+            MenuSound.IsLooped = true;
+            
             blood = new Animation(new Vector2(100, 100), new Vector2(2, 3));
             blood.AnimationSprite = Textures.bloodEmitter;
 
             /* DEFAULT LOADING  : EVERYTHING THAT HAS TO LOAD BY DEFAULT */
 
             this.game = game;
-            CheckSound = false;
-            SoundIs = false;
+          
             this.selected = gameState.SplashScreen;
             this.Execute();
         }
@@ -165,20 +162,25 @@ namespace thegame
             if (Session.session_isset)
                 Session.update(gametime);
 
-            if (this.selected == gameState.MainMenu && !CheckSound)
-            {
-                SoundIs = true;
-                //OLDSOUND: instancesound.Stop();
-                //OLDSOUND: instancesoundMenu.Play();
-            }
+
 
             if (curGameMode == instances_type.Menu)// MENU
+                (execute as Menu).Update(gametime);
+
+            if (curGameMode == instances_type.Menu || curGameMode == instances_type.Multiplayer)
             {
-                (execute as Menu).Update(gametime, SoundIs);
+                if (SoundIsActive)
+                    MenuSound.Play();
+                else
+                    MenuSound.Stop();
             }
+            else
+                MenuSound.Stop();
+
 
             if (this.selected == gameState.MainMenu && (execute as Menu).IChooseSomething)
             {
+                Sound();
                 switch ((execute as Menu).selected)
                 {
                     case 0:             // Jouer
@@ -226,6 +228,7 @@ namespace thegame
             //-------------------------------------------
             else if (selected == gameState.OptionMenu && (execute as Menu).IChooseSomething)
             {
+                Sound();
                 switch ((execute as Menu).selected)
                 {
                     case 0:     // Language
@@ -239,28 +242,21 @@ namespace thegame
                         //Game1.graphics.IsFullScreen = !Game1.graphics.IsFullScreen;
                         //Game1.graphics.ApplyChanges();
                         if (Fullscreen)
-                        {
                             (execute as Menu).tab[1] = Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOn"] + ")"; //fullscreen on
-                        }
                         else
-                        {
                             (execute as Menu).tab[1] = Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOff"] + ")"; //fullscreen off
-                        }
                         (execute as Menu).IChooseSomething = false;
                         break;
 
                     case 2:     // Sound
-                        SoundIs = !SoundIs;
-                        CheckSound = !CheckSound;
-                        if (SoundIs)
+                        SoundIsActive = !SoundIsActive;
+                        if (SoundIsActive)
                         {
                             (execute as Menu).tab[2] = Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOn"] + ")"; //sound on
-                            //OLDSOUND: instancesoundMenu.Play();
                         }
                         else
                         {
                             (execute as Menu).tab[2] = Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOff"] + ")"; // sound off
-                            //OLDSOUND: instancesoundMenu.Stop();
                         }
                         (execute as Menu).IChooseSomething = false;
                         break;
@@ -278,7 +274,7 @@ namespace thegame
             //-------------------------------------------
             else if (selected == gameState.LanguageMenu && (execute as Menu).IChooseSomething)
             {
-
+                Sound();
                 switch ((execute as Menu).selected)
                 {
                     case 0:
@@ -305,8 +301,6 @@ namespace thegame
                 }
             }
 
-            // SOUND SETTING
-            else if (selected == gameState.SoundMenu && (execute as Menu).IChooseSomething) HandleSoundSetting();
             // START SCREEN HANDLER    
             else if (selected == gameState.SplashScreen) HandleSplashScreen();
             else if (selected == gameState.DeveloperMode)
@@ -318,12 +312,11 @@ namespace thegame
             else if (curGameMode == instances_type.Game)// THIS IS THE GAME 
             {
 
-                thecurrentmap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode);
+                thecurrentmap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode, ref SoundIsActive);
                 if (thecurrentmap.themapstate == Map.MapState.gobackmenu)
                 {
                     curGameMode = instances_type.Menu;
                     this.selected = gameState.MainMenu;
-                    PlayBackGroundSound("Menu");
                     Execute();
                 }
             }
@@ -438,7 +431,7 @@ namespace thegame
             if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
             {
                 Developpermode = false;
-                SoundIs = true;
+                SoundIsActive = true;
                 if (developpermap)
                 {
                     developpermap = false;
@@ -450,10 +443,11 @@ namespace thegame
 
             if (Developpermode)
             {
-                SoundIs = false;
                 developperXMouse = mouse1.X - (int)cameraPos.X;
                 developperYMouse = mouse1.Y;
-                //OLDSOUND: instancesound.Stop();
+
+                SoundIsActive = false;
+
                 if (getkey.Contains(Keys.C) && !developperCoord)
                     developperCoord = true;
                 if (getkey.Contains(Keys.X) && developperCoord)
@@ -477,7 +471,6 @@ namespace thegame
             switch (this.selected)
             {
                 case 0: /* MAIN MENU */
-                    Sound("menu");
                     execute = new Menu(4, "Squickilling");
                     (execute as Menu).AddElements(Language.Text_Game["_mnuPlay"]);//Play
                     (execute as Menu).AddElements(Language.Text_Game["_mnuMultiplayer"]);//Play
@@ -486,7 +479,6 @@ namespace thegame
 
                     break;
                 case gameState.OptionMenu: /* OPTION MENU */
-                    Sound("menu");
                     execute = new Menu(4, Language.Text_Game["_mnuOptions"]);//options
                     (execute as Menu).activateBackSpace = true;
                     (execute as Menu).AddElements(Language.Text_Game["_mnuLanguage"]);//language 
@@ -496,7 +488,7 @@ namespace thegame
                     else
                         (execute as Menu).AddElements(Language.Text_Game["_mnuFullscreen"] + " (" + Language.Text_Game["_mnuOff"] + ")"); //fullscreen off
 
-                    if (SoundIs)
+                    if (SoundIsActive)
                         (execute as Menu).AddElements(Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOn"] + ")"); //sound on
                     else
                         (execute as Menu).AddElements((Language.Text_Game["_mnuSound"] + " (" + Language.Text_Game["_mnuOff"] + ")")); // sound off
@@ -505,7 +497,6 @@ namespace thegame
                     break;
 
                 case gameState.LanguageMenu: /* Select language */
-                    Sound("menu");
                     execute = new Menu(4, Language.Text_Game["_mnuLanguage"]);
                     (execute as Menu).activateBackSpace = true;
                     (execute as Menu).AddElements(Language.Text_Game["_mnuEnglish"]);
@@ -515,14 +506,12 @@ namespace thegame
                     break;
 
                 case gameState.SoundMenu: /* SOUND MENU */
-                    Sound("menu");
                     execute = new Menu(2, Language.Text_Game["_mnuSound"]);//sound
                     (execute as Menu).AddElements(Language.Text_Game["_mnuOn"]);//on
                     (execute as Menu).AddElements(Language.Text_Game["_mnuOff"]);//off
 
                     break;
                 case gameState.FullscreenMenu: /* FULL SCREEN */
-                    Sound("menu");
                     execute = new Menu(2, Language.Text_Game["_mnuFullscreen"]);//fullscreen
                     (execute as Menu).AddElements(Language.Text_Game["_mnuOn"]);//on
                     (execute as Menu).AddElements(Language.Text_Game["_mnuOff"]);//off
@@ -541,25 +530,21 @@ namespace thegame
                     break;
 
                 case gameState.AutumnLevel: /* GAME START */
-                    Sound("menu");
-                    Sound("Game");
                     if (curGameMode == instances_type.Multi)
-                        thecurrentmultimap = new MapMulti(selected, ref cameraClass, SoundIs);
+                        thecurrentmultimap = new MapMulti(selected, ref cameraClass, SoundIsActive);//TOBECHECKED
                     else
                     {
-                        thecurrentmap = new Map(selected, ref cameraClass, SoundIs);
+                        thecurrentmap = new Map(selected, ref cameraClass);
                         curGameMode = instances_type.Game;
                     }
                     break;
 
                 case gameState.WinterLevel: /* GAME START */
-                    Sound("menu");
-                    Sound("Game");
                     if (curGameMode == instances_type.Multi)
-                        thecurrentmultimap = new MapMulti(selected, ref cameraClass, SoundIs);
+                        thecurrentmultimap = new MapMulti(selected, ref cameraClass, SoundIsActive);
                     else
                     {
-                        thecurrentmap = new Map(selected, ref cameraClass, SoundIs);
+                        thecurrentmap = new Map(selected, ref cameraClass);
                         curGameMode = instances_type.Game;
                     }
                     break;
@@ -590,16 +575,10 @@ namespace thegame
             }
         }
 
-        public void Sound(string type)
+        public void Sound()
         {
-            //OLDSOUND: instancesound.Stop();
-            if (SoundIs)
-                if (type == "menu")
-                {
-                    Textures.buttonSound_Effect.Play();
-                    //OLDSOUND: if (instancesoundMenu.State != SoundState.Playing && !Developpermode)
-                    //OLDSOUND: instancesoundMenu.Play();
-                }
+            if (SoundIsActive)
+                  Textures.buttonSound_Effect.Play();
         }
 
         public void Display(SpriteBatch sb, GameTime gameTime)
@@ -659,13 +638,9 @@ namespace thegame
 
             }
             else if (curGameMode == instances_type.Game)
-            {
                 thecurrentmap.Display(sb, gameTime, cameraClass);
-            }
             else if (curGameMode == instances_type.Multi)
-            {
                 thecurrentmultimap.Display(sb, gameTime, cameraClass);
-            }
             else if (curGameMode == instances_type.SplashScreen) // draw splashscreen
             {
                 sb.Begin();
@@ -726,60 +701,7 @@ namespace thegame
                 Execute();
             }
         }
-        //-------------------------------------------
-        // SOUND SETTINGS
-        //-------------------------------------------
-        private void HandleSoundSetting()
-        {
-            switch ((execute as Menu).selected)
-            {
-                case 0:
-                    SoundIs = true;
-                    this.selected = gameState.MainMenu;
-                    Execute();
-                    break;
-                case 1:
-                    SoundIs = false;
-                    this.selected = gameState.MainMenu;
-                    Execute();
-                    break;
-                default:
-                    break;
-            }
+      
 
-
-        }
-
-        public void PlayBackGroundSound(string screen)
-        {
-            // First switch off current background sound
-            if (CurrentBKSound != null)
-            {
-                CurrentBKSound.Stop();
-                CurrentBKSound.Dispose();
-            }
-
-            // Now select the sound
-            if (screen == "Menu") CurrentBKSound = Textures.gameSound_EffectMenu.CreateInstance();
-            else
-            {
-                switch (thecurrentmap.thegamestate)
-                {
-                    case gameState.MainMenu: CurrentBKSound = Textures.gameSound_EffectMenu.CreateInstance();
-                        break;
-                    case gameState.AutumnLevel: CurrentBKSound = Textures.gameSound_EffectAutumn.CreateInstance();
-                        break;
-                    case gameState.WinterLevel: CurrentBKSound = Textures.gameSound_EffectWinter.CreateInstance();
-                        break;
-                    case gameState.SpringLevel: CurrentBKSound = Textures.gameSound_EffectSpring.CreateInstance();
-                        break;
-                    case gameState.SummerLevel: CurrentBKSound = Textures.gameSound_EffectSummer.CreateInstance();
-                        break;
-                }
-            }
-
-            // Now Play the sound
-            if (CurrentBKSound != null) CurrentBKSound.Play();
-        }
     }
 }

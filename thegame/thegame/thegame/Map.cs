@@ -132,8 +132,6 @@ namespace thegame
         private List<Perso> iaPerso = new List<Perso>();
 
         private int nb_nuts;
-
-        private bool SoundIs;                           // Set to true to switch the sound OF OBJECTS (on / off)
         private Drawable tree_autumn_exit;
         private Drawable tree_autumn_exit_inside;
 
@@ -172,14 +170,15 @@ namespace thegame
 
         private PauseMenu pauseMenu = new PauseMenu();
 
-        public Map(gameState thegamestate, ref Camera cameraClass, bool SoundIs)
+        private SoundEffectInstance GameSound;
+
+        public Map(gameState thegamestate, ref Camera cameraClass)
         {
             this.thegamestate = thegamestate;
-            
-            this.SoundIs = SoundIs;
             this.NewGame(ref cameraClass);
             PauseButton = new Button("P / Pause", 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
             HelpButton = new Button("H / Help", 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+
         }
 
         public void NewGame(ref Camera cameraClass)
@@ -188,33 +187,34 @@ namespace thegame
             int[,] thetile;
             int[] IAtile;
             themapstate = MapState.game;
+            if(GameSound != null && !GameSound.IsDisposed)
+                GameSound.Stop();
 
             if (thegamestate == gameState.AutumnLevel)
             {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectAutumn.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
+                GameSound = Textures.gameSound_EffectAutumn.CreateInstance();
+                GameSound.IsLooped = true;
                 snow = false;
             }
             else if (thegamestate == gameState.WinterLevel)
             {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectWinter.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
+                GameSound = Textures.gameSound_EffectWinter.CreateInstance();
+                GameSound.IsLooped = true;
                 snow = true;
             }
             else if (thegamestate == gameState.SpringLevel)
             {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectSpring.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
+                GameSound = Textures.gameSound_EffectSpring.CreateInstance();
+                GameSound.IsLooped = true;
                 snow = false;
             }
             else if (thegamestate == gameState.SummerLevel)
             {
-                //OLDSOUND: instancesound = Textures.gameSound_EffectSummer.CreateInstance();
-                //OLDSOUND: instancesound.IsLooped = true;
+                GameSound = Textures.gameSound_EffectSummer.CreateInstance();
+                GameSound.IsLooped = true;
                 snow = false;
             }
 
-            //OLDSOUND: if (SoundIs) instancesound.Play();
 
             //--------------------------------------------
             // IMAGES OF LEVELS ARE LOADED HERE
@@ -372,7 +372,7 @@ namespace thegame
              );
         }
 
-        public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode)
+        public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode, ref bool isGameSound)
         {
             //------------------------------------------------------------------
             // Pause and Help Buttons are created on the Underbar
@@ -380,6 +380,10 @@ namespace thegame
             PauseButton.Update();
             HelpButton.Update();
 
+            if (isGameSound)
+                GameSound.Play();
+            else
+                GameSound.Stop();
 
             // Conditions to access the Pause Page
             if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) themapstate = MapState.pause;
@@ -466,7 +470,7 @@ namespace thegame
                 foreach (Perso iathings in iaPerso)
                 {
                     if (playerActivate)
-                        checkBlood += iathings.TryToKill(ref Health, theperso.hitBoxPerso, SoundIs);
+                        checkBlood += iathings.TryToKill(ref Health, theperso.hitBoxPerso, isGameSound);
                     iathings.UpdateIA(gametime, blocks, theperso.hitBoxPerso);
                 }
 
@@ -482,7 +486,7 @@ namespace thegame
                         touchedByBomb = true;
                         checkCrossed.activateExplosion = true;
                         drawBloodScreen = true;
-                        if (checkCrossed.checkBlood && SoundIs)
+                        if (checkCrossed.checkBlood && isGameSound)
                             Textures.gameExplosion_Effect.Play();
                         checkCrossed.BloodOnce(ref Health);
                         break;
@@ -542,7 +546,7 @@ namespace thegame
                     if (particleComponent.particleEmitterList[1].Active)
                         particleComponent.particleEmitterList[1].Active = false;
 
-                pauseMenu.Update(gametime, SoundIs);
+                pauseMenu.Update(gametime, isGameSound);
                 if (pauseMenu.IChooseSomething) // OPTION PANNEL
                 {
                     switch (pauseMenu.selected)
