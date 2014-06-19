@@ -109,7 +109,7 @@ namespace thegame
                     sb.Draw(Textures.hitbox, dessine, Color.White * 0.5f);
         }
 
-        public void Update(GameTime gametime)
+        public void Update(GameTime gametime, bool SoundIs)
         {
             
             bool MouseOnSOmething = false;
@@ -146,6 +146,7 @@ namespace thegame
                         this.color_tab[this.selected] = change_Color;
                         YExcavator = 140 + selected * 60;
                         this.color_tab[this.selected - 1] = this.defaultColor;
+                        if (SoundIs) Textures.buttonSound_Effect.Play();
                     }
                 }
                 if (Inputs.isKeyRelease(Keys.Up))
@@ -156,6 +157,8 @@ namespace thegame
                         this.selected--;
                         this.color_tab[this.selected] = change_Color;
                         YExcavator = 140 + selected * 60;
+                        if (SoundIs)
+                            Textures.buttonSound_Effect.Play();
                     }
                 }
 
