@@ -141,6 +141,7 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Chat.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Create_game.cs" />
     <Compile Include="Dashboard.cs" />

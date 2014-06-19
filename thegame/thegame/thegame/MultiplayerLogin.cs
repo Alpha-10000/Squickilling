@@ -74,6 +74,7 @@ namespace thegame
         Server server;
         Client client;
         public  static bool created;
+        
 
         public MultiplayerLogin()
         {
@@ -289,6 +290,9 @@ namespace thegame
             {
                 server = new Server();
                 created = true;
+                Game1.graphics.PreferredBackBufferHeight = Game1.graphics.PreferredBackBufferHeight + 150;
+                Game1.graphics.ApplyChanges();
+                
             }
             if (server != null)
                 server.Update();
@@ -301,6 +305,7 @@ namespace thegame
 
             create_game.Update();
             join_game.Update();
+            
         }
 
         private void Login()
@@ -334,7 +339,7 @@ namespace thegame
         public void Display(SpriteBatch sb)
         {
             sb.Begin();
-
+            
             if (!Game1.graphics.IsFullScreen)
                 sb.Draw(Textures.menu_main_page, new Vector2(0, 0), Color.White);
             else
@@ -344,6 +349,7 @@ namespace thegame
             sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.White);
             create_game.Display(sb);
             join_game.Display(sb);
+            
 
             /* CREATE ACCOUNT FORM */
                 float newColor;
