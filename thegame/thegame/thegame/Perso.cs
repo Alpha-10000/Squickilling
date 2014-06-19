@@ -77,7 +77,7 @@ namespace thegame
         {
             if (typePerso == CharacType.player)
             {
-                animationPerso = new Animation(positionPerso, new Vector2(4, 2));
+                animationPerso = new Animation(positionPerso, new Vector2(8, 2));
                 imagePerso = Textures.mario_texture;
                 animationPerso.AnimationSprite = Textures.mario_texture;
                 hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 4, imagePerso.Height / 2 - 4);
@@ -110,6 +110,7 @@ namespace thegame
 
         public Perso(Vector2 pos, CharacType typePerso, NetConnection conn)
         {
+            
             if (typePerso == CharacType.player)
             {
                 animationPerso = new Animation(positionPerso, new Vector2(4, 2));
@@ -342,7 +343,7 @@ namespace thegame
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
             if (typePerso == CharacType.player)
-                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 4);
+                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 2);
             else if (typePerso == CharacType.ia)
                 hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height - 2);
 
