@@ -116,14 +116,14 @@ namespace thegame
                 animationPerso = new Animation(positionPerso, new Vector2(4, 2));
                 imagePerso = Textures.mario_texture;
                 animationPerso.AnimationSprite = Textures.mario_texture;
-                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 4, imagePerso.Height / 2 - 4);
+                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 4, imagePerso.Height / 2 - 8);
             }
             else if (typePerso == CharacType.ia)
             {
                 animationPerso = new Animation(positionPerso, new Vector2(8, 2));
                 imagePerso = Textures.ennemy_texture;
                 animationPerso.AnimationSprite = Textures.ennemy_texture;
-                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 4);
+                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 8);
             }
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
@@ -275,7 +275,7 @@ namespace thegame
                 positionPerso.Y += Gravity;
             }
 
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 2);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 8);
 
             /* PERSO JUST TOUCHED THE GROUND SO INITIALIZE VALUE */
             if (!jumping && (positionPerso.Y == sol || !movedown))
@@ -343,7 +343,7 @@ namespace thegame
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
             if (typePerso == CharacType.player)
-                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 2);
+                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 8);
             else if (typePerso == CharacType.ia)
                 hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height - 2);
 
