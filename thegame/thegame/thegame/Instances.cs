@@ -446,7 +446,8 @@ namespace thegame
             if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
             {
                 Developpermode = false;
-                SoundIs = true;
+                if (SoundIs) CurrentBKSound.Volume = 1;
+                else CurrentBKSound.Volume = 0;
                 if (developpermap)
                 {
                     developpermap = false;
@@ -458,7 +459,7 @@ namespace thegame
 
             if (Developpermode)
             {
-                SoundIs = false;
+                CurrentBKSound.Volume = 0;
                 developperXMouse = mouse1.X - (int)cameraPos.X;
                 developperYMouse = mouse1.Y;
                 //OLDSOUND: instancesound.Stop();

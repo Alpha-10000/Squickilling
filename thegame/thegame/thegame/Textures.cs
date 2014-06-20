@@ -117,7 +117,7 @@ namespace thegame
             // Sounds
             buttonSound_Effect = cm.Load<SoundEffect>("audio\\button");
             gameSound_EffectAutumn = cm.Load<SoundEffect>("audio\\autumn");
-            gameSound_EffectWinter = cm.Load<SoundEffect>("audio\\winter");
+            gameSound_EffectWinter = cm.Load<SoundEffect>("audio\\Blank_Holes");
             gameSound_EffectSpring = cm.Load<SoundEffect>("audio\\Crimson_Fly");
             gameSound_EffectSummer = cm.Load<SoundEffect>("audio\\Echinoderm_Regeneration");
             gameSound_EffectMenu = cm.Load<SoundEffect>("audio\\menu");
