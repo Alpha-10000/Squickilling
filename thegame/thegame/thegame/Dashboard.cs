@@ -318,7 +318,7 @@ namespace thegame
             /* INVITATIONS */
             sb.Draw(Textures.hitbox, titleinvitation, Color.Black * 0.4f);
             Tools.DisplayBorder(sb, Color.White, titleinvitation, 2);
-            Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Invitations", AlignType.MiddleCenter, new Rectangle(titleinvitation.X, titleinvitation.Y, titleinvitation.Width / 2, titleinvitation.Height));
+            Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Friends request", AlignType.MiddleCenter, new Rectangle(titleinvitation.X, titleinvitation.Y, titleinvitation.Width / 2, titleinvitation.Height));
             sb.Draw(Textures.hitbox, contentinvitation, Color.Black * 0.4f);
             Tools.DisplayBorder(sb, Color.White, contentinvitation, 2);
            
