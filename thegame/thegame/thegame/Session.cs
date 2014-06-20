@@ -18,7 +18,7 @@ namespace thegame
         public static bool session_isset = false;
 
         private static float TimeIntervalRequest = 0;
-        private static float TimeInterval = 10000;//10 seconds
+        private static float TimeInterval = 9000;//10 seconds
         private static bool finish = true;
 
 

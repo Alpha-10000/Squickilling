@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Net;
+using System.Collections.Specialized;
+using Newtonsoft.Json;
 
 namespace thegame
 {
@@ -15,9 +18,14 @@ namespace thegame
         private Button go_back;
         public bool goback = false;
 
+        private List<Dictionary<string, string>> ListOfParticipatings = new List<Dictionary<string, string>>();
+        private float timeintervall = 8000;
+        private float timelapsed = 0;
+
         public HasJoined()
         {
             go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            GetInvitations();
         }
 
         public void Update(GameTime gametime)
@@ -26,7 +34,52 @@ namespace thegame
             if (go_back.Clicked)
                 goback = true;
 
+            timelapsed += gametime.ElapsedGameTime.Milliseconds;
+            if (timelapsed >= timeintervall)
+            {
+                timelapsed = 0;
+                GetInvitations();
+            }
             
+        }
+
+        private void GetInvitations()
+        {
+
+                try
+                {
+                    WebClient wb = new WebClient();
+                    var data = new NameValueCollection();
+                    wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted);
+                    data["pwd"] = Session.session_password;
+                    data["id"] = Session.session_id;
+                    wb.UploadValuesAsync(new Uri("http://squickilling.com/json/has_joined.php"), "POST", data);
+                }
+                catch
+                {
+                    //TODO
+                }
+     
+        }
+
+        void client_UploadFileCompleted(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+
+                if (e.Result != null)
+                {
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
+                    Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+                    List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
+                    ListOfParticipatings = ValueList;
+
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         public void Display(SpriteBatch sb)
@@ -46,8 +99,12 @@ namespace thegame
 
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "You have joined a game", AlignType.MiddleCenter, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, 50));
 
+            if (ListOfParticipatings != null)
+                for(int i = 0; i < ListOfParticipatings.Count; i++)
+                    Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, ListOfParticipatings[i]["name"] + "has joined the game", AlignType.MiddleCenter, new Rectangle(TheBox.X, TheBox.Y + 100 + i * 50, TheBox.Width / 2, 60));
 
 
+            Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Waiting for users...", AlignType.MiddleCenter, new Rectangle(TheBox.X, TheBox.Y + 450 , TheBox.Width / 2, 60));
             sb.End();
         }
 

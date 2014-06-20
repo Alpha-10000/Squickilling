@@ -72,7 +72,6 @@ namespace thegame
         public static Button create_game = new Button("Create Game", 200, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
         public static Button join_game = new Button("Join Game", 450, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
 
-
         public MultiplayerLogin()
         {
             wb = new WebClient();
@@ -281,8 +280,6 @@ namespace thegame
             justExecute = true;
             create_game.Update();
             join_game.Update();
-
-
         }
 
         private void Login()
@@ -316,7 +313,7 @@ namespace thegame
         public void Display(SpriteBatch sb)
         {
             sb.Begin();
-
+            
             if (!Game1.graphics.IsFullScreen)
                 sb.Draw(Textures.menu_main_page, new Vector2(0, 0), Color.White);
             else
@@ -326,6 +323,7 @@ namespace thegame
             sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.White);
             create_game.Display(sb);
             join_game.Display(sb);
+            
 
             /* CREATE ACCOUNT FORM */
             float newColor;
