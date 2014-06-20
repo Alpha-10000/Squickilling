@@ -43,6 +43,7 @@ namespace thegame
         public bool activateBackSpace = false;
 
         public bool IChooseSomething = false;
+        
 
         public Menu(int size, string Text)
             : base(drawable_type.font)
@@ -54,6 +55,7 @@ namespace thegame
             color_tab = new Color[this.size];
             this.defaultColor = Color.White;
             this.Text = Text;
+           
         }
 
         public void AddElements(string Text)
@@ -133,6 +135,12 @@ namespace thegame
                     for (int i = 0; i < color_tab.GetLength(0); i++)
                         color_tab[i] = defaultColor;
                     color_tab[index] = change_Color;
+                    
+                    if (SoundIs && this.selected != index)
+                    {
+                        Textures.buttonSound_Effect.Play();
+
+                    }
                     this.selected = index;
                 }
             }
