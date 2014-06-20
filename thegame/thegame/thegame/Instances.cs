@@ -116,6 +116,9 @@ namespace thegame
         private Search_friends search_friends;
         private HasJoined hasjoined;
 
+        private Server server;
+        private Client client;
+
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
         private bool bypassLoginForm = false;
 
@@ -293,7 +296,7 @@ namespace thegame
                         break;
                     case 2:
                         Language.change("nederlands");
-                        this.selected = gameState.MainMenu;      
+                        this.selected = gameState.MainMenu;
                         Execute();
                         break;
                     case 3:                                      // Back to OPTION PANEL
@@ -690,13 +693,24 @@ namespace thegame
                 else if (selected == gameState.MultiplayerHasJoined)
                     hasjoined.Display(sb);
 
-                if (MultiplayerLogin.created)
+                if (MultiplayerLogin.create_game.Clicked)
                 {
-                    this.curGameMode = instances_type.Multi;
-                    this.selected = gameState.AutumnLevel;
-                    MultiplayerLogin.created = false;
-                    Execute();
+                    //this.curGameMode = instances_type.Multi;
+                    //this.selected = gameState.AutumnLevel;
+                    //Execute();
+                    server = new Server();
                 }
+                if (MultiplayerLogin.join_game.Clicked)
+                {
+                    //this.curGameMode = instances_type.Multi;
+                    //this.selected = gameState.AutumnLevel;
+                    //Execute();
+                    client = new Client();
+                }
+                if (server != null)
+                    server.Update(ref thecurrentmultimap);
+                if (client != null)
+                    client.Update(ref thecurrentmultimap);
             }
 
             if (Developpermode)
