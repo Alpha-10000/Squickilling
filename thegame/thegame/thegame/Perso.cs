@@ -446,7 +446,7 @@ namespace thegame
         public void UpdateIA(GameTime gametime, List<Rectangle> blocks, Rectangle hitboxPlayer)
         {
 
-
+            sol = 302;
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
@@ -510,7 +510,7 @@ namespace thegame
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 26);//DO NOT DELETE THAT IS SUPER SUPER IMPORTANT!! YES TWICE BUT IT IS NEEDED !!!!!!!!!
+            hitBoxPerso = new Rectangle((int)(positionPerso.X) - imagePerso.Width / 12, (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 2);
 
             if (moveright)
             {
@@ -556,7 +556,10 @@ namespace thegame
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
-            hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), 27, 26);
+            if (typePerso == CharacType.player)
+                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 8);
+            else if (typePerso == CharacType.ia)
+                hitBoxPerso = new Rectangle((int)(positionPerso.X) - imagePerso.Width / 12, (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 2);
 
         }
         public void Draw(SpriteBatch spriteBatch, GameTime gametime)
