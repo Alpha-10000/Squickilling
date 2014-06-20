@@ -311,7 +311,7 @@ namespace thegame
             // SOUND SETTING
             else if (selected == gameState.SoundMenu && (execute as Menu).IChooseSomething)
             {
-                HandleSoundSetting();
+                //HandleSoundSetting();
                 PlayBackGroundSound("Menu");
             }
             // START SCREEN HANDLER    
@@ -325,7 +325,7 @@ namespace thegame
             else if (curGameMode == instances_type.Game)// THIS IS THE GAME 
             {
 
-                thecurrentmap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode);
+                thecurrentmap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode, ref SoundIs);
                 PlayBackGroundSound(thecurrentmap.BackgroundSoundName);
                 if (thecurrentmap.themapstate == Map.MapState.gobackmenu)
                 {
@@ -440,7 +440,7 @@ namespace thegame
             //-------------------------------------------
             // ACTIVATE DEVELOPER MODE BY PRESSING THE WORD TEAM. SAME TIME
             //-------------------------------------------
-            if (getkey.Contains(Keys.T) && getkey.Contains(Keys.E) && getkey.Contains(Keys.A) && getkey.Contains(Keys.M))
+            if (getkey.Contains(Keys.D) && getkey.Contains(Keys.E) && getkey.Contains(Keys.V))
                 Developpermode = true;
 
             if (getkey.Contains(Keys.N) && getkey.Contains(Keys.O) && Developpermode)
@@ -554,7 +554,7 @@ namespace thegame
                         thecurrentmultimap = new MapMulti(selected, ref cameraClass, SoundIs);
                     else
                     {
-                        thecurrentmap = new Map(selected, ref cameraClass, SoundIs);
+                        thecurrentmap = new Map(selected, ref cameraClass);
                         PlayBackGroundSound("Autumn");
                         curGameMode = instances_type.Game;
                     }
@@ -566,7 +566,7 @@ namespace thegame
                         thecurrentmultimap = new MapMulti(selected, ref cameraClass, SoundIs);
                     else
                     {
-                        thecurrentmap = new Map(selected, ref cameraClass, SoundIs);
+                        thecurrentmap = new Map(selected, ref cameraClass);
                         curGameMode = instances_type.Game;
                     }
                     break;
@@ -665,7 +665,7 @@ namespace thegame
             }
             else if (curGameMode == instances_type.Game)
             {
-                thecurrentmap.Display(sb, gameTime, cameraClass);
+                thecurrentmap.Display(sb, gameTime, cameraClass, SoundIs);
             }
             else if (curGameMode == instances_type.Multi)
             {
@@ -745,24 +745,24 @@ namespace thegame
         //-------------------------------------------
         // SOUND SETTINGS
         //-------------------------------------------
-        private void HandleSoundSetting()
-        {
-            switch ((execute as Menu).selected)
-            {
-                case 0:
-                    SoundIs = true;
-                    this.selected = gameState.MainMenu;
-                    Execute();
-                    break;
-                case 1:
-                    SoundIs = false;
-                    this.selected = gameState.MainMenu;
-                    Execute();
-                    break;
-                default:
-                    break;
-            }
-        }
+        //private void HandleSoundSetting()
+        //{
+        //    switch ((execute as Menu).selected)
+        //    {
+        //        case 0:
+        //            SoundIs = true;
+        //            this.selected = gameState.MainMenu;
+        //            Execute();
+        //            break;
+        //        case 1:
+        //            SoundIs = false;
+        //            this.selected = gameState.MainMenu;
+        //            Execute();
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         public void PlayBackGroundSound(string SoundToPlay)
         {

@@ -115,7 +115,8 @@ namespace thegame
         private bool drawBloodScreen = false;                  //variable for the bloodscreen
         private float elapsedTimeBloodScreen = 0;
 
-        private Button PauseButton, HelpButton;                // Buttons for the Underbar
+        private Button PauseButton, HelpButton;                     // Buttons for the Underbar
+        private Button MusicButton;    // Buttons for the Underbar
 
         private Drawable scoreDisplay;
 
@@ -136,7 +137,7 @@ namespace thegame
 
         private int nb_nuts;
 
-        private bool SoundIs;                           // Set to true to switch the sound OF OBJECTS (on / off)
+        //private bool SoundIs;                           // Set to true to switch the sound OF OBJECTS (on / off)
         private Drawable tree_autumn_exit;
         private Drawable tree_autumn_exit_inside;
 
@@ -175,14 +176,13 @@ namespace thegame
 
         private PauseMenu pauseMenu = new PauseMenu();
 
-        public Map(gameState thegamestate, ref Camera cameraClass, bool SoundIs)
+        public Map(gameState thegamestate, ref Camera cameraClass)
         {
             this.thegamestate = thegamestate;
-            
-            this.SoundIs = SoundIs;
             this.NewGame(ref cameraClass);
-            PauseButton = new Button("P / Pause", 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
-            HelpButton = new Button("H / Help", 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            PauseButton = new Button("P / Pause", 524, 430, Textures.fontnormal_texture,COLORTYPE.light_green);
+            HelpButton = new Button("H / Help", 524 + 120, 430, Textures.fontnormal_texture, COLORTYPE.light_green);
+            MusicButton = new Button("M / Music", 524+60, 475, Textures.fontnormal_texture, COLORTYPE.light_green);
         }
 
         public void NewGame(ref Camera cameraClass)
@@ -409,17 +409,35 @@ namespace thegame
              );
         }
 
-        public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode)
+        public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode
+            , ref bool SoundIs)
         {
+
             //------------------------------------------------------------------
             // Pause and Help Buttons are created on the Underbar
             //------------------------------------------------------------------
             PauseButton.Update();
             HelpButton.Update();
+            MusicButton.Update();
 
 
             // Conditions to access the Pause Page
             if (Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) themapstate = MapState.pause;
+
+            if (Inputs.isKeyRelease(Keys.M) || MusicButton.Clicked)
+            {
+                if (SoundIs)
+                {
+                    SoundIs = false;
+                    MusicButton = new Button("M / Music", 524 + 60, 475, Textures.fontnormal_texture, COLORTYPE.dark_green);
+                }
+                else
+                {
+                    SoundIs = true;
+                    MusicButton = new Button("M / Music", 524 + 60,475, Textures.fontnormal_texture, COLORTYPE.light_green);
+                }
+            }
+
 
             // Deal with particules in the winter level
             if (thegamestate == gameState.WinterLevel)
@@ -676,7 +694,7 @@ namespace thegame
             
         }
 
-        public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass)
+        public void Display(SpriteBatch sb, GameTime gameTime, Camera cameraClass, bool SoundIs)
         {
 
             if (themapstate == MapState.gameover && playerActivate)
@@ -805,6 +823,8 @@ namespace thegame
                 //------------------------------------------------------------------
                 PauseButton.Display(sb);
                 HelpButton.Display(sb);
+                MusicButton.Display(sb);
+                
 
                 //Negative health
                 sb.Draw(Textures.healthBar_texture, new Rectangle(0,

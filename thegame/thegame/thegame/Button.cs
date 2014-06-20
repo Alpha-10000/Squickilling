@@ -8,6 +8,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace thegame
 {
+    public enum COLORTYPE
+    { 
+        light_green,
+        dark_green,
+        black
+    }
+
+
     class Button
     {
         private int x, y, Textwidth, Textheight, radius, CircleX1, CircleX2, CircleY1, CircleY2;
@@ -31,9 +39,44 @@ namespace thegame
             CircleX2 = x + Textwidth;
             CircleY2 = y + (Textheight + Topspacing) / 2 + 1;
             CircleY1 = y + (Textheight + Topspacing) / 2 + 1;
+
             this.main = main;
             this.borderOnClick = borderOnClick;
             this.Defautborder = Defautborder;
+        }
+
+        public Button(string text, int x, int y, SpriteFont spritefont, COLORTYPE type)
+        {
+            this.text = text;
+            this.x = x;
+            this.y = y;
+            this.spritefont = spritefont;
+            Textwidth = (int)spritefont.MeasureString(text).X;
+            Textheight = (int)spritefont.MeasureString(text).Y;
+
+            radius = (Textheight + Topspacing) / 2 + 1;
+            CircleX1 = x;
+            CircleX2 = x + Textwidth;
+            CircleY2 = y + (Textheight + Topspacing) / 2 + 1;
+            CircleY1 = y + (Textheight + Topspacing) / 2 + 1;
+            if (type == COLORTYPE.light_green)
+            {
+                this.main = new Color(122, 184, 0);
+                this.borderOnClick = Color.White;
+                this.Defautborder = new Color(122, 184, 0);
+            }
+            if (type == COLORTYPE.dark_green)
+            {
+                this.main = new Color(100, 143, 0);
+                this.borderOnClick = Color.White;
+                this.Defautborder = new Color(100,143,0);
+            } 
+            if (type == COLORTYPE.black)
+            {
+                this.main = new Color(0,0,0);
+                this.borderOnClick = Color.White;
+                this.Defautborder = new Color(0,0,0);
+            }
         }
 
         public void Update()
