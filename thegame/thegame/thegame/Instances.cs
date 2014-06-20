@@ -798,6 +798,7 @@ namespace thegame
             else CurrentBKSound.Volume = 1;
 
             // Now Play the sound
+            CurrentBKSound.IsLooped = true;
             CurrentBKSound.Play();
             
             
