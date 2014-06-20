@@ -22,6 +22,12 @@ namespace thegame
             set { visible = value; }
         }
         Vector2 positionProjectile;
+        public Vector2 PositionProjectile
+        {
+            get { return positionProjectile; }
+            set { positionProjectile = value; }
+        }
+
         Vector2 startPosition;
         float speed;
         Vector2 direction;
@@ -52,13 +58,26 @@ namespace thegame
                 this.hitbox.Y = (int)positionProjectile.Y;//collision
             }
         }
-
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             if (visible == true)
             {
+               
+
                 base.Draw(spriteBatch, positionProjectile);
+                
             }
         }
+        
+        public void Draw(SpriteBatch spriteBatch,float rot)
+        {
+            if (visible == true)
+            {
+               base.Draw(spriteBatch, positionProjectile, rot, true);
+
+            }
+        }
+        
     }
 }

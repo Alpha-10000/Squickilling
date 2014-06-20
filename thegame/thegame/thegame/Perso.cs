@@ -571,6 +571,7 @@ namespace thegame
                 hitBoxPerso = new Rectangle((int)(positionPerso.X) - imagePerso.Width / 12, (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 2);
 
         }
+        float rot = 0;
         public void Draw(SpriteBatch spriteBatch, GameTime gametime)
         {
             /* Fait clignoter le personnage */
@@ -599,13 +600,14 @@ namespace thegame
             {
                 animationPerso.Draw(spriteBatch, LastMovewasRight);
             }
-
+            
+            rot -= 0.30f;
             if (typePerso == CharacType.player)
                 foreach (Projectile nut in projs)
                     nut.Draw(spriteBatch);
             else
                 foreach (Projectile nut in projIA)
-                    nut.Draw(spriteBatch);
+                    nut.Draw(spriteBatch,nut.PositionProjectile, rot,true);
 
 
 

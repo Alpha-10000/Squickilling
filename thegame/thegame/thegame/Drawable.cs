@@ -226,10 +226,16 @@ namespace thegame
            sb.Draw(image, pos, Color.White);
         }
 
-        public void Draw(SpriteBatch sb, Vector2 position, float scale) /* To show image */
+         public void Draw(SpriteBatch sb, Vector2 position, float scale) /* To show image */
         {
             sb.Draw(image, position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
+         public void Draw(SpriteBatch sb, Vector2 position, float rotation, bool bullshit) /* To show image */
+         {
+             sb.Draw(image, position, null, Color.White, rotation, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+         }
+
+
         public void Draw(SpriteBatch sb, string text, Vector2 pos, Color color, string Type) /* To show text */
         {
             if (Type == "normal")
