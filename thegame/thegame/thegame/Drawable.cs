@@ -58,7 +58,9 @@ namespace thegame
         mine_red,
         medecine,
         excavatorArm,
-        Squirrel
+        Squirrel,
+        axe,
+        axe2
     }
 
     public class Drawable
@@ -206,6 +208,12 @@ namespace thegame
                     break;
                 case drawable_type.Squirrel:
                     image = Textures.SquirrelMenu;
+                    break;
+                case drawable_type.axe:
+                    image = Textures.axe;
+                    break;
+                case drawable_type.axe2:
+                    image = Textures.axe2;
                     break;
                default:
                     image = null;

@@ -110,7 +110,7 @@ namespace thegame
 
         public Perso(Vector2 pos, CharacType typePerso, NetConnection conn)
         {
-            
+
             if (typePerso == CharacType.player)
             {
                 animationPerso = new Animation(positionPerso, new Vector2(4, 2));
@@ -182,12 +182,12 @@ namespace thegame
             Vector2 positionNoix;
             if (animationPerso.CurrentFrame.Y == 1)
             {
-                positionNoix = new Vector2(positionPerso.X - 5, positionPerso.Y + 5);
+                positionNoix = new Vector2(positionPerso.X - 3, positionPerso.Y + 7);
                 directionNoix = new Vector2(-1, 0);
             }
             else
             {
-                positionNoix = new Vector2(positionPerso.X + 50, positionPerso.Y + 7);
+                positionNoix = new Vector2(positionPerso.X + 20, positionPerso.Y + 7);
                 directionNoix = new Vector2(1, 0);
             }
 
@@ -446,7 +446,7 @@ namespace thegame
         public void UpdateIA(GameTime gametime, List<Rectangle> blocks, Rectangle hitboxPlayer)
         {
 
-            sol = 302;
+            sol = 303;
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
@@ -456,16 +456,25 @@ namespace thegame
             Vector2 positionNoix;
             if (animationPerso.CurrentFrame.Y == 1)
             {
-                positionNoix = new Vector2(positionPerso.X - 5, positionPerso.Y + 5);
+                if (typePerso == CharacType.player)
+                    positionNoix = new Vector2(positionPerso.X - 5, positionPerso.Y + 5);
+                else
+                    positionNoix = new Vector2(positionPerso.X - 30, positionPerso.Y + 20);
                 directionNoix = new Vector2(-1, 0);
             }
             else
             {
-                positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y + 5);
+                if (typePerso == CharacType.player)
+                    positionNoix = new Vector2(positionPerso.X + 27, positionPerso.Y + 5);
+                else
+                    positionNoix = new Vector2(positionPerso.X - 10, positionPerso.Y + 20);
                 directionNoix = new Vector2(1, 0);
             }
-
-            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 230, directionNoix);
+            Projectile noix;
+            if (animationPerso.CurrentFrame.Y == 1)
+                noix = new Projectile(drawable_type.axe2, positionNoix, positionNoix, 230, directionNoix);
+            else
+                noix = new Projectile(drawable_type.axe, positionNoix, positionNoix, 230, directionNoix);
 
 
             if (gametime.TotalGameTime.TotalMilliseconds >= nextprojec && ThrowProjectiles.Intersects(hitboxPlayer))

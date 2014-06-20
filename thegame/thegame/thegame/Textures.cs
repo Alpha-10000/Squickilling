@@ -98,6 +98,8 @@ namespace thegame
         public static Texture2D acorn_texture;
         public static Texture2D healthBar_texture;
         public static Texture2D eraser;
+        public static Texture2D axe;
+        public static Texture2D axe2;
 
 
         public static Texture2D snowdrop;
@@ -146,6 +148,8 @@ namespace thegame
             SquirrelMenu = cm.Load<Texture2D>(@"Squirrel_menu");
             animation_mine = cm.Load<Texture2D>(@"mine-animation");
             bloodEmitter = cm.Load<Texture2D>(@"blood_spritesheet");
+            axe = cm.Load<Texture2D>(@"Axe");
+            axe2 = cm.Load<Texture2D>(@"Axe2");
 
             // Autumn
             autumn_ground_texture = cm.Load<Texture2D>(@"Autumn/Autumn_Ground");
