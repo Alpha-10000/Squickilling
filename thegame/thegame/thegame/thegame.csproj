@@ -155,6 +155,7 @@
     <Compile Include="GameComponents\X2DPE\Helpers\RandomMinMax.cs" />
     <Compile Include="GameComponents\X2DPE\Particle.cs" />
     <Compile Include="GameComponents\X2DPE\ParticleGameComponent.cs" />
+    <Compile Include="GetGamers.cs" />
     <Compile Include="HasJoined.cs" />
     <Compile Include="Inputs.cs" />
     <Compile Include="Instances.cs" />

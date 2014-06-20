@@ -15,6 +15,8 @@ namespace thegame
         private Button go_back;
         public bool goback = false;
 
+        public bool IsOkayToGoToTheGame = false;
+        public bool PlayerToGame = false;
         /* Content create */
         private Rectangle contentcreate = new Rectangle(175, 70, 450, 220);
         private Rectangle BottomBox = new Rectangle(50, 315, 700, 185);
@@ -67,9 +69,14 @@ namespace thegame
             if (popup != null)
             {
                 popup.Update(gametime);
-                if (popup.action1bool)
+                if (popup.action1bool && !IsOkayToGoToTheGame)
                     popup = null;
+                else if (popup.action1bool && IsOkayToGoToTheGame)
+                    PlayerToGame = true;
             }
+            Point themouse = Inputs.getMousePoint();
+            if (50 >= Math.Sqrt(Math.Pow(themouse.X - 653, 2) + Math.Pow(themouse.Y - 405, 2)) && Inputs.isLMBClick())
+                CreateGame();
 
             GetFriends();
             if (getFriends != null)
@@ -276,6 +283,45 @@ namespace thegame
                     InvitedBox();
                     finish = true;
                     GetFriends();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void CreateGame()
+        {
+
+            try
+            {
+                WebClient wb = new WebClient();
+                var data = new NameValueCollection();
+                wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted5);
+                data["pwd"] = Session.session_password;
+                data["id"] = Session.session_id;
+                wb.UploadValuesAsync(new Uri("http://squickilling.com/json/create_game.php"), "POST", data);
+            }
+            catch
+            {
+                //TODO
+            }
+
+        }
+
+        void client_UploadFileCompleted5(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+
+                if (e.Result != null)
+                {
+
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
+                    popup = new Popup("OK", "", "Information", new string[] { text }, Textures.font_texture, 450);
+                    if (text == "The game has been created")
+                        IsOkayToGoToTheGame = true;
                 }
             }
             catch

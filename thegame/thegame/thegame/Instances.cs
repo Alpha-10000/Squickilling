@@ -55,7 +55,8 @@ namespace thegame
         MultiplayerJoinGame,
         MultiplayerGame,
         MultiplayerSearchFriends,
-        MultiplayerHasJoined
+        MultiplayerHasJoined,
+        MultiplayerGetGamers
     }
 
     public class Instances
@@ -116,6 +117,7 @@ namespace thegame
         private MultiMap multimap;
         private Search_friends search_friends;
         private HasJoined hasjoined;
+        private GetGamers getgamers;
 
         private Server server;
         private Client client;
@@ -397,6 +399,11 @@ namespace thegame
                     this.selected = gameState.MutilplayerDashboard;
                     Execute();
                 }
+                if (create_game.PlayerToGame)
+                {
+                    this.selected = gameState.MultiplayerGetGamers;
+                    Execute();
+                }
             }
             else if (selected == gameState.MultiplayerJoinGame)
             {
@@ -411,6 +418,7 @@ namespace thegame
                     this.selected = gameState.MultiplayerHasJoined;
                     Execute();
                 }
+              
             }
             else if (selected == gameState.MultiplayerGame)
             {
@@ -433,6 +441,16 @@ namespace thegame
                     this.selected = gameState.MultiplayerJoinGame;
                     Execute();
                 }
+                if (hasjoined.thereisone)
+                {
+                    this.selected = gameState.MultiplayerGetGamers;
+                    Execute();
+                }
+                
+            }
+            else if (selected == gameState.MultiplayerGetGamers)
+            {
+                getgamers.Update(gametime);
             }
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
@@ -592,6 +610,9 @@ namespace thegame
                 case gameState.MultiplayerHasJoined:
                     hasjoined = new HasJoined();
                     break;
+                case gameState.MultiplayerGetGamers:
+                    getgamers = new GetGamers();
+                    break;
                 default:
                     break;
             }
@@ -694,6 +715,8 @@ namespace thegame
                     search_friends.Display(sb);
                 else if (selected == gameState.MultiplayerHasJoined)
                     hasjoined.Display(sb);
+                else if (selected == gameState.MultiplayerGetGamers)
+                    getgamers.Display(sb);
 
                 if (MultiplayerLogin.create_game.Clicked)
                 {

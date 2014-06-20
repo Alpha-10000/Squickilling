@@ -17,10 +17,12 @@ namespace thegame
         private Rectangle TheBox = new Rectangle(50, 50, 750, 400);
         private Button go_back;
         public bool goback = false;
+        public bool thereisone = false;
 
         private List<Dictionary<string, string>> ListOfParticipatings = new List<Dictionary<string, string>>();
         private float timeintervall = 8000;
         private float timelapsed = 0;
+        private string debug = "";
 
         public HasJoined()
         {
@@ -39,6 +41,7 @@ namespace thegame
             {
                 timelapsed = 0;
                 GetInvitations();
+                CheckGame();
             }
             
         }
@@ -73,7 +76,45 @@ namespace thegame
                     Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
                     List<Dictionary<string, string>> ValueList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(values["thearray"].ToString());
                     ListOfParticipatings = ValueList;
+                    debug = values["error"].ToString();
+                }
+            }
+            catch
+            {
 
+            }
+        }
+
+
+        private void CheckGame()
+        {
+
+            try
+            {
+                WebClient wb = new WebClient();
+                var data = new NameValueCollection();
+                wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted2);
+                data["pwd"] = Session.session_password;
+                data["id"] = Session.session_id;
+                wb.UploadValuesAsync(new Uri("http://squickilling.com/json/waiting_game.php"), "POST", data);
+            }
+            catch
+            {
+                //TODO
+            }
+
+        }
+
+        void client_UploadFileCompleted2(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+
+                if (e.Result != null)
+                {
+                    string text = System.Text.Encoding.UTF8.GetString(e.Result);
+                    if (text == "There is one motherfucker")
+                        thereisone = true;
                 }
             }
             catch
@@ -93,7 +134,6 @@ namespace thegame
             go_back.Display(sb);
 
 
-
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Friends game", AlignType.MiddleCenter, new Rectangle(TheBox.X, TheBox.Y, TheBox.Width / 2, 60));
             sb.Draw(Textures.hitbox, new Rectangle(TheBox.X, TheBox.Y + 52, TheBox.Width, 1), Color.White);
 
@@ -101,7 +141,7 @@ namespace thegame
 
             if (ListOfParticipatings != null)
                 for(int i = 0; i < ListOfParticipatings.Count; i++)
-                    Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, ListOfParticipatings[i]["name"] + "has joined the game", AlignType.MiddleCenter, new Rectangle(TheBox.X, TheBox.Y + 100 + i * 50, TheBox.Width / 2, 60));
+                    Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, ListOfParticipatings[i]["name"] + " has joined the game", AlignType.MiddleCenter, new Rectangle(TheBox.X, TheBox.Y + 100 + i * 50, TheBox.Width / 2, 60));
 
 
             Tools.DisplayAlignedText(sb, Color.White, Textures.font_texture, "Waiting for users...", AlignType.MiddleCenter, new Rectangle(TheBox.X, TheBox.Y + 450 , TheBox.Width / 2, 60));
