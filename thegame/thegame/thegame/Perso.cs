@@ -607,7 +607,7 @@ namespace thegame
                     nut.Draw(spriteBatch);
             else
                 foreach (Projectile nut in projIA)
-                    nut.Draw(spriteBatch,nut.PositionProjectile, rot,true);
+                    nut.Draw(spriteBatch,new Vector2(nut.PositionProjectile.X,nut.PositionProjectile.Y + 15), rot,true);
 
 
 
