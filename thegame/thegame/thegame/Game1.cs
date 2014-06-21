@@ -53,9 +53,15 @@ namespace thegame
         {
             base.Initialize();
             if (CultureInfo.InstalledUICulture.ToString() == "fr-FR")
+            {
                 Language.change("french");
+                Instances.language = "french";
+            }
             else
+            {
                 Language.change("english");
+                Instances.language = "english";
+            }
         }
 
         protected override void LoadContent()

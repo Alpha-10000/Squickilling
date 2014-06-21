@@ -93,7 +93,7 @@ namespace thegame
         public static SoundEffect gameExplosion_Effect;
         public static SoundEffect gamePunch_Effect;
 
-        public static Video vid;
+        public static Video vid, credits_en, credits_fr;
         public static Texture2D nut_texture;
         public static Texture2D acorn_texture;
         public static Texture2D healthBar_texture;
@@ -198,8 +198,10 @@ namespace thegame
             tree_summer_entrance_inside = cm.Load<Texture2D>(@"Summer/Summer_tree_entrance_inside");
             tree_summer_cut_texture = cm.Load<Texture2D>(@"Summer/Summer_Cut_tree");
 
-            //Intro
+            //Intro and credit
             vid = cm.Load<Video>(@"video\\vid");
+            credits_en = cm.Load<Video>(@"video\\credits_en");
+            credits_fr = cm.Load<Video>(@"video\\credits_fr");
 
             //button
             ButtonLeft = cm.Load<Texture2D>(@"Button/Bouton_left");
