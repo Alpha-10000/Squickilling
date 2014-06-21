@@ -487,7 +487,7 @@ namespace thegame
                 }
             }
 
-            if (Developpermode)
+            if (Developpermode && curGameMode != instances_type.SplashScreen)
             {
                 CurrentBKSound.Volume = 0;
                 developperXMouse = mouse1.X - (int)cameraPos.X;
