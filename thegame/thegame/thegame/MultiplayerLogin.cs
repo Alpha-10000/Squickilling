@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace thegame
 {
@@ -21,7 +22,7 @@ namespace thegame
         private WebClient wb;
         private string[] infotext = new string[] { "" };
         private string infotext2 = "";
-
+        bool isChatLaunched = false;
         public string session_password = "";
         public string session_email = "";
         public string session_id = "";
@@ -60,6 +61,7 @@ namespace thegame
         int xColorLeftCircle = 73;
 
         private bool justExecute = true;
+        StreamWriter sw;
 
         private bool displayRightCircle = true;
         private bool displayLeftCircle = true;
@@ -75,6 +77,7 @@ namespace thegame
         public MultiplayerLogin()
         {
             wb = new WebClient();
+            sw = new StreamWriter("name.txt");
 
             /* All rectangle for alignements and display to check collision with mouse */
             //Create form
@@ -235,11 +238,22 @@ namespace thegame
             if (displayLoginForm)
             {
                 if (Inputs.isLMBClick() && login_account_button.Contains(Inputs.getMousePoint()) || Inputs.isKeyRelease(Keys.Enter))
+                {
                     Login();
+                    
+                    if (session_name.Length > 0 && !isChatLaunched)
+                    {
+                        int i = 0;
+                        while (i < 1000)
+                            i++;
+                        
+                        System.Diagnostics.Process.Start("Client_chat.exe");
+                        isChatLaunched = true;
+                    }
+                }
 
                 if (login_email_string.next)
                     login_password_string.isSelected = true;
-
 
             }
             if (displayCreateForm)
@@ -303,6 +317,9 @@ namespace thegame
                 if (infotext2 == "")
                     session_isset = true;
                 login_password_string.text = login_email_string.text = "";
+                sw.WriteLine(session_name);
+                sw.Close();
+
             }
             catch
             {
