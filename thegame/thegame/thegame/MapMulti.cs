@@ -501,7 +501,8 @@ namespace thegame
 
                     if (!p.gameover)//player can move
                     {
-                        cameraPos = p.cameraPos;
+                        if (p.utilisable)
+                            cameraPos = p.cameraPos;
 
                         projectiles = new List<Projectile>();
                         p.Update(gametime, blocks, projectiles, objects, ref p.nbNuts, Developpermode);//TODO : remove keyboardState and oldkey because class now
