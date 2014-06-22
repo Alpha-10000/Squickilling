@@ -19,7 +19,7 @@ namespace thegame
         bool actif;
 
         private Vector2 currentFrame;
-        public Vector2 Position { get; set; }
+        public Vector2 Position;
         public Vector2 nbFrames { get; set; }
         Rectangle SpriteSheet;
 

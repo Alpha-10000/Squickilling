@@ -48,7 +48,7 @@ namespace thegame
         float speed;
         public float Speed { get; private set; }
 
-        Animation animationPerso;
+        public Animation animationPerso;
         List<Projectile> projs = new List<Projectile>();
         public List<Rectangle> objects = new List<Rectangle>();
         /* For the IA */
@@ -160,7 +160,6 @@ namespace thegame
         {
             this.activateDevelopper = activateDeveloper;
             this.objects = objects;
-
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
