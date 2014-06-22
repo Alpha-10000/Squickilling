@@ -522,7 +522,7 @@ namespace thegame
                 foreach (Perso iathings in iaPerso)
                 {
                     if (playerActivate)
-                        checkBlood += iathings.TryToKill(ref Health, theperso.hitBoxPerso, SoundIs);
+                        checkBlood += iathings.TryToKill(ref Health, theperso.hitBoxPerso, SoundIs, Developpermode);
                     iathings.UpdateIA(gametime, blocks, theperso.hitBoxPerso, Developpermode);
                 }
 
@@ -538,7 +538,7 @@ namespace thegame
                         touchedByBomb = true;
                         checkCrossed.activateExplosion = true;
                         drawBloodScreen = true;
-                        if (checkCrossed.checkBlood && SoundIs)
+                        if (checkCrossed.checkBlood && SoundIs && !Developpermode)
                             Textures.gameExplosion_Effect.Play();
                         checkCrossed.BloodOnce(ref Health);
                         break;
