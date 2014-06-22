@@ -44,7 +44,7 @@ namespace thegame
         private int nb_players = 0;
         private int myindex;
         private bool IKnowwhereIAm = false;
-        
+
 
         public Client()
         {
@@ -59,7 +59,7 @@ namespace thegame
             p = new Perso(new Vector2(0, 200), CharacType.player);
             p.utilisable = true;
             Console.WriteLine("Client créé");
- 
+
         }
 
         private void OnTriche(ref MapMulti map)
@@ -81,7 +81,7 @@ namespace thegame
 
         public void Update(ref MapMulti map)
         {
-     
+
             NetIncomingMessage inc;
             if ((inc = client.ReadMessage()) != null)//Receive message
             {
@@ -121,12 +121,12 @@ namespace thegame
                                 Console.WriteLine("Not me and id  : " + index);
                                 OnTriche(ref map);
 
-                              
+
                             }
 
                             Console.WriteLine("connecté");
                         }
-                        
+
                         if (truc == (byte)PacketTypes.POSITIONX)
                         {
 
@@ -134,16 +134,43 @@ namespace thegame
                             float newPosX = inc.ReadFloat();
                             Console.WriteLine(newPosX);
                             map.persos[whichPersoIndex].animationPerso.Position.X = newPosX;
-                           
+
                         }
                         if (truc == (byte)PacketTypes.POSITIONY)
                         {
-                            
+
                             int whichPersoIndex = inc.ReadInt32();
                             float newPosY = inc.ReadFloat();
                             Console.WriteLine(newPosY);
                             map.persos[whichPersoIndex].animationPerso.Position.Y = newPosY;
-                    
+
+                        }
+                        if (truc == (byte)PacketTypes.SCORE)
+                        {
+
+                            int whichPersoIndex = inc.ReadInt32();
+                            int newScore = inc.ReadInt32();
+                            Console.WriteLine(newScore);
+                            map.persos[whichPersoIndex].animationPerso.Position.Y = newScore;
+
+                        }
+                        if (truc == (byte)PacketTypes.BONUS)
+                        {
+
+                            int whichPersoIndex = inc.ReadInt32();
+                            int newBonus = inc.ReadInt32();
+                            Console.WriteLine(newBonus);
+                            map.persos[whichPersoIndex].animationPerso.Position.Y = newBonus;
+
+                        }
+                        if (truc == (byte)PacketTypes.BONUS)
+                        {
+
+                            int whichPersoIndex = inc.ReadInt32();
+                            int newHealth = inc.ReadInt32();
+                            Console.WriteLine(newHealth);
+                            map.persos[whichPersoIndex].animationPerso.Position.Y = newHealth;
+
                         }
                         /*
                     else if (truc == (byte)PacketTypes.SCORE)
@@ -196,96 +223,123 @@ namespace thegame
 
                 }
             }
-                    if (IKnowwhereIAm)
+            if (IKnowwhereIAm)
+            {
+
+                if (map.persos[myindex].positionPerso.X != oldx)//If i move I send JUST my position
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.POSITIONX);
+                    outmsg.Write(myindex);
+                    outmsg.Write(map.persos[myindex].positionPerso.X);
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    oldx = map.persos[myindex].positionPerso.X;
+                }
+
+                if (map.persos[myindex].positionPerso.Y != oldy)
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.POSITIONY);
+                    outmsg.Write(myindex);
+                    outmsg.Write(map.persos[myindex].positionPerso.Y);
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    oldy = map.persos[myindex].positionPerso.Y;
+                }
+
+                if (map.persos[myindex].score != oldscore)
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.SCORE);
+                    outmsg.Write(myindex);
+                    outmsg.Write(map.persos[myindex].score);
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    oldscore = map.persos[myindex].score;
+                }
+
+                if (map.persos[myindex].nbNuts != oldbonus)
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.BONUS);
+                    outmsg.Write(myindex);
+                    outmsg.Write(map.persos[myindex].nbNuts);
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    oldbonus = map.persos[myindex].nbNuts;
+                }
+
+                if (map.persos[myindex].health != oldhealth)
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.HEALTH);
+                    outmsg.Write(myindex);
+                    outmsg.Write(map.persos[myindex].health);
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    oldhealth = map.persos[myindex].health;
+                }
+
+
+
+
+
+                /* DEBUG 
+                if (Imoved)
+                    Console.WriteLine("I moved");
+                else
+                    Console.WriteLine("I did not moved");
+          */
+
+
+
+
+
+
+
+                /*
+                if (map.persos[indexC].score != oldscore)
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.SCORE);
+                    try
                     {
-                   
-                        
-                            if (map.persos[myindex].positionPerso.X != oldx)//If i move I send JUST my position
-                            {
-                                outmsg = client.CreateMessage();
-                                outmsg.Write((byte)PacketTypes.POSITIONX);
-                                outmsg.Write(myindex);
-                                outmsg.Write(map.persos[myindex].positionPerso.X);
-                                client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                                oldx = map.persos[myindex].positionPerso.X;
-                            }
-                         
-                            if (map.persos[myindex].positionPerso.Y != oldy)
-                            {
-                                outmsg = client.CreateMessage();
-                                outmsg.Write((byte)PacketTypes.POSITIONY);
-                                outmsg.Write(myindex);
-                                outmsg.Write(map.persos[myindex].positionPerso.Y);
-                                client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-
-                                oldy = map.persos[myindex].positionPerso.Y;
-                                
-                            }
-
-
-
-
-
-                            /* DEBUG 
-                            if (Imoved)
-                                Console.WriteLine("I moved");
-                            else
-                                Console.WriteLine("I did not moved");
-                      */
-
-
-
-
-
+                        outmsg.Write(map.persos[indexC].score);
+                    }
+                    catch
+                    {
+                        OnTriche(indexC, ref map);
+                    }
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                }
+                if (map.persos[indexC].nbNuts != oldbonus)
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.BONUS);
+                    try
+                    {
+                        outmsg.Write(map.persos[indexC].nbNuts);
+                    }
+                    catch
+                    {
+                        OnTriche(indexC, ref map);
+                    }
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                }
+                if (map.persos[indexC].health != oldhealth)
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.HEALTH);
+                    try
+                    {
+                        outmsg.Write(map.persos[indexC].health);
+                    }
+                    catch
+                    {
+                        OnTriche(indexC, ref map);
+                    }
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                }
+                 */
 
 
-                        /*
-                        if (map.persos[indexC].score != oldscore)
-                        {
-                            outmsg = client.CreateMessage();
-                            outmsg.Write((byte)PacketTypes.SCORE);
-                            try
-                            {
-                                outmsg.Write(map.persos[indexC].score);
-                            }
-                            catch
-                            {
-                                OnTriche(indexC, ref map);
-                            }
-                            client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                        }
-                        if (map.persos[indexC].nbNuts != oldbonus)
-                        {
-                            outmsg = client.CreateMessage();
-                            outmsg.Write((byte)PacketTypes.BONUS);
-                            try
-                            {
-                                outmsg.Write(map.persos[indexC].nbNuts);
-                            }
-                            catch
-                            {
-                                OnTriche(indexC, ref map);
-                            }
-                            client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                        }
-                        if (map.persos[indexC].health != oldhealth)
-                        {
-                            outmsg = client.CreateMessage();
-                            outmsg.Write((byte)PacketTypes.HEALTH);
-                            try
-                            {
-                                outmsg.Write(map.persos[indexC].health);
-                            }
-                            catch
-                            {
-                                OnTriche(indexC, ref map);
-                            }
-                            client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                        }
-                         */
-                    
-                    
-                
+
             }
         }
     }

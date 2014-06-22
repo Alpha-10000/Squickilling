@@ -77,7 +77,7 @@ namespace thegame
         public MultiplayerLogin()
         {
             wb = new WebClient();
-            sw = new StreamWriter("name.txt");
+            //sw = new StreamWriter("name.txt");
 
             /* All rectangle for alignements and display to check collision with mouse */
             //Create form
