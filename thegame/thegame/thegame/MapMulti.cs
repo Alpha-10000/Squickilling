@@ -432,159 +432,165 @@ namespace thegame
             // CHECK IF WE ARE AT THE END OF A LEVEL
             foreach (Perso p in persos)
             {
-                if (p.positionPerso.X > 5350)
+                if (p != null)
                 {
-                    themapstate = MapState.endlevel;
-                    if (Inputs.isKeyRelease(Keys.Space))
+                    if (p.positionPerso.X > 5350)
                     {
-                        endLevel = false;    // We begin a new level
-
-                        // We switch to the next level
-                        if (thegamestate == gameState.AutumnLevel) thegamestate = gameState.WinterLevel;
-                        else if (thegamestate == gameState.WinterLevel) thegamestate = gameState.SpringLevel;
-                        else if (thegamestate == gameState.SpringLevel) thegamestate = gameState.SummerLevel;
-                        else thegamestate = gameState.AutumnLevel;
-
-                        NewGame(ref cameraClass);
-                    }
-                }
-                else if (themapstate == MapState.game)
-                {
-                    // Displays the Help page according to several conditions
-                    if (((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange) && !Chat.text.isSelected)
-                        themapstate = MapState.help;
-
-                    if (Developpermode)
-                        p.health = 20;
-
-                    for (int j = medecines.Count - 1; j >= 0; j--)
-                        if (p.hitBoxPerso.Intersects(medecines[j]))
+                        themapstate = MapState.endlevel;
+                        if (Inputs.isKeyRelease(Keys.Space))
                         {
-                            medecines.Remove(medecines[j]);
-                            p.health += (p.health <= 15) ? 5 : (20 - p.health);
+                            endLevel = false;    // We begin a new level
+
+                            // We switch to the next level
+                            if (thegamestate == gameState.AutumnLevel) thegamestate = gameState.WinterLevel;
+                            else if (thegamestate == gameState.WinterLevel) thegamestate = gameState.SpringLevel;
+                            else if (thegamestate == gameState.SpringLevel) thegamestate = gameState.SummerLevel;
+                            else thegamestate = gameState.AutumnLevel;
+
+                            NewGame(ref cameraClass);
                         }
-                    int checkBlood = 0;
-                    foreach (Perso iathings in iaPerso)
-                    {
-                        if (!p.gameover)
-                            checkBlood += iathings.TryToKill(ref p.health, p.hitBoxPerso, SoundIs, Developpermode);
-                        iathings.UpdateIA(gametime, blocks, p.hitBoxPerso, Developpermode);
+
                     }
-
-                    bool touchedByBomb = false;
-
-                    /* CHECK IF CHARACTER CROSS A MINE */
-                    foreach (Bomb checkCrossed in bomb)
+                    else if (themapstate == MapState.game)
                     {
-                        if (p.hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)
+                        // Displays the Help page according to several conditions
+                        if (((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange) && !Chat.text.isSelected)
+                            themapstate = MapState.help;
+
+                        if (Developpermode)
+                            p.health = 20;
+
+                        for (int j = medecines.Count - 1; j >= 0; j--)
+                            if (p.hitBoxPerso.Intersects(medecines[j]))
+                            {
+                                medecines.Remove(medecines[j]);
+                                p.health += (p.health <= 15) ? 5 : (20 - p.health);
+                            }
+                        int checkBlood = 0;
+                        foreach (Perso iathings in iaPerso)
                         {
-                            touchedByBomb = true;
-                            checkCrossed.activateExplosion = true;
-                            drawBloodScreen = true;
-                            if (checkCrossed.checkBlood && SoundIs)
-                                Textures.gameExplosion_Effect.Play();
-                            checkCrossed.BloodOnce(ref p.health);
-                            break;
+                            if (!p.gameover)
+                                checkBlood += iathings.TryToKill(ref p.health, p.hitBoxPerso, SoundIs, Developpermode);
+                            iathings.UpdateIA(gametime, blocks, p.hitBoxPerso, Developpermode);
                         }
-                        if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
-                            drawBloodScreen = true;
-                    }
 
-                    if (touchedByBomb)//fait clignoter le perso
-                    {
-                        p.PersoHitted = true;
-                        p.compteurHitted = 0;
-                    }
+                        bool touchedByBomb = false;
 
-                    bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
-
-
-                    if (!p.gameover)//player can move
-                    {
-                        if (p.utilisable)
-                            cameraPos = p.cameraPos;
-
-                        projectiles = new List<Projectile>();
-                        p.Update(gametime, blocks, projectiles, objects, ref p.nbNuts, Developpermode);//TODO : remove keyboardState and oldkey because class now
-                        this.objects = p.objects;
-                        iaPerso = p.CollisionIAProjec(iaPerso, ref p.score);
-
-                        if (checkBlood > 0)
+                        /* CHECK IF CHARACTER CROSS A MINE */
+                        foreach (Bomb checkCrossed in bomb)
                         {
-                            p.PersoHitted = drawBloodScreen = true;
+                            if (p.hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)
+                            {
+                                touchedByBomb = true;
+                                checkCrossed.activateExplosion = true;
+                                drawBloodScreen = true;
+                                if (checkCrossed.checkBlood && SoundIs)
+                                    Textures.gameExplosion_Effect.Play();
+                                checkCrossed.BloodOnce(ref p.health);
+                                break;
+                            }
+                            if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
+                                drawBloodScreen = true;
+                        }
+
+                        if (touchedByBomb)//fait clignoter le perso
+                        {
+                            p.PersoHitted = true;
                             p.compteurHitted = 0;
                         }
 
-                        if (p.health <= 0)
-                        {
-                            p.health = 0;
-                            p.gameover = true;
-                            drawBloodScreen = false;
-                        }
-                    }
-                    else
-                    {
-                        int i = 0;
-                        foreach (Perso p2 in persos)
-                        {
-                            if (!p2.gameover)
-                                i++;
-                        }
-                        if (i == 0)
-                        {
-                            timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
-                            if (timeElaspedGameOver > 2500)
-                            {
-                                timeElaspedGameOver = 0;
-                                foreach (Perso p3 in persos)
-                                    p3.gameover = false;
-                                themapstate = MapState.gameover;
-                            }
-                            if (timeElaspedGameOver > 1500)
-                                transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
-                        }
-                    }
-                }
-                else if (themapstate == MapState.pause)
-                {
-                    if (thegamestate == gameState.WinterLevel)
-                        if (particleComponent.particleEmitterList[0].Active)
-                            particleComponent.particleEmitterList[0].Active = false;
-                    if (thegamestate == gameState.AutumnLevel)
-                        if (particleComponent.particleEmitterList[1].Active)
-                            particleComponent.particleEmitterList[1].Active = false;
+                        bomb.RemoveAll(x => x.checkIfFinish);//remove bomb when explosion animation is complete
 
-                    pauseMenu.Update(gametime, SoundIs);
-                    if (pauseMenu.IChooseSomething) // OPTION PANNEL
-                    {
-                        switch (pauseMenu.selected)
+
+                        if (!p.gameover)//player can move
                         {
-                            case 0:
-                                themapstate = MapState.game;
-                                pauseMenu = new PauseMenu();
-                                break;
-                            case 1:
-                                themapstate = MapState.gobackmenu;
-                                break;
-                            default:
-                                game.Exit();
-                                break;
+                            if (p.utilisable)
+                                cameraPos = p.cameraPos;
+
+                            projectiles = new List<Projectile>();
+                            p.Update(gametime, blocks, projectiles, objects, ref p.nbNuts, Developpermode);//TODO : remove keyboardState and oldkey because class now
+                            this.objects = p.objects;
+                            iaPerso = p.CollisionIAProjec(iaPerso, ref p.score);
+
+                            if (checkBlood > 0)
+                            {
+                                p.PersoHitted = drawBloodScreen = true;
+                                p.compteurHitted = 0;
+                            }
+
+                            if (p.health <= 0)
+                            {
+                                p.health = 0;
+                                p.gameover = true;
+                                drawBloodScreen = false;
+                            }
+                        }
+                        else
+                        {
+                            int i = 0;
+                            foreach (Perso p2 in persos)
+                            {
+                                if (!p2.gameover && p2 != null)
+                                    i++;
+                            }
+                            if (i == 0)
+                            {
+                                timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
+                                if (timeElaspedGameOver > 2500)
+                                {
+                                    timeElaspedGameOver = 0;
+                                    foreach (Perso p3 in persos)
+                                        if (p3 != null)
+                                            p3.gameover = false;
+                                    themapstate = MapState.gameover;
+                                }
+                                if (timeElaspedGameOver > 1500)
+                                    transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
+                            }
                         }
                     }
-                }
-                else if (themapstate == MapState.gameover)
-                {
-                    if (thegamestate == gameState.WinterLevel)
+
+                    else if (themapstate == MapState.pause)
                     {
-                        if (particleComponent.particleEmitterList[0].Active)
-                            particleComponent.particleEmitterList[0].Active = false;
-                        if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
-                            particleComponent.particleEmitterList[1].Active = false;
+                        if (thegamestate == gameState.WinterLevel)
+                            if (particleComponent.particleEmitterList[0].Active)
+                                particleComponent.particleEmitterList[0].Active = false;
+                        if (thegamestate == gameState.AutumnLevel)
+                            if (particleComponent.particleEmitterList[1].Active)
+                                particleComponent.particleEmitterList[1].Active = false;
+
+                        pauseMenu.Update(gametime, SoundIs);
+                        if (pauseMenu.IChooseSomething) // OPTION PANNEL
+                        {
+                            switch (pauseMenu.selected)
+                            {
+                                case 0:
+                                    themapstate = MapState.game;
+                                    pauseMenu = new PauseMenu();
+                                    break;
+                                case 1:
+                                    themapstate = MapState.gobackmenu;
+                                    break;
+                                default:
+                                    game.Exit();
+                                    break;
+                            }
+                        }
                     }
-                    if (Inputs.isKeyRelease(Keys.Space))
+                    else if (themapstate == MapState.gameover)
                     {
-                        themapstate = MapState.game;
-                        NewGame(ref cameraClass);
+                        if (thegamestate == gameState.WinterLevel)
+                        {
+                            if (particleComponent.particleEmitterList[0].Active)
+                                particleComponent.particleEmitterList[0].Active = false;
+                            if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
+                                particleComponent.particleEmitterList[1].Active = false;
+                        }
+                        if (Inputs.isKeyRelease(Keys.Space))
+                        {
+                            themapstate = MapState.game;
+                            NewGame(ref cameraClass);
+                        }
                     }
                 }
             }
@@ -647,7 +653,7 @@ namespace thegame
             chat.Draw(sb);
             sb.End();*/
             foreach (Perso p in persos)
-                if (themapstate == MapState.gameover && !p.gameover)
+                if (p != null && themapstate == MapState.gameover && !p.gameover)
                     GameOverAnimation(sb, 1);
             if (themapstate == MapState.endlevel || themapstate == MapState.help)
             {
@@ -667,11 +673,14 @@ namespace thegame
                 scoreDisplay.Draw(sb, Language.Text_Game["congrats"], new Vector2(85, 35), Color.White, "42");
                 for (int i = 0; i < persos.Count; i++)
                 {
-                    scoreDisplay.Draw(sb, Language.Text_Game["player"] + "  " + (i + 1), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 120), Color.White, "multi");
-                    scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + persos[i].score, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 190), Color.White, "multi");
-                    scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + persos[i].nbNuts, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 220), Color.White, "multi");
-                    scoreDisplay.Draw(sb, Language.Text_Game["total"] + (persos[i].score + persos[i].nbNuts * 0.5), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 280), Color.OrangeRed, "multi");
-                    scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
+                    if (persos[i] != null)
+                    {
+                        scoreDisplay.Draw(sb, Language.Text_Game["player"] + "  " + (i + 1), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 120), Color.White, "multi");
+                        scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + persos[i].score, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 190), Color.White, "multi");
+                        scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + persos[i].nbNuts, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 220), Color.White, "multi");
+                        scoreDisplay.Draw(sb, Language.Text_Game["total"] + (persos[i].score + persos[i].nbNuts * 0.5), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 280), Color.OrangeRed, "multi");
+                        scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
+                    }
                 }
                 sb.End();
 
@@ -741,7 +750,7 @@ namespace thegame
                 foreach (Rectangle dessine in medecines)
                     sb.Draw(Textures.medecine, dessine, Color.White);
                 foreach (Perso p in persos)
-                    if (!p.gameover)
+                    if (p!= null && !p.gameover)
                         p.Draw(sb, gameTime);
                 //Draw all players
 
@@ -769,38 +778,41 @@ namespace thegame
 
                 for (int i = 0; i < persos.Count; i++)
                 {
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + persos[i].score, new Vector2(100 + Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
-                    // this display the number of nuts that the perso has. 
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + persos[i].nbNuts, new Vector2(Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
+                    if (persos[i] != null)
+                    {
+                        scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + persos[i].score, new Vector2(100 + Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
+                        // this display the number of nuts that the perso has. 
+                        scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + persos[i].nbNuts, new Vector2(Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
 
-                    //draw text health
-                    scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + persos[i].health + "/20", new Vector2(25 + Pow(i + 1, 5) + (20 * i), 425), Color.Black, "normal");
+                        //draw text health
+                        scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + persos[i].health + "/20", new Vector2(25 + Pow(i + 1, 5) + (20 * i), 425), Color.Black, "normal");
 
 
-                    //------------------------------------------------------------------
-                    // ES 16JUI14
-                    // Draws the Pause and Help Buttons on the Underbar
-                    //------------------------------------------------------------------
-                    PauseButton.Display(sb);
-                    HelpButton.Display(sb);
+                        //------------------------------------------------------------------
+                        // ES 16JUI14
+                        // Draws the Pause and Help Buttons on the Underbar
+                        //------------------------------------------------------------------
+                        PauseButton.Display(sb);
+                        HelpButton.Display(sb);
 
-                    //Negative health
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
-                        457, Textures.healthBar_texture.Width / 2, Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 31,
-                        Textures.healthBar_texture.Width, 28), Color.Gray);
-                    //health left
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
-                        457, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 20f) / 2,
-                        Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 450 + Textures.healthBar_texture.Height / 2, Textures.healthBar_texture.Width, Textures.healthBar_texture.Height / 2), Color.Red);
-                    //healthBar bounds
-                    sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
-                        457, Textures.healthBar_texture.Width / 2, Textures.healthBar_texture.Height / 3), new Rectangle(0, 0,
-                        Textures.healthBar_texture.Width, 28), Color.White);
+                        //Negative health
+                        sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
+                            457, Textures.healthBar_texture.Width / 2, Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 31,
+                            Textures.healthBar_texture.Width, 28), Color.Gray);
+                        //health left
+                        sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
+                            457, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 20f) / 2,
+                            Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 450 + Textures.healthBar_texture.Height / 2, Textures.healthBar_texture.Width, Textures.healthBar_texture.Height / 2), Color.Red);
+                        //healthBar bounds
+                        sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
+                            457, Textures.healthBar_texture.Width / 2, Textures.healthBar_texture.Height / 3), new Rectangle(0, 0,
+                            Textures.healthBar_texture.Width, 28), Color.White);
+                    }
                 }
 
                 sb.End();
                 foreach (Perso p in persos)
-                    if (p.gameover && timeElaspedGameOver > 1500)
+                    if (p != null && p.gameover && timeElaspedGameOver > 1500)
                         GameOverAnimation(sb, transparencyAnimation);
             }
 
@@ -837,18 +849,21 @@ namespace thegame
                 cameraClass.shake = true;
                 foreach (Perso p in persos)
                 {
-                    if (elapsedTimeBloodScreen < 50)
+                    if (p != null)
                     {
-                        int positionX = (int)p.positionPerso.X - 400;
-                        float correction = 0;
-                        if (positionX + 400 >= 5000)
-                            correction = 600;
-                        sb.Draw(Textures.hitbox, new Rectangle(positionX - 20 - (int)correction, -20, 1800, 650), Color.Red * 0.5f);
-                    }
-                    else
-                    {
-                        elapsedTimeBloodScreen = 0;
-                        drawBloodScreen = cameraClass.shake = false;
+                        if (elapsedTimeBloodScreen < 50)
+                        {
+                            int positionX = (int)p.positionPerso.X - 400;
+                            float correction = 0;
+                            if (positionX + 400 >= 5000)
+                                correction = 600;
+                            sb.Draw(Textures.hitbox, new Rectangle(positionX - 20 - (int)correction, -20, 1800, 650), Color.Red * 0.5f);
+                        }
+                        else
+                        {
+                            elapsedTimeBloodScreen = 0;
+                            drawBloodScreen = cameraClass.shake = false;
+                        }
                     }
                 }
             }

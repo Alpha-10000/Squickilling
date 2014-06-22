@@ -57,8 +57,9 @@ namespace thegame
         MultiplayerSearchFriends,
         MultiplayerHasJoined,
         MultiplayerGetGamers,
-        MultiplayerConnectServer
+        MultiplayerMultiMap
     }
+
 
     public class Instances
     {
@@ -364,22 +365,8 @@ namespace thegame
             {
                 if (multiplayerloginform.join_game.Clicked)
                 {
-                    client = new Client();
-                    if (thecurrentmultimap == null)
-                    {
-                        thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
-                        thecurrentmultimap.persos = new List<Perso>();
-                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
-                    }
-                    else
-                    {
-                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
-                    }
-                    client.Update(ref thecurrentmultimap);
-                }
-                else if (client != null)
-                {
-                    client.Update(ref thecurrentmultimap);
+                    this.selected = gameState.MultiplayerMultiMap;
+                    Execute();
                 }
 
 
@@ -484,6 +471,11 @@ namespace thegame
             else if (selected == gameState.MultiplayerGetGamers)
             {
                 getgamers.Update(gametime);
+            }
+            else if (selected == gameState.MultiplayerMultiMap)
+            {
+                client.Update(ref thecurrentmultimap);
+                thecurrentmultimap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode);
             }
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
@@ -650,6 +642,12 @@ namespace thegame
                 case gameState.MultiplayerGetGamers:
                     getgamers = new GetGamers();
                     break;
+                case gameState.MultiplayerMultiMap:
+                    client = new Client();
+                        thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
+                        thecurrentmultimap.persos = new List<Perso>(){ null, null, null, null} ;
+                        
+                    break;
                 default:
                     break;
             }
@@ -754,6 +752,8 @@ namespace thegame
                     hasjoined.Display(sb);
                 else if (selected == gameState.MultiplayerGetGamers)
                     getgamers.Display(sb);
+                else if (selected == gameState.MultiplayerMultiMap)
+                    thecurrentmultimap.Display(sb, gameTime, cameraClass);
 
                 if (MultiplayerLogin.create_game.Clicked)
                 {
