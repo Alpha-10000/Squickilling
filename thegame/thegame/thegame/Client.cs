@@ -54,22 +54,25 @@ namespace thegame
             p = new Perso(new Vector2(0, 200), CharacType.player);
             p.utilisable = true;
             Console.WriteLine("Client créé");
+ 
         }
+
+
 
         public void Update(ref MapMulti map)
         {
+     
             NetIncomingMessage inc;
             if ((inc = client.ReadMessage()) != null)
             {
 
-                Console.WriteLine(inc.ReadString());
+
+                byte truc = inc.ReadByte();
+                Console.WriteLine(Convert.ToString(truc));
                 switch (inc.MessageType)
                 {
                     case NetIncomingMessageType.Data:
-
-
-                        Thread.Sleep(500);
-                        if (inc.ReadByte() == (byte)PacketTypes.NEWPERSO)
+                        if (truc == (byte)PacketTypes.NEWPERSO)
                         {
                             senderConnection = inc.SenderConnection;
                             Console.WriteLine("newperso");
@@ -98,7 +101,7 @@ namespace thegame
                             Console.WriteLine("connecté");
                         }
 
-                        if (inc.ReadByte() == (byte)PacketTypes.POSITIONX)
+                        if (truc == (byte)PacketTypes.POSITIONX)
                         {
                             senderConnection = inc.SenderConnection;
                             Console.WriteLine("posx");
@@ -106,28 +109,28 @@ namespace thegame
                             oldx = inc.ReadFloat();
                             map.persos[indexPos].positionPerso.X = oldx;
                         }
-                        if (inc.ReadByte() == (byte)PacketTypes.POSITIONY)
+                        else if (truc == (byte)PacketTypes.POSITIONY)
                         {
                             senderConnection = inc.SenderConnection;
                             int indexPos = inc.ReadInt32();
                             oldy = inc.ReadFloat();
                             map.persos[indexPos].positionPerso.Y = oldy;
                         }
-                        if (inc.ReadByte() == (byte)PacketTypes.SCORE)
+                        else if (truc == (byte)PacketTypes.SCORE)
                         {
                             senderConnection = inc.SenderConnection;
                             int indexScore = inc.ReadInt32();
                             oldscore = inc.ReadInt32();
                             map.persos[indexScore].score = oldscore;
                         }
-                        if (inc.ReadByte() == (byte)PacketTypes.BONUS)
+                        else if (truc == (byte)PacketTypes.BONUS)
                         {
                             senderConnection = inc.SenderConnection;
                             int indexBonus = inc.ReadInt32();
                             oldbonus = inc.ReadInt32();
                             map.persos[indexBonus].score = oldbonus;
                         }
-                        if (inc.ReadByte() == (byte)PacketTypes.HEALTH)
+                        else if (truc == (byte)PacketTypes.HEALTH)
                         {
                             senderConnection = inc.SenderConnection;
                             int indexHealth = inc.ReadInt32();
@@ -144,7 +147,6 @@ namespace thegame
                 {
                     if (senderConnection != null)
                     {
-                        Console.WriteLine("jkh");
                         if (map.persos[indexC].positionPerso.X == oldx)
                         {
                             outmsg = client.CreateMessage();
@@ -152,35 +154,37 @@ namespace thegame
                             outmsg.Write(map.persos[indexC].positionPerso.X);
                             client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                         }
-                        if (map.persos[indexC].positionPerso.Y != oldy)
+                        if (map.persos[indexC].positionPerso.Y == oldy)
                         {
                             outmsg = client.CreateMessage();
                             outmsg.Write((byte)PacketTypes.POSITIONY);
-                            outmsg.Write(map.persos[map.persos.IndexOf(p)].positionPerso.Y);
+                            outmsg.Write(map.persos[indexC].positionPerso.Y);
                             client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                            
                         }
-                        if (map.persos[indexC].score != oldscore)
+                        if (map.persos[indexC].score == oldscore)
                         {
                             outmsg = client.CreateMessage();
                             outmsg.Write((byte)PacketTypes.SCORE);
-                            outmsg.Write(map.persos[map.persos.IndexOf(p)].score);
+                            outmsg.Write(map.persos[indexC].score);
                             client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                         }
-                        if (map.persos[indexC].nbNuts != oldbonus)
+                        if (map.persos[indexC].nbNuts == oldbonus)
                         {
                             outmsg = client.CreateMessage();
                             outmsg.Write((byte)PacketTypes.BONUS);
-                            outmsg.Write(map.persos[map.persos.IndexOf(p)].nbNuts);
+                            outmsg.Write(map.persos[indexC].nbNuts);
                             client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                         }
                         if (map.persos[indexC].health != oldhealth)
                         {
                             outmsg = client.CreateMessage();
                             outmsg.Write((byte)PacketTypes.HEALTH);
-                            outmsg.Write(map.persos[map.persos.IndexOf(p)].health);
+                            outmsg.Write(map.persos[indexC].health);
                             client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                         }
                     }
+                    
                 }
             }
         }

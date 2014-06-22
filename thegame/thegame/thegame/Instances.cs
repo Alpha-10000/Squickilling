@@ -745,11 +745,20 @@ namespace thegame
                     //this.selected = gameState.AutumnLevel;
                     //Execute();
                     client = new Client();
+                    if (thecurrentmultimap == null)
+                    {
+                        thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
+                        thecurrentmultimap.persos = new List<Perso>();
+                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
+                    }
+                    else
+                    {
+                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
+                    }
                     client.Update(ref thecurrentmultimap);
                 }
-                if (client != null)
+                else if (client != null)
                 {
-                    thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
                     client.Update(ref thecurrentmultimap);
                 }
             }
