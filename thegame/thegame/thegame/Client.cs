@@ -53,6 +53,7 @@ namespace thegame
             client.Start();
             outmsg = client.CreateMessage();
             outmsg.Write((byte)PacketTypes.LOGIN);
+            outmsg.Write("9");
             //outmsg.Write("osef");
             string ip = "127.0.0.1";
             client.Connect(ip, 14242, outmsg);
