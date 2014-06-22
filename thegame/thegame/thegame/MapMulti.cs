@@ -769,7 +769,6 @@ namespace thegame
                 for (int i = 0; i < persos.Count; i++)
                 {
                     scoreDisplay.Draw(sb, Language.Text_Game["_gamescore"] + " : " + persos[i].score, new Vector2(100 + Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
-
                     // this display the number of nuts that the perso has. 
                     scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + persos[i].nbNuts, new Vector2(Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
 

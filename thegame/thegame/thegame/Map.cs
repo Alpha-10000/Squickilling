@@ -351,6 +351,7 @@ namespace thegame
                         medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, ((y == mapSizeY - 1) ? 345 : y * Textures.buche_texture.Height - 73) - 7, Textures.medecine.Width, Textures.medecine.Height));
 
             theperso = new Perso(new Vector2(200, 0), CharacType.player);
+            theperso.utilisable = true;
             tree_autumn_exit = new Drawable(drawable_type.tree_autumn_exit);
             tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
             debug = new Drawable(drawable_type.font);

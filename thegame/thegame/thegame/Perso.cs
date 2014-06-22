@@ -71,6 +71,8 @@ namespace thegame
 
         private bool LastMovewasRight = true;
 
+        public bool utilisable = false;
+
         public NetConnection Connection { get; set; }
 
         public Perso(Vector2 pos, CharacType typePerso)
@@ -194,7 +196,8 @@ namespace thegame
             Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 200, directionNoix);
 
             if (Inputs.isKeyRelease(Keys.Space))
-                projs.Add(noix);
+                if (utilisable)
+                    projs.Add(noix);
 
             /* CHECK OBJECT COLLISION WITH HITBOX PERSO. ADD NUTS THEN */
             for (int j = objects.Count - 1; j >= 0; j--)
@@ -251,8 +254,11 @@ namespace thegame
                 /* IF PERSO CAN JUMP THEN JUMP */
                 if (Inputs.isKeyRelease(Keys.Up) && (!movedown || positionPerso.Y == sol))
                 {
-                    jumping = true;
-                    Gravity = 5f; /* First jump speed while pressing the button*/
+                    if (utilisable)
+                    {
+                        jumping = true;
+                        Gravity = 5f; /* First jump speed while pressing the button*/
+                    }
                 }
 
                 /* KEEP PERSO ON GROUND */
@@ -283,65 +289,78 @@ namespace thegame
 
             if (Inputs.isKeyDown(Keys.Right) && moveright && !Inputs.isKeyDown(Keys.Left) && (Inputs.isKeyDown(Keys.LeftAlt) || Inputs.isKeyDown(Keys.RightAlt)) && activateDevelopper)
             {
-                tempCurrentFrame.Y = 0;
-                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
-                bool check = CheckCollisionTooFar(ref changement, blocks, "right");// this is to check right collision
-                if (check)
-                    moveright = false;
-                positionPerso.X += changement;
-                if (positionPerso.X > 400 && positionPerso.X < 5000)
-                    cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
-                LastMovewasRight = true;
+                if (utilisable)
+                {
+                    tempCurrentFrame.Y = 0;
+                    float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
+                    bool check = CheckCollisionTooFar(ref changement, blocks, "right");// this is to check right collision
+                    if (check)
+                        moveright = false;
+                    positionPerso.X += changement;
+                    if (positionPerso.X > 400 && positionPerso.X < 5000)
+                        cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
+                    LastMovewasRight = true;
+                }
             }
             else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && (Inputs.isKeyDown(Keys.LeftAlt) || Inputs.isKeyDown(Keys.RightAlt)) && activateDevelopper)
             {
-                tempCurrentFrame.Y = 1;
+                if (utilisable)
+                {
+                    tempCurrentFrame.Y = 1;
 
-                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
-                bool check = CheckCollisionTooFar(ref changement, blocks, "left");//this is to check left collsion
-                if (check)
-                    moveleft = false;
-                positionPerso.X -= changement;
-                if (positionPerso.X > 400 && positionPerso.X < 5000)
-                    cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
-                LastMovewasRight = false;
+                    float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
+                    bool check = CheckCollisionTooFar(ref changement, blocks, "left");//this is to check left collsion
+                    if (check)
+                        moveleft = false;
+                    positionPerso.X -= changement;
+                    if (positionPerso.X > 400 && positionPerso.X < 5000)
+                        cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
+                    LastMovewasRight = false;
+                }
             }
 
             if (Inputs.isKeyDown(Keys.Right) && moveright && !Inputs.isKeyDown(Keys.Left) && ((activateDeveloper) ? (Inputs.isKeysUP(Keys.LeftAlt) && Inputs.isKeysUP(Keys.RightAlt)) : true))
             {
-                tempCurrentFrame.Y = 0;
-                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-                bool check = CheckCollisionTooFar(ref changement, blocks, "right");//this is to check right collision
-                if (check)
-                    moveright = false;
-                positionPerso.X += changement;
-                if (positionPerso.X > 400 && positionPerso.X < 5000)
-                    cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
-                LastMovewasRight = true;
+                if (utilisable)
+                {
+                    tempCurrentFrame.Y = 0;
+                    float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                    bool check = CheckCollisionTooFar(ref changement, blocks, "right");//this is to check right collision
+                    if (check)
+                        moveright = false;
+                    positionPerso.X += changement;
+                    if (positionPerso.X > 400 && positionPerso.X < 5000)
+                        cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
+                    LastMovewasRight = true;
+                }
             }
             else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && ((activateDeveloper) ? (Inputs.isKeysUP(Keys.LeftAlt) && Inputs.isKeysUP(Keys.RightAlt)) : true))
             {
-                tempCurrentFrame.Y = 1;
+                if (utilisable)
+                {
+                    tempCurrentFrame.Y = 1;
 
-                float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
-                bool check = CheckCollisionTooFar(ref changement, blocks, "left");//this is to check left collision
-                if (check)
-                    moveleft = false;
-                positionPerso.X -= changement;
-                if (positionPerso.X > 400 && positionPerso.X < 5000)
-                    cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
-                LastMovewasRight = false;
+                    float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds;
+                    bool check = CheckCollisionTooFar(ref changement, blocks, "left");//this is to check left collision
+                    if (check)
+                        moveleft = false;
+                    positionPerso.X -= changement;
+                    if (positionPerso.X > 400 && positionPerso.X < 5000)
+                        cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
+                    LastMovewasRight = false;
+                }
             }
 
 
             else
                 animationPerso.Actif = false;
 
-
-            tempCurrentFrame.X = animationPerso.CurrentFrame.X;
+            if (utilisable)
+                tempCurrentFrame.X = animationPerso.CurrentFrame.X;
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
+
             if (typePerso == CharacType.player)
                 hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 8);
             else if (typePerso == CharacType.ia)
@@ -600,14 +619,14 @@ namespace thegame
             {
                 animationPerso.Draw(spriteBatch, LastMovewasRight);
             }
-            
+
             rot -= 0.30f;
             if (typePerso == CharacType.player)
                 foreach (Projectile nut in projs)
                     nut.Draw(spriteBatch);
             else
                 foreach (Projectile nut in projIA)
-                    nut.Draw(spriteBatch,nut.PositionProjectile, rot,true);
+                    nut.Draw(spriteBatch, nut.PositionProjectile, rot, true);
 
 
 

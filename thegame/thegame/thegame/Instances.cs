@@ -119,7 +119,6 @@ namespace thegame
         private HasJoined hasjoined;
         private GetGamers getgamers;
 
-        private Server server;
         private Client client;
 
         /* DEVELOPPER OPTION TO BYPASS MULTIPLAYER MENU */
@@ -720,10 +719,9 @@ namespace thegame
 
                 if (MultiplayerLogin.create_game.Clicked)
                 {
-                    //this.curGameMode = instances_type.Multi;
-                    //this.selected = gameState.AutumnLevel;
-                    //Execute();
-                    server = new Server();
+                    this.curGameMode = instances_type.Multi;
+                    this.selected = gameState.AutumnLevel;
+                    Execute();
                 }
                 if (MultiplayerLogin.join_game.Clicked)
                 {
@@ -731,11 +729,13 @@ namespace thegame
                     //this.selected = gameState.AutumnLevel;
                     //Execute();
                     client = new Client();
-                }
-                if (server != null)
-                    server.Update(ref thecurrentmultimap);
-                if (client != null)
                     client.Update(ref thecurrentmultimap);
+                }
+                if (client != null)
+                {
+                    thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
+                    client.Update(ref thecurrentmultimap);
+                }
             }
 
             if (Developpermode)

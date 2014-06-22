@@ -175,7 +175,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Search_friends.cs" />
-    <Compile Include="Server.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Textbox.cs" />
     <Compile Include="Textures.cs" />
