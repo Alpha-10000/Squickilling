@@ -70,7 +70,7 @@ namespace thegame
 
         //temporaire
         public static Button create_game = new Button("Create Game", 200, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
-        public static Button join_game = new Button("Join Game", 450, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
+        public Button join_game = new Button("Join Game", 450, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
 
         public MultiplayerLogin()
         {

@@ -56,7 +56,8 @@ namespace thegame
         MultiplayerGame,
         MultiplayerSearchFriends,
         MultiplayerHasJoined,
-        MultiplayerGetGamers
+        MultiplayerGetGamers,
+        MultiplayerConnectServer
     }
 
     public class Instances
@@ -361,6 +362,27 @@ namespace thegame
             }
             else if (selected == gameState.MultiplayerLoginRegister)
             {
+                if (multiplayerloginform.join_game.Clicked)
+                {
+                    client = new Client();
+                    if (thecurrentmultimap == null)
+                    {
+                        thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
+                        thecurrentmultimap.persos = new List<Perso>();
+                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
+                    }
+                    else
+                    {
+                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
+                    }
+                    client.Update(ref thecurrentmultimap);
+                }
+                else if (client != null)
+                {
+                    client.Update(ref thecurrentmultimap);
+                }
+
+
 
                 if (selected == gameState.MultiplayerLoginRegister)
                     multiplayerloginform.Update(gametime);
@@ -739,28 +761,7 @@ namespace thegame
                     this.selected = gameState.AutumnLevel;
                     Execute();
                 }
-                if (MultiplayerLogin.join_game.Clicked)
-                {
-                    //this.curGameMode = instances_type.Multi;
-                    //this.selected = gameState.AutumnLevel;
-                    //Execute();
-                    client = new Client();
-                    if (thecurrentmultimap == null)
-                    {
-                        thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
-                        thecurrentmultimap.persos = new List<Perso>();
-                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
-                    }
-                    else
-                    {
-                        thecurrentmultimap.persos.Add(new Perso(new Vector2(0, 200), CharacType.player));
-                    }
-                    client.Update(ref thecurrentmultimap);
-                }
-                else if (client != null)
-                {
-                    client.Update(ref thecurrentmultimap);
-                }
+               
             }
 
             if (Developpermode)
