@@ -181,7 +181,7 @@
     <Compile Include="Tools.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\x86\Debug\thegame.exe" />
+    <None Include="bin\x86\Debug\thegame.exe" />
     <Content Include="bin\x86\Debug\thegame.pdb" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />

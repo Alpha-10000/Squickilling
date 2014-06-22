@@ -69,7 +69,6 @@ namespace thegame
 
         private bool jumping;
 
-        private bool LastMovewasRight = true;
 
         public bool utilisable = false;
 
@@ -89,7 +88,7 @@ namespace thegame
                 animationPerso = new Animation(positionPerso, new Vector2(8, 2));
                 imagePerso = Textures.ennemy_texture;
                 animationPerso.AnimationSprite = Textures.ennemy_texture;
-                hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 4);
+                hitBoxPerso = new Rectangle((int)(positionPerso.X + 30), (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 4);
             }
             tempCurrentFrame = Vector2.Zero;
             positionPerso = pos;
@@ -159,7 +158,7 @@ namespace thegame
 
         public void Update(GameTime gametime, List<Rectangle> blocks, List<Projectile> proj, List<Rectangle> objects, ref int nbNuts, bool activateDeveloper)
         {
-            activateDevelopper = activateDeveloper;
+            this.activateDevelopper = activateDeveloper;
             this.objects = objects;
 
             /* INITIALISATION */
@@ -299,7 +298,6 @@ namespace thegame
                     positionPerso.X += changement;
                     if (positionPerso.X > 400 && positionPerso.X < 5000)
                         cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
-                    LastMovewasRight = true;
                 }
             }
             else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && (Inputs.isKeyDown(Keys.LeftAlt) || Inputs.isKeyDown(Keys.RightAlt)) && activateDevelopper)
@@ -307,7 +305,6 @@ namespace thegame
                 if (utilisable)
                 {
                     tempCurrentFrame.Y = 1;
-
                     float changement = speed * (float)gametime.ElapsedGameTime.TotalSeconds + 10;
                     bool check = CheckCollisionTooFar(ref changement, blocks, "left");//this is to check left collsion
                     if (check)
@@ -315,7 +312,6 @@ namespace thegame
                     positionPerso.X -= changement;
                     if (positionPerso.X > 400 && positionPerso.X < 5000)
                         cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
-                    LastMovewasRight = false;
                 }
             }
 
@@ -331,7 +327,6 @@ namespace thegame
                     positionPerso.X += changement;
                     if (positionPerso.X > 400 && positionPerso.X < 5000)
                         cameraPos = new Vector2(cameraPos.X - changement, cameraPos.Y);
-                    LastMovewasRight = true;
                 }
             }
             else if (!Inputs.isKeyDown(Keys.Right) && moveleft && Inputs.isKeyDown(Keys.Left) && ((activateDeveloper) ? (Inputs.isKeysUP(Keys.LeftAlt) && Inputs.isKeysUP(Keys.RightAlt)) : true))
@@ -347,7 +342,6 @@ namespace thegame
                     positionPerso.X -= changement;
                     if (positionPerso.X > 400 && positionPerso.X < 5000)
                         cameraPos = new Vector2(cameraPos.X + changement, cameraPos.Y);
-                    LastMovewasRight = false;
                 }
             }
 
@@ -360,7 +354,6 @@ namespace thegame
             animationPerso.Position = positionPerso;
             animationPerso.CurrentFrame = tempCurrentFrame;
             animationPerso.Update(gametime);
-
             if (typePerso == CharacType.player)
                 hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 8);
             else if (typePerso == CharacType.ia)
@@ -462,10 +455,11 @@ namespace thegame
         }
 
 
-        public void UpdateIA(GameTime gametime, List<Rectangle> blocks, Rectangle hitboxPlayer)
+        public void UpdateIA(GameTime gametime, List<Rectangle> blocks, Rectangle hitboxPlayer, bool activateDeveloper2)
         {
 
             sol = 303;
+            this.activateDevelopper = activateDeveloper2;
             /* INITIALISATION */
             positionPerso = animationPerso.Position;
             animationPerso.Actif = true;
@@ -538,7 +532,7 @@ namespace thegame
                 positionPerso.Y += Gravity; /* I putthree for a reason! Generates beug otherwise */
             }
 
-            hitBoxPerso = new Rectangle((int)(positionPerso.X) - imagePerso.Width / 12, (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 2);
+            hitBoxPerso = new Rectangle((int)(positionPerso.X + 30) - imagePerso.Width / 12, (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 2);
 
             if (moveright)
             {
@@ -587,7 +581,7 @@ namespace thegame
             if (typePerso == CharacType.player)
                 hitBoxPerso = new Rectangle((int)(positionPerso.X), (int)(positionPerso.Y), imagePerso.Width / 16, imagePerso.Height / 2 - 8);
             else if (typePerso == CharacType.ia)
-                hitBoxPerso = new Rectangle((int)(positionPerso.X) - imagePerso.Width / 12, (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 2);
+                hitBoxPerso = new Rectangle((int)(positionPerso.X + 30) - imagePerso.Width / 12, (int)(positionPerso.Y), imagePerso.Width / 8, imagePerso.Height / 2 - 2);
 
         }
         float rot = 0;
@@ -610,15 +604,17 @@ namespace thegame
                         compteurHitted++;
                         timeElaspedHitted = 0;
                     }
-                    if (compteurHitted % 2 == 1)
+                    if (compteurHitted % 2 == 1 && CharacType.player == typePerso)
+                        animationPerso.Draw(spriteBatch, false);
+                    else if (compteurHitted % 2 == 1)
                         animationPerso.Draw(spriteBatch);
                 }
 
             }
+            else if (CharacType.player == typePerso)
+                animationPerso.Draw(spriteBatch, true);
             else
-            {
-                animationPerso.Draw(spriteBatch, LastMovewasRight);
-            }
+                animationPerso.Draw(spriteBatch);
 
             rot -= 0.30f;
             if (typePerso == CharacType.player)
@@ -626,12 +622,15 @@ namespace thegame
                     nut.Draw(spriteBatch);
             else
                 foreach (Projectile nut in projIA)
+                {
                     nut.Draw(spriteBatch, nut.PositionProjectile, rot, true);
+                    //nut.Draw(spriteBatch, new Vector2(nut.PositionProjectile.X, nut.PositionProjectile.Y + 15), rot, true);
+                }
 
 
 
 
-            if (typePerso == CharacType.player && activateDevelopper)
+            if (activateDevelopper)
             {
 
                 /*      Drawable debug = new Drawable(drawable_type.font);

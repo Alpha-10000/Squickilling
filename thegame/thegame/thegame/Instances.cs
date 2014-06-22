@@ -90,7 +90,7 @@ namespace thegame
         private bool Fullscreen;        // Set to true to switch to fullscreen
         private bool SoundIs = true;           // Set to true to switch the sound (on / off)
         private Drawable tree;
-
+        public static string language = "";
         private int developperXMouse;
         private int developperYMouse;
 
@@ -164,6 +164,16 @@ namespace thegame
             mouse1 = Mouse.GetState();
 
             Inputs.upDate();
+            if (curGameMode == instances_type.Game)
+                if (thecurrentmap.themapstate == Map.MapState.endlevel && thecurrentmap.thegamestate == gameState.SummerLevel)
+                {
+                    if (Inputs.isKeyRelease(Keys.Space))
+                    {
+                        CurrentBKSound.Stop();
+                        this.selected = gameState.SplashScreen;
+                        Execute();
+                    }
+                }
 
             if (Session.session_isset)
                 Session.update(gametime);
@@ -287,11 +297,13 @@ namespace thegame
                 {
                     case 0:
                         Language.change("english");
+                        language = "english";
                         this.selected = gameState.MainMenu;      // => Shortcut to MenuMain Page
                         Execute();
                         break;
                     case 1:
                         Language.change("french");
+                        language = "french";
                         this.selected = gameState.MainMenu;
                         Execute();
                         break;
@@ -474,7 +486,7 @@ namespace thegame
                 }
             }
 
-            if (Developpermode)
+            if (Developpermode && curGameMode != instances_type.SplashScreen)
             {
                 CurrentBKSound.Volume = 0;
                 developperXMouse = mouse1.X - (int)cameraPos.X;
@@ -558,7 +570,11 @@ namespace thegame
                     this.curGameMode = instances_type.SplashScreen;
                     vidPlayer = new VideoPlayer();
                     vidRectangle = new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, Game1.graphics.PreferredBackBufferHeight);
-                    vidPlayer.Play(Textures.vid);
+                    if (language == "")
+                        vidPlayer.Play(Textures.vid);
+                    else if (language == "french")
+                        vidPlayer.Play(Textures.credits_fr);
+                    else vidPlayer.Play(Textures.credits_en);
                     break;
                 case gameState.DeveloperMode:
                     this.curGameMode = instances_type.MapDevelopper;
@@ -762,6 +778,7 @@ namespace thegame
                 vidPlayer.Stop();
                 this.curGameMode = instances_type.Menu;
                 this.selected = 0;
+
                 Execute();
             }
         }

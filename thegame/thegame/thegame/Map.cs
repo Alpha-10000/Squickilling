@@ -523,7 +523,7 @@ namespace thegame
                 {
                     if (playerActivate)
                         checkBlood += iathings.TryToKill(ref Health, theperso.hitBoxPerso, SoundIs);
-                    iathings.UpdateIA(gametime, blocks, theperso.hitBoxPerso);
+                    iathings.UpdateIA(gametime, blocks, theperso.hitBoxPerso, Developpermode);
                 }
 
                 bool touchedByBomb = false;
@@ -642,6 +642,7 @@ namespace thegame
                 //OLDSOUND: }
                    
                 // Lorsque l'on appuie sur les touches 1, 2, 3, ou 4 on change de niveau
+
                 if (getkey.Contains(Keys.NumPad2) || getkey.Contains(Keys.D2))
                 {
                     // gerer les problemes de particules entre chgmts de niveaux
