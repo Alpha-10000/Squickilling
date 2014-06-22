@@ -468,7 +468,7 @@ namespace thegame
                     {
                         if (!p.gameover)
                             checkBlood += iathings.TryToKill(ref p.health, p.hitBoxPerso, SoundIs);
-                        iathings.UpdateIA(gametime, blocks, p.hitBoxPerso);
+                        iathings.UpdateIA(gametime, blocks, p.hitBoxPerso, Developpermode);
                     }
 
                     bool touchedByBomb = false;

@@ -522,7 +522,7 @@ namespace thegame
                 {
                     if (playerActivate)
                         checkBlood += iathings.TryToKill(ref Health, theperso.hitBoxPerso, SoundIs);
-                    iathings.UpdateIA(gametime, blocks, theperso.hitBoxPerso);
+                    iathings.UpdateIA(gametime, blocks, theperso.hitBoxPerso, Developpermode);
                 }
 
                 bool touchedByBomb = false;
