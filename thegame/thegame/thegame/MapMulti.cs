@@ -529,26 +529,19 @@ namespace thegame
                         }
                         else
                         {
-                            int i = 0;
-                            foreach (Perso p2 in persos)
-                            {
-                                if (!p2.gameover && p2 != null)
-                                    i++;
-                            }
-                            if (i == 0)
-                            {
-                                timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
-                                if (timeElaspedGameOver > 2500)
+                                if (p != null && p.utilisable && p.health <=0)
                                 {
-                                    timeElaspedGameOver = 0;
-                                    foreach (Perso p3 in persos)
-                                        if (p3 != null)
-                                            p3.gameover = false;
-                                    themapstate = MapState.gameover;
+                                    timeElaspedGameOver += gametime.ElapsedGameTime.Milliseconds;
+                                    if (timeElaspedGameOver > 2500)
+                                    {
+                                        timeElaspedGameOver = 0;
+                                        p.gameover = false;
+                                        themapstate = MapState.gameover;
+                                    }
+                                    if (timeElaspedGameOver > 1500)
+                                        transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
                                 }
-                                if (timeElaspedGameOver > 1500)
-                                    transparencyAnimation = (timeElaspedGameOver - 1500) / 1000;
-                            }
+                            
                         }
                     }
 
@@ -590,8 +583,9 @@ namespace thegame
                         }
                         if (Inputs.isKeyRelease(Keys.Space))
                         {
+                                if (p!= null &&  p.health <= 0 && p.utilisable)
+                                    p.health = 20;
                             themapstate = MapState.game;
-                            NewGame(ref cameraClass);
                         }
                     }
                 }
