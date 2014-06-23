@@ -318,9 +318,11 @@ namespace thegame
                     else if (thetile[y, x] == 4)
                         medecines.Add(new Rectangle(x * Textures.buche_texture.Width + 50, ((y == mapSizeY - 1) ? 345 : y * Textures.buche_texture.Height - 73) - 7, Textures.medecine.Width, Textures.medecine.Height));
 
-         //   persos = new List<Perso>();
-           // persos.Add(new Perso(new Vector2(150, 0), CharacType.player));
-          //  persos.Add(new Perso(new Vector2(250, 0), CharacType.player));
+           // persos = new List<Perso>();
+           // Perso p = new Perso(new Vector2(150, 0), CharacType.player);
+           // p.utilisable = true;
+           // persos.Add(p);
+           //persos.Add(new Perso(new Vector2(250, 0), CharacType.player));
 
             tree_autumn_exit = new Drawable(drawable_type.tree_autumn_exit);
             tree_autumn_exit_inside = new Drawable(drawable_type.tree_autumn_exit_inside);
@@ -459,7 +461,7 @@ namespace thegame
 
                         if (Developpermode)
                             p.health = 20;
-
+                    
                         for (int j = medecines.Count - 1; j >= 0; j--)
                             if (p.hitBoxPerso.Intersects(medecines[j]))
                             {

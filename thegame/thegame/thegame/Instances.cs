@@ -369,6 +369,15 @@ namespace thegame
                     Execute();
                 }
 
+               //Tempporaire, pour tests.
+                if (MultiplayerLogin.create_game.Clicked)
+                {
+                    thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
+                    this.curGameMode = instances_type.Multi;
+                    this.selected = gameState.AutumnLevel;
+                    Execute();
+                }
+
 
 
                 if (selected == gameState.MultiplayerLoginRegister)

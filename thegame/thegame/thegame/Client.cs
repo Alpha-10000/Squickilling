@@ -23,8 +23,8 @@ namespace thegame
         SCORE,
         BONUS,
         HEALTH,
-        IA,
-        PERSOLEAVE
+        PERSOLEAVE,
+        PROJ
     }
 
     class Client
@@ -149,7 +149,7 @@ namespace thegame
                             int whichPersoIndex = inc.ReadInt32();
                             int newScore = inc.ReadInt32();
                             Console.WriteLine(newScore);
-                            map.persos[whichPersoIndex].animationPerso.Position.Y = newScore;
+                            map.persos[whichPersoIndex].score = newScore;
 
                         }
                         if (truc == (byte)PacketTypes.BONUS)
@@ -158,7 +158,7 @@ namespace thegame
                             int whichPersoIndex = inc.ReadInt32();
                             int newBonus = inc.ReadInt32();
                             Console.WriteLine(newBonus);
-                            map.persos[whichPersoIndex].animationPerso.Position.Y = newBonus;
+                            map.persos[whichPersoIndex].nbNuts = newBonus;
 
                         }
                         if (truc == (byte)PacketTypes.HEALTH)
@@ -167,8 +167,14 @@ namespace thegame
                             int whichPersoIndex = inc.ReadInt32();
                             int newHealth = inc.ReadInt32();
                             Console.WriteLine(newHealth);
-                            map.persos[whichPersoIndex].animationPerso.Position.Y = newHealth;
+                            map.persos[whichPersoIndex].health = newHealth;
+                        }
 
+                        if (truc == (byte)PacketTypes.PROJ)
+                        {
+                            int whichPersoIndex = inc.ReadInt32();
+                            Console.WriteLine("proj");
+                            map.persos[whichPersoIndex].UpdateNoix();
                         }
 
                         //IT HAS TO BE AT THE END
@@ -290,6 +296,13 @@ namespace thegame
                     outmsg.Write(map.persos[myindex].health);
                     client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                     oldhealth = map.persos[myindex].health;
+                }
+                if (Inputs.isKeyRelease(Keys.Space))
+                {
+                    outmsg = client.CreateMessage();
+                    outmsg.Write((byte)PacketTypes.PROJ);
+                    outmsg.Write(myindex);
+                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                 }
 
 

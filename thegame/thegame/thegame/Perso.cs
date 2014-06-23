@@ -156,6 +156,26 @@ namespace thegame
             Gravity = 0.5f;     // Start falling with this speed
         }
 
+        public void UpdateNoix()
+        {
+            /*PROJECTILE*/
+            Vector2 directionNoix;
+            Vector2 positionNoix;
+            if (animationPerso.CurrentFrame.Y == 1)
+            {
+                positionNoix = new Vector2(positionPerso.X - 3, positionPerso.Y + 7);
+                directionNoix = new Vector2(-1, 0);
+            }
+            else
+            {
+                positionNoix = new Vector2(positionPerso.X + 20, positionPerso.Y + 7);
+                directionNoix = new Vector2(1, 0);
+            }
+
+            Projectile noix = new Projectile(drawable_type.Nut, positionNoix, positionNoix, 200, directionNoix);
+                    projs.Add(noix);
+        }
+
         public void Update(GameTime gametime, List<Rectangle> blocks, List<Projectile> proj, List<Rectangle> objects, ref int nbNuts, bool activateDeveloper)
         {
             this.activateDevelopper = activateDeveloper;
