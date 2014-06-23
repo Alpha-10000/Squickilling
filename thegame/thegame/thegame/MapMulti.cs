@@ -535,7 +535,7 @@ namespace thegame
                                     if (timeElaspedGameOver > 2500)
                                     {
                                         timeElaspedGameOver = 0;
-                                        p.gameover = false;
+                                       
                                         themapstate = MapState.gameover;
                                     }
                                     if (timeElaspedGameOver > 1500)
@@ -545,51 +545,66 @@ namespace thegame
                         }
                     }
 
-                    else if (themapstate == MapState.pause)
-                    {
-                        if (thegamestate == gameState.WinterLevel)
-                            if (particleComponent.particleEmitterList[0].Active)
-                                particleComponent.particleEmitterList[0].Active = false;
-                        if (thegamestate == gameState.AutumnLevel)
-                            if (particleComponent.particleEmitterList[1].Active)
-                                particleComponent.particleEmitterList[1].Active = false;
+                     
+                }
+            }
+            if (themapstate == MapState.pause)
+            {
+                if (thegamestate == gameState.WinterLevel)
+                    if (particleComponent.particleEmitterList[0].Active)
+                        particleComponent.particleEmitterList[0].Active = false;
+                if (thegamestate == gameState.AutumnLevel)
+                    if (particleComponent.particleEmitterList[1].Active)
+                        particleComponent.particleEmitterList[1].Active = false;
 
-                        pauseMenu.Update(gametime, SoundIs);
-                        if (pauseMenu.IChooseSomething) // OPTION PANNEL
-                        {
-                            switch (pauseMenu.selected)
-                            {
-                                case 0:
-                                    themapstate = MapState.game;
-                                    pauseMenu = new PauseMenu();
-                                    break;
-                                case 1:
-                                    themapstate = MapState.gobackmenu;
-                                    break;
-                                default:
-                                    game.Exit();
-                                    break;
-                            }
-                        }
-                    }
-                    else if (themapstate == MapState.gameover)
+                pauseMenu.Update(gametime, SoundIs);
+                if (pauseMenu.IChooseSomething) // OPTION PANNEL
+                {
+                    switch (pauseMenu.selected)
                     {
-                        if (thegamestate == gameState.WinterLevel)
-                        {
-                            if (particleComponent.particleEmitterList[0].Active)
-                                particleComponent.particleEmitterList[0].Active = false;
-                            if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
-                                particleComponent.particleEmitterList[1].Active = false;
-                        }
-                        if (Inputs.isKeyRelease(Keys.Space))
-                        {
-                                if (p!= null &&  p.health <= 0 && p.utilisable)
-                                    p.health = 20;
+                        case 0:
                             themapstate = MapState.game;
-                        }
+                            pauseMenu = new PauseMenu();
+                            break;
+                        case 1:
+                            themapstate = MapState.gobackmenu;
+                            break;
+                        default:
+                            game.Exit();
+                            break;
                     }
                 }
             }
+            else if (themapstate == MapState.gameover)
+            {
+                if (thegamestate == gameState.WinterLevel)
+                {
+                    if (particleComponent.particleEmitterList[0].Active)
+                        particleComponent.particleEmitterList[0].Active = false;
+                    if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
+                        particleComponent.particleEmitterList[1].Active = false;
+                }
+                if (Inputs.isKeyRelease(Keys.Space))
+                {
+                    float max = 0;
+                    foreach (Perso uniqPerso in persos)
+                        if (uniqPerso != null && !uniqPerso.utilisable && uniqPerso.positionPerso.X > max)
+                            max = uniqPerso.positionPerso.X;
+                    int whereishe = persos.FindIndex(x => x.utilisable);
+                    float newcoordX;
+                    if(max > 100)
+                        newcoordX = max - 200;
+                    else
+                        newcoordX = 0;
+                    persos[whereishe] = new Perso(new Vector2(newcoordX, 0), CharacType.player);
+                    persos[whereishe].utilisable = true;
+                    persos[whereishe].gameover = false;
+                    themapstate = MapState.game;
+                }
+            }
+            
+
+
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
             if (Developpermode)
@@ -649,7 +664,7 @@ namespace thegame
             chat.Draw(sb);
             sb.End();*/
             foreach (Perso p in persos)
-                if (p != null && themapstate == MapState.gameover && !p.gameover)
+                if (p != null && themapstate == MapState.gameover)
                     GameOverAnimation(sb, 1);
             if (themapstate == MapState.endlevel || themapstate == MapState.help)
             {
@@ -746,7 +761,7 @@ namespace thegame
                 foreach (Rectangle dessine in medecines)
                     sb.Draw(Textures.medecine, dessine, Color.White);
                 foreach (Perso p in persos)
-                    if (p!= null && !p.gameover)
+                    if (p != null && p.health > 0)
                         p.Draw(sb, gameTime);
                 //Draw all players
 
