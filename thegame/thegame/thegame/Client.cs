@@ -23,7 +23,8 @@ namespace thegame
         SCORE,
         BONUS,
         HEALTH,
-        IA
+        IA,
+        PERSOLEAVE
     }
 
     class Client
@@ -57,7 +58,7 @@ namespace thegame
             outmsg.Write((byte)PacketTypes.LOGIN);
             outmsg.Write(theid);
             //outmsg.Write("osef");
-            string ip = "127.0.0.1";
+            string ip = "localhost";//ip server : 37.187.43.213
             client.Connect(ip, 14242, outmsg);
             p = new Perso(new Vector2(0, 200), CharacType.player);
             p.utilisable = true;
@@ -73,15 +74,7 @@ namespace thegame
 
         }
 
-        private void OnTriche(int index, ref MapMulti map)//old one
-        {
-            for (int i = 0; i < nb_players; i++)
-                if (map.persos[i] == null && i != myindex)
-                    map.persos[i] = new Perso(new Vector2(0, 200), CharacType.player);
-
-        }
-
-
+      
         public void Update(ref MapMulti map)
         {
 
@@ -130,6 +123,8 @@ namespace thegame
                             Console.WriteLine("connecté");
                         }
 
+                       
+
                         if (truc == (byte)PacketTypes.POSITIONX)
                         {
 
@@ -175,6 +170,24 @@ namespace thegame
                             map.persos[whichPersoIndex].animationPerso.Position.Y = newHealth;
 
                         }
+
+                        //IT HAS TO BE AT THE END
+                        if (truc == (byte)PacketTypes.PERSOLEAVE)//this happens only if there is at least 2 players in the game!
+                        {
+
+                            int LeaveId = inc.ReadInt32();
+                            nb_players--;
+                            myindex--;
+                            for (int i = LeaveId; i < nb_players; i++)
+                            {
+                                map.persos[i] = map.persos[i + 1];
+                            }
+
+                            map.persos[nb_players] = null;
+
+                        }
+
+
                         /*
                     else if (truc == (byte)PacketTypes.SCORE)
                     {

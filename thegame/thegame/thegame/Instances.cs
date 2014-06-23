@@ -116,7 +116,7 @@ namespace thegame
         private Create_game create_game;
         private Join_game join_game;
 
-        private MultiMap multimap;
+
         private Search_friends search_friends;
         private HasJoined hasjoined;
         private GetGamers getgamers;
@@ -441,10 +441,6 @@ namespace thegame
                 }
               
             }
-            else if (selected == gameState.MultiplayerGame)
-            {
-                multimap.Update(gametime);
-            }
             else if (selected == gameState.MultiplayerSearchFriends)
             {
                 search_friends.Update(gametime);
@@ -632,9 +628,7 @@ namespace thegame
                 case gameState.MultiplayerJoinGame:
                     join_game = new Join_game();
                     break;
-                case gameState.MultiplayerGame:
-                    multimap = new MultiMap();
-                    break;
+                
                 case gameState.MultiplayerSearchFriends:
                     search_friends = new Search_friends();
                     break;
@@ -748,8 +742,6 @@ namespace thegame
                     create_game.Display(sb);
                 else if (selected == gameState.MultiplayerJoinGame)
                     join_game.Display(sb);
-                else if (selected == gameState.MultiplayerGame)
-                    multimap.Display(sb);
                 else if (selected == gameState.MultiplayerSearchFriends)
                     search_friends.Display(sb);
                 else if (selected == gameState.MultiplayerHasJoined)
