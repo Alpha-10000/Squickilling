@@ -44,16 +44,18 @@ namespace thegame
         private int nb_players = 0;
         private int myindex;
         private bool IKnowwhereIAm = false;
+        private string theid;
 
-
-        public Client()
+        public Client(string theid)
         {
+            this.theid = theid;
+
             config = new NetPeerConfiguration("squickilling");
             client = new NetClient(config);
             client.Start();
             outmsg = client.CreateMessage();
             outmsg.Write((byte)PacketTypes.LOGIN);
-            outmsg.Write("9");
+            outmsg.Write(theid);
             //outmsg.Write("osef");
             string ip = "127.0.0.1";
             client.Connect(ip, 14242, outmsg);

@@ -23,6 +23,7 @@ namespace thegame
         private float timeintervall = 8000;
         private float timelapsed = 0;
         private string debug = "";
+        public string theidToJoin;
 
         public HasJoined()
         {
@@ -113,8 +114,11 @@ namespace thegame
                 if (e.Result != null)
                 {
                     string text = System.Text.Encoding.UTF8.GetString(e.Result);
-                    if (text == "There is one motherfucker")
+                    if (text != "Fuck" && text != "Login error" && text != "")
+                    {
                         thereisone = true;
+                        theidToJoin = text;
+                    }
                 }
             }
             catch

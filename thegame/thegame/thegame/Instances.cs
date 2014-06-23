@@ -421,7 +421,8 @@ namespace thegame
                 }
                 if (create_game.PlayerToGame)
                 {
-                    this.selected = gameState.MultiplayerGetGamers;
+                    client = new Client(Session.session_id);
+                    this.selected = gameState.MultiplayerMultiMap;
                     Execute();
                 }
             }
@@ -463,12 +464,13 @@ namespace thegame
                 }
                 if (hasjoined.thereisone)
                 {
-                    this.selected = gameState.MultiplayerGetGamers;
+                    client = new Client(hasjoined.theidToJoin);
+                    this.selected = gameState.MultiplayerMultiMap;
                     Execute();
                 }
                 
             }
-            else if (selected == gameState.MultiplayerGetGamers)
+            else if (selected == gameState.MultiplayerGetGamers)//Might become obselete 
             {
                 getgamers.Update(gametime);
             }
@@ -643,7 +645,9 @@ namespace thegame
                     getgamers = new GetGamers();
                     break;
                 case gameState.MultiplayerMultiMap:
-                    client = new Client();
+                    if(client == null)// only working in debug situations to bypass login/invite system
+                        client = new Client("");
+
                         thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
                         thecurrentmultimap.persos = new List<Perso>(){ null, null, null, null} ;
                         
