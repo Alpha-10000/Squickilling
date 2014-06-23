@@ -247,7 +247,7 @@ namespace thegame
                         while (i < 1000)
                             i++;
                         
-                        System.Diagnostics.Process.Start("Client_chat.exe");
+                        //System.Diagnostics.Process.Start("Client_chat.exe");
                         isChatLaunched = true;
                     }
                 }

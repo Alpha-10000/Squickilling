@@ -166,7 +166,7 @@ namespace thegame
                             map.persos[whichPersoIndex].animationPerso.Position.Y = newBonus;
 
                         }
-                        if (truc == (byte)PacketTypes.BONUS)
+                        if (truc == (byte)PacketTypes.HEALTH)
                         {
 
                             int whichPersoIndex = inc.ReadInt32();
@@ -278,9 +278,6 @@ namespace thegame
                     client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                     oldhealth = map.persos[myindex].health;
                 }
-
-
-
 
 
                 /* DEBUG 
