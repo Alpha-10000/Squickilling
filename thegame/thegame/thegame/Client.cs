@@ -247,64 +247,70 @@ namespace thegame
             }
             if (IKnowwhereIAm)
             {
-
-                if (map.persos[myindex].positionPerso.X != oldx)//If i move I send JUST my position
+                try//in case did not get the deleted perso already
                 {
-                    outmsg = client.CreateMessage();
-                    outmsg.Write((byte)PacketTypes.POSITIONX);
-                    outmsg.Write(myindex);
-                    outmsg.Write(map.persos[myindex].positionPerso.X);
-                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                    oldx = map.persos[myindex].positionPerso.X;
-                }
 
-                if (map.persos[myindex].positionPerso.Y != oldy)
-                {
-                    outmsg = client.CreateMessage();
-                    outmsg.Write((byte)PacketTypes.POSITIONY);
-                    outmsg.Write(myindex);
-                    outmsg.Write(map.persos[myindex].positionPerso.Y);
-                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                    oldy = map.persos[myindex].positionPerso.Y;
-                }
+                    if (map.persos[myindex].positionPerso.X != oldx)//If i move I send JUST my position
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.POSITIONX);
+                        outmsg.Write(myindex);
+                        outmsg.Write(map.persos[myindex].positionPerso.X);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                        oldx = map.persos[myindex].positionPerso.X;
+                    }
 
-                if (map.persos[myindex].score != oldscore)
-                {
-                    outmsg = client.CreateMessage();
-                    outmsg.Write((byte)PacketTypes.SCORE);
-                    outmsg.Write(myindex);
-                    outmsg.Write(map.persos[myindex].score);
-                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                    oldscore = map.persos[myindex].score;
-                }
+                    if (map.persos[myindex].positionPerso.Y != oldy)
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.POSITIONY);
+                        outmsg.Write(myindex);
+                        outmsg.Write(map.persos[myindex].positionPerso.Y);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                        oldy = map.persos[myindex].positionPerso.Y;
+                    }
 
-                if (map.persos[myindex].nbNuts != oldbonus)
-                {
-                    outmsg = client.CreateMessage();
-                    outmsg.Write((byte)PacketTypes.BONUS);
-                    outmsg.Write(myindex);
-                    outmsg.Write(map.persos[myindex].nbNuts);
-                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                    oldbonus = map.persos[myindex].nbNuts;
-                }
+                    if (map.persos[myindex].score != oldscore)
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.SCORE);
+                        outmsg.Write(myindex);
+                        outmsg.Write(map.persos[myindex].score);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                        oldscore = map.persos[myindex].score;
+                    }
 
-                if (map.persos[myindex].health != oldhealth)
-                {
-                    outmsg = client.CreateMessage();
-                    outmsg.Write((byte)PacketTypes.HEALTH);
-                    outmsg.Write(myindex);
-                    outmsg.Write(map.persos[myindex].health);
-                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                    oldhealth = map.persos[myindex].health;
-                }
-                if (Inputs.isKeyRelease(Keys.Space))
-                {
-                    outmsg = client.CreateMessage();
-                    outmsg.Write((byte)PacketTypes.PROJ);
-                    outmsg.Write(myindex);
-                    client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
-                }
+                    if (map.persos[myindex].nbNuts != oldbonus)
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.BONUS);
+                        outmsg.Write(myindex);
+                        outmsg.Write(map.persos[myindex].nbNuts);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                        oldbonus = map.persos[myindex].nbNuts;
+                    }
 
+                    if (map.persos[myindex].health != oldhealth)
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.HEALTH);
+                        outmsg.Write(myindex);
+                        outmsg.Write(map.persos[myindex].health);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                        oldhealth = map.persos[myindex].health;
+                    }
+                    if (Inputs.isKeyRelease(Keys.Space))
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.PROJ);
+                        outmsg.Write(myindex);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    }
+                }
+                catch
+                {
+
+                }
 
                 /* DEBUG 
                 if (Imoved)
