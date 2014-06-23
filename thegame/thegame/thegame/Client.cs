@@ -24,7 +24,8 @@ namespace thegame
         BONUS,
         HEALTH,
         PERSOLEAVE,
-        PROJ
+        PROJ,
+        DIRECTION
     }
 
     class Client
@@ -176,6 +177,13 @@ namespace thegame
                             Console.WriteLine("proj");
                             map.persos[whichPersoIndex].UpdateNoix();
                         }
+                        if (truc == (byte)PacketTypes.DIRECTION)
+                        {
+                            int whichPersoIndex = inc.ReadInt32();
+                            int newFrame = inc.ReadInt32();
+                            Console.WriteLine(newFrame);
+                            map.persos[whichPersoIndex].tempCurrentFrame.Y = newFrame;
+                        }
 
                         //IT HAS TO BE AT THE END
                         if (truc == (byte)PacketTypes.PERSOLEAVE)//this happens only if there is at least 2 players in the game!
@@ -304,6 +312,22 @@ namespace thegame
                         outmsg = client.CreateMessage();
                         outmsg.Write((byte)PacketTypes.PROJ);
                         outmsg.Write(myindex);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    }
+                    if (Inputs.isKeyRelease(Keys.Right))
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.DIRECTION);
+                        outmsg.Write(myindex);
+                        outmsg.Write(0);
+                        client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
+                    }
+                    if (Inputs.isKeyRelease(Keys.Left))
+                    {
+                        outmsg = client.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.DIRECTION);
+                        outmsg.Write(myindex);
+                        outmsg.Write(1);
                         client.SendMessage(outmsg, senderConnection, NetDeliveryMethod.ReliableOrdered);
                     }
                 }
