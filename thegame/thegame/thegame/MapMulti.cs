@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using X2DPE;
 using X2DPE.Helpers;
+using System.Net;
+using System.Collections.Specialized;
 
 namespace thegame
 {
@@ -121,6 +123,10 @@ namespace thegame
         private Button PauseButton, HelpButton;
         private bool ShowBloodBecauseItsMe = false;
         private Drawable scoreDisplay;
+
+        private bool UpdateScore = true;
+        private int nb_dead = 0;
+
 
         private SoundEffectInstance instancesound;
 
@@ -444,8 +450,6 @@ namespace thegame
             {
                 if (p != null)
                 {
-                    
-
                      if (themapstate == MapState.game)
                     {
                         // Displays the Help page according to several conditions
@@ -603,6 +607,7 @@ namespace thegame
                     else if (persos[whereishe].positionPerso.X > 5000)
                         persos[whereishe].cameraPos = new Vector2(-4600 + Game1.graphics.PreferredBackBufferWidth / 2, 0);
                     themapstate = MapState.game;
+                    
                 }
             }
 
@@ -617,6 +622,9 @@ namespace thegame
                 }
             if (whereishe != -1 && persos[whereishe].positionPerso.X > 5350)
             {
+                if(UpdateScore)
+                    UpdateScores();
+                UpdateScore = false;
                 themapstate = MapState.endlevel;
                 WaitingOtherPlayers = true;
 
@@ -627,6 +635,7 @@ namespace thegame
                 }
                 if (Inputs.isKeyRelease(Keys.Space) && YouCanStillPressThespaceButton)
                 {
+                    UpdateScore = true;
                     YouCanStillPressThespaceButton = false;
                     endLevel = false;    // We begin a new level
                     persos[whereishe] = new Perso(new Vector2(0, 0), CharacType.player);
@@ -918,6 +927,51 @@ namespace thegame
                             ShowBloodBecauseItsMe = false;
                         }
         
+            }
+        }
+
+
+        private void UpdateScores()
+        {
+            int whereishe = -1;
+            if (persos != null)
+                whereishe = persos.FindIndex(x => x != null && x.utilisable);
+
+            try
+            {
+                if (whereishe != -1)
+                {
+                    WebClient wb = new WebClient();
+                    var data = new NameValueCollection();
+                    wb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(client_UploadFileCompleted);
+                    data["pwd"] = Session.session_password;
+                    data["id"] = Session.session_id;
+                    if(nb_dead > 0)
+                        data["ratio"] = "" + (persos[whereishe].score / nb_dead);
+                    else
+                        data["ratio"] = "" + persos[whereishe].score;
+                    data["level"] = "" + persos[whereishe].nbNuts;
+                    wb.UploadValuesAsync(new Uri("http://squickilling.com/json/updatescoremulti.php"), "POST", data);
+                }
+            }
+            catch
+            {
+                //TODO
+            }
+        }
+
+        void client_UploadFileCompleted(object sender, UploadValuesCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null)
+                {
+
+                }
+            }
+            catch
+            {
+
             }
         }
     }
