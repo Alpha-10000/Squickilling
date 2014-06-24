@@ -483,6 +483,12 @@ namespace thegame
             {
                 client.Update(ref thecurrentmultimap);
                 thecurrentmultimap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode);
+                if (thecurrentmultimap.themapstate == MapMulti.MapState.gobackmenu)
+                        {
+                            curGameMode = instances_type.Menu;
+                            this.selected = gameState.MainMenu;
+                            Execute();
+                        }
             }
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();

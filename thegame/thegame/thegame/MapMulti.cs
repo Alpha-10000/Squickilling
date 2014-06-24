@@ -11,8 +11,11 @@ using X2DPE.Helpers;
 
 namespace thegame
 {
+
     class MapMulti
     {
+
+
         public enum MapState
         {
             game,
@@ -22,7 +25,6 @@ namespace thegame
             endlevel,
             gobackmenu
         }
-
 
         private static int[,] autumnTileMap = new int[,]
                         {
