@@ -497,7 +497,11 @@ namespace thegame
                 if (MultiplayerLogin.isProc())
                 {
                     Process[] proc = Process.GetProcessesByName("Client_chat");
-                    proc[0].Kill();
+                    try
+                    {
+                        proc[0].Kill();
+                    }
+                    catch { Console.WriteLine("Error"); }
                 }
             }
 

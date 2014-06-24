@@ -10,6 +10,7 @@ using X2DPE;
 using X2DPE.Helpers;
 using System.Net;
 using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace thegame
 {
@@ -571,6 +572,11 @@ namespace thegame
                             themapstate = MapState.gobackmenu;
                             break;
                         default:
+                            if (MultiplayerLogin.isProc())
+                            {
+                                Process[] proc = Process.GetProcessesByName("Client_chat");
+                                proc[0].Kill();
+                            }
                             game.Exit();
                             break;
                     }
