@@ -483,7 +483,7 @@ namespace thegame
             }
             else if (selected == gameState.MultiplayerMultiMap)
             {
-                client.Update(ref thecurrentmultimap);
+                client.Update(ref thecurrentmultimap, gametime);
                 thecurrentmultimap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode);
                 if (thecurrentmultimap.themapstate == MapMulti.MapState.gobackmenu)
                 {
