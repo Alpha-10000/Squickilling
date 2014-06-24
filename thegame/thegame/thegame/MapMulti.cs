@@ -598,7 +598,11 @@ namespace thegame
                     else
                         newcoordX = 0;
                     Color oldColor = persos[whereishe].DefaultColor;
+                    int oldscore = persos[whereishe].score;
+                    int oldnuts = persos[whereishe].nbNuts;
                     persos[whereishe] = new Perso(new Vector2(newcoordX, 0), CharacType.player);
+                    persos[whereishe].nbNuts = oldnuts;
+                    persos[whereishe].score = oldscore;
                     persos[whereishe].health = 10;
                     persos[whereishe].utilisable = true;
                     persos[whereishe].DefaultColor = oldColor;
@@ -640,6 +644,7 @@ namespace thegame
                     YouCanStillPressThespaceButton = false;
                     endLevel = false;    // We begin a new level
                     persos[whereishe] = new Perso(new Vector2(0, 0), CharacType.player);
+                    persos[whereishe].health = 10;
                     persos[whereishe].utilisable = true;
                     persos[whereishe].gameover = false;
                     themapstate = MapState.game;
