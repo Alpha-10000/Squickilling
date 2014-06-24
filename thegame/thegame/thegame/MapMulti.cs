@@ -123,6 +123,7 @@ namespace thegame
         private SoundEffectInstance instancesound;
 
         private bool WaitingOtherPlayers = false;
+        private bool YouCanStillPressThespaceButton = false;
 
         public List<Rectangle> blocks;
 
@@ -597,25 +598,30 @@ namespace thegame
                     themapstate = MapState.game;
                 }
             }
-     
 
-            if (themapstate == MapState.game &&  whereishe != -1 && persos[whereishe].positionPerso.X > 5350)
+            int nbPlayers = 0;
+            int nbEnd = 0;
+            foreach (Perso onePersoAtaTime in persos)
+                if (onePersoAtaTime != null)
+                {
+                    nbPlayers++;
+                    if (onePersoAtaTime.animationPerso.Position.X > 5300)
+                        nbEnd++;
+                }
+            if (whereishe != -1 && persos[whereishe].positionPerso.X > 5350)
             {
                 themapstate = MapState.endlevel;
                 WaitingOtherPlayers = true;
-                int nbPlayers = 0;
-                int nbEnd = 0;
-                foreach (Perso onePersoAtaTime in persos)
-                    if (onePersoAtaTime != null)
-                    {
-                        nbPlayers++;
-                        if (onePersoAtaTime.positionPerso.X > 5340)
-                            nbEnd++;
-                    }
-                if (Inputs.isKeyRelease(Keys.Space) && nbEnd == nbPlayers)
+
+                if (nbEnd == nbPlayers)
                 {
-                    endLevel = false;    // We begin a new level
                     WaitingOtherPlayers = false;
+                    YouCanStillPressThespaceButton = true;
+                }
+                if (Inputs.isKeyRelease(Keys.Space) && YouCanStillPressThespaceButton)
+                {
+                    YouCanStillPressThespaceButton = false;
+                    endLevel = false;    // We begin a new level
                     persos[whereishe] = new Perso(new Vector2(0, 0), CharacType.player);
                     persos[whereishe].utilisable = true;
                     persos[whereishe].gameover = false;
@@ -682,6 +688,8 @@ namespace thegame
             /*sb.Begin();
             chat.Draw(sb);
             sb.End();*/
+        
+
             foreach (Perso p in persos)
                 if (p != null && themapstate == MapState.gameover)
                     GameOverAnimation(sb, 1);
@@ -709,12 +717,13 @@ namespace thegame
                         scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + persos[i].score, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 190), Color.White, "multi");
                         scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + persos[i].nbNuts, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 220), Color.White, "multi");
                         scoreDisplay.Draw(sb, Language.Text_Game["total"] + (persos[i].score + persos[i].nbNuts * 0.5), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 280), Color.OrangeRed, "multi");
-                        if(WaitingOtherPlayers)
-                            scoreDisplay.Draw(sb, "Waiting others players", new Vector2(70, 400), Color.White, "osef");
-                        else
-                            scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
+                       
                     }
                 }
+                if (YouCanStillPressThespaceButton)
+                    scoreDisplay.Draw(sb, "Waiting others players", new Vector2(70, 400), Color.White, "osef");
+                else
+                    scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
                 sb.End();
 
 
