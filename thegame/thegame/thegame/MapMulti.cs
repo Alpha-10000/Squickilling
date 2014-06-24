@@ -122,6 +122,8 @@ namespace thegame
 
         private SoundEffectInstance instancesound;
 
+
+
         public List<Rectangle> blocks;
 
         public List<Rectangle> tile;
@@ -485,13 +487,14 @@ namespace thegame
                             {
                                 touchedByBomb = true;
                                 checkCrossed.activateExplosion = true;
-                                drawBloodScreen = true;
+                                if(p.utilisable)
+                                    drawBloodScreen = true;
                                 if (checkCrossed.checkBlood && SoundIs)
                                     Textures.gameExplosion_Effect.Play();
                                 checkCrossed.BloodOnce(ref p.health);
                                 break;
                             }
-                            if (checkCrossed.activateExplosion)// important to keep the blood screen active until the end of the explosion
+                            if (checkCrossed.activateExplosion && p.utilisable)// important to keep the blood screen active until the end of the explosion
                                 drawBloodScreen = true;
                         }
 
@@ -586,7 +589,7 @@ namespace thegame
                 }
                 if (Inputs.isKeyRelease(Keys.Space))
                 {
-                    float max = 0;
+                    float max = 800;
                     foreach (Perso uniqPerso in persos)
                         if (uniqPerso != null && !uniqPerso.utilisable && uniqPerso.positionPerso.X > max)
                             max = uniqPerso.positionPerso.X;
@@ -599,6 +602,10 @@ namespace thegame
                     persos[whereishe] = new Perso(new Vector2(newcoordX, 0), CharacType.player);
                     persos[whereishe].utilisable = true;
                     persos[whereishe].gameover = false;
+                    if (persos[whereishe].positionPerso.X > 400 && persos[whereishe].positionPerso.X < 5000)
+                        persos[whereishe].cameraPos = new Vector2(-newcoordX + Game1.graphics.PreferredBackBufferWidth / 2, 0);
+                    else if (persos[whereishe].positionPerso.X > 5000)
+                        persos[whereishe].cameraPos = new Vector2(-4600 + Game1.graphics.PreferredBackBufferWidth / 2, 0);
                     themapstate = MapState.game;
                 }
             }

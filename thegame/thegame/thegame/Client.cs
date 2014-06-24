@@ -59,7 +59,7 @@ namespace thegame
             outmsg.Write((byte)PacketTypes.LOGIN);
             outmsg.Write(theid);
             //outmsg.Write("osef");
-            string ip = "localhost";//ip server : 37.187.43.213
+            string ip = "37.187.43.213";//ip server : 37.187.43.213
             client.Connect(ip, 14242, outmsg);
             p = new Perso(new Vector2(0, 200), CharacType.player);
             p.utilisable = true;
@@ -129,60 +129,105 @@ namespace thegame
                         if (truc == (byte)PacketTypes.POSITIONX)
                         {
 
-                            int whichPersoIndex = inc.ReadInt32();
-                            float newPosX = inc.ReadFloat();
-                            Console.WriteLine(newPosX);
-                            map.persos[whichPersoIndex].animationPerso.Position.X = newPosX;
+                            try
+                            {
+                                int whichPersoIndex = inc.ReadInt32();
+                                float newPosX = inc.ReadFloat();
+                                Console.WriteLine(newPosX);
+                                map.persos[whichPersoIndex].animationPerso.Position.X = newPosX;
+                            }
+                            catch
+                            {
+
+                            }
 
                         }
                         if (truc == (byte)PacketTypes.POSITIONY)
                         {
-
+                            try
+                            {
                             int whichPersoIndex = inc.ReadInt32();
                             float newPosY = inc.ReadFloat();
                             Console.WriteLine(newPosY);
                             map.persos[whichPersoIndex].animationPerso.Position.Y = newPosY;
+                             }
+                            catch
+                            {
+
+                            }
 
                         }
                         if (truc == (byte)PacketTypes.SCORE)
                         {
-
+                            try
+                            {
                             int whichPersoIndex = inc.ReadInt32();
                             int newScore = inc.ReadInt32();
                             Console.WriteLine(newScore);
                             map.persos[whichPersoIndex].score = newScore;
+                             }
+                            catch
+                            {
+
+                            }
 
                         }
                         if (truc == (byte)PacketTypes.BONUS)
                         {
-
+                            try
+                            {
                             int whichPersoIndex = inc.ReadInt32();
                             int newBonus = inc.ReadInt32();
                             Console.WriteLine(newBonus);
                             map.persos[whichPersoIndex].nbNuts = newBonus;
+                             }
+                            catch
+                            {
+
+                            }
 
                         }
                         if (truc == (byte)PacketTypes.HEALTH)
                         {
-
+                            try
+                            {
                             int whichPersoIndex = inc.ReadInt32();
                             int newHealth = inc.ReadInt32();
                             Console.WriteLine(newHealth);
                             map.persos[whichPersoIndex].health = newHealth;
+         }
+                            catch
+                            {
+
+                            }
                         }
 
                         if (truc == (byte)PacketTypes.PROJ)
                         {
+                            try
+                            {
                             int whichPersoIndex = inc.ReadInt32();
                             Console.WriteLine("proj");
                             map.persos[whichPersoIndex].UpdateNoix();
+ }
+                            catch
+                            {
+
+                            }
                         }
                         if (truc == (byte)PacketTypes.DIRECTION)
                         {
+                            try
+                            {
                             int whichPersoIndex = inc.ReadInt32();
                             int newFrame = inc.ReadInt32();
                             Console.WriteLine(newFrame);
                             map.persos[whichPersoIndex].tempCurrentFrame.Y = newFrame;
+ }
+                            catch
+                            {
+
+                            }
                         }
 
                         //IT HAS TO BE AT THE END
