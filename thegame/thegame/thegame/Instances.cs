@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using X2DPE;
 using X2DPE.Helpers;
+using System.Diagnostics;
 
 namespace thegame
 {
@@ -361,6 +362,7 @@ namespace thegame
                     Execute();
                 }
             }
+            
             else if (selected == gameState.MultiplayerLoginRegister)
             {
                 if (multiplayerloginform.join_game.Clicked)
@@ -369,7 +371,7 @@ namespace thegame
                     Execute();
                 }
 
-               //Tempporaire, pour tests.
+                //Tempporaire, pour tests.
                 if (MultiplayerLogin.create_game.Clicked)
                 {
                     thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
@@ -448,7 +450,7 @@ namespace thegame
                     this.selected = gameState.MultiplayerHasJoined;
                     Execute();
                 }
-              
+
             }
             else if (selected == gameState.MultiplayerSearchFriends)
             {
@@ -473,7 +475,7 @@ namespace thegame
                     this.selected = gameState.MultiplayerMultiMap;
                     Execute();
                 }
-                
+
             }
             else if (selected == gameState.MultiplayerGetGamers)//Might become obselete 
             {
@@ -484,11 +486,19 @@ namespace thegame
                 client.Update(ref thecurrentmultimap);
                 thecurrentmultimap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode);
                 if (thecurrentmultimap.themapstate == MapMulti.MapState.gobackmenu)
-                        {
-                            curGameMode = instances_type.Menu;
-                            this.selected = gameState.MainMenu;
-                            Execute();
-                        }
+                {
+                    curGameMode = instances_type.Menu;
+                    this.selected = gameState.MainMenu;
+                    Execute();
+                }
+            }
+            else if (curGameMode != instances_type.Multi)
+            {
+                if (MultiplayerLogin.isProc())
+                {
+                    Process[] proc = Process.GetProcessesByName("Client_chat");
+                    proc[0].Kill();
+                }
             }
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();

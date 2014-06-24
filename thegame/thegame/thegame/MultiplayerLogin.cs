@@ -62,7 +62,7 @@ namespace thegame
 
         private bool justExecute = true;
         StreamWriter sw;
-
+        
         private bool displayRightCircle = true;
         private bool displayLeftCircle = true;
         private bool displayLoginForm = false;
@@ -77,9 +77,8 @@ namespace thegame
         public MultiplayerLogin()
         {
             wb = new WebClient();
-            //sw = new StreamWriter("name.txt");
 
-            /* All rectangle for alignements and display to check collision with mouse */
+             /* All rectangle for alignements and display to check collision with mouse */
             //Create form
             create_text_name = new Rectangle(XcreateForm, 110, 200, 50);//+50 for text, +40 otherwise
             create_name_string = new Textbox(XcreateForm, 160, 200, 40);
@@ -246,8 +245,9 @@ namespace thegame
                         int i = 0;
                         while (i < 1000)
                             i++;
+                        System.IO.File.Copy("name2.txt", "name.txt", true);
                         
-                        //System.Diagnostics.Process.Start("Client_chat.exe");
+                        System.Diagnostics.Process.Start("Client_chat.exe");
                         isChatLaunched = true;
                     }
                 }
@@ -295,11 +295,24 @@ namespace thegame
             create_game.Update();
             join_game.Update();
         }
+        public static bool isProc()
+        { 
+                try
+            {
+	            Process [] proc = Process.GetProcessesByName("Client_chat");
+                if (proc.Length > 0)
+                    return true;
+                else return false;
+            }
 
+                catch { return false; }
+        }
+        
         private void Login()
         {
             try
             {
+                sw = new StreamWriter("name2.txt");
                 var data = new NameValueCollection();
                 data["email"] = login_email_string.text;
                 data["password"] = login_password_string.text;
