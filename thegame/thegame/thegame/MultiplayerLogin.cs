@@ -71,8 +71,8 @@ namespace thegame
         private float transparency = 0;
 
         //temporaire
-        public static Button create_game = new Button("Create Game", 200, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
-        public Button join_game = new Button("Join Game", 450, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
+       // public static Button create_game = new Button("Create Game", 200, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
+        //public Button join_game = new Button("Join Game", 450, 425, Textures.font_texture, Color.White, Color.Black, new Color(122, 184, 0));
 
         public MultiplayerLogin()
         {
@@ -292,8 +292,8 @@ namespace thegame
             }
 
             justExecute = true;
-            create_game.Update();
-            join_game.Update();
+            //create_game.Update();
+            //join_game.Update();
         }
         public static bool isProc()
         { 
@@ -351,8 +351,8 @@ namespace thegame
 
             sb.DrawString(Textures.font_texture, "MULTIPLAYER", new Vector2(20, 20), Color.White);
             sb.DrawString(Textures.font_texture, "Back main menu", new Vector2(back_main_menu.X, back_main_menu.Y), Color.White);
-            create_game.Display(sb);
-            join_game.Display(sb);
+           // create_game.Display(sb);
+           // join_game.Display(sb);
             
 
             /* CREATE ACCOUNT FORM */

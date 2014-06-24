@@ -365,6 +365,7 @@ namespace thegame
             
             else if (selected == gameState.MultiplayerLoginRegister)
             {
+                /*
                 if (multiplayerloginform.join_game.Clicked)
                 {
                     this.selected = gameState.MultiplayerMultiMap;
@@ -380,7 +381,7 @@ namespace thegame
                     Execute();
                 }
 
-
+                */
 
                 if (selected == gameState.MultiplayerLoginRegister)
                     multiplayerloginform.Update(gametime);
@@ -779,14 +780,14 @@ namespace thegame
                     getgamers.Display(sb);
                 else if (selected == gameState.MultiplayerMultiMap)
                     thecurrentmultimap.Display(sb, gameTime, cameraClass);
-
+                /*
                 if (MultiplayerLogin.create_game.Clicked)
                 {
                     this.curGameMode = instances_type.Multi;
                     this.selected = gameState.AutumnLevel;
                     Execute();
                 }
-               
+               */
             }
 
             if (Developpermode)
