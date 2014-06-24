@@ -119,7 +119,7 @@ namespace thegame
         private float elapsedTimeBloodScreen = 0;
 
         private Button PauseButton, HelpButton;
-
+        private bool ShowBloodBecauseItsMe = false;
         private Drawable scoreDisplay;
 
         private SoundEffectInstance instancesound;
@@ -476,10 +476,11 @@ namespace thegame
                         {
                             if (p.hitBoxPerso.Intersects(checkCrossed.Object) && !checkCrossed.activateExplosion)
                             {
+                                if (p.utilisable)
+                                    ShowBloodBecauseItsMe = true;
                                 touchedByBomb = true;
                                 checkCrossed.activateExplosion = true;
-                                if(p.utilisable)
-                                    drawBloodScreen = true;
+                                drawBloodScreen = true;
                                 if (checkCrossed.checkBlood && SoundIs)
                                     Textures.gameExplosion_Effect.Play();
                                 checkCrossed.BloodOnce(ref p.health);
@@ -489,7 +490,7 @@ namespace thegame
                                 drawBloodScreen = true;
                         }
 
-                        if (touchedByBomb)//fait clignoter le perso
+                        if (touchedByBomb && p.utilisable)//fait clignoter le perso
                         {
                             p.PersoHitted = true;
                             p.compteurHitted = 0;
@@ -508,13 +509,13 @@ namespace thegame
                             this.objects = p.objects;
                             iaPerso = p.CollisionIAProjec(iaPerso, ref p.score);
 
-                            if (checkBlood > 0)
+                            if (checkBlood > 0 && p.utilisable)
                             {
                                 p.PersoHitted = drawBloodScreen = true;
                                 p.compteurHitted = 0;
                             }
 
-                            if (p.health <= 0)
+                            if (p.health <= 0 && p.utilisable)
                             {
                                 p.health = 0;
                                 p.gameover = true;
@@ -541,6 +542,8 @@ namespace thegame
 
                      
                 }
+                if (p!= null &&  p.health < 0)
+                    p.health = 0;
             }
             if (themapstate == MapState.pause)
             {
@@ -590,8 +593,10 @@ namespace thegame
                         newcoordX = max - 200;
                     else
                         newcoordX = 0;
+                    Color oldColor = persos[whereishe].DefaultColor;
                     persos[whereishe] = new Perso(new Vector2(newcoordX, 0), CharacType.player);
                     persos[whereishe].utilisable = true;
+                    persos[whereishe].DefaultColor = oldColor;
                     persos[whereishe].gameover = false;
                     if (persos[whereishe].positionPerso.X > 400 && persos[whereishe].positionPerso.X < 5000)
                         persos[whereishe].cameraPos = new Vector2(-newcoordX + Game1.graphics.PreferredBackBufferWidth / 2, 0);
@@ -888,17 +893,19 @@ namespace thegame
 
         private void Bloodscreen(GameTime gameTime, SpriteBatch sb, Vector2 camera, Camera cameraClass)
         {
-            if (drawBloodScreen)
+            int whereishe = -1;
+            if (persos != null)
+                whereishe = persos.FindIndex(x => x != null && x.utilisable);
+
+            if (drawBloodScreen && ShowBloodBecauseItsMe && whereishe != -1)
             {
+                
                 elapsedTimeBloodScreen += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 cameraClass.shake = true;
-                foreach (Perso p in persos)
-                {
-                    if (p != null)
-                    {
-                        if (elapsedTimeBloodScreen < 50)
+
+                        if (elapsedTimeBloodScreen < 500)
                         {
-                            int positionX = (int)p.positionPerso.X - 400;
+                            int positionX = (int)persos[whereishe].positionPerso.X - 400;
                             float correction = 0;
                             if (positionX + 400 >= 5000)
                                 correction = 600;
@@ -908,9 +915,9 @@ namespace thegame
                         {
                             elapsedTimeBloodScreen = 0;
                             drawBloodScreen = cameraClass.shake = false;
+                            ShowBloodBecauseItsMe = false;
                         }
-                    }
-                }
+        
             }
         }
     }
