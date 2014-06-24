@@ -63,6 +63,7 @@ namespace thegame
             string ip = "37.187.43.213";//ip server : 37.187.43.213
             client.Connect(ip, 14242, outmsg);
             p = new Perso(new Vector2(0, 200), CharacType.player);
+            p.health = 10;
             p.utilisable = true;
             Console.WriteLine("Client créé");
 
@@ -74,6 +75,7 @@ namespace thegame
                 if (map.persos[i] == null && i != myindex)
                 {
                     map.persos[i] = new Perso(new Vector2(0, 200), CharacType.player);
+                    map.persos[i].health = 10;
                     map.persos[i].DefaultColor = ColorList[i];
                 }
 
@@ -109,6 +111,7 @@ namespace thegame
                                 Console.WriteLine("Me and id : " + myindex);
                                 OnTriche(ref map);
                                 map.persos[myindex] = p;
+                                map.persos[myindex].health = 10;
                                 map.persos[myindex].DefaultColor = ColorList[myindex];
                                 oldx = map.persos[myindex].animationPerso.Position.X;
                                 oldy = map.persos[myindex].animationPerso.Position.Y;

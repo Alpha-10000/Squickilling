@@ -457,13 +457,13 @@ namespace thegame
                             themapstate = MapState.help;
 
                         if (Developpermode)
-                            p.health = 20;
+                            p.health = 10;
                     
                         for (int j = medecines.Count - 1; j >= 0; j--)
                             if (p.hitBoxPerso.Intersects(medecines[j]))
                             {
                                 medecines.Remove(medecines[j]);
-                                p.health += (p.health <= 15) ? 5 : (20 - p.health);
+                                p.health += (p.health <= 5) ? 5 : (10 - p.health);
                             }
                         int checkBlood = 0;
                         foreach (Perso iathings in iaPerso)
@@ -534,7 +534,7 @@ namespace thegame
                                     if (timeElaspedGameOver > 2500)
                                     {
                                         timeElaspedGameOver = 0;
-                                       
+                                        nb_dead++;
                                         themapstate = MapState.gameover;
                                     }
                                     if (timeElaspedGameOver > 1500)
@@ -599,6 +599,7 @@ namespace thegame
                         newcoordX = 0;
                     Color oldColor = persos[whereishe].DefaultColor;
                     persos[whereishe] = new Perso(new Vector2(newcoordX, 0), CharacType.player);
+                    persos[whereishe].health = 10;
                     persos[whereishe].utilisable = true;
                     persos[whereishe].DefaultColor = oldColor;
                     persos[whereishe].gameover = false;
@@ -843,7 +844,7 @@ namespace thegame
                         scoreDisplay.Draw(sb, Language.Text_Game["_gamebonus"] + " : " + persos[i].nbNuts, new Vector2(Pow(i + 1, 5) + (20 * i), 487), Color.Black, "normal");
 
                         //draw text health
-                        scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + persos[i].health + "/20", new Vector2(25 + Pow(i + 1, 5) + (20 * i), 425), Color.Black, "normal");
+                        scoreDisplay.Draw(sb, Language.Text_Game["_gameHealth"] + " :  " + persos[i].health + "/10", new Vector2(25 + Pow(i + 1, 5) + (20 * i), 425), Color.Black, "normal");
 
 
                         //------------------------------------------------------------------
@@ -859,7 +860,7 @@ namespace thegame
                             Textures.healthBar_texture.Width, 28), Color.Gray);
                         //health left
                         sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
-                            457, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 20f) / 2,
+                            457, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 10f) / 2,
                             Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 450 + Textures.healthBar_texture.Height / 2, Textures.healthBar_texture.Width, Textures.healthBar_texture.Height / 2),
                             (persos[i].DefaultColor == Color.White) ? Color.Orange : persos[i].DefaultColor);
                         //healthBar bounds
@@ -950,7 +951,7 @@ namespace thegame
                         data["ratio"] = "" + (persos[whereishe].score / nb_dead);
                     else
                         data["ratio"] = "" + persos[whereishe].score;
-                    data["level"] = "" + persos[whereishe].nbNuts;
+                    data["level"] = "" + persos[whereishe].nbNuts / 10;
                     wb.UploadValuesAsync(new Uri("http://squickilling.com/json/updatescoremulti.php"), "POST", data);
                 }
             }
