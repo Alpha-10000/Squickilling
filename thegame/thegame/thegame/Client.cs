@@ -49,6 +49,9 @@ namespace thegame
         private string theid;
         private List<Color> ColorList = new List<Color>() { Color.White, Color.Brown, Color.Black, Color.Blue };
 
+        private float ElaspedTime = 0;
+        private bool SendDate = true;
+
         public Client(string theid)
         {
             this.theid = theid;
@@ -82,8 +85,15 @@ namespace thegame
         }
 
       
-        public void Update(ref MapMulti map)
+        public void Update(ref MapMulti map, GameTime gametime)
         {
+            ElaspedTime += gametime.ElapsedGameTime.Milliseconds;
+            SendDate = false;
+            if (ElaspedTime >= 20)
+            {
+                SendDate = true;
+                ElaspedTime = 0;
+            }
 
             NetIncomingMessage inc;
             if ((inc = client.ReadMessage()) != null)//Receive message
@@ -308,7 +318,7 @@ namespace thegame
 
                 }
             }
-            if (IKnowwhereIAm)
+            if (IKnowwhereIAm && SendDate)
             {
                 try//in case did not get the deleted perso already
                 {
