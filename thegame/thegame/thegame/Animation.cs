@@ -80,12 +80,12 @@ namespace thegame
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, bool LastMovewasRight)//to place the sprite at the right position when using right/left
+        public void Draw(SpriteBatch spriteBatch, bool LastMovewasRight, Color color)//to place the sprite at the right position when using right/left
         {
             if((int)currentFrame.Y == 0)
-                spriteBatch.Draw(Sprite, new Vector2(Position.X - Textures.mario_texture.Width / 16, Position.Y - 5), SpriteSheet, Color.White);
+                spriteBatch.Draw(Sprite, new Vector2(Position.X - Textures.mario_texture.Width / 16, Position.Y - 5), SpriteSheet, color);
             else
-                spriteBatch.Draw(Sprite, new Vector2(Position.X - 5, Position.Y - 5), SpriteSheet, Color.White);
+                spriteBatch.Draw(Sprite, new Vector2(Position.X - 5, Position.Y - 5), SpriteSheet, color);
         }
 
         public void Draw(SpriteBatch spriteBatch)

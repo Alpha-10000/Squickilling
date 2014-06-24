@@ -820,7 +820,8 @@ namespace thegame
                         //health left
                         sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
                             457, (int)(Textures.healthBar_texture.Width * (double)persos[i].health / 20f) / 2,
-                            Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 450 + Textures.healthBar_texture.Height / 2, Textures.healthBar_texture.Width, Textures.healthBar_texture.Height / 2), Color.Red);
+                            Textures.healthBar_texture.Height / 3), new Rectangle(0 + Pow(i + 1, 5) + (30 * i), 450 + Textures.healthBar_texture.Height / 2, Textures.healthBar_texture.Width, Textures.healthBar_texture.Height / 2),
+                            (persos[i].DefaultColor == Color.White) ? Color.Orange : persos[i].DefaultColor);
                         //healthBar bounds
                         sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
                             457, Textures.healthBar_texture.Width / 2, Textures.healthBar_texture.Height / 3), new Rectangle(0, 0,

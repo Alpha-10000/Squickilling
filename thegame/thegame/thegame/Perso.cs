@@ -33,6 +33,8 @@ namespace thegame
         float vel;
         float acc;
 
+        public Color DefaultColor = Color.White;
+
         public bool gameover = false;
         public static bool game_over;
         public bool PersoHitted = false;
@@ -624,14 +626,14 @@ namespace thegame
                         timeElaspedHitted = 0;
                     }
                     if (compteurHitted % 2 == 1 && CharacType.player == typePerso)
-                        animationPerso.Draw(spriteBatch, false);
+                        animationPerso.Draw(spriteBatch, false, DefaultColor);
                     else if (compteurHitted % 2 == 1)
                         animationPerso.Draw(spriteBatch);
                 }
 
             }
             else if (CharacType.player == typePerso)
-                animationPerso.Draw(spriteBatch, true);
+                animationPerso.Draw(spriteBatch, true, DefaultColor);
             else
                 animationPerso.Draw(spriteBatch);
 

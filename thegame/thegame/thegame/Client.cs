@@ -47,6 +47,7 @@ namespace thegame
         private int myindex;
         private bool IKnowwhereIAm = false;
         private string theid;
+        private List<Color> ColorList = new List<Color>() { Color.White, Color.Brown, Color.Black, Color.Blue };
 
         public Client(string theid)
         {
@@ -71,7 +72,10 @@ namespace thegame
         {
             for (int i = 0; i < nb_players; i++)
                 if (map.persos[i] == null && i != myindex)
+                {
                     map.persos[i] = new Perso(new Vector2(0, 200), CharacType.player);
+                    map.persos[i].DefaultColor = ColorList[i];
+                }
 
         }
 
@@ -105,6 +109,7 @@ namespace thegame
                                 Console.WriteLine("Me and id : " + myindex);
                                 OnTriche(ref map);
                                 map.persos[myindex] = p;
+                                map.persos[myindex].DefaultColor = ColorList[myindex];
                                 oldx = map.persos[myindex].animationPerso.Position.X;
                                 oldy = map.persos[myindex].animationPerso.Position.Y;
                                 oldscore = map.persos[myindex].score;
@@ -236,14 +241,16 @@ namespace thegame
 
                             int LeaveId = inc.ReadInt32();
                             nb_players--;
-                            myindex--;
+                            if (myindex > 0)
+                                myindex--;
                             for (int i = LeaveId; i < nb_players; i++)
                             {
                                 map.persos[i] = map.persos[i + 1];
+                                map.persos[i].DefaultColor = map.persos[i + 1].DefaultColor;
                             }
 
                             map.persos[nb_players] = null;
-
+                            map.persos[myindex].DefaultColor = ColorList[myindex];
                         }
 
 
