@@ -60,7 +60,7 @@ namespace thegame
             outmsg.Write((byte)PacketTypes.LOGIN);
             outmsg.Write(theid);
             //outmsg.Write("osef");
-            string ip = "localhost";//ip server : 37.187.43.213
+            string ip = "37.187.43.213";//ip server : 37.187.43.213
             client.Connect(ip, 14242, outmsg);
             p = new Perso(new Vector2(0, 200), CharacType.player);
             p.utilisable = true;
