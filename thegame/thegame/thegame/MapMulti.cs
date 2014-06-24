@@ -122,7 +122,7 @@ namespace thegame
 
         private SoundEffectInstance instancesound;
 
-
+        private bool WaitingOtherPlayers = false;
 
         public List<Rectangle> blocks;
 
@@ -385,6 +385,9 @@ namespace thegame
 
         public void Update(GameTime gametime, Game game, ref Camera cameraClass, ref Vector2 cameraPos, bool Developpermode)
         {
+            int whereishe = -1;
+            if(persos != null)
+                whereishe = persos.FindIndex(x => x!= null && x.utilisable);
             // Pause and Help Buttons are created
             PauseButton.Update();
             HelpButton.Update();
@@ -438,24 +441,9 @@ namespace thegame
             {
                 if (p != null)
                 {
-                    if (p.positionPerso.X > 5350)
-                    {
-                        themapstate = MapState.endlevel;
-                        if (Inputs.isKeyRelease(Keys.Space))
-                        {
-                            endLevel = false;    // We begin a new level
+                    
 
-                            // We switch to the next level
-                            if (thegamestate == gameState.AutumnLevel) thegamestate = gameState.WinterLevel;
-                            else if (thegamestate == gameState.WinterLevel) thegamestate = gameState.SpringLevel;
-                            else if (thegamestate == gameState.SpringLevel) thegamestate = gameState.SummerLevel;
-                            else thegamestate = gameState.AutumnLevel;
-
-                            NewGame(ref cameraClass);
-                        }
-
-                    }
-                    else if (themapstate == MapState.game)
+                     if (themapstate == MapState.game)
                     {
                         // Displays the Help page according to several conditions
                         if (((Inputs.isKeyRelease(Keys.H) || HelpButton.Clicked) && !justchange) && !Chat.text.isSelected)
@@ -587,13 +575,13 @@ namespace thegame
                     if (particleComponent.particleEmitterList[1].Active && thegamestate == gameState.AutumnLevel)
                         particleComponent.particleEmitterList[1].Active = false;
                 }
-                if (Inputs.isKeyRelease(Keys.Space))
+                if (Inputs.isKeyRelease(Keys.Space) && whereishe != -1)
                 {
                     float max = 800;
                     foreach (Perso uniqPerso in persos)
                         if (uniqPerso != null && !uniqPerso.utilisable && uniqPerso.positionPerso.X > max)
                             max = uniqPerso.positionPerso.X;
-                    int whereishe = persos.FindIndex(x => x.utilisable);
+                    
                     float newcoordX;
                     if(max > 100)
                         newcoordX = max - 200;
@@ -609,8 +597,32 @@ namespace thegame
                     themapstate = MapState.game;
                 }
             }
-            
+     
 
+            if (themapstate == MapState.game &&  whereishe != -1 && persos[whereishe].positionPerso.X > 5350)
+            {
+                themapstate = MapState.endlevel;
+                WaitingOtherPlayers = true;
+                int nbPlayers = 0;
+                int nbEnd = 0;
+                foreach (Perso onePersoAtaTime in persos)
+                    if (onePersoAtaTime != null)
+                    {
+                        nbPlayers++;
+                        if (onePersoAtaTime.positionPerso.X > 5340)
+                            nbEnd++;
+                    }
+                if (Inputs.isKeyRelease(Keys.Space) && nbEnd == nbPlayers)
+                {
+                    endLevel = false;    // We begin a new level
+                    WaitingOtherPlayers = false;
+                    persos[whereishe] = new Perso(new Vector2(0, 0), CharacType.player);
+                    persos[whereishe].utilisable = true;
+                    persos[whereishe].gameover = false;
+                    themapstate = MapState.game;
+                }
+
+            }
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
 
@@ -697,7 +709,10 @@ namespace thegame
                         scoreDisplay.Draw(sb, Language.Text_Game["finalScore"] + persos[i].score, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 190), Color.White, "multi");
                         scoreDisplay.Draw(sb, Language.Text_Game["finalBonus"] + persos[i].nbNuts, new Vector2(30 + Pow(i + 1, 5) + (150 * i), 220), Color.White, "multi");
                         scoreDisplay.Draw(sb, Language.Text_Game["total"] + (persos[i].score + persos[i].nbNuts * 0.5), new Vector2(30 + Pow(i + 1, 5) + (150 * i), 280), Color.OrangeRed, "multi");
-                        scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
+                        if(WaitingOtherPlayers)
+                            scoreDisplay.Draw(sb, "Waiting others players", new Vector2(70, 400), Color.White, "osef");
+                        else
+                            scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
                     }
                 }
                 sb.End();
