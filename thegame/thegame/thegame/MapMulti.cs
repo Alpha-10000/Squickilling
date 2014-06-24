@@ -748,7 +748,7 @@ namespace thegame
                        
                     }
                 }
-                if (YouCanStillPressThespaceButton)
+                if (!YouCanStillPressThespaceButton)
                     scoreDisplay.Draw(sb, "Waiting others players", new Vector2(70, 400), Color.White, "osef");
                 else
                     scoreDisplay.Draw(sb, Language.Text_Game["space"], new Vector2(70, 400), Color.White, "osef");
