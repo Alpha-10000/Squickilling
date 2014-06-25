@@ -246,8 +246,12 @@ namespace thegame
                         while (i < 1000)
                             i++;
                         System.IO.File.Copy("name2.txt", "name.txt", true);
-                        
-                        System.Diagnostics.Process.Start("Client_chat.exe");
+                        try
+                        {
+                            System.Diagnostics.Process.Start("Client_chat.exe");
+                        }
+                        catch { Console.WriteLine("Error"); }
+
                         isChatLaunched = true;
                     }
                 }
