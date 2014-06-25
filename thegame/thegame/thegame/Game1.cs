@@ -43,6 +43,10 @@ namespace thegame
             this.Components.Add(MapMulti.particleComponent);
 
             this.IsMouseVisible = true;
+            IntPtr hWnd = this.Window.Handle;
+            var control = System.Windows.Forms.Control.FromHandle(hWnd);
+            var form = control.FindForm();
+            form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             Content.RootDirectory = "Content";
 
             

@@ -122,6 +122,7 @@ namespace thegame
         private float elapsedTimeBloodScreen = 0;
 
         private Button PauseButton, HelpButton;
+        private Button MusicButton;
         private bool ShowBloodBecauseItsMe = false;
         private Drawable scoreDisplay;
 
@@ -191,7 +192,7 @@ namespace thegame
             this.SoundIs = SoundIs;
             PauseButton = new Button("P / Pause", 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
             HelpButton = new Button("H / Help", 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
-
+            MusicButton = new Button("M / Music", 524 + 60, 475, Textures.fontnormal_texture, COLORTYPE.light_green);
         }
 
         public void NewGame(ref Camera cameraClass)
@@ -401,7 +402,22 @@ namespace thegame
             // Pause and Help Buttons are created
             PauseButton.Update();
             HelpButton.Update();
+            MusicButton.Update();
             chat.Update(gametime);
+
+            if (Inputs.isKeyRelease(Keys.M) || MusicButton.Clicked)
+            {
+                if (SoundIs)
+                {
+                    SoundIs = false;
+                    MusicButton = new Button("M / Music", 524 + 60, 475, Textures.fontnormal_texture, COLORTYPE.dark_green);
+                }
+                else
+                {
+                    SoundIs = true;
+                    MusicButton = new Button("M / Music", 524 + 60, 475, Textures.fontnormal_texture, COLORTYPE.light_green);
+                }
+            }
             // Conditions to access the Pause Page
             if ((Inputs.isKeyRelease(Keys.Escape) || Inputs.isKeyRelease(Keys.P) || PauseButton.Clicked) && !Chat.text.isSelected) themapstate = MapState.pause;
 
@@ -773,6 +789,7 @@ namespace thegame
                 sb.Begin();
                 // Makes the background move slower than the camera to create an effect of depth.
                 sb.Draw(Background, new Vector2(cameraClass.Position.X / 3 - 1, -43), Color.White * 0.9f);
+                sb.Draw(Textures.underBar_texture, new Vector2(0, 420), Color.White);
                 sb.End();
 
                 sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraClass.TransformMatrix);
@@ -844,8 +861,8 @@ namespace thegame
                 Bloodscreen(gameTime, sb, cameraClass.Position, cameraClass);
                 sb.End();
                 sb.Begin();
-                sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);//draw panel life + bonus + help + pause
-
+                //sb.Draw(Textures.hitbox, new Rectangle(0, 420, Game1.graphics.PreferredBackBufferWidth + 40, 120), Color.DimGray);//draw panel life + bonus + help + pause
+                sb.Draw(Textures.underBar_texture, new Vector2(0, 420), Color.White);
                 for (int i = 0; i < persos.Count; i++)
                 {
                     if (persos[i] != null)
@@ -864,6 +881,7 @@ namespace thegame
                         //------------------------------------------------------------------
                         PauseButton.Display(sb);
                         HelpButton.Display(sb);
+                        MusicButton.Display(sb);
 
                         //Negative health
                         sb.Draw(Textures.healthBar_texture, new Rectangle(0 + Pow(i + 1, 5) + (20 * i),
