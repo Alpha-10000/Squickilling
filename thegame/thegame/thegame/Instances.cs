@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using X2DPE;
 using X2DPE.Helpers;
+using System.Diagnostics;
 
 namespace thegame
 {
@@ -361,15 +362,17 @@ namespace thegame
                     Execute();
                 }
             }
+            
             else if (selected == gameState.MultiplayerLoginRegister)
             {
+                /*
                 if (multiplayerloginform.join_game.Clicked)
                 {
                     this.selected = gameState.MultiplayerMultiMap;
                     Execute();
                 }
 
-               //Tempporaire, pour tests.
+                //Tempporaire, pour tests.
                 if (MultiplayerLogin.create_game.Clicked)
                 {
                     thecurrentmultimap = new MapMulti(gameState.AutumnLevel, ref cameraClass, SoundIs);
@@ -378,7 +381,7 @@ namespace thegame
                     Execute();
                 }
 
-
+                */
 
                 if (selected == gameState.MultiplayerLoginRegister)
                     multiplayerloginform.Update(gametime);
@@ -448,7 +451,7 @@ namespace thegame
                     this.selected = gameState.MultiplayerHasJoined;
                     Execute();
                 }
-              
+
             }
             else if (selected == gameState.MultiplayerSearchFriends)
             {
@@ -473,7 +476,7 @@ namespace thegame
                     this.selected = gameState.MultiplayerMultiMap;
                     Execute();
                 }
-                
+
             }
             else if (selected == gameState.MultiplayerGetGamers)//Might become obselete 
             {
@@ -481,8 +484,26 @@ namespace thegame
             }
             else if (selected == gameState.MultiplayerMultiMap)
             {
-                client.Update(ref thecurrentmultimap);
+                client.Update(ref thecurrentmultimap, gametime);
                 thecurrentmultimap.Update(gametime, game, ref cameraClass, ref cameraPos, Developpermode);
+                if (thecurrentmultimap.themapstate == MapMulti.MapState.gobackmenu)
+                {
+                    curGameMode = instances_type.Menu;
+                    this.selected = gameState.MainMenu;
+                    Execute();
+                }
+            }
+            else if (curGameMode != instances_type.Multi)
+            {
+                if (MultiplayerLogin.isProc())
+                {
+                    Process[] proc = Process.GetProcessesByName("Client_chat");
+                    try
+                    {
+                        proc[0].Kill();
+                    }
+                    catch { Console.WriteLine("Error"); }
+                }
             }
 
             Keys[] getkey = Keyboard.GetState().GetPressedKeys();
@@ -759,14 +780,14 @@ namespace thegame
                     getgamers.Display(sb);
                 else if (selected == gameState.MultiplayerMultiMap)
                     thecurrentmultimap.Display(sb, gameTime, cameraClass);
-
+                /*
                 if (MultiplayerLogin.create_game.Clicked)
                 {
                     this.curGameMode = instances_type.Multi;
                     this.selected = gameState.AutumnLevel;
                     Execute();
                 }
-               
+               */
             }
 
             if (Developpermode)
