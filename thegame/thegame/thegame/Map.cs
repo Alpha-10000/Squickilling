@@ -180,9 +180,9 @@ namespace thegame
         {
             this.thegamestate = thegamestate;
             this.NewGame(ref cameraClass);
-            PauseButton = new Button("P / Pause", 524, 430, Textures.fontnormal_texture,COLORTYPE.light_green);
-            HelpButton = new Button("H / Help", 524 + 120, 430, Textures.fontnormal_texture, COLORTYPE.light_green);
-            MusicButton = new Button("M / Music", 524+60, 475, Textures.fontnormal_texture, COLORTYPE.light_green);
+            PauseButton = new Button(Language.Text_Game["_btnPause"], 524, 430, Textures.fontnormal_texture,COLORTYPE.light_green);
+            HelpButton = new Button(Language.Text_Game["_btnHelp"], 524 + 120, 430, Textures.fontnormal_texture, COLORTYPE.light_green);
+            MusicButton = new Button(Language.Text_Game["_btnMusic"], 524+60, 475, Textures.fontnormal_texture, COLORTYPE.light_green);
         }
 
         public void NewGame(ref Camera cameraClass)
@@ -430,12 +430,12 @@ namespace thegame
                 if (SoundIs)
                 {
                     SoundIs = false;
-                    MusicButton = new Button("M / Music", 524 + 60, 475, Textures.fontnormal_texture, COLORTYPE.dark_green);
+                    MusicButton = new Button(Language.Text_Game["_btnMusic"], 524 + 60, 475, Textures.fontnormal_texture, COLORTYPE.dark_green);
                 }
                 else
                 {
                     SoundIs = true;
-                    MusicButton = new Button("M / Music", 524 + 60,475, Textures.fontnormal_texture, COLORTYPE.light_green);
+                    MusicButton = new Button(Language.Text_Game["_btnMusic"], 524 + 60,475, Textures.fontnormal_texture, COLORTYPE.light_green);
                 }
             }
 

@@ -126,7 +126,11 @@ namespace thegame
                         if (Inputs.isLMBClick() && selected != 2) IChooseSomething = true;
                         else if (Inputs.isLMBClick())
                         {
-                            popup = new Popup("Cancel", "Yes", "Exit the game", new string[] { "Are you sure you want to quit ?" }, Textures.font_texture, 450);
+                            popup = new Popup(Language.Text_Game["_btnCancel"], 
+                                              Language.Text_Game["_btnYes"], 
+                                              Language.Text_Game["_popupExit"], 
+                                              new string[] { Language.Text_Game["_popupSure?"] }, 
+                                              Textures.font_texture, 450);
                         }
                         break;
                     }
@@ -168,7 +172,11 @@ namespace thegame
                 if (Inputs.isKeyRelease(Keys.Enter) && selected != 2) IChooseSomething = true;              // "2" is the Quit button
                 else if (Inputs.isKeyRelease(Keys.Enter))
                 {
-                    popup = new Popup("Cancel", "Yes", "Exit the game", new string[] { "Are you sure you want to quit ?" }, Textures.font_texture, 450);
+                    popup = new Popup(Language.Text_Game["_btnCancel"], 
+                                      Language.Text_Game["_btnYes"],   
+                                      Language.Text_Game["_popupExit"], 
+                                      new string[] { Language.Text_Game["_popupSure?"] }, 
+                                      Textures.font_texture, 450);
                 }
 
                 if (Inputs.isKeyRelease(Keys.Back) && activateBackSpace)

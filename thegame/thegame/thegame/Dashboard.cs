@@ -59,8 +59,8 @@ namespace thegame
         {
             TimeIntervalRequest = TimeInterval;
             TimeIntervalRequest2 = TimeInterval2;
-            searchFriendButton = new Button("Search Friend", 551, 83, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15));
-            back_main_menu = new Button("Back to the menu", 580, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            searchFriendButton = new Button(Language.Text_Game["_btnSearchFri"], 551, 83, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15));
+            back_main_menu = new Button(Language.Text_Game["_btnBackM"], 580, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
         }
 
         public void Update(GameTime gametime)
@@ -236,8 +236,8 @@ namespace thegame
 
                     for (int i = 0; i < myrequest.Count; i++)
                     {
-                        InvitationsButtonAccept.Add(new Button("Accept", contentinvitation.X + 150, contentinvitation.Y + i * 40, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
-                        InvitationsButtonIgnore.Add(new Button("Ignore", contentinvitation.X + 300, contentinvitation.Y + i * 40, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                        InvitationsButtonAccept.Add(new Button(Language.Text_Game["_btnAccept"], contentinvitation.X + 150, contentinvitation.Y + i * 40, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                        InvitationsButtonIgnore.Add(new Button(Language.Text_Game["_btnIgnore"], contentinvitation.X + 300, contentinvitation.Y + i * 40, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                         Invitationsid.Add(myrequest[i]["id"]);
 
                     }

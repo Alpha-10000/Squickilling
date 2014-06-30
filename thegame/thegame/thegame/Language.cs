@@ -52,6 +52,29 @@ namespace thegame
                                                    {"_btnMenu","Menu"},
                                                    {"_btnQuit","Exit"},
                                                    {"player","Player"},
+                                                   {"_btnPause", "P / Pause"},
+                                                   {"_btnMusic", "M / Music"},
+                                                   {"_btnHelp", "H / Help"},
+                                                   {"_btnYes", "Yes"},
+                                                   {"_btnCancel", "Cancel"},
+                                                   {"strGame", "The game has been created"},
+                                                   {"_popupAccount", "Your account has been created"},
+                                                   {"_popupCongratz", "Congratulations"},
+                                                   {"_popupWrong", "Something is wrong"},
+                                                   {"_popupUnreachedDatabase", "Sorry. We are unable to reach the database. Try again later."},
+                                                   {"_popupExit", "Exit the game"},
+                                                   {"_popupSure?", "Are you sure you want to quit ?"},
+                                                   {"_popupConnect", "Sorry we are unable to connect to the website"},
+                                                   {"_btnBack", "Go Back"},
+                                                   {"_btnCancelInvit", "Cancel Invitation"},
+                                                   {"_btnSearchFri", "Search Friend"},
+                                                   {"_btnBackM", "Back to the Menu"},
+                                                   {"_btnAccept", "Accept"},
+                                                   {"_btnIgnore", "Ignore"},
+                                                   {"_btnJoin", "Join Game"},
+
+
+
                     
                     };
                     break;
@@ -90,6 +113,31 @@ namespace thegame
                                                    {"_btnMenu","Menu"},
                                                    {"_btnQuit","Quitter"},
                                                    {"player","Joueur"},
+                                                   {"_btnPause", "P / Pause"},
+                                                   {"_btnMusic", "M / Musique"},
+                                                   {"_btnHelp", "H / Aide"},
+                                                   {"_btnYes", "Oui"},
+                                                   {"_btnCancel", "Annuler"},
+                                                   {"strGame", "Le jeu a été créé"},
+                                                   {"_popupAccount", "Votre compte a été créé"},
+                                                   {"_popupCongratz", "Félicitations"},
+                                                   {"_popupWrong", "Quelquechose ne va pas"},
+                                                   {"_popupUnreachedDatabase", "Désolé. Nous sommes incapable d'atteindre les bases de données. Réessayez plus tard."},
+                                                   {"_popupExit", "Quitter le jeu"},
+                                                   {"_popupSure?", "Etes vous sûr(e) de vouloir partir ?"},
+                                                   {"_popupConnect", "Désolé. Nous sommes incapable d'atteindre le site web."},
+                                                   {"_btnBack", "Retour"},
+                                                   {"_btnCancelInvit", "Annuler l'invitation"},
+                                                   {"_btnSearchFri", "Chercher un ami"},
+                                                   {"_btnBackM", "Retour vers le menu"},
+                                                   {"_btnAccept", "Accepter"},
+                                                   {"_btnIgnore", "Ignorer"},
+                                                   {"_btnJoin", "Joindre la partie"},
+                                                   
+
+
+
+
                     };
                     break;
 
@@ -127,6 +175,31 @@ namespace thegame
                                                    {"_btnMenu","Menu"},
                                                    {"_btnQuit","Afsluiten"},
                                                    {"player","Player"},
+                                                   {"_btnPause", "P / Pauze"},
+                                                   {"_btnMusic", "M / Muzic"},
+                                                   {"_btnHelp", "H / Helpen"},
+                                                   {"_btnYes", "Ja"},
+                                                   {"_btnCancel", "Nee"},
+                                                   {"strGame", "De speel hat beginnen"},
+                                                   {"_popupAccount", "Your account has been created"},
+                                                   {"_popupCongratz", "Congratulations"},
+                                                   {"_popupWrong", "Something is wrong"},
+                                                   {"_popupUnreachedDatabase", "Sorry. We are unable to reach the database. Try again later."},
+                                                   {"_popupExit", "Exit the game"},
+                                                   {"_popupSure?", "Are you sure you want to quit ?"},
+                                                   {"_popupConnect", "Sorry we are unable to connect to the website"},
+                                                   {"_btnBack", "Go Back"},
+                                                   {"_btnCancelInvit", "Cancel Invitation"},
+                                                   {"_btnSearchFri", "Search Friend"},
+                                                   {"_btnBackM", "Back to the Menu"},
+                                                   {"_btnAccept", "Accept"},
+                                                   {"_btnIgnore", "Ignore"},
+                                                   {"_btnJoin", "Join Game"},
+
+
+
+
+
                     };
                     break;
             }

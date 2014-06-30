@@ -31,7 +31,7 @@ namespace thegame
         {
             finish = true;
             GameTimeGetInvitations = TimeInterval;
-            go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            go_back = new Button(Language.Text_Game["_btnBack"], 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
         }
 
         public void Update(GameTime gametime)
@@ -91,7 +91,7 @@ namespace thegame
                     MyFriendsGame = ValueList;
 
                     for (int i = 0; i < ValueList.Count; i++)
-                        JoinButton.Add(new Button("Join game", contentjoin.X + 128, contentjoin.Y + 115 + i * 100, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                        JoinButton.Add(new Button(Language.Text_Game["_btnJoin"], contentjoin.X + 128, contentjoin.Y + 115 + i * 100, Textures.font_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
 
                 }
             }

@@ -27,7 +27,7 @@ namespace thegame
 
         public HasJoined()
         {
-            go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            go_back = new Button(Language.Text_Game["_btnBack"], 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
             GetInvitations();
         }
 

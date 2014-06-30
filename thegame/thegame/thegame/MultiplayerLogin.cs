@@ -119,7 +119,7 @@ namespace thegame
             }
             catch
             {
-                infotext[0] = "Sorry. We are unable to reach the database. Try again later.";
+                infotext[0] = Language.Text_Game["_popupUnreachedDatabase"];
             }
         }
 
@@ -128,7 +128,7 @@ namespace thegame
         public void Update(GameTime gametime)
         {
             if (popup == null && infotext[0] != "")
-                popup = new Popup("ok", "", (infotext[0] == "Your account has been created." ? "Congratulations" : "Something wrong"), infotext, Textures.font_texture, 500);
+                popup = new Popup("ok", "", (infotext[0] == Language.Text_Game["_popupAccount"] ? Language.Text_Game["_popupCongratz"] : Language.Text_Game["_popupWrong"]), infotext, Textures.font_texture, 500);
             //fix a bug
             if (FirstTime && transparency >= 1)
                 FirstTime = false;

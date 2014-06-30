@@ -179,8 +179,8 @@ namespace thegame
             this.thegamestate = thegamestate;
             this.NewGame(ref cameraClass);
             this.SoundIs = SoundIs;
-            PauseButton = new Button("P / Pause", 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
-            HelpButton = new Button("H / Help", 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            PauseButton = new Button(Language.Text_Game["_btnPause"], 524, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            HelpButton = new Button(Language.Text_Game["_btnHelp"], 524 + 120, 437, Textures.fontnormal_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
 
         }
 

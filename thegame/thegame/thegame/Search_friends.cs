@@ -144,7 +144,7 @@ namespace thegame
             }
             catch
             {
-                popup = new Popup("OK", "", "Information", new string[] { "Sorry we are unable to connect to the website" }, Textures.font_texture, 450);
+                popup = new Popup("OK", "", "Information", new string[] { Language.Text_Game["_popupConnect"] }, Textures.font_texture, 450);
             }
         }
 

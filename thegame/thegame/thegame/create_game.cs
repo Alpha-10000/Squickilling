@@ -39,7 +39,7 @@ namespace thegame
         public Create_game()
         {
             essai_textbox = new Textbox(400, 75, 200, 40);
-            go_back = new Button("Go back", 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
+            go_back = new Button(Language.Text_Game["_btnBack"], 620, 10, Textures.font_texture, new Color(122, 184, 0), Color.White, new Color(122, 184, 0));
             InvitedBox();
         }
 
@@ -147,7 +147,7 @@ namespace thegame
                     {
                         if (ValueList[i]["invitation"] == "sent")
                         {
-                            inviteButtonList.Add(new Button("Cancel invitation", contentcreate.X + 290, contentcreate.Y + 56 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                            inviteButtonList.Add(new Button(Language.Text_Game["_btnCancelInvit"], contentcreate.X + 290, contentcreate.Y + 56 + i * 50, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                             alreadysent.Add(true);
                         }
                         else
@@ -237,7 +237,7 @@ namespace thegame
                     for (int i = 0; i < ValueList.Count; i++)
                     {
                         if (ValueList[i]["joined"] == "0")
-                            TheInvitedCancelButton.Add(new Button("Cancel invitation", BottomBox.X + 290, BottomBox.Y + 45 * i + 37, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
+                            TheInvitedCancelButton.Add(new Button(Language.Text_Game["_btnCancelInvit"], BottomBox.X + 290, BottomBox.Y + 45 * i + 37, Textures.fonthelp_texture, new Color(129, 130, 134), Color.White, new Color(14, 15, 15)));
                         else
                             TheInvitedCancelButton.Add(null);
                     }
@@ -320,7 +320,7 @@ namespace thegame
 
                     string text = System.Text.Encoding.UTF8.GetString(e.Result);
                     popup = new Popup("OK", "", "Information", new string[] { text }, Textures.font_texture, 450);
-                    if (text == "The game has been created")
+                    if (text == Language.Text_Game["strGame"])
                         IsOkayToGoToTheGame = true;
                 }
             }
